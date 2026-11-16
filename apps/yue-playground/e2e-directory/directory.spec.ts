@@ -12,7 +12,7 @@ const PASSWORD = 'Init-Pass-2026';
 const NEXT_PASSWORD = 'Next-Pass-2026';
 
 interface Member { membership: { id: string; account: string; display_name: string } }
-interface Added extends Member { person_created: boolean; granted_roles: string[] }
+interface Added extends Member { person_created: boolean; restored: boolean; granted_roles: string[] }
 interface Organization { id: string; name: string; path: string; depth: number }
 type Headers = Record<string, string>;
 
@@ -41,7 +41,7 @@ async function signIn(api: APIRequestContext, identifier: string): Promise<{ ten
 async function seedDirectory(api: APIRequestContext, headers: Headers, people: [identifier: string, name: string][], orgs: [key: string, name: string, type: string, parent?: string][], primary: [account: string, org: string][]) {
   for (const [identifier, display_name] of people) {
     const added = await ok<Added>(await api.post('/api/directory/members', { headers, data: { identifier, display_name, initial_password: PASSWORD } }), '新增成员 ' + identifier);
-    expect(added).toMatchObject({ membership: { account: identifier, display_name }, person_created: true, granted_roles: ['tenant.user'] });
+    expect(added).toMatchObject({ membership: { account: identifier, display_name }, person_created: true, restored: false, granted_roles: ['tenant.user'] });
   }
   for (const [code, name] of [['company', '公司'], ['dept', '部门'], ['team', '小组']]) await ok(await api.put('/api/directory/org-types', { headers, data: { code, name } }), '组织类型 ' + code);
   const ids: Record<string, string> = {};
@@ -62,7 +62,8 @@ test('R109 真实目录：OrganizeSelect 选部门、UserSelect 选人，经 Pla
   const administrator = async (displayName: string, identifier: string) =>
     (await ok<{ subjectId: string }>(await ops.post('/api/tenancy/admin-accounts', { data: { displayName, identifierKind: 'username', identifier, initialPassword: PASSWORD } }), '新建管理员账号 ' + identifier)).subjectId;
   async function openTenant(code: string, name: string, subjectId: string) {
-    const tenant = await ok<{ id: string }>(await ops.post('/api/tenancy/tenants', { data: { code, name, isolation: 'row', administrator: { membershipId: randomUUID(), subjectId }, quotas: { users: 20 } } }), '开通 ' + code);
+    // 管理员账号是用户名账号，没有经本人验证的联系方式，开户请求须带初始密码（R163）；仍用建号时的那个，登录流程不变。
+    const tenant = await ok<{ id: string }>(await ops.post('/api/tenancy/tenants', { data: { code, name, isolation: 'row', administrator: { membershipId: randomUUID(), subjectId, initialPassword: PASSWORD }, quotas: { users: 20 } } }), '开通 ' + code);
     await ok(await ops.post(`/api/tenancy/tenants/${tenant.id}:activate`, { data: { trial: false } }), '激活 ' + code);
     return tenant.id;
   }
