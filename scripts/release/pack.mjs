@@ -122,6 +122,9 @@ for (const record of records) {
   const internal = Object.entries(record.dependencies).filter(([dependency]) => versions.has(dependency)).map(([dependency, spec]) => `${dependency.replace('@cavailab/', '')}@${spec}`).join('、') || '—';
   console.log(`| ${record.name} | ${record.version} | ${record.license} | ${record.files.length} | ${(record.size / 1024).toFixed(1)} KiB | ${internal} |`);
 }
+// 完整性摘要：同一提交两次打包逐字节相同，CI 日志、发布日志与包源上的 dist.integrity 可以直接比对。
+console.log('\n完整性摘要：');
+for (const record of records) console.log(`${record.name}@${record.version} ${record.integrity}`);
 if (problems.length) {
   console.error(`\n打包验证不通过：\n${problems.join('\n')}`);
   process.exit(1);
