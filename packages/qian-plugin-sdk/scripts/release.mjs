@@ -31,7 +31,7 @@ if (mode === 'pack') {
     assert(!files.some((file) => /(?:^|\/)test(?:s)?\/|\.(?:test|spec)\.[cm]?[jt]sx?$/.test(file.replace(/\.d\.ts$/, '.ts'))), '测试源码或声明不得进入发布制品');
     assert.equal(manifest.name, pkg.name); assert.equal(manifest.version, pkg.version);
     assert.equal(manifest.repository.directory, source);
-    assert.match(manifest.repository.url, /github\.com[:/]idadawn\/qian(?:\.git)?$/);
+    assert.match(manifest.repository.url, /github\.com[:/]CavaiLAB\/qian(?:\.git)?$/);
     for (const version of Object.values(manifest.dependencies ?? {})) assert(!/^(workspace|file|link):/.test(version), '发布制品不得引用工作区或本地文件');
     records.push({ name: pkg.name, version: pkg.version, source, archive,
       integrity: 'sha512-' + createHash('sha512').update(readFileSync(archive)).digest('base64'), publish: source !== runtime });

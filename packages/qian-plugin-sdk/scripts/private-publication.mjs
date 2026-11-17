@@ -5,7 +5,7 @@ import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 
-export const REPOSITORY = 'idadawn/qian';
+export const REPOSITORY = 'CavaiLAB/qian';
 export const BOOTSTRAP_VERSION = '0.0.0-private.0';
 export const BOOTSTRAP_TAG = 'private-bootstrap';
 export const COHORT = Object.freeze([

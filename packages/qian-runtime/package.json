@@ -19,8 +19,12 @@
   ],
   "repository": {
     "type": "git",
-    "url": "https://github.com/idadawn/qian.git",
+    "url": "https://github.com/CavaiLAB/qian.git",
     "directory": "packages/qian-runtime"
+  },
+  "homepage": "https://github.com/CavaiLAB/qian/tree/main/packages/qian-runtime#readme",
+  "bugs": {
+    "url": "https://github.com/CavaiLAB/qian/issues"
   },
   "engines": {
     "node": ">=22"

@@ -35,7 +35,7 @@ export async function downloadPackageArchive(address, token, fetcher = fetch) {
 export function packageApi(token, fetcher = fetch) {
   const endpoint = name => {
     assert(COHORT.some(pkg => pkg.name === name), '不允许访问未知包');
-    return `https://api.github.com/users/idadawn/packages/npm/${encodeURIComponent(name.split('/')[1])}`;
+    return `https://api.github.com/orgs/CavaiLAB/packages/npm/${encodeURIComponent(name.split('/')[1])}`;
   };
   const headers = { Authorization: `Bearer ${token}`, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' };
   async function github(url, method = 'GET') {

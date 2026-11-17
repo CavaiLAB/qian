@@ -18,7 +18,7 @@ try {
  const installed=path.join(directory,'node_modules/@qian/runtime');
  const pkg=JSON.parse(readFileSync(path.join(installed,'package.json'),'utf8'));
  assert.equal(pkg.name,'@cavailab/qian-runtime');assert.equal(pkg.version,expected.version);
- assert.equal(pkg.repository.url,'https://github.com/idadawn/qian.git');
+ assert.equal(pkg.repository.url,'https://github.com/CavaiLAB/qian.git');
  assert.equal(pkg.repository.directory,'packages/qian-runtime');
  assert.match(readFileSync(path.join(installed,'README.md'),'utf8'),/模型体验/);
  assert.match(readFileSync(path.join(installed,'README.md'),'utf8'),/已知限制与延期项/);

@@ -5,8 +5,12 @@
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/idadawn/qian.git",
+    "url": "git+https://github.com/CavaiLAB/qian.git",
     "directory": "packages/qian/shell"
+  },
+  "homepage": "https://github.com/CavaiLAB/qian/tree/main/packages/qian/shell#readme",
+  "bugs": {
+    "url": "https://github.com/CavaiLAB/qian/issues"
   },
   "type": "module",
   "sideEffects": [
