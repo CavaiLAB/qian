@@ -1,9 +1,9 @@
 import fs from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import { QIAN_PACKAGES, allowedDependencies } from '../../../packages/qian/boundaries.config.mjs';
+import { LAYER_SCOPE, QIAN_PACKAGES, allowedDependencies, isLayerPackageName } from '../../../packages/qian/boundaries.config.mjs';
 
-// 包形状门禁：每个 @cavailab/qian-* 包的 package.json 与矩阵、catalog、发布形状一致（docs/prd/specs/yue.md §3.1、§4.1；PRD §07 7.15.2）。
+// 包形状门禁：每个层包（packages/qian/*）的 package.json 与矩阵、catalog、发布形状一致（docs/prd/specs/yue.md §3.1、§4.1；PRD §07 7.15.2）。
 const ROOT = path.resolve(__dirname, '../../..');
 const QIAN_DIR = path.join(ROOT, 'packages', 'qian');
 
@@ -36,12 +36,12 @@ describe('packages/qian/* 的 package.json', () => {
     }
   });
 
-  it('dependencies 里的 @cavailab/qian-* 包不超出矩阵允许范围，且用 workspace 协议', () => {
+  it('dependencies 里的层包不超出矩阵允许范围，且用 workspace 协议', () => {
     for (const { dir, pkg } of packages) {
       const allowed = allowedDependencies(dir);
       for (const [name, range] of Object.entries(pkg.dependencies ?? {})) {
-        if (!name.startsWith('@cavailab/qian-')) continue;
-        expect(allowed, `${pkg.name} 不得依赖 ${name}`).toContain(name.slice('@cavailab/qian-'.length));
+        if (!isLayerPackageName(name)) continue;
+        expect(allowed, `${pkg.name} 不得依赖 ${name}`).toContain(name.slice(LAYER_SCOPE.length));
         expect(range).toMatch(/^workspace:/);
       }
     }
@@ -61,7 +61,7 @@ describe('packages/qian/* 的 package.json', () => {
       expect(pkg.scripts?.publint).toMatch(/^publint/);
       expect(pkg.peerDependencies?.react).toBeDefined();
       for (const [name, range] of Object.entries({ ...pkg.dependencies, ...pkg.devDependencies })) {
-        if (name.startsWith('@cavailab/qian-')) continue;
+        if (isLayerPackageName(name)) continue;
         expect(range, `${pkg.name} 的 ${name} 要写 catalog:`).toBe('catalog:');
       }
     }

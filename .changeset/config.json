@@ -1,7 +1,7 @@
 {
   "changelog": "@changesets/cli/changelog",
   "commit": false,
-  "fixed": [["@cavailab/qian-*"]],
+  "fixed": [["@cavailab/qian-biz", "@cavailab/qian-contracts", "@cavailab/qian-core", "@cavailab/qian-data", "@cavailab/qian-form", "@cavailab/qian-sdk", "@cavailab/qian-shell", "@cavailab/qian-tokens"]],
   "linked": [],
   "access": "restricted",
   "baseBranch": "main",

@@ -32,6 +32,17 @@ const DIRECT = {
 /** 全部已知的 @cavailab/qian-* 包名（目录名）。 */
 export const QIAN_PACKAGES = Object.keys(DIRECT);
 
+/** 层包的包名前缀。 */
+export const LAYER_SCOPE = '@cavailab/qian-';
+
+/** 也以 LAYER_SCOPE 开头、但不是层包的两个包。更名之前它们的名字不在层包的前缀之内，按前缀判断层包时要把它们除开。 */
+export const NON_LAYER_PACKAGES = ['@cavailab/qian-runtime', '@cavailab/qian-plugin-sdk'];
+
+/** 按包名判断是不是层包（已建、规划中、没登记的都算）：前缀之内、除开上面两个，与更名之前按旧前缀判断的集合相同。 */
+export function isLayerPackageName(name) {
+  return name.startsWith(LAYER_SCOPE) && !NON_LAYER_PACKAGES.includes(name);
+}
+
 /** 某包允许依赖的 @cavailab/qian-* 包目录名（含最底层横切包，不含自己）。未知包名 → 空数组（什么都不许依赖，先来这里登记）。 */
 export function allowedDependencies(pkg) {
   const direct = DIRECT[pkg];
@@ -62,10 +73,13 @@ const policies = [
   // Qian 的前端 SDK 在 qian 之上，只消费 sdk/底层契约与 TS Runtime，不能反向进入 UI 控件或应用。
   { from: { element: { type: 'qian-ui-sdk' } }, allow: { to: [{ element: { type: 'qian-ui-sdk' } }, { element: { type: 'qian-runtime' } },
     { element: { type: 'qian', captured: { pkg: ['sdk', 'tokens', 'contracts'] } } },
-    { module: { source: ['@cavailab/qian-sdk{,/**}', '@cavailab/qian-tokens{,/**}', '@cavailab/qian-contracts{,/**}', '@cavailab/qian-runtime', '@qian/runtime'] } },
+    { module: { source: ['@cavailab/qian-sdk{,/**}', '@cavailab/qian-tokens{,/**}', '@cavailab/qian-contracts{,/**}', '@cavailab/qian-runtime{,/**}', '@qian/runtime'] } },
     { module: { source: '!{@cavailab/qian-**,@cavailab/qian-plugin-sdk{,/**},@qian/plugin-sdk{,/**},@qian/shell-kit{,/**}}' } }] } },
   // 应用面（apps/*）可以引任何 qian 包、彼此与第三方库。
-  { from: { element: { type: 'app' } }, allow: { to: [{ element: { type: 'qian' } }, { element: { type: 'app' } }, { element: { type: 'qian-ui-sdk' } }, { element: { type: 'qian-runtime' } }, { module: { source: ['!@cavailab/qian-**'] } }] } },
+  // 更名之后运行时与插件开发包和组件层同一前缀，@cavailab/qian-** 也盖住了它们；改名前它们不在 @idadawn/yue-** 之内，
+  // 按说明符引用本来就放行，所以这里显式放行，范围与改名前一致。上面插件开发包那条的 @cavailab/qian-runtime{,/**} 同理。
+  { from: { element: { type: 'app' } }, allow: { to: [{ element: { type: 'qian' } }, { element: { type: 'app' } }, { element: { type: 'qian-ui-sdk' } }, { element: { type: 'qian-runtime' } }, { module: { source: ['!@cavailab/qian-**'] } },
+    { module: { source: ['@cavailab/qian-plugin-sdk{,/**}', '@cavailab/qian-runtime{,/**}'] } }] } },
 ];
 
 /** 只含边界规则的 ESLint 配置片段（根 eslint.config.mjs 与 eslint.boundaries.config.mjs 共用）。 */

@@ -207,7 +207,9 @@ describe('子集外拒绝，而不是静默放过', () => {
 describe('运行时路径不携带 JSON Schema 编译器、不在运行期生成代码', () => {
   const packages = new URL('../../', import.meta.url);
   const manifest = (name: string) => JSON.parse(readFileSync(new URL(`${name}/package.json`, packages), 'utf8')) as { dependencies?: Record<string, string>; peerDependencies?: Record<string, string> };
-  const workspace = (dependencies: Record<string, string> = {}) => Object.keys(dependencies).filter((name) => name.startsWith('@cavailab/qian-')).map((name) => name.slice('@cavailab/qian-'.length));
+  // 只沿层包走：运行时与插件开发包也以 @cavailab/qian- 开头，但不在 packages/qian 下，更名之前也不在层包的前缀之内。
+  const notLayers = new Set(['@cavailab/qian-runtime', '@cavailab/qian-plugin-sdk']);
+  const workspace = (dependencies: Record<string, string> = {}) => Object.keys(dependencies).filter((name) => name.startsWith('@cavailab/qian-') && !notLayers.has(name)).map((name) => name.slice('@cavailab/qian-'.length));
   const visited = new Set<string>();
   for (const pending = ['form']; pending.length;) {
     const name = pending.pop()!;
