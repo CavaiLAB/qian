@@ -7,7 +7,7 @@
 包发在 GitHub Packages 上。它的 npm 包源装公开包也要带令牌（[GitHub 文档](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages)）：本机用有 `read:packages` 权限的个人访问令牌（classic）；GitHub Actions 里用工作流的 `GITHUB_TOKEN`，工作流要声明 `packages: read`。消费项目的 `.npmrc` 配置 `@cavailab:registry=https://npm.pkg.github.com`；认证行 `//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}` 只引用环境变量、不能提交令牌值，放在用户级配置里（`~/.npmrc`，或 `NPM_CONFIG_USERCONFIG` 指向的文件；GitHub Actions 里 `actions/setup-node` 填了 `registry-url` 就会生成这样一份），不放项目的 `.npmrc`：pnpm（10.34.2 起的 10、11.5.3 起的 11 与 12）不展开项目 `.npmrc` 认证行里的环境变量，写在那里会 401（[迁移说明](https://github.com/CavaiLAB/qian/blob/main/docs/migrating-from-yue.md)第 2 节）。逻辑导入名通过 npm alias 保留：
 
 ```bash
-npm install '@qian/plugin-sdk@npm:@cavailab/qian-plugin-sdk@0.2.0'
+npm install '@qian/plugin-sdk@npm:@cavailab/qian-plugin-sdk@0.2.1'
 ```
 
 依赖为实际发布的 `@cavailab/qian-runtime`、`@cavailab/qian-sdk`（传递 contracts 与 tokens）、官方 MF2 runtime 与 SemVer；Ajv 只在构建期使用（见下文「校验不在运行期生成代码」）。`pnpm pack` 会把 workspace 依赖写成固定版本范围，包内只交付 ESM、声明与文档；本地 pack 不代表包源上发布成功。正式发布与仓库外的干净消费者验证由本仓库的 `release` 工作流执行，见[发布脚本](https://github.com/CavaiLAB/qian/blob/main/scripts/release/README.md)。新名字从 0.2.0 起发布，旧名字 `@idadawn/qian-plugin-sdk` 不再出新版本。变更记录不随包发布，在[仓库里](https://github.com/CavaiLAB/qian/blob/main/packages/qian-plugin-sdk/CHANGELOG.md)。

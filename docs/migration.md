@@ -369,3 +369,20 @@ F3（S1-YUE-024），2026-11-17 准备并发布。本节写准备了什么、查
 - 0.x 的 `^0.1.0` 不包含 0.2.0：插件开发包的宿主按清单的 `engines.qian` 做 SemVer 比对，外壳报的版本取外壳包的版本。后端各界面清单的 `engines.qian` 与远程共享依赖的 `requiredVersion` 要在换包的同一次改动里放宽到 `^0.2.0`，否则远程会被拒载。
 - 文档站按 `refs/tags/@cavailab/qian-core@<版本>` 检出本仓库（第 4 节、11.3 第 6 步）。
 - 第 10.3 节的其余各项。
+
+### 11.7 0.2.1：data、biz 一渲染就报错的返修
+
+2026-11-18。0.2.0 发布之后，后端仓库换用已发布的包（F4），浏览器测试里 `DataTable`、`OrganizeSelect`、`UserSelect` 等一渲染就报 `ReferenceError: React is not defined`。包源上 data、biz 的 tarball 与 11.5 记的摘要相同，坏的就是发布的那一份。这次以 0.2.1 返修，10 个包都升版；发布要产品负责人点头，步骤照 11.3，版本换成 0.2.1，发布记录等发布之后补在这一节。
+
+| 项 | 内容 |
+|---|---|
+| 缺陷 | data、biz 的 `dist/index.js` 是经典 JSX 转换的产物：data 有 94 处 `React.createElement`、1 处 `React.Fragment`，biz 有 44 处 `React.createElement`，模块里只导入了 `useState` 等具名钩子，没有导入 `React`，渲染这两个包的任何组件都会报错。core、form、shell 导入的是 `react/jsx-runtime`，没有问题；tokens、contracts、sdk、运行时与插件开发包没有 JSX |
+| 根因 | data、biz 的 `rslib.config.ts` 少了 core、form、shell 都有的 `tools.swc.jsc.transform.react.runtime: 'automatic'`，构建出来的是经典转换。原仓库起就缺这一行。工作区里各包的 `exports` 指向源码，演练场、SSR 用例与浏览器用例都由 `@vitejs/plugin-react` 按 automatic 编译源码，用不到构建出的 `dist`；这两个包 0.2.0 是第一次发布，所以以前没暴露 |
+| 为什么没拦住 | 打包核对只看包的形状；消费者验证只做类型检查与生产构建，都不执行组件。`React` 在 dist 里是自由变量，类型检查不看依赖的 JS，打包器也不报，到渲染时才出错 |
+| 构建 | data、biz 的 `rslib.config.ts` 补上那一行，dist 改为从 `react/jsx-runtime` 导入；修复本身不改其余 8 个包的制品（版本号不变时打包，与修之前逐字节相同）。没有另做 8 个层包共用的配置：放在 `packages/qian/` 下的共用文件不属于任何一个包，它改了 `turbo` 的构建缓存不会失效；以后哪个包漏了，由下面两条检查在 PR 上拦住 |
+| 打包核对 | `pack.mjs` 新加一条：每个 tarball 里的 JS 模块交给 TypeScript 解析名字（不加载标准库与类型声明、不解析被导入的模块），有对 `React` 的引用、却解析不到绑定的就失败，报出文件、处数与第一处的位置；字符串、注释与属性名不算。判定在 `scripts/release/free-react.mjs`，门禁自测在 `tests/gates/qian/free-react.test.ts` |
+| 消费者验证 | `consumer.mjs` 在构建之后不经打包器，让 Node 直接加载装好的制品，用 `react-dom/server` 渲染 core 的 `Button`、form 的 `SchemaForm`、data 的 `Tree` 与 `DataTable`、shell 的 `AppShell`、biz 的 `OrganizeSelect` 与 `UserSelect`，逐个核对输出里的标识；制品导入了 JSX runtime 或含 `React.createElement` 的包都要有渲染用例。`archive` 与 `registry` 两种模式都跑，所以 PR 上 `qian` 工作流的 publint 一项、`release` 上传之前与发布之后都有这一步 |
+| 拿 0.2.0 试新检查 | 在修复之前的源码上跑 `pack.mjs`：data 报 95 处、biz 报 44 处，其余 8 个包不报；这次打出的 data、biz 与包源上 0.2.0 的 `dist.integrity` 逐字节相同。用从包源下载的 10 个 0.2.0 制品跑 `consumer.mjs archive`：类型检查与构建照常通过，渲染报 4 处 `ReferenceError: React is not defined`（data 的 `Tree`、`DataTable`，biz 的 `OrganizeSelect`、`UserSelect`），core、form、shell 的用例通过。修好之后两项都通过 |
+| 版本 | 10 个包都到 0.2.1，共 4 份登记：data、biz 的修复（8 个层包是固定版本组，一起升）；10 个包安装说明的更正；运行时、插件开发包各一份随同发布的说明。`publish.mjs` 要求包源上已有的同一版本逐字节相同，不同就整组停下（11.4），而这 10 个包的制品都已与包源上的 0.2.0 不同：安装说明的更正改了 10 个包随包发布的说明；运行时的说明在 0.2.0 之后还改过在本仓库跑一致性用例时后端检出的位置；sdk 与运行时到 0.2.1 之后，插件开发包打包时依赖范围写成 `^0.2.1`。只登记 data、biz 时，changeset 本身不会带上运行时与插件开发包（内部依赖写的是 `workspace:^`）。运行时与插件开发包的变更记录写明代码与类型与 0.2.0 相同。第 8 节「要不要锁成同一版本」可以参考这一次：不锁的时候，制品一变也得升版 |
+| 包内说明 | 运行时与插件开发包的安装命令改为 0.2.1。10 个包说明里的安装一段已按[迁移说明](migrating-from-yue.md)第 2 节更正（认证行放进用户级配置），0.2.1 的包带上这处更正，10 个包的变更记录也记了这一条 |
+| 使用方 | 用到 data 或 biz 的，从 0.2.0 升到 0.2.1；后端仓库切换（F4）钉 0.2.1，11.6 第二条的 0.2.0 以此为准。已发布的 0.2.0 照 11.4 不覆盖、不删 |

@@ -70,7 +70,7 @@ pnpm --filter ./packages/qian-runtime test:browser
 
 视觉基线在 `apps/qian-playground/visual/__snapshots__`，只在固定的 Playwright 镜像里比对。F2 重拍了组件目录页头带旧名字的 148 张，经过见 [迁移与更名](docs/migration.md) 第 10 节。
 
-打包验证（不发布）：10 个包各打一个 tarball，再在仓库外的空目录里只用这些 tarball 装起来、做类型检查与生产构建，最后跑插件开发包的制品验收。CI 上是 `qian` 工作流 publint 那一项的最后一步：
+打包验证（不发布）：10 个包各打一个 tarball，再在仓库外的空目录里只用这些 tarball 装起来、做类型检查与生产构建、实际渲染每个含 JSX 的包的组件，最后跑插件开发包的制品验收。CI 上是 `qian` 工作流 publint 那一项的最后一步：
 
 ```bash
 node scripts/release/pack.mjs <输出目录>

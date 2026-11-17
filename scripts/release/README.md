@@ -5,8 +5,8 @@
 | 文件 | 作用 |
 |---|---|
 | `packages.mjs` | 10 个包的清单（按依赖顺序）、本仓库与包源，以及后端仓库要从安装目录读的文件 |
-| `pack.mjs` | 构建并逐个 `pnpm pack`，核对每个 tarball：名字、版本、`license` 是 MIT、`repository` / `homepage` / `bugs` 指向本仓库、`exports` 指向的文件都在包里、工作区依赖已换成真实版本、没有测试文件；包里说明文件的相对链接都指向随包发布的文件、说明里写的本仓库包版本与这次打包的版本一致、声明文件的相对引用都在包里且不引用 JSON；输出 tarball 与 `packages.json`，最后打印每个包的完整性摘要 |
-| `consumer.mjs` | 在仓库外的空目录里新建一个项目，只用这 10 个包的制品装起来（`archive` 用本地 tarball，`registry` 从 GitHub Packages 装），再做一次类型检查与生产构建 |
+| `pack.mjs` | 构建并逐个 `pnpm pack`，核对每个 tarball：名字、版本、`license` 是 MIT、`repository` / `homepage` / `bugs` 指向本仓库、`exports` 指向的文件都在包里、工作区依赖已换成真实版本、没有测试文件；包里说明文件的相对链接都指向随包发布的文件、说明里写的本仓库包版本与这次打包的版本一致、声明文件的相对引用都在包里且不引用 JSON、JS 里没有引用了却没有绑定的 `React`（经典 JSX 转换的产物，判定在 `free-react.mjs`）；输出 tarball 与 `packages.json`，最后打印每个包的完整性摘要 |
+| `consumer.mjs` | 在仓库外的空目录里新建一个项目，只用这 10 个包的制品装起来（`archive` 用本地 tarball，`registry` 从 GitHub Packages 装），再做一次类型检查与生产构建；最后不经打包器，用 Node 直接加载装好的制品，以 `react-dom/server` 把每个含 JSX 的包至少渲染一个组件并核对输出 |
 | `gates.mjs` | 发布前核对：要发布的提交在 `qian`、`runtime-ts`、`backend-copy` 三个工作流里的最近一次运行都是成功 |
 | `publish.mjs` | 把 tarball 发到 GitHub Packages：先整组核对，包源上已有的同一版本必须是同一份制品（相同就跳过，不同就一个都不传）；上传后逐个回读（包源刚收下的版本最多等 75 秒）；最后报告每个包的摘要与可见性，不是 public 的在运行摘要里给出警告 |
 
@@ -16,7 +16,7 @@
 
 1. **门禁已通过**：只在 `main` 上、只能手动触发。`gates.mjs` 核对这个提交的三个门禁工作流都成功过；某个工作流因为路径过滤没在这个提交上跑，就先在 Actions 里对 `main` 手动运行它（三个工作流都能手动触发）。`workflow_dispatch` 总是跑 `main` 当时的最新提交，所以从触发门禁到运行 `release` 之间不要往 `main` 合入别的改动。
 2. **打包并发布**：`pack.mjs` 打包验证；上传之前先用这批 tarball 跑 `consumer.mjs archive` 与上面两个制品验收（`archive` / `file:`），都过了才由 `publish.mjs` 发布。版本号取各包的 `package.json`，包源与可见性取 `publishConfig`，工作流不改它们。这批 tarball 与 `packages.json` 作为 `qian-packages` 留存在这次运行里。
-3. **干净消费者验证**：`consumer.mjs registry` 从包源装已发布的版本，类型检查并构建；再从包源跑一遍两个制品验收。
+3. **干净消费者验证**：`consumer.mjs registry` 从包源装已发布的版本，类型检查、构建并渲染组件；再从包源跑一遍两个制品验收。
 
 发到一半失败，对同一提交重跑整个工作流即可：同一提交两次打包得到逐字节相同的 tarball（F3 实测，见[迁移与更名](../../docs/migration.md)第 11.1 节），已经上传的包按摘要相同跳过，只传剩下的。摘要不同说明制品真的变了，`publish.mjs` 一个都不传；已发布的版本不覆盖，要改就出新版本。
 

@@ -1,5 +1,19 @@
 # @cavailab/qian-biz
 
+## 0.2.1
+
+### Patch Changes
+
+- be41903: 修复 0.2.0 一渲染组件就报错。0.2.0 的数据组件包与业务选择器包构建时用了经典 JSX 转换：发布的 `dist/index.js` 调用 `React.createElement`，模块里却没有导入 `React`，渲染这两个包的任何组件（如 `DataTable`、`Tree`、`OrganizeSelect`、`UserSelect`）都会报 `ReferenceError: React is not defined`。现在改用 automatic JSX runtime，从 `react/jsx-runtime` 导入，不再依赖全局的 `React`。组件的接口与行为没有变化。
+  
+  用到这两个包的项目请从 0.2.0 升到 0.2.1；8 个层包是同一个版本号，一起升。
+- eb493d3: 包内说明的安装一段改为：项目的 `.npmrc` 只写作用域那一行，认证行放进用户级配置（`~/.npmrc`，或 `NPM_CONFIG_USERCONFIG` 指向的文件）。pnpm 10.34.2 起的 10、11.5.3 起的 11 与 12 不展开项目 `.npmrc` 认证行里的环境变量，照 0.2.0 说明里的写法用 pnpm 装包会得到 401。
+- Updated dependencies [be41903]
+- Updated dependencies [eb493d3]
+  - @cavailab/qian-data@0.2.1
+  - @cavailab/qian-sdk@0.2.1
+  - @cavailab/qian-core@0.2.1
+
 ## 0.2.0
 
 ### Minor Changes

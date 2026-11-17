@@ -1,5 +1,15 @@
 # @cavailab/qian-shell
 
+## 0.2.1
+
+### Patch Changes
+
+- eb493d3: 包内说明的安装一段改为：项目的 `.npmrc` 只写作用域那一行，认证行放进用户级配置（`~/.npmrc`，或 `NPM_CONFIG_USERCONFIG` 指向的文件）。pnpm 10.34.2 起的 10、11.5.3 起的 11 与 12 不展开项目 `.npmrc` 认证行里的环境变量，照 0.2.0 说明里的写法用 pnpm 装包会得到 401。
+- Updated dependencies [eb493d3]
+  - @cavailab/qian-sdk@0.2.1
+  - @cavailab/qian-core@0.2.1
+  - @cavailab/qian-form@0.2.1
+
 ## 0.2.0
 
 ### Minor Changes

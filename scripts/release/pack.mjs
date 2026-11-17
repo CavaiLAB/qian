@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 // 打包验证（S1-YUE-022）：10 个包各打一个 tarball，逐个核对名字、版本、许可、仓库地址、文件清单，
-// 以及工作区依赖已换成真实版本。不发布。发布工作流用同一个脚本打包。
+// 以及工作区依赖已换成真实版本、JS 里没有未绑定的 React（0.2.1）。不发布。发布工作流用同一个脚本打包。
 //
 //   node scripts/release/pack.mjs <输出目录> [--no-build]
 //
@@ -10,6 +10,7 @@ import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { mkdirSync, readFileSync, writeFileSync } from 'node:fs';
 import path from 'node:path';
+import { freeReactReferences } from './free-react.mjs';
 import { PACKAGES, REPOSITORY, REQUIRED_FILES, ROOT, tarballName, workspacePackage } from './packages.mjs';
 
 const args = process.argv.slice(2);
@@ -101,6 +102,11 @@ for (const { name, dir } of PACKAGES) {
       if (!declarationCandidates(resolved).some((candidate) => files.includes(candidate))) fail(`声明文件 ${file} 引用的 ${specifier} 不在包里（使用方不跳过库检查时报 TS2307）`);
       else if (resolved.endsWith('.json')) fail(`声明文件 ${file} 引用了 JSON（${specifier}）：使用方没开 resolveJsonModule 时会报错，把类型写进声明文件`);
     }
+  }
+  // 引用了却没有绑定的 React（0.2.1）：经典 JSX 转换的产物，类型检查与打包都不报，消费方一渲染就是 React is not defined。
+  const scripts = files.filter((entry) => /\.[cm]?js$/.test(entry)).map((file) => ({ file, text: read(file) }));
+  for (const [file, hits] of Object.entries(Object.groupBy(freeReactReferences(scripts), (hit) => hit.file))) {
+    fail(`${file} 有 ${hits.length} 处引用了没有绑定的 React（第一处在 ${hits[0].line}:${hits[0].column}），消费方一渲染就报 React is not defined：构建要用 automatic JSX runtime（rslib 配置的 tools.swc）`);
   }
   if (name === '@cavailab/qian-core') {
     const catalog = JSON.parse(execFileSync('tar', ['-xOzf', archive, 'package/dist/qian-manifest.json'], { encoding: 'utf8' }));
