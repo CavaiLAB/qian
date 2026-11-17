@@ -372,7 +372,7 @@ F3（S1-YUE-024），2026-11-17 准备并发布。本节写准备了什么、查
 
 ### 11.7 0.2.1：data、biz 一渲染就报错的返修
 
-2026-11-18。0.2.0 发布之后，后端仓库换用已发布的包（F4），浏览器测试里 `DataTable`、`OrganizeSelect`、`UserSelect` 等一渲染就报 `ReferenceError: React is not defined`。包源上 data、biz 的 tarball 与发布时的摘要相同，坏的就是发布的那一份。这次以 0.2.1 返修，10 个包都升版；发布要产品负责人点头，步骤照 11.3，版本换成 0.2.1，发布记录等发布之后补在这一节。
+2026-11-18。0.2.0 发布之后，后端仓库换用已发布的包（F4），浏览器测试里 `DataTable`、`OrganizeSelect`、`UserSelect` 等一渲染就报 `ReferenceError: React is not defined`。包源上 data、biz 的 tarball 与 11.5 记的摘要相同，坏的就是发布的那一份。这次以 0.2.1 返修，10 个包都升版；发布要产品负责人点头，步骤照 11.3，版本换成 0.2.1，发布记录等发布之后补在这一节。
 
 | 项 | 内容 |
 |---|---|
@@ -384,5 +384,5 @@ F3（S1-YUE-024），2026-11-17 准备并发布。本节写准备了什么、查
 | 消费者验证 | `consumer.mjs` 在构建之后不经打包器，让 Node 直接加载装好的制品，用 `react-dom/server` 渲染 core 的 `Button`、form 的 `SchemaForm`、data 的 `Tree` 与 `DataTable`、shell 的 `AppShell`、biz 的 `OrganizeSelect` 与 `UserSelect`，逐个核对输出里的标识；制品导入了 JSX runtime 或含 `React.createElement` 的包都要有渲染用例。`archive` 与 `registry` 两种模式都跑，所以 PR 上 `qian` 工作流的 publint 一项、`release` 上传之前与发布之后都有这一步 |
 | 拿 0.2.0 试新检查 | 在修复之前的源码上跑 `pack.mjs`：data 报 95 处、biz 报 44 处，其余 8 个包不报；这次打出的 data、biz 与包源上 0.2.0 的 `dist.integrity` 逐字节相同。用从包源下载的 10 个 0.2.0 制品跑 `consumer.mjs archive`：类型检查与构建照常通过，渲染报 4 处 `ReferenceError: React is not defined`（data 的 `Tree`、`DataTable`，biz 的 `OrganizeSelect`、`UserSelect`），core、form、shell 的用例通过。修好之后两项都通过 |
 | 版本 | 3 份登记，10 个包都到 0.2.1。data、biz 记 patch，8 个层包是固定版本组，一起升。运行时与插件开发包 changeset 本身不连带（内部依赖写的是 `workspace:^`），但 `publish.mjs` 要求包源上已有的同一版本逐字节相同，不同就整组停下（11.4）：运行时随包发布的说明在 0.2.0 之后改过（在本仓库跑一致性用例时后端检出的位置），在主干上打出的运行时 tarball 已与包源上的 0.2.0 不同；sdk 与运行时到 0.2.1 之后，插件开发包打包时依赖范围写成 `^0.2.1`，tarball 也会变。所以这两个包也各记一份 patch，变更记录写明代码与类型与 0.2.0 相同。第 8 节「要不要锁成同一版本」可以参考这一次：不锁的时候，制品一变也得升版 |
-| 包内说明 | 运行时与插件开发包的安装命令改为 0.2.1 |
+| 包内说明 | 运行时与插件开发包的安装命令改为 0.2.1。10 个包说明里的安装一段已按[迁移说明](migrating-from-yue.md)第 2 节更正（认证行放进用户级配置），0.2.1 的包带上这处更正 |
 | 使用方 | 用到 data 或 biz 的，从 0.2.0 升到 0.2.1；后端仓库切换（F4）钉 0.2.1，11.6 第二条的 0.2.0 以此为准。已发布的 0.2.0 照 11.4 不覆盖、不删 |
