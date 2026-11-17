@@ -28,6 +28,7 @@
   "scripts": {
     "build": "node scripts/prepare.mjs && tsc && node scripts/copy-vendor.mjs",
     "test": "node --test test/*.test.mjs",
+    "test:tck": "node --test test/runtime-tck.test.mjs",
     "api:update": "api-extractor run --local",
     "check:api": "api-extractor run",
     "test:browser": "node test/browser-smoke.mjs",

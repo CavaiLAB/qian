@@ -61,8 +61,6 @@ Definition 定义服务键与事件。`list`、代理属性与显式执行使用
 ## 验证
 
 ```bash
-pnpm --filter @qian/surfaces build
-pnpm --filter qian build
 pnpm --filter ./packages/qian-runtime build
 pnpm --filter ./packages/qian-runtime test
 pnpm --filter ./packages/qian-runtime check:api
@@ -70,7 +68,22 @@ pnpm --filter ./packages/qian-runtime test:types
 pnpm --filter ./packages/qian-runtime test:browser
 ```
 
-TS harness 复用 `tck/runtime/harness-ts.mjs` 与 `assembly-ts.mjs`，直接读取 26 个 YAML 场景与 T15–T17 的 3 个装配场景，不复制语言独立输入；从真实 minimal profile 起步，并调用真实 profile 装配器后挂载运行时。另有 9 项边界/错误验证，共 38 项测试。T19 自动热重载、T23 完整 platform 以及产品提示词链路的剩余验收见 S1-QA-002；不在测试里伪造这些产品功能。
+`test` 跑 9 项边界/错误验证。与 .NET 运行时共用的一致性用例（TCK）留在后端仓库：TS harness 复用后端的 `tck/runtime/harness-ts.mjs` 与 `assembly-ts.mjs`，直接读取 26 个 YAML 场景与 T15–T17 的 3 个装配场景，不复制语言独立输入；从真实 minimal profile 起步，并调用真实 profile 装配器（后端命令行的 `profiles.js`）后挂载运行时。合计 38 项测试。
+
+在本仓库跑 TCK 要一份后端检出，停在 `backend-copy/manifest.json` 记的来源提交上，并在检出里构建命令行（在后端检出的根目录执行）：
+
+```bash
+pnpm install --frozen-lockfile --filter 'qian...'
+pnpm --filter @qian/surfaces build && pnpm --filter qian build
+```
+
+再回到本仓库，用环境变量 `QIAN_TCK_BACKEND_DIR` 指向那份检出。没设这个变量时 `test` 把 TCK 记为跳过，`test:tck` 直接报错：
+
+```bash
+QIAN_TCK_BACKEND_DIR=<后端检出> pnpm --filter ./packages/qian-runtime test:tck
+```
+
+CI 的 `runtime-ts` 工作流按同样的办法跑这一项。T19 自动热重载、T23 完整 platform 以及产品提示词链路的剩余验收见 S1-QA-002；不在测试里伪造这些产品功能。
 
 ## 已知限制与延期项
 
