@@ -364,29 +364,29 @@ importers:
         specifier: 'catalog:'
         version: 5.0.3(@types/node@24.19.1)(@vitest/browser-playwright@5.0.3)(@vitest/ui@5.0.3)(vite@8.3.4(@types/node@24.19.1)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))
 
-  apps/yue-playground:
+  apps/qian-playground:
     dependencies:
-      '@idadawn/yue-biz':
+      '@cavailab/qian-biz':
         specifier: workspace:^
-        version: link:../../packages/yue/biz
-      '@idadawn/yue-core':
+        version: link:../../packages/qian/biz
+      '@cavailab/qian-core':
         specifier: workspace:^
-        version: link:../../packages/yue/core
-      '@idadawn/yue-data':
+        version: link:../../packages/qian/core
+      '@cavailab/qian-data':
         specifier: workspace:^
-        version: link:../../packages/yue/data
-      '@idadawn/yue-form':
+        version: link:../../packages/qian/data
+      '@cavailab/qian-form':
         specifier: workspace:*
-        version: link:../../packages/yue/form
-      '@idadawn/yue-sdk':
+        version: link:../../packages/qian/form
+      '@cavailab/qian-sdk':
         specifier: workspace:*
-        version: link:../../packages/yue/sdk
-      '@idadawn/yue-shell':
+        version: link:../../packages/qian/sdk
+      '@cavailab/qian-shell':
         specifier: workspace:^
-        version: link:../../packages/yue/shell
-      '@idadawn/yue-tokens':
+        version: link:../../packages/qian/shell
+      '@cavailab/qian-tokens':
         specifier: workspace:^
-        version: link:../../packages/yue/tokens
+        version: link:../../packages/qian/tokens
       react:
         specifier: 'catalog:'
         version: 19.3.0
@@ -430,12 +430,12 @@ importers:
 
   packages/qian-plugin-sdk:
     dependencies:
-      '@idadawn/qian-runtime':
+      '@cavailab/qian-runtime':
         specifier: workspace:^
         version: link:../qian-runtime
-      '@idadawn/yue-sdk':
+      '@cavailab/qian-sdk':
         specifier: workspace:^
-        version: link:../yue/sdk
+        version: link:../qian/sdk
       '@module-federation/enhanced':
         specifier: 'catalog:'
         version: 2.9.2(@rspack/core@2.2.8(@module-federation/runtime-tools@2.9.2)(@swc/helpers@0.5.23))(typescript@6.0.3)
@@ -493,19 +493,19 @@ importers:
         specifier: 2.9.1
         version: 2.9.1
 
-  packages/yue/biz:
+  packages/qian/biz:
     dependencies:
-      '@idadawn/yue-core':
+      '@cavailab/qian-core':
         specifier: workspace:^
         version: link:../core
-      '@idadawn/yue-data':
+      '@cavailab/qian-data':
         specifier: workspace:^
         version: link:../data
-      '@idadawn/yue-sdk':
+      '@cavailab/qian-sdk':
         specifier: workspace:^
         version: link:../sdk
     devDependencies:
-      '@idadawn/yue-tokens':
+      '@cavailab/qian-tokens':
         specifier: workspace:^
         version: link:../tokens
       '@rslib/core':
@@ -560,7 +560,7 @@ importers:
         specifier: 'catalog:'
         version: 5.0.3(@types/node@24.19.1)(@vitest/browser-playwright@5.0.3)(@vitest/ui@5.0.3)(vite@8.3.4(@types/node@24.19.1)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))
 
-  packages/yue/contracts:
+  packages/qian/contracts:
     devDependencies:
       '@rslib/core':
         specifier: 'catalog:'
@@ -590,15 +590,15 @@ importers:
         specifier: 'catalog:'
         version: 6.0.3
 
-  packages/yue/core:
+  packages/qian/core:
     dependencies:
       '@base-ui/react':
         specifier: 'catalog:'
         version: 1.8.0(@types/react@19.3.0)(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
-      '@idadawn/yue-contracts':
+      '@cavailab/qian-contracts':
         specifier: workspace:^
         version: link:../contracts
-      '@idadawn/yue-tokens':
+      '@cavailab/qian-tokens':
         specifier: workspace:^
         version: link:../tokens
       clsx:
@@ -669,15 +669,15 @@ importers:
         specifier: 'catalog:'
         version: 5.0.3(@types/node@24.19.1)(@vitest/browser-playwright@5.0.3)(@vitest/ui@5.0.3)(vite@8.3.4(@types/node@24.19.1)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))
 
-  packages/yue/data:
+  packages/qian/data:
     dependencies:
-      '@idadawn/yue-contracts':
+      '@cavailab/qian-contracts':
         specifier: workspace:^
         version: link:../contracts
-      '@idadawn/yue-core':
+      '@cavailab/qian-core':
         specifier: workspace:^
         version: link:../core
-      '@idadawn/yue-sdk':
+      '@cavailab/qian-sdk':
         specifier: workspace:^
         version: link:../sdk
       '@tanstack/react-table':
@@ -687,7 +687,7 @@ importers:
         specifier: 'catalog:'
         version: 3.14.21(react-dom@19.3.0(react@19.3.0))(react@19.3.0)
     devDependencies:
-      '@idadawn/yue-tokens':
+      '@cavailab/qian-tokens':
         specifier: workspace:^
         version: link:../tokens
       '@rslib/core':
@@ -745,22 +745,22 @@ importers:
         specifier: 'catalog:'
         version: 5.0.3(@types/node@24.19.1)(@vitest/browser-playwright@5.0.3)(@vitest/ui@5.0.3)(vite@8.3.4(@types/node@24.19.1)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))
 
-  packages/yue/form:
+  packages/qian/form:
     dependencies:
-      '@idadawn/yue-contracts':
+      '@cavailab/qian-contracts':
         specifier: workspace:^
         version: link:../contracts
-      '@idadawn/yue-core':
+      '@cavailab/qian-core':
         specifier: workspace:^
         version: link:../core
-      '@idadawn/yue-sdk':
+      '@cavailab/qian-sdk':
         specifier: workspace:^
         version: link:../sdk
       react-hook-form:
         specifier: 'catalog:'
         version: 7.90.0(@types/react@19.3.0)(react@19.3.0)
     devDependencies:
-      '@idadawn/yue-tokens':
+      '@cavailab/qian-tokens':
         specifier: workspace:^
         version: link:../tokens
       '@rslib/core':
@@ -821,12 +821,12 @@ importers:
         specifier: 'catalog:'
         version: 5.0.3(@types/node@24.19.1)(@vitest/browser-playwright@5.0.3)(@vitest/ui@5.0.3)(vite@8.3.4(@types/node@24.19.1)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))
 
-  packages/yue/sdk:
+  packages/qian/sdk:
     dependencies:
-      '@idadawn/yue-contracts':
+      '@cavailab/qian-contracts':
         specifier: workspace:^
         version: link:../contracts
-      '@idadawn/yue-tokens':
+      '@cavailab/qian-tokens':
         specifier: workspace:^
         version: link:../tokens
       i18next:
@@ -861,19 +861,19 @@ importers:
         specifier: 'catalog:'
         version: 6.0.3
 
-  packages/yue/shell:
+  packages/qian/shell:
     dependencies:
-      '@idadawn/yue-core':
+      '@cavailab/qian-core':
         specifier: workspace:^
         version: link:../core
-      '@idadawn/yue-form':
+      '@cavailab/qian-form':
         specifier: workspace:^
         version: link:../form
-      '@idadawn/yue-sdk':
+      '@cavailab/qian-sdk':
         specifier: workspace:^
         version: link:../sdk
     devDependencies:
-      '@idadawn/yue-tokens':
+      '@cavailab/qian-tokens':
         specifier: workspace:^
         version: link:../tokens
       '@rslib/core':
@@ -928,7 +928,7 @@ importers:
         specifier: 'catalog:'
         version: 5.0.3(@types/node@24.19.1)(@vitest/browser-playwright@5.0.3)(@vitest/ui@5.0.3)(vite@8.3.4(@types/node@24.19.1)(esbuild@0.28.2)(jiti@2.7.0)(yaml@2.9.1))
 
-  packages/yue/tokens:
+  packages/qian/tokens:
     dependencies:
       tw-animate-css:
         specifier: 'catalog:'
