@@ -251,7 +251,7 @@ F2（S1-YUE-022）的更名，2026-11-17。脚本与做法见[更名脚本](../s
 
 ## 11 首发记录
 
-F3（S1-YUE-024），2026-11-17 准备并发布。本节写准备了什么、查文档得到的结论、发布当天的步骤（11.3）与发布记录（11.5）。
+F3（S1-YUE-024），2026-11-17 准备并发布。本节写准备了什么、查文档得到的结论、发布当天的步骤（11.3）与发布记录（11.5）；2026-11-18 的 0.2.1 返修与它的发布记录见 11.7。
 
 ### 11.1 准备了什么
 
@@ -386,3 +386,28 @@ F3（S1-YUE-024），2026-11-17 准备并发布。本节写准备了什么、查
 | 版本 | 10 个包都到 0.2.1，共 4 份登记：data、biz 的修复（8 个层包是固定版本组，一起升）；10 个包安装说明的更正；运行时、插件开发包各一份随同发布的说明。`publish.mjs` 要求包源上已有的同一版本逐字节相同，不同就整组停下（11.4），而这 10 个包的制品都已与包源上的 0.2.0 不同：安装说明的更正改了 10 个包随包发布的说明；运行时的说明在 0.2.0 之后还改过在本仓库跑一致性用例时后端检出的位置；sdk 与运行时到 0.2.1 之后，插件开发包打包时依赖范围写成 `^0.2.1`。只登记 data、biz 时，changeset 本身不会带上运行时与插件开发包（内部依赖写的是 `workspace:^`）。运行时与插件开发包的变更记录写明代码与类型与 0.2.0 相同。第 8 节「要不要锁成同一版本」可以参考这一次：不锁的时候，制品一变也得升版 |
 | 包内说明 | 运行时与插件开发包的安装命令改为 0.2.1。10 个包说明里的安装一段已按[迁移说明](migrating-from-yue.md)第 2 节更正（认证行放进用户级配置），0.2.1 的包带上这处更正，10 个包的变更记录也记了这一条 |
 | 使用方 | 用到 data 或 biz 的，从 0.2.0 升到 0.2.1；后端仓库切换（F4）钉 0.2.1，11.6 第二条的 0.2.0 以此为准。已发布的 0.2.0 照 11.4 不覆盖、不删 |
+
+0.2.1 的发布记录：
+
+| 项 | 值 |
+|---|---|
+| 发布的提交 | `e4becd2e1c3c2ff471a6bfce671f86b0ef0df786`（PR #9 的合并提交），2026-11-18 |
+| `release` 运行 | [44159938919](https://github.com/CavaiLAB/qian/actions/runs/44159938919)：门禁已通过、打包并发布、干净消费者验证，三个作业全部通过。上传之前用同一批 tarball 跑的干净消费者验证，与发布之后从包源跑的那一遍，都渲染了上面 7 个组件 |
+| 该提交上三个门禁工作流的运行 | `qian` [44159402301](https://github.com/CavaiLAB/qian/actions/runs/44159402301) 与 `runtime-ts` [44159402333](https://github.com/CavaiLAB/qian/actions/runs/44159402333) 由合并的 push 触发；`backend-copy` [44159470971](https://github.com/CavaiLAB/qian/actions/runs/44159470971) 手动触发，都成功 |
+| 可见性 | 10 个包本来就是 public，新版本随包公开：`publish.mjs` 回读到的都是 public，运行摘要里没有警告。关联的仓库都是 `CavaiLAB/qian` |
+| 标签 | 10 个带注释的标签 `@cavailab/qian-<名>@0.2.1`，都指向发布提交；用 `git tag -a <标签> -m <标签>` 打，与 `pnpm changeset git-tag` 打出的相同 |
+
+| 包 | 版本 | 包源上的 `dist.integrity` |
+|---|---|---|
+| `@cavailab/qian-tokens` | 0.2.1 | `sha512-MC90tPGwpUoFevnUiiOThnvuhkX5ysV7enoiD7NCrBLyN5dkW6ymjlWOOPmO4Dvgl8SX7imUASNqFWWZPC2zjA==` |
+| `@cavailab/qian-contracts` | 0.2.1 | `sha512-5zwdik4DMXyfEK5irH3r8Tz6oFCF9f+kF7Py3a5Z7zYeZjCP5YG/cSokv14CcHqRTwV1qrN/dJzpTLS/7ew0pA==` |
+| `@cavailab/qian-sdk` | 0.2.1 | `sha512-HgFb2j9FgkMjURT+edIMkTdbdFOi83g9tixl0SLjXFfDGV11XZz76gjwvVCW/Y4CmVTWtscMSElL+k4/+LC0tw==` |
+| `@cavailab/qian-core` | 0.2.1 | `sha512-LBtvRWcrj8+gkAgBqOTo/ytOnGAWsO5ziPI+AOaMy1/n0VX6EwKThbgNBnhLVzLpK5jrYH/VU/y88797YAdzYQ==` |
+| `@cavailab/qian-form` | 0.2.1 | `sha512-nGhPh0Wn02j4r+MDctcbTVkro6JKdl5yK7sDMBwkV7q8MC9XU+ZWJC3fz/8+bb6V1l4x4NSzd7RN9CMHGrjSfg==` |
+| `@cavailab/qian-data` | 0.2.1 | `sha512-FEKkynu9JTS5VP9H3mdo2LSz3om1+dH7v17459QzXSsgA5RgZUtJybi7mQCOu9hW1VXzBqOPLFL0nuTLQC3baQ==` |
+| `@cavailab/qian-shell` | 0.2.1 | `sha512-M7xA0IL9BYkpGI+ydwQuDUAg1d7RSycvCdkCc56rdJMi0KowAPvBh1UzL2BmebRhMttwb4HgFwhUbwr5y38sSw==` |
+| `@cavailab/qian-biz` | 0.2.1 | `sha512-krSpHfpyUHKTV41kdcWvgyy04E4wgjay8ByUhumpbIprJQqzHc0dj4S1OgbIjO5MUR15wPJhnkq+MM+Z6A9W5w==` |
+| `@cavailab/qian-runtime` | 0.2.1 | `sha512-XDG+hZ+JMnS99Fzk3XDgA8aQo5cD+euaQoy24ywp4IJzSas0xGOHWEIrkqOxNc6Xdk4vSNo2vNUK3JD39E1sug==` |
+| `@cavailab/qian-plugin-sdk` | 0.2.1 | `sha512-WZPRaGaeVEK4fyBaxYaBl/5CNzIZuTXEHQw8KOQ0NNmr5cH9ccsXAmkVQholxh3VBFBpJ1stbZzxrflwEC+6Tw==` |
+
+包源上的 `dist.integrity` 与在发布提交的源码上重新打包得到的 tarball 逐个相同，也与 CI 上 publint 那一项打出的相同。每个包现在有 0.2.0 与 0.2.1 两个版本，`latest` 指向 0.2.1。

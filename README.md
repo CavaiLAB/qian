@@ -2,7 +2,7 @@
 
 [匠心智能体平台](https://github.com/CavaiLAB/jiangxin)的前端框架。TypeScript 与 React：设计令牌、组件库、应用外壳、微前端、由 Schema 驱动的界面。
 
-> **状态：迁移进行中（2026-11-17）。** 框架库已连同提交历史从 [`idadawn/qian`](https://github.com/idadawn/qian) 的前端工作区导入本仓库（F1），并在 F2 里一次更名为 qian：包名 `@cavailab/qian-*`、目录 `packages/qian/`。首发（F3）已于 2026-11-17 完成：10 个包以 0.2.0 发布在 GitHub Packages，已公开，发布记录见[迁移与更名](docs/migration.md)第 11.5 节。计划与进度见[迁移与更名](docs/migration.md)，使用方要改什么见[迁移说明](docs/migrating-from-yue.md)，本机怎么跑门禁见 [AGENTS.md](AGENTS.md)。
+> **状态：迁移进行中（2026-11-18）。** 框架库已连同提交历史从 [`idadawn/qian`](https://github.com/idadawn/qian) 的前端工作区导入本仓库（F1），并在 F2 里一次更名为 qian：包名 `@cavailab/qian-*`、目录 `packages/qian/`。首发（F3）已于 2026-11-17 完成：10 个包以 0.2.0 发布在 GitHub Packages，已公开，发布记录见[迁移与更名](docs/migration.md)第 11.5 节。0.2.0 的数据组件包与业务选择器包一渲染就报错，2026-11-18 以 0.2.1 返修，10 个包一起升，请用 0.2.1（第 11.7 节）。计划与进度见[迁移与更名](docs/migration.md)，使用方要改什么见[迁移说明](docs/migrating-from-yue.md)，本机怎么跑门禁见 [AGENTS.md](AGENTS.md)。
 >
 > **名字说明：** 2026-11-17 之前，「Qian」指基于 Kun 的平台层（`idadawn/qian` 仓库里的后端、`Qian.*` 包）。那部分后端并入 [Kun](https://github.com/CavaiLAB/kun)，「Qian」今后只作前端框架的名字。读旧文档时注意区分。组件 id 前缀 `qian.`、`qian` 命令行这些保留下来的字面，不表示前端框架。
 
@@ -50,7 +50,7 @@ Qian 负责人看得见、摸得着的那一层。在平台的理念「三元全
 | 代码 | 已导入（F1）：框架库连同 154 个提交从 `idadawn/qian` 的提交 `aafa0cc5ab` 导入，文件与源提交逐个一致；八项门禁、视觉回归与运行时测试跑在本仓库的 CI 上。F2 合入之后，框架库的改动一律在本仓库做，不再从原仓库补 |
 | 范围 | 已定：只迁框架库（8 个包、组件演练场、前端插件开发包、TypeScript 运行时、前端门禁）。应用外壳、组件自带的界面、文档站留在后端仓库，按钉住的版本消费本仓库发布的包 |
 | 更名 | 已完成（F2）：由 yue 更名为 qian；8 个包名字里的 `yue-` 换成 `qian-`，不换词；样式变量、测试标识、存储键、清单版本键一并换名。新旧对照见[迁移说明](docs/migrating-from-yue.md)，经过见[迁移与更名](docs/migration.md)第 10 节 |
-| 包与发布 | 已定：作用域 `@cavailab`（包发在 GitHub Packages 上，作用域要与仓库所有者同名）；首发 10 个包统一 0.2.0，包公开。GitHub Packages 的 npm 包源装公开包也要带令牌，`.npmrc` 怎么写见[迁移说明](docs/migrating-from-yue.md)第 2 节。首发 0.2.0 已于 2026-11-17 发布，发布步骤与记录见[迁移与更名](docs/migration.md)第 11 节 |
+| 包与发布 | 已定：作用域 `@cavailab`（包发在 GitHub Packages 上，作用域要与仓库所有者同名）；首发 10 个包统一 0.2.0，包公开。GitHub Packages 的 npm 包源装公开包也要带令牌，`.npmrc` 怎么写见[迁移说明](docs/migrating-from-yue.md)第 2 节。首发 0.2.0 已于 2026-11-17 发布；0.2.1 已于 2026-11-18 发布，返修 data、biz 一渲染就报错，使用方用 0.2.1。发布步骤与记录见[迁移与更名](docs/migration.md)第 11 节 |
 | 许可 | 已定：MIT，见 [LICENSE](LICENSE)。版权行是 `Copyright (c) 2026 Qian Framework Contributors` |
 | 待定 | 文档站组件页由谁出、10 个包要不要锁成同一版本。见[迁移与更名](docs/migration.md)第 8 节 |
 
