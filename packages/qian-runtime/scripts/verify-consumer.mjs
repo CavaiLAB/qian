@@ -22,7 +22,7 @@ try {
  assert.equal(pkg.repository.directory,'packages/qian-runtime');
  assert.match(readFileSync(path.join(installed,'README.md'),'utf8'),/模型体验/);
  assert.match(readFileSync(path.join(installed,'README.md'),'utf8'),/已知限制与延期项/);
- assert.match(readFileSync(path.join(installed,'LICENSE'),'utf8'),/Apache License/);
+ assert.match(readFileSync(path.join(installed,'LICENSE'),'utf8'),/^MIT License\n/);
  assert.match(readFileSync(path.join(installed,'dist/vendor/LICENSE.cordis.txt'),'utf8'),/MIT License/);
  if(source.startsWith('npm:')){
   const lock=JSON.parse(readFileSync(path.join(directory,'package-lock.json'),'utf8'));

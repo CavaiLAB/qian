@@ -2,7 +2,7 @@
   "name": "@cavailab/qian-runtime",
   "version": "0.1.1",
   "type": "module",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "sideEffects": false,
   "description": "Qian TypeScript runtime: scoped services, events and reversible effects",
   "exports": {

@@ -3,7 +3,7 @@
   "version": "0.1.0",
   "description": "Qian 前端插件契约、作用域插槽、MF2 加载与桥接 API。",
   "type": "module",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "sideEffects": false,
   "repository": {
     "type": "git",

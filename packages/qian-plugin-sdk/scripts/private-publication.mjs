@@ -67,7 +67,7 @@ export function bootstrapFiles(pkg, releaseVersion, runId) {
   assert.match(pkg.version, versionPattern); assert.match(releaseVersion, versionPattern); assert.match(runId, /^[1-9]\d*$/);
   const marker = { schema: MARKER_SCHEMA, repository: REPOSITORY, runId, releaseVersion, packageName: pkg.name, packageVersion: pkg.version };
   const manifest = {
-    name: pkg.name, version: BOOTSTRAP_VERSION, description: 'Qian 私有包可见性初始化占位版本，不包含 SDK 实现。', license: 'Apache-2.0',
+    name: pkg.name, version: BOOTSTRAP_VERSION, description: 'Qian 私有包可见性初始化占位版本，不包含 SDK 实现。', license: 'MIT',
     repository: { type: 'git', url: `git+https://github.com/${REPOSITORY}.git`, directory: pkg.source },
     files: ['README.md'], publishConfig: { registry: 'https://npm.pkg.github.com', access: 'restricted' }, [MARKER]: marker,
   };

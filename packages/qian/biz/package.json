@@ -2,7 +2,7 @@
   "name": "@cavailab/qian-biz",
   "version": "0.1.0",
   "description": "业务选择器：远程选项、字典、组织 / 用户 / 角色选择器、菜单与按钮授权树、IconPicker。",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/CavaiLAB/qian.git",
