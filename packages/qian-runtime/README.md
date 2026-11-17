@@ -14,10 +14,10 @@
 令牌放进环境变量 `NODE_AUTH_TOKEN` 后安装固定版本：
 
 ```bash
-npm install '@qian/runtime@npm:@cavailab/qian-runtime@0.2.0'
+npm install '@qian/runtime@npm:@cavailab/qian-runtime@0.2.1'
 ```
 
-`package.json` 的依赖值为 `"@qian/runtime": "npm:@cavailab/qian-runtime@0.2.0"`，下文逻辑导入名保持一致。变更记录不随包发布，在[仓库里](https://github.com/CavaiLAB/qian/blob/main/packages/qian-runtime/CHANGELOG.md)。源码工作区内部构建按目录筛选包；发版只经本仓库的 `release` 工作流（在 main 上手动触发）：先核对门禁，打包后先在仓库外的干净项目里用这批制品装一遍、跑一遍，再按清单版本发布，发完从包源安装并构建，见[发布脚本](https://github.com/CavaiLAB/qian/blob/main/scripts/release/README.md)。旧名字的 0.1.0、0.1.1 由原仓库的发布工作流发布，不再出新版本。
+`package.json` 的依赖值为 `"@qian/runtime": "npm:@cavailab/qian-runtime@0.2.1"`，下文逻辑导入名保持一致。变更记录不随包发布，在[仓库里](https://github.com/CavaiLAB/qian/blob/main/packages/qian-runtime/CHANGELOG.md)。源码工作区内部构建按目录筛选包；发版只经本仓库的 `release` 工作流（在 main 上手动触发）：先核对门禁，打包后先在仓库外的干净项目里用这批制品装一遍、跑一遍，再按清单版本发布，发完从包源安装并构建，见[发布脚本](https://github.com/CavaiLAB/qian/blob/main/scripts/release/README.md)。旧名字的 0.1.0、0.1.1 由原仓库的发布工作流发布，不再出新版本。
 
 `scripts/verify-consumer.mjs` 是本包自己的制品验收：在仓库外的空项目里经逻辑导入名 `@qian/runtime` 装上制品（`file:<tarball>` 或 `npm:@cavailab/qian-runtime@<版本>`），实际装载、派发、卸载一次，核对许可证文件随包，再按 NodeNext 解析做类型检查。CI 的 `runtime-ts` 工作流对每次改动的打包结果跑它，`release` 工作流在上传前对 tarball、发布后对包源各跑一次。
 
