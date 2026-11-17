@@ -51,16 +51,16 @@ node scripts/backend-copy.mjs --source <后端仓库的检出>
 
 两头都对得上才算通过：本机不带参数时，把副本按 `replace` 反向换回去，摘要要等于 `lead.sourceSha256`；CI 的比对（`--source`）要求来源的摘要等于 `lead.sourceSha256`，即后端那份没有意外变化，而且来源按 `replace` 正向替换之后与副本逐字节相同，即副本与来源的差异恰好是登记的那几处。
 
-现在领先的只有界面清单的版本键（已定）：F2（S1-YUE-022）把声明前端版本要求的键由 `engines.yue` 改为 `engines.qian`。这份 Schema 与一致性用例的唯一来源在后端仓库，后端要等新名字的包发布、改为消费新包时才改，由 F4（S1-YUE-025）消除领先。其余三份副本与来源逐字节相同。
+现在没有领先的副本，5 份副本都与来源逐字节相同。上一次领先是界面清单的版本键：F2（S1-YUE-022）把声明前端版本要求的键由 `engines.yue` 改为 `engines.qian`，这份 Schema 与一致性用例的唯一来源在后端仓库，副本先改；后端在 F4（S1-YUE-025，`CavaiLAB/kun#23`）里跟上，来源提交升到 `71cbd5b4fb` 时 `--update` 去掉了这两条登记。当时登记的替换：
 
 | 副本 | 登记的替换 |
 |---|---|
 | `schemas/v2/ui.schema.json` | `"yue"` → `"qian"`，2 处：`engines` 的 `required` 与 `properties` |
 | `tck/surfaces/cases.json` | 界面清单正文里的 `\"yue\":` → `\"qian\":`，27 处；期望错误的指针 `#/engines/yue"` → `#/engines/qian"`，1 处 |
 
-`--update` 遇到领先的文件：新来源还是旧的写法，就在新来源上重做一遍登记的替换，更新 `lead.sourceSha256`；新来源已经是副本的样子（F4 合入之后），去掉 `lead`，副本恢复与来源逐字节相同；两样都不是，说明来源在领先改动的位置变了，停下来人工处理。所以 F4 合入之后升来源提交，照下一节的步骤跑 `--update` 即可，不用手工改清单。
+`--update` 遇到领先的文件：新来源还是旧的写法，就在新来源上重做一遍登记的替换，更新 `lead.sourceSha256`；新来源已经是副本的样子，去掉 `lead`，副本恢复与来源逐字节相同；两样都不是，说明来源在领先改动的位置变了，停下来人工处理。F4 合入之后升来源提交就是第二种情况，照下一节的步骤跑 `--update` 即可，不用手工改清单。
 
-由界面清单 Schema 派生的两个文件（`packages/qian-plugin-sdk/src/ui-schema.generated.ts`、`ui-validators.generated.ts`）按领先之后的副本生成，见下一节第 3 步。
+由界面清单 Schema 派生的两个文件（`packages/qian-plugin-sdk/src/ui-schema.generated.ts`、`ui-validators.generated.ts`）按副本生成，见下一节第 3 步。
 
 ## 后端改了契约之后
 

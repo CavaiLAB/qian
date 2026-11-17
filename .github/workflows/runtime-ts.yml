@@ -3,6 +3,9 @@ name: runtime-ts
 # - runtime：构建、公共 API、类型测试、单测、浏览器冒烟、可分发包；
 # - tck：与 .NET 运行时共用的一致性用例留在后端仓库。按 backend-copy/manifest.json 记的仓库、路径前缀与提交检出后端，
 #   在检出里构建命令行（profile 装配器），再用本仓库工作区里的运行时跑那套用例（QIAN_TCK_BACKEND_DIR）。
+#   F4 之后，后端检出里的命令行与校验库从 GitHub Packages 装 @cavailab/qian-runtime：tck 作业声明 packages: read，
+#   setup-node 写用户级的包源与认证（pnpm 不展开项目 .npmrc 认证行里的环境变量，见 docs/migrating-from-yue.md 第 2 节），
+#   令牌只给在后端检出里装依赖的那一步。
 on:
   push:
     branches: [main]
@@ -50,11 +53,16 @@ jobs:
     name: 运行时一致性用例（后端 TCK）
     runs-on: ubuntu-latest
     timeout-minutes: 15
+    permissions:
+      contents: read
+      packages: read
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
+          registry-url: https://npm.pkg.github.com
+          scope: '@cavailab'
       - uses: pnpm/action-setup@v4
         with:
           version: 12.9.1
@@ -72,6 +80,8 @@ jobs:
           persist-credentials: false
       - name: 在后端检出里构建命令行
         working-directory: .backend/${{ steps.source.outputs.path-prefix }}
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         run: |
           pnpm install --frozen-lockfile --filter 'qian...'
           pnpm --filter @qian/surfaces build

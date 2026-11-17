@@ -75,6 +75,6 @@ tests/gates/qian/           门禁自测：分层边界、循环依赖样例、�
 
 ## 7 已知限制与延期项
 
-- tokens 的品牌、明暗与语义色验证页已在靶场 `/tokens.html` 建立；Rspress 组件页与站内交互编辑器由 S1-YUE-005 提供，文档站留在后端仓库，在那里执行 `pnpm yue:docs` 验证生成、真实交互、离线编辑及静态构建；sdk / shell / data / form / biz 的组件文案门禁已随 SDK 接入 lint，资源包、示例与测试除外，core 继续由宿主传 label；视觉回归已随 S1-YUE-011 接入 `pnpm qian:visual`，采用固定 Linux 镜像，本机需 Docker。
+- tokens 的品牌、明暗与语义色验证页已在靶场 `/tokens.html` 建立；Rspress 组件页与站内交互编辑器由 S1-YUE-005 提供，文档站留在后端仓库，在那里执行 `pnpm docs:site` 验证生成、真实交互、离线编辑及静态构建；sdk / shell / data / form / biz 的组件文案门禁已随 SDK 接入 lint，资源包、示例与测试除外，core 继续由宿主传 label；视觉回归已随 S1-YUE-011 接入 `pnpm qian:visual`，采用固定 Linux 镜像，本机需 Docker。
 - tokens 已实现三层令牌和首帧主题控制；sdk 已交付类型化客户端、注册表与三语言 i18n；form 已交付 SchemaForm 与统一弹层；data 已交付 S1 基础组件，真实上传 E2E 仍归 S1-FILE-003；shell 已交付页面骨架、菜单/偏好与注入式认证页族（R111）；biz 已交付 S1 基础版业务选择器（S1-YUE-010），角色与权限点目录的服务端归 S1-AZ-005；tokens、contracts、sdk 曾以旧名字于 2026-10-23 私有发布 0.1.0（S1-YUE-001）；新名字从 0.2.0 起发布（F3）。
 - Lighthouse 同时覆盖靶场各页与 `/shell.html` 的真实 AppShell 首屏；认证表单按需懒加载，脚本压缩后 ≤ 250 KiB、a11y = 100 的预算不变（PRD §14）。真实 qian.shell 部署接线由 S1-YUE-001/002 继续验收。
