@@ -78,12 +78,13 @@ node scripts/rename/rename.mjs check
 
 `check` 按类列出剩下的 yue：上面的保护区、不进替换范围的文件、二进制文件（视觉基线 PNG 压缩数据里碰巧出现的字节）、锁文件里的完整性摘要，以及迁移文档里的新旧对照与更名记录。加环境变量 `RENAME_VERBOSE=1` 会列出每一类所在的文件；`inventory` 加它会列出每条规则命中的写法。
 
-F2 手工写进来、本来就要带旧名字的片段另列在 `CHECK_KEEP` 与 `KEEP_PATHS`，只用来归类，不参与 `replace`：
+F2、F3 手工写进来、本来就要带旧名字的片段另列在 `CHECK_KEEP` 与 `KEEP_PATHS`，只用来归类，不参与 `replace`：
 
 | 类 | 内容 |
 |---|---|
 | `guide-path` | 给使用方的迁移说明 `docs/migrating-from-yue.md` 的文件名 |
 | `guide-link` | 指向这份迁移说明的链接 |
+| `first-release-entry` | 各包变更记录（`CHANGELOG.md`）里首发 0.2.0 那一条：新旧名字的逐项对照，含其中指向迁移说明的链接 |
 | `lead-registration` | 契约副本说明（`backend-copy/README.md`）「领先于来源」一节里，来源仍在用的旧键 |
 | `release-assertion` | 打包与消费验证（`scripts/release/`）里断言制品不带旧名字的那两行 |
 
