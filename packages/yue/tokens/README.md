@@ -1,6 +1,6 @@
 # @idadawn/yue-tokens
 
-三层设计令牌（primitive → semantic → component）、明暗两态、状态色与 `Tone` 类型、浏览器主题控制器及首帧初始化脚本。包不依赖其他 yue 包；规格见 [yue §3.5](../../../docs/prd/specs/yue.md#35-令牌命名)，实现任务为 S1-YUE-004 与 S1-YUE-011。
+三层设计令牌（primitive → semantic → component）、明暗两态、状态色与 `Tone` 类型、浏览器主题控制器及首帧初始化脚本。包不依赖其他 yue 包；规格见 [yue §3.5](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/yue.md#35-令牌命名)，实现任务为 S1-YUE-004 与 S1-YUE-011。
 
 ## 令牌与样式
 

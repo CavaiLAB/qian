@@ -1,6 +1,6 @@
 # Qian 前端插件 SDK
 
-逻辑名 `@qian/plugin-sdk`，私有 GitHub Packages 发布名 `@idadawn/qian-plugin-sdk`。目录模型与运行时语义见 [组件规格](../../docs/prd/specs/component-model.md)，任务范围见 [S1-YUE-001](../../pm/tasks/S1-YUE-001.md)。本包提供外壳 Definition 与运行时适配；yue 保持可独立使用，不依赖 Qian。
+逻辑名 `@qian/plugin-sdk`，私有 GitHub Packages 发布名 `@idadawn/qian-plugin-sdk`。目录模型与运行时语义见 [组件规格](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/component-model.md)，任务范围见 [S1-YUE-001](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/pm/tasks/S1-YUE-001.md)。本包提供外壳 Definition 与运行时适配；yue 保持可独立使用，不依赖 Qian。
 
 ## 安装与发布
 
@@ -41,7 +41,7 @@ const menu = host.catalog('qian.shell.nav/v1');
 await host.loadSlot('qian.shell.nav/v1', menu[0]?.descriptor.id);
 ```
 
-官方可运行接线见 [qian.shell](../../apps/qian-shell/README.md)。`engines.yue` 在任何远程请求之前做 SemVer 检查；不满足时写结构化控制台事件，等待审计成功后抛 `ShellError`（`INPUT_INVALID`、`/engines/yue`）。审计失败向调用方传播，不能悄悄降级为只有控制台。错误细节沿冻结 ErrorDetail，错误目录由 `contracts/v0/error-codes.json` 派生并检查新鲜度。
+官方可运行接线见 [qian.shell](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/apps/qian-shell/README.md)。`engines.yue` 在任何远程请求之前做 SemVer 检查；不满足时写结构化控制台事件，等待审计成功后抛 `ShellError`（`INPUT_INVALID`、`/engines/yue`）。审计失败向调用方传播，不能悄悄降级为只有控制台。错误细节沿冻结 ErrorDetail，错误目录由 `contracts/v0/error-codes.json` 派生并检查新鲜度。
 
 远程 `mf-manifest.json`、`remoteEntry.js` 与 `@mf-types.zip / .d.ts` 由官方 Vite 插件生成。宿主采用 MF2 runtime 显式共享工厂；远程的 React、yue、SDK 全部 `import: false`，只能消费宿主 singleton。宿主完整根包按需加载，首次布局用现有 yue 的子路径；没有引入第二套 UI 引擎或裁剪后回落双份共享包。
 

@@ -2,7 +2,7 @@
 
 业务选择器：ApiSelect / `useRemoteOptions`、DictSelect、OrganizeSelect、UserSelect、RoleSelect、菜单 / 按钮授权树（AuthorizationTree）、IconPicker。
 
-- 分层与允许依赖：[yue 专题规格 §3.1](../../../docs/prd/specs/yue.md#31-包结构与依赖方向)；依赖方向由 `packages/yue/boundaries.config.mjs` 与 CI 门禁强制（biz 只依赖 core、data、form、sdk 与底层包，本包实际用到 core、data、sdk）。
+- 分层与允许依赖：[yue 专题规格 §3.1](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/yue.md#31-包结构与依赖方向)；依赖方向由 `packages/yue/boundaries.config.mjs` 与 CI 门禁强制（biz 只依赖 core、data、form、sdk 与底层包，本包实际用到 core、data、sdk）。
 - 实现任务：S1-YUE-010（S1-DEC-024 / R109 自 S1-YUE-009 拆出）。组件文档与交互示例：文档站「组件 → yue 组件库 → 业务选择器」，源在 `docs/index.mdx`。
 
 ## 使用

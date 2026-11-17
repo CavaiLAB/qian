@@ -2,7 +2,7 @@
 
 注册表 API、PlatformClient、请求拦截器链、i18n 与 mock；配置由宿主经构造参数注入。
 
-- 分层与允许依赖：[yue 专题规格 §3.1](../../../docs/prd/specs/yue.md#31-包结构与依赖方向)；依赖方向由 `packages/yue/boundaries.config.mjs` 与 CI 门禁强制。
+- 分层与允许依赖：[yue 专题规格 §3.1](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/yue.md#31-包结构与依赖方向)；依赖方向由 `packages/yue/boundaries.config.mjs` 与 CI 门禁强制。
 - 实现任务：S1-YUE-009（S1-DEC-024 / R109）。
 
 ## 使用

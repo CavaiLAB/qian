@@ -1,6 +1,6 @@
 # Qian TypeScript 运行时
 
-依据 [组件模型 §5](../../docs/prd/specs/component-model.md#5-运行时模型) 与 [S1-RT-003](../../pm/tasks/S1-RT-003.md)。S1-DEC-014 已批准：物理包名 `@idadawn/qian-runtime`，发布到 GitHub Packages 私有源；消费者通过 npm alias 保留公共逻辑导入名 `@qian/runtime`。
+依据 [组件模型 §5](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/component-model.md#5-运行时模型) 与 [S1-RT-003](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/pm/tasks/S1-RT-003.md)。S1-DEC-014 已批准：物理包名 `@idadawn/qian-runtime`，发布到 GitHub Packages 私有源；消费者通过 npm alias 保留公共逻辑导入名 `@qian/runtime`。
 
 ## 私有源安装
 
