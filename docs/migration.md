@@ -422,5 +422,5 @@ F4（S1-YUE-025），2026-11-18 在后端仓库完成：`CavaiLAB/kun#23` 以合
 | 换包 | 留在后端的外壳、外壳接线、三个界面包、参考应用的远程模块与文档站，按后端版本目录钉的 `@cavailab/qian-*` 0.2.1 消费。装包的作业声明 `packages: read`，由 `setup-node` 的 `registry-url` 写用户级认证（见[迁移说明](migrating-from-yue.md)第 2 节） |
 | 版本键 | 界面清单 Schema 只认 `engines.qian`；插件清单 Schema 只留 `kun`、`qian`；后端命令行的 `kun` 看 Kun.Core 的版本，`qian` 看 `@cavailab/qian-core` 的版本 |
 | 文档站 | 组件文档从本仓库的标签 `@cavailab/qian-core@<版本>` 检出生成。后端的根脚本改名为 `docs:site`、`shell:auth`、`shell:federation`、`ui:*`。路由 `/components/yue/…`、`/design/prd/specs/yue` 与页面的 `project: yue` 留到 F5 |
-| 本仓库的跟进 | 契约副本的来源由 `f96cdfe5c0` 升到 `71cbd5b4fb`：副本内容不变，界面清单 Schema 与一致性用例的领先登记去掉，5 份副本都与来源逐字节相同。后端的命令行与校验库改为从包源取运行时，所以运行时一致性用例的作业在后端检出里装依赖时要读 GitHub Packages，作业补上 `packages: read` 与用户级认证。包内说明里后端脚本的旧名 `yue:docs` 改为 `docs:site` |
+| 本仓库的跟进 | 契约副本的来源由 `f96cdfe5c0` 升到 `71cbd5b4fb`：副本内容不变，界面清单 Schema 与一致性用例的领先登记去掉，5 份副本都与来源逐字节相同。后端的命令行与校验库改为从包源取运行时，所以运行时一致性用例的作业在后端检出里装依赖时要读 GitHub Packages，作业补上 `packages: read` 与用户级认证。包内说明里后端脚本的旧名换成新名（`yue:docs` → `docs:site`、`yue:auth` → `shell:auth`）；外壳包说明里指后端外壳、外壳接线、认证页族与联调工具的链接，由归档的 `idadawn/qian` 改指后端仓库的 F4 合并提交 |
 | 还没做 | 部署环境的外壳与远程模块重建、重新部署，要产品负责人另外点头 |
