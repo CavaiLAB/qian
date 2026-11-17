@@ -1,7 +1,7 @@
 import { readFileSync, writeFileSync } from 'node:fs';
 import { createRequire } from 'node:module';
 
-// 两份派生物，都由 schemas/v2/ui.schema.json 生成、禁止手改，--check 只比对不写：
+// 两份派生物，都由 schemas/v2/ui.schema.json（本仓库读 backend-copy/ 里的后端契约副本）生成、禁止手改，--check 只比对不写：
 // 1. src/ui-schema.generated.ts：Schema 的 TS 副本（slotContracts 与工具索引用）；
 // 2. src/ui-validators.generated.ts：Ajv standalone 预编译的清单校验器与贡献校验器（S1-YUE-012）。浏览器运行时不再携带 Ajv 编译器、
 //    不在运行期生成代码（外壳首屏预算与 CSP）；Ajv 的两个运行时辅助函数内联，不依赖 ajv 的内部路径。
@@ -10,7 +10,7 @@ import { createRequire } from 'node:module';
 const require = createRequire(import.meta.url);
 const { Ajv2020 } = require('ajv/dist/2020.js');
 const standaloneCode = require('ajv/dist/standalone').default;
-const schema = JSON.parse(readFileSync(new URL('../../../schemas/v2/ui.schema.json', import.meta.url), 'utf8'));
+const schema = JSON.parse(readFileSync(new URL('../../../backend-copy/schemas/v2/ui.schema.json', import.meta.url), 'utf8'));
 
 const schemaTarget = new URL('../src/ui-schema.generated.ts', import.meta.url);
 const schemaContent = '// 由 schemas/v2/ui.schema.json 派生；禁止手改。运行 scripts/ui-schema.mjs。\nexport const uiSchema = ' + JSON.stringify(schema, null, 2) + ' as const;\n';

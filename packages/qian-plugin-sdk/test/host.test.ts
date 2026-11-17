@@ -146,7 +146,7 @@ describe('桥接身份、scope、权限与客户端动作', () => {
     expect(t.requests[0]!.headers.get('Idempotency-Key')).toBe(key); expect(t.requests[0]!.headers.get('X-Tenant-Id')).toBe('a'); await t.host.dispose();
   });
   it('实际冻结写能力 inputSchema 接受自动幂等键，header/body 唯一一致且冲突不发请求', async () => {
-    const fixture = JSON.parse(readFileSync(new URL('../../../contracts/v0/fixtures/capability-entry.valid.json', import.meta.url), 'utf8'))[0].data;
+    const fixture = JSON.parse(readFileSync(new URL('../../../backend-copy/contracts/v0/fixtures/capability-entry.valid.json', import.meta.url), 'utf8'))[0].data;
     const ajv = new Ajv2020(); ajv.addFormat('uuid', /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i);
     const validate = ajv.compile(fixture.inputSchema);
     const t = await setup(); t.context.membership!.permissions.push(fixture.requiredPermission);

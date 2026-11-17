@@ -4,11 +4,11 @@ import { SLOT_IDS, validateManifest } from '../src/index';
 import { uiSchema } from '../src/ui-schema.generated';
 
 interface UiCase { name: string; uiFile?: string; uiRuntimeValid?: boolean; files: Record<string, string> }
-const vectors = JSON.parse(readFileSync(new URL('../../../tck/surfaces/cases.json', import.meta.url), 'utf8')) as UiCase[];
+const vectors = JSON.parse(readFileSync(new URL('../../../backend-copy/tck/surfaces/cases.json', import.meta.url), 'utf8')) as UiCase[];
 
 describe('同源 ui/v2 与运行态支持边界', () => {
   it('生成副本、插槽词表与公共真相源一致', () => {
-    expect(uiSchema).toEqual(JSON.parse(readFileSync(new URL('../../../schemas/v2/ui.schema.json', import.meta.url), 'utf8')));
+    expect(uiSchema).toEqual(JSON.parse(readFileSync(new URL('../../../backend-copy/schemas/v2/ui.schema.json', import.meta.url), 'utf8')));
     expect(uiSchema.$defs.slotId.enum).toEqual(SLOT_IDS);
   });
   for (const vector of vectors.filter((item) => item.uiFile)) {
