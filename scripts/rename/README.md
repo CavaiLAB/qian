@@ -41,7 +41,7 @@ F2「更名」（任务 S1-YUE-022）用的脚本：把前端框架由 yue 更�
 | `pinned-url` | 指向 `idadawn/qian` 固定提交的完整地址（F1 改写的链接），路径是源仓库在那个提交的路径 |
 | `backend-path` | 正文里提到的后端仓库文件与文档站路由：`docs/prd/specs/yue.md`、`docs/adr/ADR-013-frontend-yue.md`、`/design/prd/specs/yue`、`/components/yue/` |
 | `qian-dev-url` | `https://qian.dev/…` 运行期字面（组件清单 Schema 的 `$id`） |
-| `backend-script` | 后端仓库的根脚本 `yue:docs`、`yue:auth` |
+| `backend-script` | 后端仓库根脚本的原名 `yue:docs`、`yue:auth`（F4 已改名为 `docs:site`、`shell:auth`） |
 
 保护区按表里的顺序挪开，可以嵌套：任务号先换成占位符，固定提交的地址再把带着这个占位符的整段挪开。放回时一层层放，直到一个占位符也不剩；计数与 `check` 都把嵌套的片段算在最外层名下。
 

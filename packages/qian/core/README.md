@@ -84,7 +84,7 @@ Select 的触发器通过 `SelectTrigger` 的 `aria-label` 或关联标签命名
 ```bash
 # 在后端仓库
 KUN_DOCS_PATH=/本机/kun pnpm --filter website dev
-KUN_DOCS_PATH=/本机/kun pnpm yue:docs
+KUN_DOCS_PATH=/本机/kun pnpm docs:site
 # 在本仓库
 pnpm qian:gates
 ```

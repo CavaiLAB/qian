@@ -8,7 +8,7 @@
 
 现在代码里的名字：包名 `@cavailab/qian-<名>`、目录 `packages/qian/`、`apps/qian-playground`、`tests/gates/qian`，样式变量 `--qian-*`，测试标识的默认前缀 `qian-`，根脚本 `qian:*`。前端插件开发包与 TypeScript 运行时是 `@cavailab/qian-plugin-sdk`、`@cavailab/qian-runtime`，也以 `@cavailab/qian-` 开头，所以要指 8 个层包时逐个写名字或写 `packages/qian/*`，不要用 `@cavailab/qian-*` 通配（固定版本组与分层规则都是这样写的）。新旧名字的对照见[迁移说明](docs/migrating-from-yue.md)。
 
-旧名字只留在这几类地方：任务号 `S1-YUE-*` 与提交历史，指向原仓库固定提交的地址，后端仓库里的文件、文档站路由与根脚本（如 `yue:docs`），契约副本与它的领先登记，导入脚本，以及迁移文档里的新旧对照。`node scripts/rename/rename.mjs check` 把剩下的每一处归类，有归不了类的就失败。
+旧名字只留在这几类地方：任务号 `S1-YUE-*` 与提交历史，指向原仓库固定提交的地址，后端仓库里的文件与文档站路由（如 `/components/yue/`，收尾时改），契约副本说明里记下的上一次领先，导入脚本，以及迁移文档里的新旧对照。`node scripts/rename/rename.mjs check` 把剩下的每一处归类，有归不了类的就失败。
 
 ## 代码在哪里
 

@@ -59,7 +59,7 @@ export const PROTECT = [
   { id: 'pinned-url', why: '指向 idadawn/qian 固定提交的完整地址：路径是源仓库在那个提交的路径', re: /https:\/\/github\.com\/idadawn\/qian\/(?:blob|tree|commit)\/[0-9a-f]{40}[^\s)\]>"'`）】，。；、]*/g },
   { id: 'backend-path', why: '后端仓库里的文件与文档站路由（纯文字引用）：文件在后端，名字没变', re: /docs\/prd\/specs\/yue\.md|docs\/adr\/ADR-013-frontend-yue\.md|\/design\/prd\/specs\/yue(?![\w-])|\/components\/yue\//g },
   { id: 'qian-dev-url', why: 'https://qian.dev/… 是保留下来的运行期字面（组件清单 Schema 的 $id），不改', re: /https:\/\/qian\.dev\/yue\/[\w./-]*/g },
-  { id: 'backend-script', why: '后端仓库的根脚本 yue:docs、yue:auth（文档站与外壳认证的门禁留在后端，F1 已从本仓库去掉），名字随后端', re: /(?<![\w-])yue:(?:docs|auth|mf)(?![\w-])/g },
+  { id: 'backend-script', why: '后端仓库根脚本的原名 yue:docs、yue:auth（文档站与外壳认证的门禁留在后端，F1 已从本仓库去掉；F4 已改名为 docs:site、shell:auth），只在迁移记录与本工具里出现', re: /(?<![\w-])yue:(?:docs|auth|mf)(?![\w-])/g },
 ];
 
 // 映射表：按顺序逐条应用在整段文本上，每条都按词法边界匹配（前后不能紧挨着标识符字符）。
