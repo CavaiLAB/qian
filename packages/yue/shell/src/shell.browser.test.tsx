@@ -1,0 +1,277 @@
+import { cleanup, fireEvent, render, screen, waitFor } from '@testing-library/react';
+import { page, userEvent } from 'vitest/browser';
+import axe from 'axe-core';
+import { afterEach, expect, it, vi } from 'vitest';
+import { useState } from 'react';
+import { AppShell, Authentication, AuthLayout, ColPage, FallbackPage, InboxPopover, initPreferences, LeftTree, LocaleMenu, OfflineBanner, Page, PageHeader, PasswordLogin, PlainLayout, PreferenceControls, PreferencesProvider, SessionExpiredDialog, ShellErrorBoundary, SsoCallback, TenantSelection, TenantSwitcher, UpdateBanner, WorkspaceCard } from './index';
+import { makeI18n, makeProvider, session } from './test/fixture';
+afterEach(() => { cleanup(); vi.restoreAllMocks(); });
+// Base UI 浮层的 Tab 哨兵（aria-hidden 且可聚焦，立即转移焦点）与靶场 a11y 门禁一样排除，aria-hidden-focus 规则本身保留。
+async function accessible() {
+  await waitFor(() => expect(document.querySelector('[data-starting-style], [data-ending-style]')).toBeNull());
+  // 与 core/data 的 axe 门一致：开场属性移除后，opacity 过渡才开始，需等待真实动画结束。
+  let stableFrames = 0;
+  while (stableFrames < 2) {
+    await new Promise<void>(resolve => requestAnimationFrame(() => resolve()));
+    const finite = document.getAnimations().filter(animation => animation.playState !== 'finished' && Number.isFinite(Number(animation.effect?.getComputedTiming().endTime)));
+    if (finite.length) { await Promise.all(finite.map(animation => animation.finished.catch(() => {}))); stableFrames = 0; }
+    else stableFrames++;
+  }
+  const result = await axe.run({ include: [document.body], exclude: ['[data-base-ui-focus-guard]'] });
+  expect(result.violations.filter(value => ['critical', 'serious'].includes(value.impact ?? ''))).toEqual([]);
+}
+
+it('用户菜单清理开场属性后仍等待真实 opacity 过渡结束再运行 axe', async () => {
+  const store = initPreferences({ namespace: 'menu-timing', storage: null });
+  render(<PreferencesProvider store={store}><AppShell i18n={makeI18n()} brand="Qian" menu={[]} managed userName="用户" onSignOut={vi.fn()}>内容</AppShell></PreferencesProvider>);
+  const paused: Animation[] = [];
+  const observer = new MutationObserver(records => {
+    for (const { target } of records) {
+      if (!(target instanceof HTMLElement) || !target.matches('[data-slot="menu-content"]') || target.hasAttribute('data-starting-style')) continue;
+      for (const animation of target.getAnimations({ subtree: true })) {
+        const end = Number(animation.effect?.getComputedTiming().endTime);
+        if (animation.playState !== 'running' || !Number.isFinite(end) || end <= 0) continue;
+        animation.pause(); animation.currentTime = end * 0.4; paused.push(animation);
+      }
+    }
+  });
+  observer.observe(document.body, { subtree: true, attributes: true, attributeFilter: ['data-starting-style'] });
+  let pending: Promise<void> | undefined;
+  try {
+    await userEvent.click(screen.getByRole('button', { name: '用户菜单' }));
+    await waitFor(() => expect(paused.length).toBeGreaterThan(0));
+    observer.disconnect();
+    const menu = screen.getByRole('menu');
+    expect(menu.hasAttribute('data-starting-style')).toBe(false);
+    expect(Number(getComputedStyle(menu).opacity)).toBeGreaterThan(0);
+    expect(Number(getComputedStyle(menu).opacity)).toBeLessThan(1);
+    const run = vi.spyOn(axe, 'run');
+    pending = accessible();
+    // 暂停真实动画而不改 CSS；属性已消失，但稳定打开态的验收仍必须等待。
+    await new Promise<void>(resolve => requestAnimationFrame(() => requestAnimationFrame(() => resolve())));
+    expect(run).not.toHaveBeenCalled();
+    for (const animation of paused) animation.play();
+    await pending;
+    expect(getComputedStyle(menu).opacity).toBe('1');
+    expect(run).toHaveBeenCalledOnce();
+  } finally {
+    observer.disconnect();
+    for (const animation of paused) animation.play();
+    await pending?.catch(() => {});
+  }
+});
+
+it('密码表单：必填焦点、密码掩码与一次提交，提交后清空密码', async () => {
+  const provider = makeProvider(); const authenticated = vi.fn();
+  render(<Authentication i18n={makeI18n()} provider={provider} onAuthenticated={authenticated} onRedirect={vi.fn()} />); await screen.findByLabelText(/账号/);
+  await userEvent.click(screen.getByRole('button', { name: '登录' }));
+  expect(document.activeElement).toBe(screen.getByLabelText(/账号/));
+  await userEvent.fill(screen.getByLabelText(/账号/), 'demo'); await userEvent.fill(screen.getByLabelText('密码'), 'secret');
+  expect(screen.getByLabelText('密码').getAttribute('type')).toBe('password');
+  await accessible(); await userEvent.click(screen.getByRole('button', { name: '登录' }));
+  await waitFor(() => expect(authenticated).toHaveBeenCalledWith(session));
+  expect(provider.signIn).toHaveBeenCalledTimes(1); expect(provider.signIn).toHaveBeenCalledWith({ username: 'demo', password: 'secret' }, expect.any(AbortSignal));
+  expect((screen.getByLabelText('密码') as HTMLInputElement).value).toBe('');
+});
+it('密码失败不输出异常细节；多租户二次选择可键盘完成', async () => {
+  const provider = makeProvider(); vi.mocked(provider.signIn).mockRejectedValueOnce(new Error('internal-secret')).mockResolvedValue({ kind: 'select-tenant', tenants: session.tenants });
+  const complete = vi.fn(); render(<Authentication i18n={makeI18n()} provider={provider} onAuthenticated={complete} onRedirect={vi.fn()} />); await screen.findByLabelText(/账号/);
+  await userEvent.fill(screen.getByLabelText(/账号/), 'demo'); await userEvent.fill(screen.getByLabelText('密码'), 'bad'); await userEvent.click(screen.getByRole('button', { name: '登录' }));
+  await screen.findByRole('alert'); expect(document.body.textContent).not.toContain('internal-secret');
+  await userEvent.fill(screen.getByLabelText('密码'), 'good'); await userEvent.click(screen.getByRole('button', { name: '登录' }));
+  const tenant = await screen.findByRole('button', { name: '租户 B' }); tenant.focus(); await userEvent.keyboard('{Enter}');
+  await waitFor(() => expect(complete).toHaveBeenCalledWith({ ...session, tenantId: 'b' }));
+  await accessible();
+});
+it('SSO 回调成功、错误与卸载竞态', async () => {
+  const provider = makeProvider(); const result = vi.fn(); const back = vi.fn();
+  const view = render(<SsoCallback i18n={makeI18n()} provider={provider} callback={{ code: 'code', state: 'state' }} onResult={result} onBack={back} />);
+  await waitFor(() => expect(result).toHaveBeenCalledWith({ kind: 'authenticated', session })); view.unmount();
+  render(<SsoCallback i18n={makeI18n()} provider={provider} callback={{ error: 'access_denied' }} onResult={result} onBack={back} />);
+  await screen.findByRole('alert'); await accessible(); await userEvent.click(screen.getByRole('button', { name: '返回登录' })); expect(back).toHaveBeenCalledOnce();
+  cleanup(); let resolve!: (value: { kind: 'authenticated'; session: typeof session }) => void;
+  vi.mocked(provider.completeSso!).mockImplementation(() => new Promise(done => { resolve = done; })); result.mockClear();
+  const pending = render(<SsoCallback i18n={makeI18n()} provider={provider} callback={{ code: 'later', state: 'state' }} onResult={result} onBack={back} />);
+  pending.unmount(); resolve({ kind: 'authenticated', session }); await Promise.resolve(); expect(result).not.toHaveBeenCalled();
+});
+it.each(['/auth?access_token=secret', '/auth#/callback?access_token=secret'])('SSO 跳转经注入回调且拒绝令牌 URL %s', async unsafe => {
+  const provider = makeProvider(); const redirect = vi.fn();
+  vi.mocked(provider.beginSso!).mockResolvedValueOnce(unsafe);
+  render(<Authentication i18n={makeI18n()} provider={provider} onAuthenticated={vi.fn()} onRedirect={redirect} />); await screen.findByLabelText(/账号/);
+  await userEvent.click(screen.getByRole('button', { name: '单点登录' })); await screen.findByRole('alert'); expect(redirect).not.toHaveBeenCalled();
+  vi.mocked(provider.beginSso!).mockResolvedValue('/auth?code=c&state=s'); await userEvent.click(screen.getByRole('button', { name: '单点登录' }));
+  await waitFor(() => expect(redirect).toHaveBeenCalledWith('/auth?code=c&state=s'));
+});
+it('租户切换失败保留当前值，成功更新会话且打开态无障碍通过', async () => {
+  const provider = makeProvider(); vi.mocked(provider.switchTenant).mockRejectedValueOnce(new Error('unavailable'));
+  function Host() { const [current, setCurrent] = useState(session); return <TenantSwitcher i18n={makeI18n()} provider={provider} session={current} onChanged={setCurrent} />; }
+  render(<Host />); await userEvent.click(screen.getByRole('combobox')); await accessible(); await userEvent.click(screen.getByRole('option', { name: '租户 B' }));
+  await screen.findByRole('alert'); expect(screen.getByRole('combobox').textContent).toContain('租户 A');
+  await userEvent.click(screen.getByRole('combobox')); await userEvent.click(screen.getByRole('option', { name: '租户 B' }));
+  await waitFor(() => expect(screen.getByRole('combobox').textContent).toContain('租户 B'));
+});
+it('过期弹窗只能明确重新登录，键盘可达且有名称和说明', async () => {
+  const signIn = vi.fn(); render(<SessionExpiredDialog open i18n={makeI18n()} onSignIn={signIn} />);
+  await screen.findByRole('alertdialog', { name: '登录已过期' }); await accessible();
+  await userEvent.keyboard('{Escape}'); expect(screen.getByRole('alertdialog')).toBeTruthy();
+  await userEvent.click(screen.getByRole('button', { name: '重新登录' })); expect(signIn).toHaveBeenCalledOnce();
+});
+it('AppShell 单侧栏、页面族、导航、偏好和用户菜单通过键盘与 axe', async () => {
+  const store = initPreferences({ namespace: 'test', storage: null }); const i18n = makeI18n(); const navigate = vi.fn(); const signOut = vi.fn();
+  render(<PreferencesProvider store={store}><AppShell i18n={i18n} brand="Qian" activePath="/" menu={[{ id: 'home', labelKey: 'test.home', type: 'page', target: '/' }, { id: 'docs', labelKey: 'test.docs', type: 'external', target: 'https://example.test' }]} onNavigate={navigate} onSignOut={signOut} userName="用户" managed toolbar={<PreferenceControls i18n={i18n} />}><Page header={<PageHeader title="页面标题" />}><ColPage aside={<LeftTree label="目录">资源</LeftTree>}>内容</ColPage></Page></AppShell></PreferencesProvider>);
+  expect(screen.getByRole('link', { name: '工作台' }).getAttribute('aria-current')).toBe('page');
+  await userEvent.click(screen.getByRole('link', { name: '工作台' })); expect(navigate).toHaveBeenCalledWith('/');
+  expect(screen.getByRole('link', { name: '文档' }).getAttribute('rel')).toContain('noopener');
+  await userEvent.click(screen.getByRole('button', { name: '收起侧栏' })); expect(store.getSnapshot().sidebarCollapsed).toBe(true);
+  expect(screen.getByRole('button', { name: '展开侧栏' }).getAttribute('aria-expanded')).toBe('false');
+  await userEvent.click(screen.getByRole('button', { name: '主题' })); await accessible(); expect(screen.getByRole('menuitemradio', { name: '跟随系统' }).getAttribute('aria-checked')).toBe('true'); await userEvent.click(screen.getByRole('menuitemradio', { name: '暗色' })); expect(store.getSnapshot().theme).toBe('dark');
+  await userEvent.click(screen.getByRole('button', { name: '用户菜单' })); await accessible(); await userEvent.click(screen.getByRole('menuitem', { name: '退出登录' })); expect(signOut).toHaveBeenCalledOnce();
+});
+it.each([403, 404, 500, 'offline'] as const)('兜底 %s 有标题、可操作出口并通过 axe', async status => {
+  const retry = vi.fn(); render(<FallbackPage status={status} i18n={makeI18n()} onRetry={retry} onHome={vi.fn()} />); expect(screen.getByRole('heading', { level: 1 })).toBeTruthy(); await accessible(); await userEvent.click(screen.getByRole('button', { name: '重试' })); expect(retry).toHaveBeenCalledOnce();
+});
+it('离线事件、更新提示和错误边界均有可观察恢复路径', async () => {
+  const i18n = makeI18n(); const reload = vi.fn();
+  const online = vi.spyOn(navigator, 'onLine', 'get').mockReturnValue(false);
+  render(<><OfflineBanner i18n={i18n} /><UpdateBanner i18n={i18n} available onReload={reload} /></>);
+  expect(screen.getByText('网络连接已断开')).toBeTruthy(); await userEvent.click(screen.getByRole('button', { name: '刷新页面' })); expect(reload).toHaveBeenCalledOnce();
+  online.mockReturnValue(true); fireEvent(window, new Event('online')); await waitFor(() => expect(screen.queryByText('网络连接已断开')).toBeNull());
+  cleanup(); vi.spyOn(console, 'error').mockImplementation(() => {});
+  function Broken(): never { throw new Error('private-stack'); }
+  function Host() { const [broken, setBroken] = useState(true); return <ShellErrorBoundary i18n={i18n} resetKey={broken} onReset={() => setBroken(false)}>{broken ? <Broken /> : <p>恢复成功</p>}</ShellErrorBoundary>; }
+  render(<Host />); expect(document.body.textContent).not.toContain('private-stack'); await accessible(); await userEvent.click(screen.getByRole('button', { name: '重试' })); await screen.findByText('恢复成功');
+});
+
+it('同一认证实例收到新 callback 时处理新回调，不被已消费状态吞掉', async () => {
+  const i18n = makeI18n(); const provider = makeProvider(); const complete = vi.fn();
+  vi.mocked(provider.completeSso!).mockResolvedValueOnce({ kind: 'select-tenant', tenants: session.tenants }).mockResolvedValue({ kind: 'authenticated', session });
+  const view = render(<Authentication i18n={i18n} provider={provider} callback={{ code: 'first', state: 'one' }} onAuthenticated={complete} onRedirect={vi.fn()} />);
+  await screen.findByRole('heading', { name: '选择要进入的工作空间' });
+  view.rerender(<Authentication i18n={i18n} provider={provider} callback={{ code: 'second', state: 'two' }} onAuthenticated={complete} onRedirect={vi.fn()} />);
+  await waitFor(() => expect(complete).toHaveBeenCalledWith(session));
+  expect(provider.completeSso).toHaveBeenNthCalledWith(2, { code: 'second', state: 'two' }, expect.any(AbortSignal));
+});
+
+it('强制改密：两次输入不一致只提示不提交；一致后经 provider 改密并继续同一登录流程，密码字段清空', async () => {
+  const provider = makeProvider(); const authenticated = vi.fn();
+  vi.mocked(provider.signIn).mockResolvedValue({ kind: 'change-password' });
+  const changePassword = vi.fn(async () => ({ kind: 'authenticated' as const, session }));
+  render(<Authentication i18n={makeI18n()} provider={{ ...provider, changePassword }} onAuthenticated={authenticated} onRedirect={vi.fn()} />); await screen.findByLabelText(/账号/);
+  await userEvent.fill(screen.getByLabelText(/账号/), 'demo'); await userEvent.fill(screen.getByLabelText('密码'), 'initial'); await userEvent.click(screen.getByRole('button', { name: '登录' }));
+  await screen.findByRole('heading', { name: '设置新密码' }); await accessible();
+  await userEvent.fill(screen.getByLabelText(/^新密码/), 'Longer-Pass-9'); await userEvent.fill(screen.getByLabelText(/确认新密码/), 'Different-1');
+  await userEvent.click(screen.getByRole('button', { name: '设置新密码' }));
+  await screen.findByRole('alert'); expect(changePassword).not.toHaveBeenCalled();
+  expect((screen.getByLabelText(/^新密码/) as HTMLInputElement).value).toBe('');
+  await userEvent.fill(screen.getByLabelText(/^新密码/), 'Longer-Pass-9'); await userEvent.fill(screen.getByLabelText(/确认新密码/), 'Longer-Pass-9');
+  await userEvent.click(screen.getByRole('button', { name: '设置新密码' }));
+  await waitFor(() => expect(authenticated).toHaveBeenCalledWith(session));
+  expect(changePassword).toHaveBeenCalledWith('Longer-Pass-9', expect.any(AbortSignal));
+  expect(document.body.textContent).not.toContain('Longer-Pass-9');
+});
+it('没有 changePassword 的 provider 收到改密要求时按登录失败提示', async () => {
+  const provider = makeProvider(); vi.mocked(provider.signIn).mockResolvedValue({ kind: 'change-password' });
+  render(<Authentication i18n={makeI18n()} provider={provider} onAuthenticated={vi.fn()} onRedirect={vi.fn()} />); await screen.findByLabelText(/账号/);
+  await userEvent.fill(screen.getByLabelText(/账号/), 'demo'); await userEvent.fill(screen.getByLabelText('密码'), 'initial'); await userEvent.click(screen.getByRole('button', { name: '登录' }));
+  await screen.findByRole('alert'); expect(screen.queryByRole('heading', { name: '设置新密码' })).toBeNull();
+});
+it('站内信弹窗：未读角标、空态与消息条目键盘可达，axe 通过', async () => {
+  const open = vi.fn(); const i18n = makeI18n();
+  const view = render(<InboxPopover i18n={i18n} messages={[{ id: '1', title: '审批提醒', body: '有 1 条待办', time: '09:00', unread: true }, { id: '2', title: '系统公告' }]} onOpen={open} />);
+  expect(screen.getByTestId('yue-inbox-unread').textContent).toBe('1');
+  await userEvent.click(screen.getByRole('button', { name: /站内信/ })); await screen.findByText('审批提醒'); await accessible();
+  await userEvent.click(screen.getByRole('button', { name: /审批提醒/ })); expect(open).toHaveBeenCalledWith(expect.objectContaining({ id: '1' }));
+  view.unmount(); render(<InboxPopover i18n={i18n} messages={[]} />);
+  expect(screen.queryByTestId('yue-inbox-unread')).toBeNull();
+  await userEvent.click(screen.getByRole('button', { name: '站内信' })); await screen.findByText('暂无消息');
+});
+
+it('认证页布局：登录（深色品牌面、语言标签按钮、记住账号与其他登录方式）与申请表单布局通过 axe，语言切换写入偏好', async () => {
+  const store = initPreferences({ namespace: 'test-auth-layout', storage: null }); const i18n = makeI18n();
+  const view = render(<PreferencesProvider store={store}><AuthLayout brand="Qian 乾" headline="为 Agent 时代准备的多租户平台" description="一个账号可以加入多家企业。" footer={<span>© 2026 Qian</span>}
+    toolbar={<PreferenceControls i18n={i18n} localeStyle="label" />} legal="登录即表示你同意服务条款。">
+    <PasswordLogin i18n={i18n} onSubmit={vi.fn(async () => {})} rememberKey="yue.test.remember" forgotHref="#forgot" alternatives={<button type="button">单点登录</button>} footer={<p>还没有企业账号？</p>} />
+  </AuthLayout></PreferencesProvider>);
+  expect(screen.getByTestId('yue-auth-layout').getAttribute('data-variant')).toBe('sign-in');
+  expect(screen.getByRole('heading', { level: 1, name: '登录' })).toBeTruthy();
+  expect(screen.getByRole('heading', { level: 2, name: '为 Agent 时代准备的多租户平台' })).toBeTruthy();
+  expect(screen.getByRole('link', { name: '忘记密码？' }).getAttribute('href')).toBe('#forgot');
+  expect(screen.getByText('其他登录方式')).toBeTruthy();
+  await accessible();
+  // 语言标签按钮：可见文字是当前语言名，读屏名称以「语言」开头（可见文字包含在名称里）。
+  const locale = screen.getByTestId('yue-preference-controls-locale');
+  expect(locale.textContent).toContain('简体中文');
+  expect(locale.textContent).toContain('语言');
+  await userEvent.click(locale); await accessible();
+  await userEvent.click(screen.getByRole('menuitemradio', { name: 'English' }));
+  expect(store.getSnapshot().locale).toBe('en-US');
+  view.unmount();
+  render(<PreferencesProvider store={store}><AuthLayout variant="form" brand="Qian 乾" brandHref="#login" headline="申请开通企业" aside={<ol><li>验证手机号</li><li>填写企业信息</li></ol>} toolbar={<a href="#login">已有账号？登录</a>}>
+    <section aria-label="申请表单"><p>表单内容</p></section>
+  </AuthLayout></PreferencesProvider>);
+  expect(screen.getByTestId('yue-auth-layout').getAttribute('data-variant')).toBe('form');
+  expect(screen.getByRole('link', { name: 'Qian 乾' }).getAttribute('href')).toBe('#login');
+  await accessible();
+});
+
+it('认证页与外壳的几何：登录版标题在侧栏中部、不压住装饰条（传不传 footer 都一样），分隔线到单点登录 24px，外壳顶栏 56px', async () => {
+  await page.viewport(1440, 900);
+  try {
+    const store = initPreferences({ namespace: 'test-auth-geometry', storage: null }); const i18n = makeI18n();
+    const box = (selector: string) => document.querySelector(selector)!.getBoundingClientRect();
+    for (const footer of [undefined, <span key="footer">© 2026 Qian</span>]) {
+      const view = render(<PreferencesProvider store={store}><AuthLayout brand="Qian 乾" headline="为 Agent 时代准备的多租户平台" description="一个账号可以加入多家企业。" footer={footer}>
+        <PasswordLogin i18n={i18n} onSubmit={vi.fn(async () => {})} onSso={vi.fn()} />
+      </AuthLayout></PreferencesProvider>);
+      const aside = box('[data-slot="auth-layout-aside"]'), headline = box('[data-slot="auth-layout-headline"]'), decoration = box('[data-slot="auth-layout-decoration"]');
+      expect(headline.bottom).toBeLessThanOrEqual(decoration.top);
+      expect(Math.abs((headline.top + headline.bottom) / 2 - (aside.top + aside.bottom) / 2)).toBeLessThan(60);
+      const divider = box('[data-slot="password-login-alternatives"] > :first-child');
+      expect(screen.getByTestId('yue-password-login-sso').getBoundingClientRect().top - divider.bottom).toBeCloseTo(24, 0);
+      view.unmount();
+    }
+    render(<PreferencesProvider store={store}><AppShell i18n={i18n} brand="Qian" menu={[]} managed userName="用户" breadcrumb={<span>首页</span>} toolbar={<PreferenceControls i18n={i18n} locale={false} />}>内容</AppShell></PreferencesProvider>);
+    expect(box('[data-slot="shell-toolbar"]').height).toBe(56);
+  } finally { await page.viewport(414, 896); }
+});
+
+it('选择工作空间：简单布局里平台控制台与企业各是一张卡片，隐藏「返回登录」时仍有申请入口，键盘可选并通过 axe', async () => {
+  const select = vi.fn(); const i18n = makeI18n();
+  render(<PlainLayout brand="Qian 乾" account={<span>李雷</span>}><TenantSelection i18n={i18n} onSelect={select} onBack={vi.fn()} applyHref="#apply" hideBack
+    tenants={[{ id: 'platform', name: 'platform', platform: true }, { id: 't1', name: '星河科技', code: 'xinghe', admin: true }, { id: 't2', name: '云帆物流', code: 'yunfan' }]} /></PlainLayout>);
+  expect(screen.getByRole('heading', { level: 1, name: '选择要进入的工作空间' })).toBeTruthy();
+  expect(screen.queryByTestId('yue-tenant-selection-back')).toBeNull();
+  expect(screen.getByTestId('yue-tenant-selection-apply').getAttribute('href')).toBe('#apply');
+  const company = screen.getByRole('button', { name: '星河科技' });
+  expect(company.getAttribute('aria-describedby')).toBeTruthy();
+  await accessible();
+  company.focus(); await userEvent.keyboard('{Enter}');
+  expect(select).toHaveBeenCalledWith('t1');
+  await userEvent.click(screen.getByRole('button', { name: '平台控制台' }));
+  expect(select).toHaveBeenLastCalledWith('platform');
+});
+
+it('AppShell 工作空间卡片、导航分组与角标、账号菜单里的语言子菜单：键盘与 axe 通过', async () => {
+  const store = initPreferences({ namespace: 'test-workspace', storage: null }); const i18n = makeI18n(); const switched = vi.fn();
+  render(<PreferencesProvider store={store}><AppShell i18n={i18n} brand="Qian 乾" activePath="/applications" userName="王敏" userDescription="平台运营" onSignOut={vi.fn()}
+    menu={[{ id: 'home', labelKey: 'test.home', type: 'page', target: '/', icon: 'home' }, { id: 'tenants', labelKey: 'tenants', label: '租户管理', type: 'page', target: '/tenants', icon: 'building', group: '租户' },
+      { id: 'applications', labelKey: 'applications', label: '开通申请', type: 'page', target: '/applications', icon: 'clipboardCheck', group: '租户', badge: 3 }]}
+    workspace={<WorkspaceCard title="平台控制台" description="平台运营" label="切换工作空间" tile={<span className="inline-flex size-8 rounded-md bg-primary" />} onClick={switched} />}
+    breadcrumb={<span>开通申请</span>} toolbar={<PreferenceControls i18n={i18n} locale={false} />} userMenu={<LocaleMenu i18n={i18n} />}>内容</AppShell></PreferencesProvider>);
+  expect(screen.getByRole('group', { name: '租户' })).toBeTruthy();
+  expect(screen.getByRole('link', { name: /开通申请/ }).getAttribute('aria-current')).toBe('page');
+  expect(screen.getByRole('link', { name: '工作台' }).getAttribute('aria-current')).toBeNull();
+  expect(screen.getByTestId('yue-app-shell-menu-badge').textContent).toBe('3');
+  expect(screen.queryByRole('button', { name: '语言' })).toBeNull();
+  await accessible();
+  await userEvent.click(screen.getByRole('button', { name: /切换工作空间/ })); expect(switched).toHaveBeenCalledOnce();
+  await userEvent.click(screen.getByRole('button', { name: '用户菜单' }));
+  await userEvent.click(await screen.findByRole('menuitem', { name: '语言' }));
+  await screen.findByRole('menuitemradio', { name: 'English' }); await accessible();
+  await userEvent.click(screen.getByRole('menuitemradio', { name: 'English' }));
+  expect(store.getSnapshot().locale).toBe('en-US');
+  // 侧栏收起后工作空间卡片隐藏，分组标题只留给读屏。
+  await userEvent.click(screen.getByRole('button', { name: 'Collapse sidebar' }));
+  expect(screen.queryByRole('button', { name: /切换工作空间/ })).toBeNull();
+  expect(screen.getByRole('group', { name: '租户' })).toBeTruthy();
+});

@@ -1,0 +1,103 @@
+import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactElement, type ReactNode } from 'react';
+import { AlertDialog, AlertDialogClose, AlertDialogContent, AlertDialogDescription, AlertDialogTitle, Button, Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle, Popover, PopoverClose, PopoverContent, PopoverDescription, PopoverTitle, PopoverTrigger, Sheet, SheetBody, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, ToastList, ToastProvider, useToast } from '@idadawn/yue-core';
+import { OverlayFormContext } from './overlay-form-context';
+import type { PlatformI18n } from '@idadawn/yue-sdk';
+
+export interface OverlayOptions {
+  title: string;
+  /** 标题下的说明；可以是带格式的内容，例如等宽显示的申请编号。 */
+  description?: ReactNode; content: ReactNode; onClose?: () => void;
+  /** 抽屉宽度档（仅 useDrawer）。 @default 'sm' */
+  size?: 'sm' | 'md' | 'lg';
+  /** 跟在标题后的附加内容，例如状态徽标（仅 useDrawer）。 */
+  extra?: ReactNode;
+}
+export interface OverlayApi { open(options: OverlayOptions): void; close(): void; holder: ReactNode }
+
+/** 三种 API 共享状态与生命周期，焦点、键盘及 ARIA 由 core 原语负责。 */
+function useOverlay(kind: 'modal' | 'drawer' | 'popup', i18n: PlatformI18n, trigger?: ReactElement<Record<string, unknown>>, defaultOptions?: OverlayOptions): OverlayApi {
+  const [forms, setForms] = useState(0);
+  const register = useCallback(() => { setForms(count => count + 1); return () => setForms(count => Math.max(0, count - 1)); }, []);
+  const [options, setOptions] = useState<OverlayOptions | null>(null);
+  const activeOptions = useRef<OverlayOptions | null>(null);
+  const lastFocus = useRef<HTMLElement | null>(null);
+  const close = () => { const current = activeOptions.current; activeOptions.current = null; setOptions(null); current?.onClose?.(); lastFocus.current?.focus(); };
+  const open = (next: OverlayOptions) => { if (!activeOptions.current) lastFocus.current = document.activeElement instanceof HTMLElement ? document.activeElement : null; activeOptions.current = next; setOptions(next); };
+  const [footer, setFooter] = useState<HTMLElement | null>(null);
+  const Root = kind === 'drawer' ? Sheet : kind === 'popup' ? Popover : Dialog;
+  const Content = kind === 'drawer' ? SheetContent : kind === 'popup' ? PopoverContent : DialogContent;
+  const Title = kind === 'drawer' ? SheetTitle : kind === 'popup' ? PopoverTitle : DialogTitle;
+  const Description = kind === 'drawer' ? SheetDescription : kind === 'popup' ? PopoverDescription : DialogDescription;
+  const Close = kind === 'drawer' ? SheetClose : kind === 'popup' ? PopoverClose : DialogClose;
+  const cancel = <Close render={<Button variant="outline" type="button" />}>{i18n.t('common.cancel')}</Close>;
+  // 抽屉：页头 / 可滚动主体 / 固定页脚；主体里的表单把操作按钮送进页脚（SchemaForm 读 footer）。
+  if (kind === 'drawer') return { open, close, holder: <Sheet open={!!options} onOpenChange={(value) => { if (!value) close(); }}>
+    {options && <SheetContent closeLabel={i18n.t('common.close')} size={options.size} data-slot="form-drawer" testId="yue-form-drawer">
+      <SheetHeader><div className="flex min-h-8 flex-wrap items-center gap-3"><SheetTitle>{options.title}</SheetTitle>{options.extra}</div>{options.description && <SheetDescription>{options.description}</SheetDescription>}</SheetHeader>
+      <SheetBody><OverlayFormContext value={{ cancel, register, footer }}>{options.content}</OverlayFormContext></SheetBody>
+      <SheetFooter>{forms === 0 && <Close render={<Button variant="outline" />}>{i18n.t('common.close')}</Close>}<div ref={setFooter} data-slot="form-drawer-actions" className="contents" /></SheetFooter>
+    </SheetContent>}
+  </Sheet> };
+  return { open, close, holder: <Root open={!!options} onOpenChange={(value) => { if (!value) close(); else if (defaultOptions) open(defaultOptions); }}>
+    {kind === 'popup' && <PopoverTrigger render={trigger} />}
+    {options && <Content {...(kind === 'popup' ? {} : { closeLabel: i18n.t('common.close') })} data-slot={`form-${kind}`} testId={`yue-form-${kind}`}>
+      <Title>{options.title}</Title>
+      {options.description && <Description>{options.description}</Description>}
+      <OverlayFormContext value={{ cancel, register }}><div className="my-4">{options.content}</div></OverlayFormContext>
+      {forms === 0 && <div className="flex justify-end gap-2"><Close render={<Button variant="outline" />}>{i18n.t('common.close')}</Close></div>}
+    </Content>}
+  </Root> };
+}
+export function useModal(i18n: PlatformI18n): OverlayApi { return useOverlay('modal', i18n); }
+export function useDrawer(i18n: PlatformI18n): OverlayApi { return useOverlay('drawer', i18n); }
+export function usePopup(i18n: PlatformI18n, trigger: ReactElement<Record<string, unknown>>, options?: OverlayOptions): OverlayApi { return useOverlay('popup', i18n, trigger, options); }
+
+export interface ConfirmOptions {
+  title: string; description?: string;
+  /** danger：确认按钮用危险色（冻结、删除一类不可轻易撤回的操作）。 @default 'default' */
+  tone?: 'default' | 'danger';
+  /** 确认按钮的文字（已本地化），缺省为「确定」；危险操作建议写明动作，如「冻结」。 */
+  confirmLabel?: string;
+}
+export interface MessageApi { info(key: string): void; success(key: string): void; error(key: string): void; notification(key: string): void }
+interface Feedback { message: MessageApi; confirm(options: ConfirmOptions): Promise<boolean> }
+const FeedbackContext = createContext<Feedback | null>(null);
+
+function FeedbackContent({ i18n, children }: { i18n: PlatformI18n; children: ReactNode }) {
+  const manager = useToast();
+  const pending = useRef<((result: boolean) => void) | null>(null);
+  const [confirmation, setConfirmation] = useState<ConfirmOptions | null>(null);
+  const finish = (result: boolean) => { pending.current?.(result); pending.current = null; setConfirmation(null); };
+  useEffect(() => () => { pending.current?.(false); }, []);
+  const show = (key: string, type: string) => { manager.add({ title: i18n.t(key), type }); };
+  const value: Feedback = {
+    message: { info: (key) => show(key, 'info'), success: (key) => show(key, 'success'), error: (key) => show(key, 'error'), notification: (key) => show(key, 'notification') },
+    confirm(options) {
+      // 只允许一个确认框；替换时旧调用明确返回 false。
+      pending.current?.(false);
+      setConfirmation(options);
+      return new Promise<boolean>((resolve) => { pending.current = resolve; });
+    },
+  };
+  return <FeedbackContext.Provider value={value}>{children}<ToastList closeLabel={i18n.t('common.close')} />
+    <AlertDialog open={!!confirmation} onOpenChange={(open) => { if (!open) finish(false); }}>
+      {confirmation && <AlertDialogContent closeLabel={i18n.t('common.close')} testId="yue-form-confirm"><AlertDialogTitle>{confirmation.title}</AlertDialogTitle>
+        {confirmation.description && <AlertDialogDescription>{confirmation.description}</AlertDialogDescription>}
+        <div className="mt-4 flex justify-end gap-2"><AlertDialogClose render={<Button variant="outline" />}>{i18n.t('common.cancel')}</AlertDialogClose><Button variant={confirmation.tone === 'danger' ? 'destructive' : 'primary'} onClick={() => finish(true)} testId="yue-form-confirm-ok">{confirmation.confirmLabel ?? i18n.t('common.confirm')}</Button></div>
+      </AlertDialogContent>}
+    </AlertDialog>
+  </FeedbackContext.Provider>;
+}
+export function FeedbackProvider({ i18n, children }: { i18n: PlatformI18n; children: ReactNode }) {
+  return <ToastProvider><FeedbackContent i18n={i18n}>{children}</FeedbackContent></ToastProvider>;
+}
+export function useMessage(): MessageApi {
+  const context = useContext(FeedbackContext);
+  if (!context) throw new Error('form.error.feedbackProvider');
+  return context.message;
+}
+export function useConfirm(): Feedback['confirm'] {
+  const context = useContext(FeedbackContext);
+  if (!context) throw new Error('form.error.feedbackProvider');
+  return context.confirm;
+}
