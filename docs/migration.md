@@ -266,7 +266,7 @@ F3（S1-YUE-024），2026-11-17 准备。本节先写准备了什么、查文档
 | 旧的发布与验收脚本 | 删掉运行时的 `scripts/publish.mjs`，插件开发包的 `scripts/private-publication.mjs`、`private-package-api.mjs`、`release.mjs` 与测试 `private-publication.test.mjs`：它们是原仓库逐包发布的脚本，已被 `scripts/release/` 取代，而且是按「包是私有的」写的（`--access=restricted`、断言可见性为 private、先发私有占位版本），与已定的公开相反。留下两个 `verify-consumer.mjs`：各自在仓库外经逻辑导入名（`@qian/runtime`、`@qian/plugin-sdk`）装上制品、实际运行一遍、按 NodeNext 解析做类型检查，这是 `consumer.mjs` 没有的覆盖。运行时的那个本来就在 `runtime-ts` 工作流里；插件开发包的那个原来没有人调，现在接进 `qian` 与 `release` 工作流 |
 | 发布工作流 | 上传之前先用这批 tarball 跑干净消费者验证与两个制品验收，都过了才上传；发布之后从包源再跑两个制品验收。`publish.mjs` 回读最多等 75 秒，不是 public 的包在运行摘要里给警告 |
 | CI | `qian` 工作流 publint 一项的最后跑打包验证、干净消费者验证与插件开发包的制品验收，触发路径加上 `scripts/release/**`；unit 一项去掉已删的测试，`runtime-ts` 去掉对已删脚本的语法检查 |
-| 制品可复现 | 主干 `23f2aac` 在两个目录 × Node 24.16、24.22、26.12（macOS），以及 Linux arm64 容器（Node 24.21，在容器里重新装依赖）各打一次：10 个 tarball 逐字节相同。pnpm 打包写固定的时间（1985-10-26）与属主，gzip 头里没有平台字节。所以 `publish.mjs`「包源上已有的同一版本必须是同一份制品」在重跑时成立，判据不改。GitHub 的 npm 包源回读的 `dist.integrity` 就是上传字节的 sha512（拿旧名字已发布的运行时 0.1.1 下载核对过）。没测：x64 的 Linux（CI 的机器） |
+| 制品可复现 | 主干 `23f2aac` 在两个目录 × Node 24.16、24.22、26.12（macOS），以及 Linux arm64 容器（Node 24.21，在容器里重新装依赖）各打一次：10 个 tarball 逐字节相同。pnpm 打包写固定的时间（1985-10-26）与属主，gzip 头里没有平台字节。所以 `publish.mjs`「包源上已有的同一版本必须是同一份制品」在重跑时成立，判据不改。GitHub 的 npm 包源回读的 `dist.integrity` 就是上传字节的 sha512（拿旧名字已发布的运行时 0.1.1 下载核对过）。F3 的分支上，CI 的 x64 Linux（GitHub 托管的 ubuntu-26.04、Node 24.22.2，与 `release` 用的是同一类机器）在 publint 一项打出的 10 个摘要与本机 macOS 上的相同，`runtime-ts` 留存的运行时 tarball 也逐字节相同。`pack.mjs` 在输出最后打印每个包的摘要，CI、发布日志与包源可以直接比对 |
 
 ### 11.2 GitHub Packages：可见性与安装
 
@@ -303,7 +303,7 @@ F3（S1-YUE-024），2026-11-17 准备。本节先写准备了什么、查文档
 
 5. 发完核对：
    - 运行全绿。「打包并发布」的日志里有 10 行 JSON：版本 0.2.0、`integrity`、`uploaded: true`、`visibility`；这次运行留存的 `qian-packages` 里有 10 个 tarball 与 `packages.json`。
-   - 包源上的版本与摘要：`npm view @cavailab/qian-<名>@0.2.0 dist.integrity --registry=https://npm.pkg.github.com`（要令牌）应等于 `packages.json` 里的 `integrity`。也可以在本机检出 X 打一遍（`node scripts/release/pack.mjs <目录>`），制品可复现，摘要应当相同。
+   - 包源上的版本与摘要：`npm view @cavailab/qian-<名>@0.2.0 dist.integrity --registry=https://npm.pkg.github.com`（要令牌）应等于 `packages.json` 里的 `integrity`，也就是「打包并发布」日志里「完整性摘要」那 10 行。也可以在本机检出 X 打一遍（`node scripts/release/pack.mjs <目录>`），制品可复现，摘要应当相同。
    - 可见性与关联的仓库：`gh api /orgs/CavaiLAB/packages/npm/qian-<名> --jq '.visibility, .repository.full_name'`（要 `read:packages`），应是 `public` 与 `CavaiLAB/qian`。不是 public 的，由包的管理员在包的页面 → Package settings → Danger Zone → Change visibility 改为 Public，10 个逐个改，不可逆。
 6. 打标签，打在 X 上（就是这次 `release` 运行发布的提交，运行页面上的提交号）：
 

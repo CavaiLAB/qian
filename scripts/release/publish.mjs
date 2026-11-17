@@ -8,7 +8,7 @@
 //
 // 重跑（S1-YUE-024）：发到一半失败时，对同一提交重跑整个工作流即可，已上传的包按摘要相同跳过、只传剩下的。
 // 这依赖同一提交两次打包得到逐字节相同的 tarball：pnpm 打包写固定的时间戳与属主，构建产物不含路径与时间，
-// F3 实测不同目录、不同 Node 版本、macOS 与 Linux（arm64 容器）打出的 10 个 tarball 都相同。摘要不同说明制品真的变了，不覆盖。
+// F3 实测不同目录、不同 Node 版本、macOS、Linux arm64 容器与 CI 的 x64 Linux 打出的 10 个 tarball 都相同。摘要不同说明制品真的变了，不覆盖。
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
