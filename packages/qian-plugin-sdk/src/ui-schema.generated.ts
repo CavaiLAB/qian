@@ -42,10 +42,10 @@ export const uiSchema = {
       "type": "object",
       "additionalProperties": false,
       "required": [
-        "yue"
+        "qian"
       ],
       "properties": {
-        "yue": {
+        "qian": {
           "$ref": "#/$defs/text"
         }
       }

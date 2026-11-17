@@ -8,6 +8,10 @@
 //
 // --repository <所有者/仓库>、--path-prefix <前缀> 覆盖清单里的 source.repository、source.pathPrefix：
 // 比对与打印时只在这一次生效；和 --update 一起用时写回清单（后端换了仓库或目录结构时用）。
+//
+// 领先于来源的副本（S1-YUE-022）：清单里带 lead 的文件，副本 = 来源按 lead.replace 逐条替换的结果，lead.sourceSha256 记来源在来源提交的摘要。
+// 不带参数时，把副本按 replace 反向换回去，摘要要等于 lead.sourceSha256；--source 时，来源的摘要要等于 lead.sourceSha256，
+// 且来源按 replace 正向替换（每条命中次数等于 count）之后与副本逐字节相同。两头都对得上才算通过。
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
 import { copyFileSync, existsSync, mkdirSync, readFileSync, readdirSync, writeFileSync } from 'node:fs';
@@ -74,11 +78,40 @@ function readManifest() {
     if (seen.has(file.path)) fail(`清单里的路径重复：${file.path}`);
     seen.add(file.path);
     if (typeof file.sha256 !== 'string' || !/^[0-9a-f]{64}$/.test(file.sha256)) fail(`${file.path} 的 sha256 不是 64 位十六进制`);
+    if (file.lead !== undefined) checkLead(file);
   }
   return manifest;
 }
 
-const sha256 = (file) => createHash('sha256').update(readFileSync(file)).digest('hex');
+function checkLead({ path: file, lead }) {
+  const bad = (message) => fail(`${file} 的 lead ${message}`);
+  if (!lead || typeof lead !== 'object') bad('要是对象');
+  if (typeof lead.sourceSha256 !== 'string' || !/^[0-9a-f]{64}$/.test(lead.sourceSha256)) bad('缺少来源摘要 sourceSha256（64 位十六进制）');
+  if (typeof lead.reason !== 'string' || lead.reason === '') bad('缺少领先的原因 reason');
+  if (typeof lead.resolvedBy !== 'string' || !/^S\d+-[A-Z]+-\d+$/.test(lead.resolvedBy)) bad('缺少由哪个任务消除 resolvedBy（任务号）');
+  if (!Array.isArray(lead.replace) || lead.replace.length === 0) bad('缺少替换清单 replace');
+  for (const item of lead.replace) {
+    if (typeof item.from !== 'string' || item.from === '' || typeof item.to !== 'string' || item.from === item.to) bad('的 replace 每条要有不同的 from 与 to');
+    if (!Number.isInteger(item.count) || item.count < 1) bad('的 replace 每条要有正整数 count');
+  }
+}
+
+/** 按 lead.replace 把来源换成副本（forward）或把副本换回来源（reverse）；每条命中次数必须等于 count。 */
+function applyLead(buffer, lead, direction) {
+  let text = buffer.toString('utf8');
+  const problems = [];
+  const steps = direction === 'forward' ? lead.replace : [...lead.replace].reverse();
+  for (const { from, to, count } of steps) {
+    const [find, put] = direction === 'forward' ? [from, to] : [to, from];
+    const hits = text.split(find).length - 1;
+    if (hits !== count) problems.push(`${JSON.stringify(find)} 命中 ${hits} 次，登记的是 ${count} 次`);
+    text = text.split(find).join(put);
+  }
+  return { content: Buffer.from(text, 'utf8'), problems };
+}
+
+const digest = (buffer) => createHash('sha256').update(buffer).digest('hex');
+const sha256 = (file) => digest(readFileSync(file));
 
 function listCopyDir(directory = copyDir, prefix = '') {
   const result = [];
@@ -104,6 +137,11 @@ function verifyDigests(manifest) {
     const copy = path.join(copyDir, file.path);
     if (!existsSync(copy)) problems.push(`缺少副本：backend-copy/${file.path}`);
     else if (sha256(copy) !== file.sha256) problems.push(`摘要不符：backend-copy/${file.path}（副本被改过，或清单没有跟着更新）`);
+    else if (file.lead) {
+      const { content, problems: hits } = applyLead(readFileSync(copy), file.lead, 'reverse');
+      problems.push(...hits.map((hit) => `领先登记对不上：backend-copy/${file.path} 反向替换时 ${hit}`));
+      if (!hits.length && digest(content) !== file.lead.sourceSha256) problems.push(`领先登记对不上：backend-copy/${file.path} 换回去之后的摘要不等于登记的来源摘要`);
+    }
   }
   const listed = new Set(manifest.files.map((file) => file.path));
   for (const relative of listCopyDir()) if (!listed.has(relative) && !ownFiles.has(relative)) problems.push(`清单之外的文件：backend-copy/${relative}`);
@@ -120,7 +158,15 @@ function compareWithSource(manifest, source, prefix) {
     const copy = path.join(copyDir, file.path);
     if (!existsSync(origin)) problems.push(`来源里没有：${prefix}${file.path}`);
     else if (!existsSync(copy)) continue; // 摘要核对已经报了缺少副本
-    else if (!readFileSync(origin).equals(readFileSync(copy))) problems.push(`与来源不一致：backend-copy/${file.path} ≠ ${prefix}${file.path}`);
+    else if (file.lead) {
+      if (sha256(origin) !== file.lead.sourceSha256) {
+        problems.push(`来源有了没登记的变化：${prefix}${file.path} 的摘要不等于领先登记里的来源摘要`);
+        continue;
+      }
+      const { content, problems: hits } = applyLead(readFileSync(origin), file.lead, 'forward');
+      problems.push(...hits.map((hit) => `领先登记对不上：${prefix}${file.path} 正向替换时 ${hit}`));
+      if (!hits.length && !content.equals(readFileSync(copy))) problems.push(`副本与来源的差异不止登记的那几处：backend-copy/${file.path}`);
+    } else if (!readFileSync(origin).equals(readFileSync(copy))) problems.push(`与来源不一致：backend-copy/${file.path} ≠ ${prefix}${file.path}`);
   }
   return problems;
 }
@@ -131,21 +177,38 @@ function update(manifest, source, repository, prefix) {
   const dirty = execFileSync('git', ['-C', directory, 'status', '--porcelain', '--', ...manifest.files.map((file) => prefix + file.path)], { encoding: 'utf8' }).trim();
   if (dirty) fail(`检出里这些来源文件有没提交的改动，副本只能取自提交过的内容：\n${dirty}`);
   const changed = [];
+  const resolved = [];
   for (const file of manifest.files) {
     const origin = path.join(directory, prefix + file.path);
     if (!existsSync(origin)) fail(`来源里没有：${prefix}${file.path}`);
     const copy = path.join(copyDir, file.path);
     mkdirSync(path.dirname(copy), { recursive: true });
-    copyFileSync(origin, copy);
-    const digest = sha256(copy);
-    if (digest !== file.sha256) changed.push(file.path);
-    file.sha256 = digest;
+    if (file.lead) {
+      // 领先的文件：来源还没改，就在新来源上重新做一遍登记的替换；来源已经改成了副本的样子，领先消除；别的情况停下来人工看。
+      const source = readFileSync(origin);
+      const forward = applyLead(source, file.lead, 'forward');
+      const already = file.lead.replace.every(({ from, to }) => !source.toString('utf8').includes(from) && source.toString('utf8').includes(to));
+      if (!forward.problems.length) {
+        writeFileSync(copy, forward.content);
+        file.lead.sourceSha256 = digest(source);
+      } else if (already) {
+        copyFileSync(origin, copy);
+        resolved.push(`${file.path}（${file.lead.resolvedBy}）`);
+        delete file.lead;
+      } else fail(`${prefix}${file.path} 在领先改动的位置变了，登记的替换套不上，人工处理：\n${forward.problems.map((problem) => `  ${problem}`).join('\n')}`);
+    } else copyFileSync(origin, copy);
+    const next = sha256(copy);
+    if (next !== file.sha256) changed.push(file.path);
+    file.sha256 = next;
   }
   const before = { ...manifest.source };
   manifest.source = { repository, pathPrefix: prefix, commit: head };
   writeFileSync(manifestPath, `${JSON.stringify(manifest, null, 2)}\n`);
   console.log(`来源：${before.repository}@${before.commit.slice(0, 10)}（前缀 ${JSON.stringify(before.pathPrefix)}）→ ${repository}@${head.slice(0, 10)}（前缀 ${JSON.stringify(prefix)}）`);
   console.log(changed.length ? `内容有变的副本（${changed.length}）：\n${changed.map((file) => `  backend-copy/${file}`).join('\n')}` : '副本内容没有变化');
+  if (resolved.length) console.log(`来源已经追上、领先登记去掉了：\n${resolved.map((file) => `  backend-copy/${file}`).join('\n')}`);
+  const leading = manifest.files.filter((file) => file.lead).map((file) => file.path);
+  if (leading.length) console.log(`仍然领先于来源（在新来源上重做了登记的替换）：\n${leading.map((file) => `  backend-copy/${file}`).join('\n')}`);
 }
 
 const options = parseArgs(process.argv.slice(2));
@@ -166,7 +229,9 @@ if (options.printSource) {
   if (options.source) problems.push(...compareWithSource(manifest, options.source, prefix));
   const where = `${repository}@${manifest.source.commit.slice(0, 10)}`;
   if (problems.length) fail(`后端契约副本检查失败（来源 ${where}）：\n${problems.map((problem) => `  ${problem}`).join('\n')}`);
+  const leading = manifest.files.filter((file) => file.lead).length;
+  const leadNote = leading ? `；其中 ${leading} 个领先于来源，差异恰好是登记的替换` : '';
   console.log(options.source
-    ? `后端契约副本：${manifest.files.length} 个文件的摘要与清单一致，与来源检出（${where}，前缀 ${JSON.stringify(prefix)}）逐个相同`
-    : `后端契约副本：${manifest.files.length} 个文件的摘要与清单一致（来源 ${where}）`);
+    ? `后端契约副本：${manifest.files.length} 个文件的摘要与清单一致，与来源检出（${where}，前缀 ${JSON.stringify(prefix)}）逐个对上${leadNote}`
+    : `后端契约副本：${manifest.files.length} 个文件的摘要与清单一致（来源 ${where}）${leadNote}`);
 }
