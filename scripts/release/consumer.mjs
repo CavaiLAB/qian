@@ -1,13 +1,14 @@
 #!/usr/bin/env node
 // 干净消费者验证（S1-YUE-022）：在仓库外的空目录里新建一个项目，只用 10 个包的制品装起来，
-// 再做一次类型检查与生产构建。第三方依赖从公共 npm 源装，版本取工作区里装着的版本。
+// 再做一次类型检查与生产构建，最后用 Node 直接加载制品、实际渲染每个含 JSX 的包的组件（0.2.1）。
+// 第三方依赖从公共 npm 源装，版本取工作区里装着的版本。
 //
 //   node scripts/release/consumer.mjs archive <pack.mjs 的输出目录>   用本地 tarball（打包验证）
 //   node scripts/release/consumer.mjs registry                       从 GitHub Packages 装已发布的版本（发布之后）
 //
 // registry 模式要环境变量 NODE_AUTH_TOKEN（能读 @cavailab 包的令牌）。
 import assert from 'node:assert/strict';
-import { execFileSync } from 'node:child_process';
+import { execFileSync, spawnSync } from 'node:child_process';
 import { existsSync, lstatSync, mkdirSync, mkdtempSync, readFileSync, readdirSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
@@ -32,6 +33,50 @@ const archives = mode === 'archive'
 const installed = (name) => JSON.parse(readFileSync(path.join(ROOT, 'apps/qian-playground/node_modules', name, 'package.json'), 'utf8')).version;
 const thirdParty = Object.fromEntries(['react', 'react-dom'].map((name) => [name, installed(name)]));
 const tooling = Object.fromEntries(['typescript', '@types/react', '@types/react-dom', 'vite', '@vitejs/plugin-react', 'tailwindcss', '@tailwindcss/vite'].map((name) => [name, installed(name)]));
+
+// 渲染脚本（0.2.1）：在消费者目录里由 Node 直接运行，组件从装好的制品里加载，不经打包器。
+// 每个用例单独捕获错误，结果以 JSON 打到标准输出；用例的写法参照各包的 SSR 用例（*.ssr.test.tsx）。
+const RENDER_SCRIPT = `import { createElement as h } from 'react';
+import { renderToString } from 'react-dom/server';
+import { PlatformClient, createI18n, createMockTransport } from '@cavailab/qian-sdk';
+
+const client = new PlatformClient({ baseUrl: 'https://consumer.test', transport: createMockTransport([]) });
+const nodes = [{ id: 'root', label: '根', children: [{ id: 'leaf', label: '叶' }] }];
+const query = { pageIndex: 0, pageSize: 5, sorting: [], filters: {} };
+const form = {
+  $schema: 'https://schema.qian.dev/form/v1', version: '1.0.0', id: 'qian.consumer.form',
+  data: { type: 'object', additionalProperties: false, required: ['username'], properties: { username: { type: 'string', minLength: 1 } } },
+  ui: { layout: [{ field: 'username', labelKey: 'consumer.username' }] }, rules: {}, binding: {}, auth: {},
+};
+
+// [包, 组件, 用包的导出造出要渲染的元素, 输出里必须有的片段]
+const cases = [
+  ['@cavailab/qian-core', 'Button', ({ Button }) => h(Button, { testId: 'consumer-button' }, '按钮'), ['data-testid="consumer-button"', '按钮']],
+  ['@cavailab/qian-form', 'SchemaForm', ({ SchemaForm }) => h(SchemaForm, { schema: form, i18n: createI18n() }), ['data-testid="qian-schema-form"', 'name="username"']],
+  ['@cavailab/qian-data', 'Tree', ({ Tree }) => h(Tree, { nodes, 'aria-label': '树', defaultExpandedIds: ['root'] }), ['role="tree"', 'data-node-id="leaf"']],
+  ['@cavailab/qian-data', 'DataTable', ({ DataTable, createDataI18n }) => h(DataTable, { columns: [{ field: 'label', titleKey: 'common.detail' }], data: nodes, total: 1, query, onQueryChange: () => undefined, getRowId: (row) => row.id, i18n: createDataI18n(), label: '表格' }), ['data-testid="qian-data-table"', '根']],
+  ['@cavailab/qian-shell', 'AppShell', ({ AppShell, Page, PageHeader, PreferencesProvider, initPreferences, installShellLanguagePacks }) => {
+    const i18n = createI18n();
+    installShellLanguagePacks(i18n);
+    return h(PreferencesProvider, { store: initPreferences({ namespace: 'consumer', storage: null }) },
+      h(AppShell, { i18n, brand: 'qian 消费者', menu: [] }, h(Page, { header: h(PageHeader, { title: '消费者验证' }) }, '内容')));
+  }, ['data-slot="app-shell"', 'data-slot="page-header"', '消费者验证']],
+  ['@cavailab/qian-biz', 'OrganizeSelect', ({ OrganizeSelect, createBizI18n }) => h(OrganizeSelect, { client, i18n: createBizI18n(), label: '部门', value: null, onChange: () => undefined }), ['data-slot="organize-select"']],
+  ['@cavailab/qian-biz', 'UserSelect', ({ UserSelect, createBizI18n }) => h(UserSelect, { client, i18n: createBizI18n(), label: '成员', value: null, onChange: () => undefined }), ['data-slot="user-select"', 'data-testid="qian-user-select-trigger"']],
+];
+
+const results = [];
+for (const [pkg, component, element, expected] of cases) {
+  try {
+    const markup = renderToString(element(await import(pkg)));
+    const missing = expected.filter((text) => !markup.includes(text));
+    results.push(missing.length ? { package: pkg, component, error: '输出里没有 ' + missing.join('、') } : { package: pkg, component, length: markup.length });
+  } catch (error) {
+    results.push({ package: pkg, component, error: error instanceof Error ? error.name + ': ' + error.message : String(error) });
+  }
+}
+console.log(JSON.stringify(results));
+`;
 
 const directory = mkdtempSync(path.join(tmpdir(), 'qian-consumer-'));
 assert(!path.relative(ROOT, directory).match(/^[^.]/), '消费者目录必须在仓库外');
@@ -164,9 +209,24 @@ await build({ root: import.meta.dirname, configFile: false, logLevel: 'warn', pl
   assert(css.includes('--qian-primary'), '构建出的样式里没有 --qian-* 令牌');
   assert(!/--yue-|data-yue-|\byue-[a-z]/.test(css + js), '构建产物里还有 yue 前缀');
   assert(js.includes('qian-'), '构建产物里没有 qian- 测试标识');
+
+  // 实际渲染（0.2.1）：类型检查与构建都不执行组件，0.2.0 的 data、biz 引用了没有绑定的 React，照样通过了上面几步。
+  // 这里不经打包器，让 Node 直接加载装好的制品，用 react-dom/server 把每个含 JSX 的包至少渲染一个组件，再核对输出。
+  write('render.mjs', RENDER_SCRIPT);
+  const rendering = spawnSync(process.execPath, ['render.mjs'], { cwd: directory, env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'inherit'] });
+  assert.equal(rendering.status, 0, `渲染脚本没有跑完（退出码 ${rendering.status}）：\n${rendering.stdout}`);
+  const rendered = JSON.parse(rendering.stdout);
+  const renderFailures = rendered.filter((item) => item.error).map((item) => `${item.package} ${item.component}：${item.error}`);
+  assert.deepEqual(renderFailures, [], `组件渲染失败：\n${renderFailures.join('\n')}`);
+  // 含 JSX 的包（制品导入 JSX runtime，或有经典转换的 React.createElement）都要有渲染用例，以后加了包也不会漏。
+  const scriptsOf = (name) => readdirSync(path.join(directory, 'node_modules', name), { recursive: true }).filter((file) => /\.[cm]?js$/.test(file) && !String(file).split(path.sep).includes('node_modules'));
+  const jsxPackages = PACKAGES.map(({ name }) => name).filter((name) => scriptsOf(name).some((file) => /["']react\/jsx(?:-dev)?-runtime["']|\bReact\.createElement\b/.test(readFileSync(path.join(directory, 'node_modules', name, file), 'utf8'))));
+  assert.deepEqual(jsxPackages.filter((name) => !rendered.some((item) => item.package === name)), [], '这些含 JSX 的包没有渲染用例，在 consumer.mjs 的 RENDER_SCRIPT 里补上');
+
   console.log(JSON.stringify({
     phase: 'consumer', mode, directory: '<临时目录>', packages: PACKAGES.map(({ name }) => `${name}@${versions[name]}`),
     thirdParty: { ...thirdParty, ...tooling }, typecheck: 'passed', build: 'passed', assets: files.length,
+    rendered: rendered.map((item) => `${item.package.replace(`${SCOPE}/`, '')} ${item.component}`),
     ownDeclarations: 'passed',
     thirdPartyDeclarations: thirdPartyDeclarations.length ? thirdPartyDeclarations : 'passed',
     backendReads: ['@cavailab/qian-core/package.json#version', '@cavailab/qian-core/dist/qian-manifest.json', '@cavailab/qian-biz/contracts/biz.openapi.json'],
