@@ -28,5 +28,9 @@ eslint.boundaries.config.mjs
 .github/workflows/runtime-ts-release.yml
 .github/workflows/plugin-sdk-release.yml
 
+# 接口类型生成工具：biz 与 data 两个包的 contracts:generate / contracts:check 经根脚本 openapi:generate 调它。
+# 后端仓库照旧留一份，给留在那边的界面包用，两边各有一份。
+tools/openapi-codegen/
+
 # 清单之外、开工核对时发现确实需要的：根目录的 .gitignore（依赖目录、构建产物、测试与视觉报告靠它不进 Git）
 .gitignore

@@ -10,14 +10,16 @@ F1「保留历史导入」（任务 S1-YUE-023）用的脚本：把框架库连�
 | `list-refs.py` | 改写之前列出全部 `#数字` 命中，标出每一处会不会被改写 |
 | `verify.sh` | 一致性证明：本仓库某个提交里导入路径下的每个文件，模式与 blob 是否与源提交一致 |
 
-要用到 `git`、[`git-filter-repo`](https://github.com/newren/git-filter-repo)、`python3` 与 `bash`。`git-filter-repo` 不在 `PATH` 上时，用环境变量 `GIT_FILTER_REPO` 指定。`--source` 不写时从 `https://github.com/idadawn/qian.git` 克隆；指向一份本机克隆可以省下下载，结果一样，因为过滤只认源提交的哈希。
+要用到 `git`、[`git-filter-repo`](https://github.com/newren/git-filter-repo)、`python3` 与 `bash`。`git-filter-repo` 不在 `PATH` 上时，用环境变量 `GIT_FILTER_REPO` 指定。F1 用的是 `git-filter-repo` 2.47.0；过滤的结果取决于它的剪枝与改写规则，增量补齐时用同一个版本，换版本之前先按下文核对末端哈希。`--source` 不写时从 `https://github.com/idadawn/qian.git` 克隆；指向一份本机克隆可以省下下载，结果一样，因为过滤只认源提交的哈希。
 
 ## 做了什么
 
 1. 新克隆一份源仓库（裸仓库），只留一个分支指向源提交，其余引用全删。
 2. `git filter-repo --paths-from-file paths.txt`：只留清单里的路径，不碰这些路径的提交被剪掉。
 3. 同一遍里用 `rewrite-message.py` 改写提交说明：指向源仓库 PR 的 `#N` 改成 `idadawn/qian#N`，否则在本仓库会被链到不相干的 PR。已经写成 `idadawn/qian#N` 的不再加前缀；任务号（如 `[S1-YUE-012]`）、复核号（如 `R169`）不带 `#`，不受影响。
-4. 提交说明里出现的源仓库提交哈希，`git filter-repo` 照它的默认做法换成过滤后的哈希；被剪掉的提交没有对应，哈希原样留着，指的是 `idadawn/qian` 里的提交。
+4. 提交说明里出现的源仓库提交哈希，`git filter-repo` 照它的默认做法换成过滤后的哈希；被剪掉的提交没有对应，哈希原样留着，指的是 `idadawn/qian` 里的提交。输出目录的 `filter-repo/suboptimal-issues` 列出提交说明里所有像哈希、又没能换成新哈希的串：多数指被剪掉的提交，也有恰好全由数字组成的串（如 CI 的运行号），都原样留着。
+
+F1 的核对办法：用输出目录里的 `filter-repo/commit-map` 把每个过滤后的提交对回源提交，把源提交说明按 `rewrite-message.py` 的规则改写一遍，再与过滤后的说明逐字比较。154 个提交里 108 个说明没变，45 个只有 PR 引用的改写（合计 50 处），1 个另有一处哈希被换成过滤后的哈希（它指的提交保留了下来），没有其它差异。改写之前的命中清单（51 处，其中 1 处原本就写成 `idadawn/qian#79`）由 `--list-refs` 列出，逐条看过，都是 PR 号。
 
 `git filter-repo` 只在脚本自己克隆出来的输出目录里跑，不碰 `--source` 指向的仓库。
 
@@ -57,7 +59,7 @@ scripts/import/verify.sh --commit aafa0cc5ab48637a1c634867d6cddb2935837814 --tar
 
 只在更名（F2）合入之前适用。迁移计划第 6 节规定，从源提交起这些路径在原仓库冻结；确有改动要进，就在原仓库合入之后，按下面的办法补到本仓库。F2 合入之后一律在本仓库改，不再从原仓库导入。
 
-能增量补齐，靠的是过滤可重现：同样的源历史、同一份 `paths.txt` 与 `rewrite-message.py`，重跑得到的提交逐个相同（F1 用两份不同来源的克隆各跑一遍核对过，末端哈希相同）。所以新的源提交过滤出来的历史，前面一段就是已经合入的那段，合并时只会带进新的提交。
+能增量补齐，靠的是过滤可重现：同样的源历史、同一份 `paths.txt` 与 `rewrite-message.py`、同一版本的 `git-filter-repo`，重跑得到的提交逐个相同（F1 用两份不同来源的克隆各跑一遍核对过：一份是脚本从 GitHub 新克隆的，一份是指向本机克隆的 `--source`，末端哈希相同，见 [迁移与更名](../../docs/migration.md) 第 9 节）。所以新的源提交过滤出来的历史，前面一段就是已经合入的那段，合并时只会带进新的提交。
 
 1. 用新的源提交重跑 `import.sh`，得到新的末端。
 2. 核对上次导入的末端是新末端的祖先（上次的末端就是导入合并提交的第二个父提交，第 9 节也记着）。不是祖先，说明清单或改写规则变过，不能按这个办法补，停下来另想办法。
