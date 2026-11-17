@@ -13,7 +13,7 @@ async function lint(file: string, code: string) {
 }
 
 describe('qian 分层边界（docs/prd/specs/yue.md §3.1）', () => {
-  it('Qian SDK只消费qian底层，qian不能反向依赖平台SDK，应用可以消费SDK', async () => {
+  it('前端插件开发包只消费qian底层，qian不能反向依赖插件开发包，应用可以消费它', async () => {
     expect(await lint('packages/qian-plugin-sdk/src/__ok__.ts', "export { PlatformClient } from '@cavailab/qian-sdk';\n")).toEqual([]);
     expect(await lint('packages/qian-plugin-sdk/src/__violation__.ts', "export { Button } from '@cavailab/qian-core';\n")).toHaveLength(1);
     expect(await lint('packages/qian/sdk/src/__violation__.ts', "export { ShellHost } from '@cavailab/qian-plugin-sdk';\n")).toHaveLength(1);
@@ -21,7 +21,7 @@ describe('qian 分层边界（docs/prd/specs/yue.md §3.1）', () => {
     expect(await lint('apps/qian-playground/src/__ok__.ts', "export { ShellHost } from '@cavailab/qian-plugin-sdk';\n")).toEqual([]);
   });
   // 外壳、认证页族与参考远程可以引 @qian/shell-kit 的那几条用例随这些包留在后端仓库（S1-YUE-023）。
-  it('Qian 专有的外壳接线（@qian/shell-kit）在 qian 之上：qian 包与平台 SDK 不得反向引用', async () => {
+  it('平台专有的外壳接线（@qian/shell-kit）在 qian 之上：qian 包与插件开发包不得反向引用', async () => {
     expect(await lint('packages/qian/shell/src/__violation__.ts', "export { loadAppConfig } from '@qian/shell-kit';\n")).toHaveLength(1);
     expect(await lint('packages/qian/shell/src/__violation__.ts', "export { createIdentityAuthProvider } from '@qian/shell-kit/identity';\n")).toHaveLength(1);
     expect(await lint('packages/qian-plugin-sdk/src/__violation__.ts', "export { loadAppConfig } from '@qian/shell-kit';\n")).toHaveLength(1);

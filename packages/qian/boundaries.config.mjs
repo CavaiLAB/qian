@@ -68,16 +68,16 @@ const policies = [
     };
   }),
   // 第三方库与 Node 内置模块对所有 qian 包放行（@cavailab/qian-* 不在此列，只走矩阵）。
-  // Qian 专有的外壳接线（@qian/shell-kit，留在后端仓库）同样在 qian 之上：qian 包不得反向引用。
+  // 平台专有的外壳接线（@qian/shell-kit，留在后端仓库）同样在 qian 之上：qian 包不得反向引用。
   { from: { element: { type: 'qian' } }, allow: { to: { module: { source: '!{@cavailab/qian-**,@cavailab/qian-plugin-sdk{,/**},@qian/plugin-sdk{,/**},@cavailab/qian-runtime{,/**},@qian/runtime{,/**},@qian/shell-kit{,/**}}' } } } },
-  // Qian 的前端 SDK 在 qian 之上，只消费 sdk/底层契约与 TS Runtime，不能反向进入 UI 控件或应用。
+  // 前端插件开发包在 qian 之上，只消费 sdk/底层契约与 TS Runtime，不能反向进入 UI 控件或应用。
   { from: { element: { type: 'qian-ui-sdk' } }, allow: { to: [{ element: { type: 'qian-ui-sdk' } }, { element: { type: 'qian-runtime' } },
     { element: { type: 'qian', captured: { pkg: ['sdk', 'tokens', 'contracts'] } } },
     { module: { source: ['@cavailab/qian-sdk{,/**}', '@cavailab/qian-tokens{,/**}', '@cavailab/qian-contracts{,/**}', '@cavailab/qian-runtime{,/**}', '@qian/runtime'] } },
     { module: { source: '!{@cavailab/qian-**,@cavailab/qian-plugin-sdk{,/**},@qian/plugin-sdk{,/**},@qian/shell-kit{,/**}}' } }] } },
   // 应用面（apps/*）可以引任何 qian 包、彼此与第三方库。
-  // 更名之后运行时与插件开发包和组件层同一前缀，@cavailab/qian-** 也盖住了它们；改名前它们不在 @idadawn/yue-** 之内，
-  // 按说明符引用本来就放行，所以这里显式放行，范围与改名前一致。上面插件开发包那条的 @cavailab/qian-runtime{,/**} 同理。
+  // 更名之后运行时与插件开发包和组件层同一前缀，@cavailab/qian-** 也盖住了它们；改名前组件层是另一个前缀，
+  // 按说明符引用它们本来就放行，所以这里显式放行，范围与改名前一致。上面插件开发包那条的 @cavailab/qian-runtime{,/**} 同理。
   { from: { element: { type: 'app' } }, allow: { to: [{ element: { type: 'qian' } }, { element: { type: 'app' } }, { element: { type: 'qian-ui-sdk' } }, { element: { type: 'qian-runtime' } }, { module: { source: ['!@cavailab/qian-**'] } },
     { module: { source: ['@cavailab/qian-plugin-sdk{,/**}', '@cavailab/qian-runtime{,/**}'] } }] } },
 ];

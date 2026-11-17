@@ -47,7 +47,7 @@ describe('packages/qian/* 的 package.json', () => {
     }
   });
 
-  it('所有 @cavailab/qian-* 包同一版本、ESM、开发期 exports 指源码、publishConfig 指 dist、第三方依赖走 catalog', () => {
+  it('packages/qian 下的包同一版本、ESM、开发期 exports 指源码、publishConfig 指 dist、第三方依赖走 catalog', () => {
     const versions = new Set(packages.map((p) => p.pkg.version));
     expect(versions.size).toBe(1);
     for (const { pkg } of packages) {

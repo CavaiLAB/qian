@@ -52,4 +52,4 @@ HttpOnly Cookie 会话的宿主改用 `sessionProvider: { refreshSession(): Prom
 
 - SDK 不提供登录页、OIDC 流程或 HTTP 刷新端点，分别由外壳与身份组件承接；组件消费方提供对应 OpenAPI 生成类型。
 - SSE 为 S1 草案，只提供 Schema 与类型；流连接、重连与 Agent 界面归后续任务。客户端动作参数须由执行方按注册表 Schema 校验，服务端权限判定不由前端替代。
-- 本包由构造参数注入配置；Qian 外壳的运行时配置（同源 `/app-config.json`）由 `@qian/shell-kit` 的 `loadAppConfig` 读取与校验（S1-YUE-012），外壳据此构造 `PlatformClient`。版本 0.1.0 尚未发布。
+- 本包由构造参数注入配置；平台外壳的运行时配置（同源 `/app-config.json`）由 `@qian/shell-kit` 的 `loadAppConfig` 读取与校验（S1-YUE-012），外壳据此构造 `PlatformClient`。版本 0.1.0 尚未发布。

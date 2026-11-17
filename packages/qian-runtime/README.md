@@ -1,6 +1,6 @@
 # Qian TypeScript 运行时
 
-依据 [组件模型 §5](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/component-model.md#5-运行时模型) 与 [S1-RT-003](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/pm/tasks/S1-RT-003.md)。S1-DEC-014 已批准：物理包名 `@cavailab/qian-runtime`，发布到 GitHub Packages 私有源；消费者通过 npm alias 保留公共逻辑导入名 `@qian/runtime`。
+依据 [组件模型 §5](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/component-model.md#5-运行时模型) 与 [S1-RT-003](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/pm/tasks/S1-RT-003.md)。S1-DEC-014 批准的物理包名是 `@idadawn/qian-runtime`，发布到 GitHub Packages 私有源；F2 把作用域改为 `@cavailab`（GitHub Packages 要求作用域与仓库所有者同名），现在的包名是 `@cavailab/qian-runtime`。消费者通过 npm alias 保留公共逻辑导入名 `@qian/runtime`。
 
 ## 私有源安装
 
@@ -17,7 +17,7 @@
 npm install '@qian/runtime@npm:@cavailab/qian-runtime@0.1.1'
 ```
 
-`package.json` 的依赖值为 `"@qian/runtime": "npm:@cavailab/qian-runtime@0.1.1"`，下文逻辑导入名保持一致。源码工作区内部构建按目录筛选包；发版只运行 main 的 `runtime-ts-release` 工作流，输入版本必须等于清单版本。工作流校验私有可见性与制品摘要，再在仓库外的干净项目完成真实安装、运行、类型和许可证验收；首次发布证据记录在任务中。
+`package.json` 的依赖值为 `"@qian/runtime": "npm:@cavailab/qian-runtime@0.1.1"`，下文逻辑导入名保持一致。源码工作区内部构建按目录筛选包；发版只经本仓库的 `release` 工作流（在 main 上手动触发）：先核对门禁，按清单版本发布，再在仓库外的干净项目从包源安装并构建，见[发布脚本](../../scripts/release/README.md)。旧名字的 0.1.1 曾由原仓库的 `runtime-ts-release` 工作流发布到私有源，首次发布证据记录在任务中；新名字还没有发布过，首发之前上面的安装命令装不上，首发的版本号待定（F3）。`scripts/publish.mjs` 与 `scripts/verify-consumer.mjs` 是那个工作流的脚本，断言已改成本仓库与新名字，去留在首发时定。
 
 ## 装配与使用
 

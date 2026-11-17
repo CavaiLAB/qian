@@ -1,6 +1,6 @@
 # @cavailab/qian-shell
 
-AppShell 单一侧栏布局、菜单 → 路由、偏好、认证页族组件与契约、会话过期对话框、站内信与兜底页。本包只放通用 UI；对接 Qian 平台的接线（运行时配置、网关 BFF 会话、bootstrap、能力导航、身份服务 AuthProvider）在私有包 [`@qian/shell-kit`](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/packages/qian-shell-kit/README.md)，MF2 宿主与插槽在 [前端插件 SDK](../../qian-plugin-sdk/README.md)。
+AppShell 单一侧栏布局、菜单 → 路由、偏好、认证页族组件与契约、会话过期对话框、站内信与兜底页。本包只放通用 UI；对接平台的接线（运行时配置、网关 BFF 会话、bootstrap、能力导航、身份服务 AuthProvider）在后端仓库的私有包 [`@qian/shell-kit`](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/packages/qian-shell-kit/README.md)，MF2 宿主与插槽在 [前端插件 SDK](../../qian-plugin-sdk/README.md)。
 
 - 分层与允许依赖：[qian 专题规格 §3.1](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/yue.md#31-包结构与依赖方向)；依赖方向由 `packages/qian/boundaries.config.mjs` 与 CI 门禁强制。
 - 实现任务：S1-YUE-006；库 API、共用示例与认证边界见 [组件文档源](docs/index.mdx)。
@@ -25,7 +25,7 @@ AuthProvider 由宿主注入，认证页族不持有令牌。登录表单使用 
 - `ShellMenuItem` 新增 `icon`（qian 图标名，未登记的名称回落为缺省图标）、`group`（相邻同组项共用一个分组标题）和 `badge`（只展示，收起时变成圆点并保留读屏文字）。
 - PreferenceControls 改为主题、语言两个图标按钮，展开为单选菜单（`menuitemradio`，选中即关闭）；语言以各自本名列出。
 
-子路径让外壳首屏只拉需要的部分（首屏 JS 预算 250 KiB gzip）。Qian 的可部署外壳是 [apps/qian-shell](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/apps/qian-shell/README.md)，认证页族是 [packages/qian-identity-ui](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/packages/qian-identity-ui/README.md)；真实流程验收 `pnpm yue:auth` 对 [tools/Qian.Dev.Shell](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/tools/Qian.Dev.Shell/README.md) 拉起的真实 qian.identity、平台表面宿主与网关 BFF 运行。
+子路径让外壳首屏只拉需要的部分（首屏 JS 预算 250 KiB gzip）。平台的可部署外壳是后端仓库的 [apps/qian-shell](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/apps/qian-shell/README.md)，认证页族是 [packages/qian-identity-ui](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/packages/qian-identity-ui/README.md)；真实流程验收是后端仓库的 `pnpm yue:auth`，对 [tools/Qian.Dev.Shell](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/tools/Qian.Dev.Shell/README.md) 拉起的真实 qian.identity、平台表面宿主与网关 BFF 运行。
 
 ## 模型体验
 
@@ -39,5 +39,5 @@ menuTypeRegistry.toJSON 可导出菜单类型元数据，注册返回可撤销�
 
 ## 已知限制与延期项
 
-- 真实 OIDC code + PKCE、多租户选择、`prompt=select_account` 切换与 Cookie 会话由 S1-YUE-002 经网关 BFF 接线（浏览器零令牌，不再有 selection_token 进前端）；S1-YUE-012 把这些 Qian 专有接线移到 `@qian/shell-kit`，与 S1-YUE-001 的 MF2 宿主一起融合进 `apps/qian-shell`。版本号沿用工作区 0.1.0，尚未发布。
+- 真实 OIDC code + PKCE、多租户选择、`prompt=select_account` 切换与 Cookie 会话由 S1-YUE-002 经网关 BFF 接线（浏览器零令牌，不再有 selection_token 进前端）；S1-YUE-012 把这些平台专有接线移到 `@qian/shell-kit`，与 S1-YUE-001 的 MF2 宿主一起融合进 `apps/qian-shell`。版本号沿用工作区 0.1.0，尚未发布。
 - 验证码登录与忘记密码为 P1，Captcha 为 P2，七种布局与偏好抽屉为后续范围。

@@ -1,6 +1,6 @@
 # @cavailab/qian-core
 
-Qian 的基础组件层，基于 Base UI 1.8、统一 qian 令牌与 Lucide 图标。S1-YUE-005 提供 51 个组件入口及配套部件（S1-YUE-017 增加 Steps，现为 52 个）、机器可读 manifest、Rspress 组件文档、SSR/键盘与无障碍验收。设计文档中的 `@cavailab/qian-core` 是本包简称。
+Qian 的基础组件层，基于 Base UI 1.8、统一 qian 令牌与 Lucide 图标。S1-YUE-005 提供 51 个组件入口及配套部件（S1-YUE-017 增加 Steps，现为 52 个）、机器可读 manifest、Rspress 组件文档、SSR/键盘与无障碍验收。后端设计文档写于更名之前，用旧名字与旧的包简称称呼本包，对照见[迁移说明](../../../docs/migrating-from-yue.md)。
 
 ## 边界与安装
 
@@ -65,11 +65,13 @@ Select 的触发器通过 `SelectTrigger` 的 `aria-label` 或关联标签命名
 
 ## Rspress 文档与验证
 
-组件文档统一在现有站点 `/components/yue/`：每个入口有用途、真实交互、源码、组合部件、完整 Props、键盘说明与限制。`docs/catalog.json` 提供中文用途，`docs/examples/catalog.tsx` 是文档/浏览器测试/原靶场共用的普通 React 示例，`docs/scenarios.json` 保留迁移前 126 个状态场景的逐条 id，逐条由 `website/e2e/components.spec.ts` 验收。
+组件文档统一在现有站点 `/components/yue/`（文档站与这条路由都在后端仓库）：每个入口有用途、真实交互、源码、组合部件、完整 Props、键盘说明与限制。`docs/catalog.json` 提供中文用途，`docs/examples/catalog.tsx` 是文档/浏览器测试/原靶场共用的普通 React 示例，`docs/scenarios.json` 保留迁移前 126 个状态场景的逐条 id，逐条由 `website/e2e/components.spec.ts` 验收。
 
 ```bash
+# 在后端仓库
 KUN_DOCS_PATH=/本机/kun pnpm --filter website dev
 KUN_DOCS_PATH=/本机/kun pnpm yue:docs
+# 在本仓库
 pnpm qian:gates
 ```
 

@@ -1,6 +1,6 @@
 # Qian 前端插件 SDK
 
-逻辑名 `@qian/plugin-sdk`，私有 GitHub Packages 发布名 `@cavailab/qian-plugin-sdk`。目录模型与运行时语义见 [组件规格](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/component-model.md)，任务范围见 [S1-YUE-001](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/pm/tasks/S1-YUE-001.md)。本包提供外壳 Definition 与运行时适配；qian 保持可独立使用，不依赖 Qian。
+逻辑名 `@qian/plugin-sdk`，私有 GitHub Packages 发布名 `@cavailab/qian-plugin-sdk`。目录模型与运行时语义见 [组件规格](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/component-model.md)，任务范围见 [S1-YUE-001](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/pm/tasks/S1-YUE-001.md)。本包提供外壳 Definition 与运行时适配；qian 的组件层（`packages/qian/*`）保持可独立使用，不依赖本包。
 
 ## 安装与发布
 
@@ -10,11 +10,13 @@
 npm install '@qian/plugin-sdk@npm:@cavailab/qian-plugin-sdk@0.1.0'
 ```
 
-依赖为实际发布的 `@cavailab/qian-runtime`、`@cavailab/qian-sdk`（传递 contracts 与 tokens）、官方 MF2 runtime 与 SemVer；Ajv 只在构建期使用（见下文「校验不在运行期生成代码」）。`pnpm pack` 会把 workspace 依赖写成固定版本范围，包内只交付 ESM、声明与文档；本地 pack 不代表私有源发布成功。正式发布与外部干净消费者验收由 `plugin-sdk-release` 工作流执行。
+依赖为实际发布的 `@cavailab/qian-runtime`、`@cavailab/qian-sdk`（传递 contracts 与 tokens）、官方 MF2 runtime 与 SemVer；Ajv 只在构建期使用（见下文「校验不在运行期生成代码」）。`pnpm pack` 会把 workspace 依赖写成固定版本范围，包内只交付 ESM、声明与文档；本地 pack 不代表私有源发布成功。正式发布与仓库外的干净消费者验证由本仓库的 `release` 工作流执行，见[发布脚本](../../scripts/release/README.md)。新名字还没有发布过，首发之前上面的安装命令装不上；首发的版本号待定（F3）。
 
-### 私有包初始化与正式发布
+### 私有包初始化与正式发布（原工作流的脚本）
 
-`plugin-sdk-release` 仅接受 main、`idadawn/qian` 与清单中的固定 SDK 版本；所有远端写入使用本次 Actions 的 `GITHUB_TOKEN`，不使用本机 PAT 回退。固定依赖组只有 `@cavailab/qian-tokens / @cavailab/qian-contracts / @cavailab/qian-sdk / qian-plugin-sdk` 四个 `@idadawn` 包；既有 `qian-runtime` 只参与消费者验证，不重复发布。
+这一节说的是 `scripts/private-publication.mjs` 与 `scripts/release.mjs`，它们原来由原仓库的 `plugin-sdk-release` 工作流调用。F1 迁入本仓库时删掉了那个工作流，F2 起 10 个包统一由 `release` 工作流发布；这两个脚本与测试暂时保留，其中的仓库与包名断言已改成本仓库与新名字，去留在首发（F3）时定。
+
+脚本仅接受 main、`CavaiLAB/qian` 与清单中的固定 SDK 版本；所有远端写入使用本次 Actions 的 `GITHUB_TOKEN`，不使用本机 PAT 回退。固定依赖组只有 `@cavailab/qian-tokens / @cavailab/qian-contracts / @cavailab/qian-sdk / @cavailab/qian-plugin-sdk` 四个包；既有 `@cavailab/qian-runtime` 只参与消费者验证，不重复发布。
 
 默认 `operation=release` 保留构建、测试、打包、仓库外归档消费、同版本摘要防覆盖和真实 registry 消费。**任何正式归档上传前，先 GET 核对完整四包均已存在且 visibility=private**；缺包、public 或 internal 会使整组失败，正式上传次数为零。每次上传前后再检查可见性，不能把 npm 的 `--access=restricted` 输出当作 GitHub 私有状态的证明。
 
