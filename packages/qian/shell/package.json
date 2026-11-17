@@ -32,7 +32,7 @@
     "./inbox": "./src/inbox.tsx"
   },
   "publishConfig": {
-    "access": "restricted",
+    "access": "public",
     "registry": "https://npm.pkg.github.com",
     "exports": {
       ".": {

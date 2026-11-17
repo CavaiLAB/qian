@@ -25,7 +25,7 @@
   },
   "publishConfig": {
     "registry": "https://npm.pkg.github.com",
-    "access": "restricted",
+    "access": "public",
     "exports": {
       ".": {
         "types": "./dist/index.d.ts",

@@ -28,7 +28,7 @@
     "./theme.css": "./src/theme.css"
   },
   "publishConfig": {
-    "access": "restricted",
+    "access": "public",
     "registry": "https://npm.pkg.github.com",
     "exports": {
       ".": {
