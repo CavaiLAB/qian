@@ -1,6 +1,6 @@
 {
   "name": "@cavailab/qian-form",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Field、SchemaForm、FormApi、联动、校验与脱敏规则目录、弹层 API 与消息出口。",
   "license": "MIT",
   "repository": {

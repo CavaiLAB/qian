@@ -1,5 +1,13 @@
 # @cavailab/qian-form
 
+## 0.2.1
+
+### Patch Changes
+
+- @cavailab/qian-contracts@0.2.1
+  - @cavailab/qian-core@0.2.1
+  - @cavailab/qian-sdk@0.2.1
+
 ## 0.2.0
 
 ### Minor Changes

@@ -1,5 +1,12 @@
 # @cavailab/qian-sdk
 
+## 0.2.1
+
+### Patch Changes
+
+- @cavailab/qian-contracts@0.2.1
+  - @cavailab/qian-tokens@0.2.1
+
 ## 0.2.0
 
 ### Minor Changes

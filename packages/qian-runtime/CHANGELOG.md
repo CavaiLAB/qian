@@ -1,5 +1,11 @@
 # @cavailab/qian-runtime
 
+## 0.2.1
+
+### Patch Changes
+
+- be41903: 随 8 个层包的 0.2.1 一起发布。与 0.2.0 相比只改了包内说明（`README.md`），代码与类型相同，用 0.2.0 的项目不需要特意升级。
+
 ## 0.2.0
 
 ### Minor Changes

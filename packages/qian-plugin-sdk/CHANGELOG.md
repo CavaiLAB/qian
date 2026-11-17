@@ -1,5 +1,14 @@
 # @cavailab/qian-plugin-sdk
 
+## 0.2.1
+
+### Patch Changes
+
+- be41903: 随 8 个层包的 0.2.1 一起发布。依赖的 `@cavailab/qian-sdk`、`@cavailab/qian-runtime` 写成 `^0.2.1`，包内说明的安装命令改为 0.2.1；代码与类型与 0.2.0 相同，用 0.2.0 的项目不需要特意升级。
+- Updated dependencies [be41903]
+  - @cavailab/qian-runtime@0.2.1
+  - @cavailab/qian-sdk@0.2.1
+
 ## 0.2.0
 
 ### Minor Changes

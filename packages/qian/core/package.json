@@ -1,6 +1,6 @@
 {
   "name": "@cavailab/qian-core",
-  "version": "0.2.0",
+  "version": "0.2.1",
   "description": "Base UI + shadcn 源码自有化的基础组件（52 个）。",
   "license": "MIT",
   "repository": {
