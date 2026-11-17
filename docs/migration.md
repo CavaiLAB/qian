@@ -30,8 +30,9 @@
 | `tests/gates/yue` | 分层边界、循环依赖、包形状等门禁的自测 | `tests/gates/qian` |
 | `scripts/yue-visual.mjs` | 视觉回归的入口 | `scripts/qian-visual.mjs` |
 | `.changeset/` | 变更级别登记与版本编排 | 不变 |
+| `tools/openapi-codegen` | 接口类型生成工具：业务选择器与数据组件包的 `contracts:generate` / `contracts:check` 经根脚本 `openapi:generate` 调它。两边各留一份，后端那份给留在后端的界面包用 | 不变 |
 | 根目录的前端工程配置 | 工作区与版本目录、构建编排、代码规则、分层矩阵、循环依赖检查、测试配置 | 裁剪成只含本仓库的包 |
-| 八项门禁、运行时、发布的工作流 | 4 个工作流 | 改写后放在本仓库 |
+| 八项门禁、运行时、发布的工作流 | 4 个工作流 | 门禁与运行时的两个改写后放在本仓库；两个发布工作流发的是旧名字，F1 删掉，F2 按新名字重写 |
 
 ### 2.2 留在后端仓库
 
@@ -43,7 +44,8 @@
 | `packages/qian-identity-ui`、`packages/qian-tenancy-ui`、`packages/qian-tenancy-signup-ui` | 身份、租户运营、租户开通三个组件自带的界面 |
 | `samples/qian-sample-crm-ui` | 参考应用的远程模块 |
 | `website/` | 文档站。组件页的来源在本仓库的包里，拆开之后怎么取见第 4 节 |
-| `packages/qian-cli`、`packages/qian-surfaces`、`tools/openapi-codegen` | 命令行、声明式表面的校验库、接口类型生成工具 |
+| `packages/qian-cli`、`packages/qian-surfaces` | 命令行、声明式表面的校验库 |
+| `tools/openapi-codegen` | 接口类型生成工具。后端也留一份，给留在后端的界面包用；本仓库那份见 2.1 |
 | 起真实后端的端到端测试 | 外壳的联邦与认证、租户运营页、真实目录 |
 
 后端仓库现在是 `idadawn/qian`；后端迁往 `CavaiLAB/kun` 之后指那边。下文说「后端仓库」都按这个意思。
@@ -60,6 +62,8 @@
 | `schemas/v2/ui.schema.json` | 前端插件开发包 | 界面清单的 Schema，生成类型与校验器 |
 | `tck/surfaces/cases.json` | 前端插件开发包 | 界面清单的一致性用例 |
 | `tck/runtime`、`tck/profiles/base`，以及命令行的 profile 解析 | TypeScript 运行时 | 与 .NET 运行时共用的一致性用例 |
+
+前 5 行的副本在本仓库的 `backend-copy/`，按来源路径存放，来源清单与检查脚本的用法见那里的 README。最后一行不复制：它要的是命令行构建出来的装配器与成套的场景，CI 按同一个来源提交检出后端来跑，见第 4 节。
 
 ## 3 阶段
 
@@ -96,6 +100,8 @@ F1 与 F2 分成两个 PR 的理由：F1 的 PR 只证明「搬过来的东西�
 | 本仓库 → 后端 | 10 个 npm 包 | 后端仓库写精确版本，不写范围；升级走 PR |
 | 本仓库 → 后端 | 文档站要的组件文档源、示例与目录 | 文档站按发布版本对应的标签检出本仓库，和它现在按钉住的版本取 Kun 文档是同一个办法。要不要改成由平台总览的文档站直接出组件页，待定 |
 | 本仓库 → 后端 | 后端测试读的两份文件：业务选择器的接口契约、基础组件包的版本号 | 随包发布，后端从安装目录里读 |
+
+前两行在 F1 落地：契约副本的摘要核对在门禁 unit 一项里，逐个文件比对是 `backend-copy` 工作流；运行时的一致性用例是 `runtime-ts` 工作流里的「运行时一致性用例」一项，在后端检出里只装命令行及其依赖、构建命令行，再用本仓库的运行时跑。两者用 `backend-copy/manifest.json` 记的同一个来源仓库、路径前缀与提交。
 
 本仓库不需要后端的镜像，也不需要 .NET 工具链。
 
@@ -154,4 +160,33 @@ F1 与 F2 分成两个 PR 的理由：F1 的 PR 只证明「搬过来的东西�
 
 ## 9 导入记录
 
-F1 完成时填写：源提交、导入用的命令、导入的提交数、文件一致性的核对结果、重跑的办法。
+F1（S1-YUE-023）的导入，2026-11-17。脚本与做法见 [导入脚本](../scripts/import/README.md)。
+
+| 项 | 结果 |
+|---|---|
+| 源 | `idadawn/qian` 主干的提交 `aafa0cc5ab48637a1c634867d6cddb2935837814`。导入时主干已前进 15 个提交，都没有碰导入路径 |
+| 导入的路径 | `scripts/import/paths.txt` 的 22 条：2.1 的全部路径（含 `tools/openapi-codegen/`），加上清单之外确实需要的根目录 `.gitignore` |
+| 过滤结果 | 154 个提交，末端 `c7d945775c244da51a5fb351e29b3ad10c04a9b6`，580 个文件。用的是 `git-filter-repo` 2.47.0；脚本从 GitHub 新克隆、与指向本机克隆各跑一遍，末端相同 |
+| 提交说明 | 50 处指向源仓库 PR 的 `#N` 改写成 `idadawn/qian#N`（另有 1 处原本就这样写）；1 处指向保留下来的提交的哈希换成新哈希。逐个对回源提交比较，没有其它改动；任务号不变 |
+| 合并提交 | `df9d7a1deb5b5b416e894c8f9e540d840ee0e7e0`，第二个父提交是上面的末端 |
+| 一致性证明 | 在合并提交上（裁剪之前）跑 `scripts/import/verify.sh`：源提交的文件 580 个，一致 580，不一致 0，缺少 0，多出 0；导入的提交 154 个。另按目录树与文件的对象哈希核对 22 条路径，全部相同 |
+| 改名排查 | 全历史按 50% 与 30% 两档相似度找改名，合并提交也算：没有从清单之外改名进入导入路径的文件，不需要补旧路径。反方向有 3 个文件从 `packages/yue/shell/src` 改名迁进留在后端的 `packages/qian-shell-kit`（S1-YUE-012），在导入的历史里表现为删除 |
+| 锁文件 | 裁剪之后重新生成，与原锁文件逐项比对：留下的 13 个工作区项目、200 个直接依赖、828 个包、832 个快照完全相同，没有出现新版本；去掉的是 9 个没迁来的工作区项目与只被它们用到的 258 个包。版本目录原样保留 |
+
+导入用的命令：
+
+```bash
+scripts/import/import.sh --commit aafa0cc5ab48637a1c634867d6cddb2935837814 --out <空目录>
+git fetch <空目录> import
+git merge --allow-unrelated-histories --no-ff FETCH_HEAD
+scripts/import/verify.sh --commit aafa0cc5ab48637a1c634867d6cddb2935837814 --target <合并提交>
+```
+
+合并之后的改动都是单独的提交，名字一个不改：
+
+- 裁剪工程配置：工作区、根脚本、eslint、分层矩阵、循环依赖检查、vitest 的 projects、变更登记的忽略清单、令牌检查的扫描范围只含迁入的框架库；`turbo.json` 只加了 `"agentGuidance": false`，免得 turbo 往 `AGENTS.md` 写它自己的段落。
+- 删掉只服务于留在后端的东西：门禁自测 `shell-dist.test.ts`（测外壳的产物校验脚本）；`boundaries.test.ts` 里外壳、认证页族、参考远程可以引外壳接线的 4 条断言（「应用可以消费开发包」那条改用演练场的路径）；演练场的真实目录端到端测试 `e2e:directory` 及它专用的 Playwright 与 Vite 配置、页面（要靠后端的 `dev-tenant-ops.sh` 起真实后端）；两个发布工作流。
+- 契约改读 `backend-copy/` 里的副本（第 2.3 节）；运行时的一致性用例从默认的 `test` 拆出，成为 `test:tck`（第 4 节）。
+- 导入的 README 里 19 处指向后端仓库文件的相对链接，改成指向源提交的完整地址。
+
+重跑与增量补齐：F2 合入之前，原仓库里导入路径确有改动要进时，按导入脚本说明里的「增量补齐」做：用新的源提交重跑 `import.sh`，核对上次的末端 `c7d945775c` 是新末端的祖先，再合并，只核对这一段改过的路径，并在这一节补一行。F2 合入之后不再从原仓库导入。
