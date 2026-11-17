@@ -19,13 +19,15 @@ const DIRECT = {
   'code-editor': ['core'],
   biz: ['core', 'data', 'form', 'sdk'],
   widgets: ['core', 'data', 'form', 'biz', 'sdk'],
-  runtime: ['widgets', 'biz', 'shell', 'data', 'form', 'charts', 'code-editor', 'core', 'sdk'],
-  designer: ['runtime', 'widgets', 'biz', 'shell', 'data', 'form', 'charts', 'code-editor', 'core', 'sdk'],
-  'designer-form': ['designer', 'runtime', 'widgets', 'biz', 'shell', 'data', 'form', 'charts', 'code-editor', 'core', 'sdk'],
-  'designer-list': ['designer', 'runtime', 'widgets', 'biz', 'shell', 'data', 'form', 'charts', 'code-editor', 'core', 'sdk'],
-  'designer-flow': ['designer', 'runtime', 'widgets', 'biz', 'shell', 'data', 'form', 'charts', 'code-editor', 'core', 'sdk'],
-  'designer-portal': ['designer', 'runtime', 'widgets', 'biz', 'shell', 'data', 'form', 'charts', 'code-editor', 'core', 'sdk'],
-  mobile: ['runtime', 'widgets', 'biz', 'shell', 'data', 'form', 'charts', 'code-editor', 'core', 'sdk'],
+  // 规划中、还没建：由 Schema 驱动的表单、列表、详情渲染器与动作执行器。产品负责人定名为 renderer，免得与 TypeScript 运行时
+  // （@cavailab/qian-runtime）同名；后端规格的分层表原来叫它 runtime，F4 跟着改。
+  renderer: ['widgets', 'biz', 'shell', 'data', 'form', 'charts', 'code-editor', 'core', 'sdk'],
+  designer: ['renderer', 'widgets', 'biz', 'shell', 'data', 'form', 'charts', 'code-editor', 'core', 'sdk'],
+  'designer-form': ['designer', 'renderer', 'widgets', 'biz', 'shell', 'data', 'form', 'charts', 'code-editor', 'core', 'sdk'],
+  'designer-list': ['designer', 'renderer', 'widgets', 'biz', 'shell', 'data', 'form', 'charts', 'code-editor', 'core', 'sdk'],
+  'designer-flow': ['designer', 'renderer', 'widgets', 'biz', 'shell', 'data', 'form', 'charts', 'code-editor', 'core', 'sdk'],
+  'designer-portal': ['designer', 'renderer', 'widgets', 'biz', 'shell', 'data', 'form', 'charts', 'code-editor', 'core', 'sdk'],
+  mobile: ['renderer', 'widgets', 'biz', 'shell', 'data', 'form', 'charts', 'code-editor', 'core', 'sdk'],
   agent: ['core', 'sdk'],
 };
 
