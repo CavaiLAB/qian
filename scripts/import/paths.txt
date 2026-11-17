@@ -1,0 +1,32 @@
+# F1 导入的路径（S1-YUE-023）。import.sh 原样交给 git filter-repo --paths-from-file，verify.sh 按同一份清单核对。
+# 都从仓库根算起；以 / 结尾的是目录（含其下全部文件），其余是单个文件。以 # 开头的行与空行不算。
+# 改这份清单会改变过滤后的每一个提交，已经合入之后再改就不能按 README.md 的「增量补齐」做了。
+
+# 框架库：8 个包、组件演练场、前端插件开发包、TypeScript 运行时、门禁自测、视觉回归入口、变更登记
+packages/yue/
+apps/yue-playground/
+packages/qian-plugin-sdk/
+packages/qian-runtime/
+tests/gates/yue/
+scripts/yue-visual.mjs
+.changeset/
+
+# 根目录的前端工程配置
+package.json
+pnpm-workspace.yaml
+pnpm-lock.yaml
+turbo.json
+vitest.config.ts
+eslint.config.mjs
+eslint.boundaries.config.mjs
+.dependency-cruiser.cjs
+.editorconfig
+
+# 工作流：门禁、运行时，以及两个发布工作流（导入后在裁剪提交里删掉，由 F2 重写）
+.github/workflows/yue.yml
+.github/workflows/runtime-ts.yml
+.github/workflows/runtime-ts-release.yml
+.github/workflows/plugin-sdk-release.yml
+
+# 清单之外、开工核对时发现确实需要的：根目录的 .gitignore（依赖目录、构建产物、测试与视觉报告靠它不进 Git）
+.gitignore
