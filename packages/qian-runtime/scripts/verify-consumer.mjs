@@ -7,7 +7,7 @@ import {fileURLToPath} from 'node:url';
 
 // 在仓库外安装真实制品，禁止 workspace 链接代替消费验收。
 const source=process.argv[2];
-assert(source?.startsWith('file:') || /^npm:@cavailab\/qian-runtime@\d+\.\d+\.\d+$/.test(source),'需要本地 tgz 或固定版本的私有 npm alias');
+assert(source?.startsWith('file:') || /^npm:@cavailab\/qian-runtime@\d+\.\d+\.\d+$/.test(source),'需要本地 tgz（file:）或固定版本的 npm alias（npm:@cavailab/qian-runtime@x.y.z）');
 const expected=JSON.parse(readFileSync(new URL('../package.json',import.meta.url),'utf8'));
 const directory=mkdtempSync(path.join(tmpdir(),'qian-runtime-consumer-'));
 try {
@@ -46,5 +46,5 @@ void invalid;
  execFileSync(process.execPath,['smoke.mjs'],{cwd:directory,env,stdio:'inherit'});
  const tsc=fileURLToPath(new URL('../node_modules/typescript/bin/tsc',import.meta.url));
  execFileSync(process.execPath,[tsc,'--noEmit','--strict','--target','ES2022','--module','NodeNext','--moduleResolution','NodeNext','smoke.mts'],{cwd:directory,env,stdio:'inherit'});
- console.log(JSON.stringify({package:pkg.name,version:pkg.version,logicalImport:'@qian/runtime',source:source.startsWith('npm:')?'private-registry':'local-archive',runtime:true,types:true,licenses:true}));
+ console.log(JSON.stringify({package:pkg.name,version:pkg.version,logicalImport:'@qian/runtime',source:source.startsWith('npm:')?'registry':'local-archive',runtime:true,types:true,licenses:true}));
 } finally {rmSync(directory,{recursive:true,force:true});}

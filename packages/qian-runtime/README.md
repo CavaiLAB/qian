@@ -1,23 +1,25 @@
 # Qian TypeScript 运行时
 
-依据 [组件模型 §5](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/component-model.md#5-运行时模型) 与 [S1-RT-003](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/pm/tasks/S1-RT-003.md)。S1-DEC-014 批准的物理包名是 `@idadawn/qian-runtime`，发布到 GitHub Packages 私有源；F2 把作用域改为 `@cavailab`（GitHub Packages 要求作用域与仓库所有者同名），现在的包名是 `@cavailab/qian-runtime`。消费者通过 npm alias 保留公共逻辑导入名 `@qian/runtime`。
+依据 [组件模型 §5](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/component-model.md#5-运行时模型) 与 [S1-RT-003](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/pm/tasks/S1-RT-003.md)。S1-DEC-014 批准的物理包名是 `@idadawn/qian-runtime`，当时作为私有包发布在 GitHub Packages；F2 把作用域改为 `@cavailab`（GitHub Packages 要求作用域与仓库所有者同名），现在的包名是 `@cavailab/qian-runtime`，从 0.2.0 起以这个名字发布，包是公开的。消费者通过 npm alias 保留公共逻辑导入名 `@qian/runtime`。
 
-## 私有源安装
+## 安装
 
-消费项目的 `.npmrc` 只引用环境变量，不写入令牌值：
+包发在 GitHub Packages 上。它的 npm 包源装公开包也要带令牌（[GitHub 文档](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages)）：本机用有 `read:packages` 权限的个人访问令牌（classic）；GitHub Actions 里用工作流的 `GITHUB_TOKEN`，工作流要声明 `packages: read`。消费项目的 `.npmrc` 只引用环境变量，不写入令牌值：
 
 ```ini
 @cavailab:registry=https://npm.pkg.github.com
 //npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
 ```
 
-在环境中提供具有该包读取权限的令牌后安装固定版本：
+令牌放进环境变量 `NODE_AUTH_TOKEN` 后安装固定版本：
 
 ```bash
-npm install '@qian/runtime@npm:@cavailab/qian-runtime@0.1.1'
+npm install '@qian/runtime@npm:@cavailab/qian-runtime@0.2.0'
 ```
 
-`package.json` 的依赖值为 `"@qian/runtime": "npm:@cavailab/qian-runtime@0.1.1"`，下文逻辑导入名保持一致。源码工作区内部构建按目录筛选包；发版只经本仓库的 `release` 工作流（在 main 上手动触发）：先核对门禁，按清单版本发布，再在仓库外的干净项目从包源安装并构建，见[发布脚本](../../scripts/release/README.md)。旧名字的 0.1.1 曾由原仓库的 `runtime-ts-release` 工作流发布到私有源，首次发布证据记录在任务中；新名字还没有发布过，首发之前上面的安装命令装不上，首发的版本号待定（F3）。`scripts/publish.mjs` 与 `scripts/verify-consumer.mjs` 是那个工作流的脚本，断言已改成本仓库与新名字，去留在首发时定。
+`package.json` 的依赖值为 `"@qian/runtime": "npm:@cavailab/qian-runtime@0.2.0"`，下文逻辑导入名保持一致。变更记录不随包发布，在[仓库里](https://github.com/CavaiLAB/qian/blob/main/packages/qian-runtime/CHANGELOG.md)。源码工作区内部构建按目录筛选包；发版只经本仓库的 `release` 工作流（在 main 上手动触发）：先核对门禁，打包后先在仓库外的干净项目里用这批制品装一遍、跑一遍，再按清单版本发布，发完从包源安装并构建，见[发布脚本](https://github.com/CavaiLAB/qian/blob/main/scripts/release/README.md)。旧名字的 0.1.0、0.1.1 由原仓库的发布工作流发布，不再出新版本。
+
+`scripts/verify-consumer.mjs` 是本包自己的制品验收：在仓库外的空项目里经逻辑导入名 `@qian/runtime` 装上制品（`file:<tarball>` 或 `npm:@cavailab/qian-runtime@<版本>`），实际装载、派发、卸载一次，核对许可证文件随包，再按 NodeNext 解析做类型检查。CI 的 `runtime-ts` 工作流对每次改动的打包结果跑它，`release` 工作流在上传前对 tarball、发布后对包源各跑一次。
 
 ## 装配与使用
 
@@ -87,7 +89,7 @@ CI 的 `runtime-ts` 工作流按同样的办法跑这一项。T19 自动热重�
 
 ## 已知限制与延期项
 
-- 私有包消费需要读取权限；使用逻辑导入名的消费者必须声明上述 npm alias。
+- 从 GitHub Packages 安装要带令牌，公开包也一样（见「安装」）；使用逻辑导入名的消费者必须声明上述 npm alias。
 - 只负责宿主内运行时，不实现市场下载、配置 Schema 校验、持久化或远程 Provider 健康探测；由装配器在 mount 前完成。
 - 生命周期内不要等待同一装载器的 mount/unmount/whenIdle，避免自等待。
 - 调用方须配合取消信号；无法强制终止忽略取消的插件代码。

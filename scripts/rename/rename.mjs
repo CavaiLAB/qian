@@ -85,9 +85,11 @@ export const RULES = [
 // check 用：替换之后仍然允许带旧名字的文档（新旧对照、更名记录、导入记录）。
 export const HISTORY_DOCS = ['docs/migration.md', 'docs/migrating-from-yue.md', 'AGENTS.md', 'README.md', 'docs/architecture.md'];
 
-// check 用：F2 手工写进来、本来就要带旧名字的片段。只用来给剩下的 yue 归类，不参与 replace。带 file 的只认那一个文件。
+// check 用：F2、F3 手工写进来、本来就要带旧名字的片段。只用来给剩下的 yue 归类，不参与 replace。
+// 带 file 的只认那一个文件；file 是正则时认路径匹配的文件。
 export const CHECK_KEEP = [
   { id: 'guide-link', re: /migrating-from-yue\.md/g, why: '指向给使用方的迁移说明（docs/migrating-from-yue.md）的链接' },
+  { id: 'first-release-entry', file: /(?:^|\/)CHANGELOG\.md$/, re: /^- [0-9a-f]{7}: 以新名字首次发布。.*(?:\n(?: .*|[ \t]*))*/gm, why: '各包变更记录里首发那一条：新旧名字的逐项对照（含其中指向迁移说明的链接）' },
   { id: 'lead-registration', file: 'backend-copy/README.md', re: /engines\.yue|\\?"yue\\?"|#\/engines\/yue/g, why: '契约副本说明「领先于来源」一节里来源仍在用的旧键' },
   { id: 'release-assertion', file: 'scripts/release/pack.mjs', re: /^.*文件名里还有 yue.*$/gm, why: '打包与消费验证断言制品里没有旧名字' },
   { id: 'release-assertion', file: 'scripts/release/consumer.mjs', re: /^.*构建产物里还有 yue 前缀.*$/gm, why: '打包与消费验证断言制品里没有旧名字' },
@@ -307,7 +309,7 @@ function check() {
     const skip = skipOf(file);
     const covered = [];
     for (const { id, re } of PROTECT) for (const m of text.matchAll(re)) covered.push([m.index, m.index + m[0].length, id]);
-    if (skip?.keep !== 'rename-script') for (const { id, re, file: only } of CHECK_KEEP) if (!only || only === file) for (const m of text.matchAll(re)) covered.push([m.index, m.index + m[0].length, id]);
+    if (skip?.keep !== 'rename-script') for (const { id, re, file: only } of CHECK_KEEP) if (!only || (only instanceof RegExp ? only.test(file) : only === file)) for (const m of text.matchAll(re)) covered.push([m.index, m.index + m[0].length, id]);
     covered.sort((a, b) => (b[1] - b[0]) - (a[1] - a[0])); // 嵌套时算在最外层名下，与 replace 的计数一致
     for (const m of text.matchAll(/yue/gi)) {
       const hit = covered.find(([start, end]) => m.index >= start && m.index < end);

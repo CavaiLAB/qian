@@ -56,12 +56,12 @@ tests/gates/qian/           门禁自测：分层边界、循环依赖样例、�
 
 - `packages/qian/*` 的 8 个包固定同一版本号（`.changeset/config.json` 的 `fixed` 逐个列出包名：运行时与插件开发包也以 `@cavailab/qian-` 开头，但不在固定组里，各自定版本），对应插件清单的 `engines.qian`（ADR-013 D13.4）。
 - `0.x` 期间：破坏性变更记 `minor`，修复与兼容新增记 `patch`，每个 minor 都可能破坏；`1.0` 之后只在大版本破坏，废弃的 API 至少保留一个 minor 并给出迁移说明；主版本升级有双版本并存期（规格 §4.3）。
-- 流程：改了包的公开行为就在 PR 里 `pnpm changeset` 选包与级别；出版本时由 `pnpm changeset version` 把版本号与变更记录写进各包，经 PR 合入 main；发布由手动触发的 `release` 工作流按各包 `package.json` 里的版本做，不改版本号。
-- **发布**：GitHub Packages（规格 D14，2026-10-09 拍板）。GitHub Packages 要求 scope 与所有者同名，所以包名是 `@cavailab/qian-<包>`；每个包的 `publishConfig.registry` 已指 `https://npm.pkg.github.com`。不从本机发布：这 8 个包连同运行时与插件开发包只经 `release` 工作流发布，打包验证、发布与干净消费者验证的做法见[发布脚本](../../scripts/release/README.md)。新名字的包还没有发布过，首发是 F3 的事，首发的版本号与包的可见性待定。消费方在项目 `.npmrc` 写：
+- 流程：改了包的公开行为就在 PR 里 `pnpm changeset` 选包与级别；出版本时由 `pnpm changeset version` 把版本号与变更记录写进各包，经 PR 合入 main；发布由手动触发的 `release` 工作流按各包 `package.json` 里的版本做，不改版本号。运行时与插件开发包的说明里写的是固定版本的安装命令，出版本时跟着改，`scripts/release/pack.mjs` 会核对（CI 的 publint 一项也跑它）。
+- **发布**：GitHub Packages（规格 D14，2026-10-09 拍板）。GitHub Packages 要求 scope 与所有者同名，所以包名是 `@cavailab/qian-<包>`；每个包的 `publishConfig.registry` 已指 `https://npm.pkg.github.com`。不从本机发布：这 8 个包连同运行时与插件开发包只经 `release` 工作流发布，打包验证、发布与干净消费者验证的做法见[发布脚本](../../scripts/release/README.md)。首发（F3）10 个包统一 0.2.0，包公开。GitHub Packages 的 npm 包源装公开包也要带令牌：本机用有 `read:packages` 权限的个人访问令牌（classic），GitHub Actions 里用工作流的 `GITHUB_TOKEN`（工作流声明 `packages: read`），出处与细节见[迁移说明](../../docs/migrating-from-yue.md)第 2 节。消费方在项目 `.npmrc` 写：
 
   ```ini
   @cavailab:registry=https://npm.pkg.github.com
-  //npm.pkg.github.com/:_authToken=${GITHUB_TOKEN}
+  //npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
   ```
 
 ## 6 Base UI 验证门
@@ -71,5 +71,5 @@ tests/gates/qian/           门禁自测：分层边界、循环依赖样例、�
 ## 7 已知限制与延期项
 
 - tokens 的品牌、明暗与语义色验证页已在靶场 `/tokens.html` 建立；Rspress 组件页与站内交互编辑器由 S1-YUE-005 提供，文档站留在后端仓库，在那里执行 `pnpm yue:docs` 验证生成、真实交互、离线编辑及静态构建；sdk / shell / data / form / biz 的组件文案门禁已随 SDK 接入 lint，资源包、示例与测试除外，core 继续由宿主传 label；视觉回归已随 S1-YUE-011 接入 `pnpm qian:visual`，采用固定 Linux 镜像，本机需 Docker。
-- tokens 已实现三层令牌和首帧主题控制；sdk 已交付类型化客户端、注册表与三语言 i18n；form 已交付 SchemaForm 与统一弹层；data 已交付 S1 基础组件，真实上传 E2E 仍归 S1-FILE-003；shell 已交付页面骨架、菜单/偏好与注入式认证页族（R111）；biz 已交付 S1 基础版业务选择器（S1-YUE-010），角色与权限点目录的服务端归 S1-AZ-005；tokens、contracts、sdk 曾以旧名字于 2026-10-23 私有发布 0.1.0（S1-YUE-001），新名字的包都还没有发布。
+- tokens 已实现三层令牌和首帧主题控制；sdk 已交付类型化客户端、注册表与三语言 i18n；form 已交付 SchemaForm 与统一弹层；data 已交付 S1 基础组件，真实上传 E2E 仍归 S1-FILE-003；shell 已交付页面骨架、菜单/偏好与注入式认证页族（R111）；biz 已交付 S1 基础版业务选择器（S1-YUE-010），角色与权限点目录的服务端归 S1-AZ-005；tokens、contracts、sdk 曾以旧名字于 2026-10-23 私有发布 0.1.0（S1-YUE-001）；新名字从 0.2.0 起发布（F3）。
 - Lighthouse 同时覆盖靶场各页与 `/shell.html` 的真实 AppShell 首屏；认证表单按需懒加载，脚本压缩后 ≤ 250 KiB、a11y = 100 的预算不变（PRD §14）。真实 qian.shell 部署接线由 S1-YUE-001/002 继续验收。

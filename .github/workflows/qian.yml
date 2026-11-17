@@ -10,6 +10,7 @@ on:
     branches: [main]
     paths:
       - "scripts/qian-visual.mjs"
+      - "scripts/release/**"
       - "packages/qian/**"
       - "backend-copy/**"
       - "scripts/backend-copy.mjs"
@@ -30,6 +31,7 @@ on:
   pull_request:
     paths:
       - "scripts/qian-visual.mjs"
+      - "scripts/release/**"
       - "packages/qian/**"
       - "backend-copy/**"
       - "scripts/backend-copy.mjs"
@@ -104,7 +106,6 @@ jobs:
         run: |
           node scripts/backend-copy.mjs
           pnpm --filter @cavailab/qian-contracts contracts:check
-          node --test packages/qian-plugin-sdk/scripts/private-publication.test.mjs
           pnpm qian:test
       - name: a11y（Playwright + axe，critical / serious = 0）
         if: matrix.gate == 'a11y'
@@ -118,6 +119,13 @@ jobs:
       - name: publint（发布形状，先 build）
         if: matrix.gate == 'publint'
         run: pnpm qian:publint
+      # S1-YUE-024：发布工作流用的打包验证与干净消费者验证也在 PR 上跑，打包问题不留到发布时才发现。不发布。
+      - name: 打包验证与干净消费者（10 个包的 tarball）
+        if: matrix.gate == 'publint'
+        run: |
+          node scripts/release/pack.mjs "$RUNNER_TEMP/packages"
+          node scripts/release/consumer.mjs archive "$RUNNER_TEMP/packages"
+          node packages/qian-plugin-sdk/scripts/verify-consumer.mjs archive "$RUNNER_TEMP/packages"
       - name: circular（循环依赖）
         if: matrix.gate == 'circular'
         run: pnpm qian:circular

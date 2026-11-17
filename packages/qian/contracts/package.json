@@ -1,6 +1,6 @@
 {
   "name": "@cavailab/qian-contracts",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "FormSchema / ListSchema / 控件 manifest / SSE 事件的 JSON Schema 与生成的 TS 类型（无 UI）。",
   "license": "MIT",
   "repository": {
@@ -24,7 +24,7 @@
     ".": "./src/index.ts"
   },
   "publishConfig": {
-    "access": "restricted",
+    "access": "public",
     "registry": "https://npm.pkg.github.com",
     "exports": {
       ".": {

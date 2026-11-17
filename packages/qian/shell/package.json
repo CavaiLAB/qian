@@ -1,6 +1,6 @@
 {
   "name": "@cavailab/qian-shell",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "AppShell 单一侧栏布局、菜单 → 路由、偏好、认证页族组件与契约、会话过期对话框、站内信与兜底页（通用 UI；平台专有接线在 @qian/shell-kit）。",
   "license": "MIT",
   "repository": {
@@ -32,7 +32,7 @@
     "./inbox": "./src/inbox.tsx"
   },
   "publishConfig": {
-    "access": "restricted",
+    "access": "public",
     "registry": "https://npm.pkg.github.com",
     "exports": {
       ".": {

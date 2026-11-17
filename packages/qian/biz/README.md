@@ -5,6 +5,17 @@
 - 分层与允许依赖：[qian 专题规格 §3.1](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/yue.md#31-包结构与依赖方向)；依赖方向由 `packages/qian/boundaries.config.mjs` 与 CI 门禁强制（biz 只依赖 core、data、form、sdk 与底层包，本包实际用到 core、data、sdk）。
 - 实现任务：S1-YUE-010（S1-DEC-024 / R109 自 S1-YUE-009 拆出）。组件文档与交互示例：文档站「组件 → qian 组件库 → 业务选择器」，源在 `docs/index.mdx`。
 
+## 安装
+
+包发在 GitHub Packages 上。它的 npm 包源装公开包也要带令牌（[GitHub 文档](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages)）：本机用有 `read:packages` 权限的个人访问令牌（classic）；GitHub Actions 里用工作流的 `GITHUB_TOKEN`，工作流要声明 `packages: read`。项目的 `.npmrc` 只引用环境变量，不写令牌值：
+
+```ini
+@cavailab:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
+```
+
+令牌放进环境变量 `NODE_AUTH_TOKEN`，再 `npm install @cavailab/qian-biz`。变更记录不随包发布，在[仓库里](https://github.com/CavaiLAB/qian/blob/main/packages/qian/biz/CHANGELOG.md)。
+
 ## 使用
 
 ```tsx
@@ -34,4 +45,4 @@ const i18n = createBizI18n(); // 已有 PlatformI18n 实例时改用 addBizLangu
 - UserSelect 由服务端检索（S1-IDP-010 的 `q`，按显示名、账号与拼音），每次只显示第一页 50 位，后面还有时提示继续输入，不做滚动加载；已选值的显示名按 `ids` / `person_ids` 批量回查（目录接口按 id 批量不分页，回查不带 offset / limit）。
 - 角色与权限点目录的服务端尚未交付（S1-AZ-005）；真实目录数据的 E2E 见靶场的真实目录页（S1-IDP-010），角色授予与服务端生效的 E2E 在 S1-AZ-005。
 - PosSelect / GroupSelect / UsersSelect、PopupSelect 族、RelationForm、InterfaceSelect 与授权树的列 / 字段 / 数据页签留给 S2。
-- 版本 0.1.0 尚未发布。
+- 新名字从 0.2.0 起发布。

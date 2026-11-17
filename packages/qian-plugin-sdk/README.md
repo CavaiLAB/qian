@@ -1,30 +1,20 @@
 # Qian 前端插件 SDK
 
-逻辑名 `@qian/plugin-sdk`，私有 GitHub Packages 发布名 `@cavailab/qian-plugin-sdk`。目录模型与运行时语义见 [组件规格](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/component-model.md)，任务范围见 [S1-YUE-001](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/pm/tasks/S1-YUE-001.md)。本包提供外壳 Definition 与运行时适配；qian 的组件层（`packages/qian/*`）保持可独立使用，不依赖本包。
+逻辑名 `@qian/plugin-sdk`，GitHub Packages 上的发布名 `@cavailab/qian-plugin-sdk`（公开包）。目录模型与运行时语义见 [组件规格](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/component-model.md)，任务范围见 [S1-YUE-001](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/pm/tasks/S1-YUE-001.md)。本包提供外壳 Definition 与运行时适配；qian 的组件层（`packages/qian/*`）保持可独立使用，不依赖本包。
 
 ## 安装与发布
 
-消费项目配置 `@cavailab:registry=https://npm.pkg.github.com`，认证行只引用环境变量 `//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}`，不能提交令牌值。逻辑导入名通过 npm alias 保留：
+包发在 GitHub Packages 上。它的 npm 包源装公开包也要带令牌（[GitHub 文档](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages)）：本机用有 `read:packages` 权限的个人访问令牌（classic）；GitHub Actions 里用工作流的 `GITHUB_TOKEN`，工作流要声明 `packages: read`。消费项目配置 `@cavailab:registry=https://npm.pkg.github.com`，认证行只引用环境变量 `//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}`，不能提交令牌值。逻辑导入名通过 npm alias 保留：
 
 ```bash
-npm install '@qian/plugin-sdk@npm:@cavailab/qian-plugin-sdk@0.1.0'
+npm install '@qian/plugin-sdk@npm:@cavailab/qian-plugin-sdk@0.2.0'
 ```
 
-依赖为实际发布的 `@cavailab/qian-runtime`、`@cavailab/qian-sdk`（传递 contracts 与 tokens）、官方 MF2 runtime 与 SemVer；Ajv 只在构建期使用（见下文「校验不在运行期生成代码」）。`pnpm pack` 会把 workspace 依赖写成固定版本范围，包内只交付 ESM、声明与文档；本地 pack 不代表私有源发布成功。正式发布与仓库外的干净消费者验证由本仓库的 `release` 工作流执行，见[发布脚本](../../scripts/release/README.md)。新名字还没有发布过，首发之前上面的安装命令装不上；首发的版本号待定（F3）。
+依赖为实际发布的 `@cavailab/qian-runtime`、`@cavailab/qian-sdk`（传递 contracts 与 tokens）、官方 MF2 runtime 与 SemVer；Ajv 只在构建期使用（见下文「校验不在运行期生成代码」）。`pnpm pack` 会把 workspace 依赖写成固定版本范围，包内只交付 ESM、声明与文档；本地 pack 不代表包源上发布成功。正式发布与仓库外的干净消费者验证由本仓库的 `release` 工作流执行，见[发布脚本](https://github.com/CavaiLAB/qian/blob/main/scripts/release/README.md)。新名字从 0.2.0 起发布，旧名字 `@idadawn/qian-plugin-sdk` 不再出新版本。变更记录不随包发布，在[仓库里](https://github.com/CavaiLAB/qian/blob/main/packages/qian-plugin-sdk/CHANGELOG.md)。
 
-### 私有包初始化与正式发布（原工作流的脚本）
+### 制品验收
 
-这一节说的是 `scripts/private-publication.mjs` 与 `scripts/release.mjs`，它们原来由原仓库的 `plugin-sdk-release` 工作流调用。F1 迁入本仓库时删掉了那个工作流，F2 起 10 个包统一由 `release` 工作流发布；这两个脚本与测试暂时保留，其中的仓库与包名断言已改成本仓库与新名字，去留在首发（F3）时定。
-
-脚本仅接受 main、`CavaiLAB/qian` 与清单中的固定 SDK 版本；所有远端写入使用本次 Actions 的 `GITHUB_TOKEN`，不使用本机 PAT 回退。固定依赖组只有 `@cavailab/qian-tokens / @cavailab/qian-contracts / @cavailab/qian-sdk / @cavailab/qian-plugin-sdk` 四个包；既有 `@cavailab/qian-runtime` 只参与消费者验证，不重复发布。
-
-默认 `operation=release` 保留构建、测试、打包、仓库外归档消费、同版本摘要防覆盖和真实 registry 消费。**任何正式归档上传前，先 GET 核对完整四包均已存在且 visibility=private**；缺包、public 或 internal 会使整组失败，正式上传次数为零。每次上传前后再检查可见性，不能把 npm 的 `--access=restricted` 输出当作 GitHub 私有状态的证明。
-
-首次缺包时显式选择 `operation=bootstrap-private`，`version` 仍填写正式 SDK 目标版本。这个模式不安装工作区依赖、不构建或读取 `dist`；它为不存在的固定名称生成仅含 `package.json / README.md` 的 `0.0.0-private.0` 空版本，以 `private-bootstrap` 标签发布并关联本仓库。上传前检查真实归档只有两份文件，没有实现、依赖或安装脚本。已有名称不发布或修改。输出包含 `bootstrapRunId`、实际可见性和 `implementationPublished=false`；若有非 private 包，工作流以 `needs-admin` 失败结束，须管理员在包设置中调整为 private 并确认 Actions 访问权限。这是可见性初始化，不能当作正式 SDK 交付；空初始化版本可能先处于 public，但正式实现尚未上传。
-
-管理员配置完成后再次选择默认 `release`，仍发布完整 `0.1.0`（或输入的固定正式版本），并通过私有源真实安装验收。可选输入 `bootstrap_run_id` 必须填写**原初始化运行 ID**：仅在本次 registry 消费成功后，清理才会执行。清理再次确认四份正式版本和摘要，读取空版本归档，核对本仓库、本轮 runId、包名、目标版本、精确空版本及完整两文件内容；只调用该版本 ID 的删除接口。正式版本、其他运行的空版本、无标记或带未知文件的版本均保留；留空不执行删除。
-
-`node --test packages/qian-plugin-sdk/scripts/private-publication.test.mjs` 验证整组零上传拒绝、初始化归档无实现、既有包不变及清理防误删，不向真实 registry 发布或删除任何内容。
+`scripts/verify-consumer.mjs` 在仓库外的空项目里经逻辑导入名 `@qian/plugin-sdk` 装上运行时、tokens、contracts、sdk 与本包的制品（`archive <打包目录>` 用 `scripts/release/pack.mjs` 打出的 tarball，`registry` 从包源装已发布的版本），实际跑一遍 `ShellHost` 的登记、按需加载、桥接调用与卸载，再按 NodeNext 解析做类型检查。CI 的 `qian` 工作流与 `release` 工作流都跑它，见[发布脚本](https://github.com/CavaiLAB/qian/blob/main/scripts/release/README.md)。
 
 ## 宿主与远程
 

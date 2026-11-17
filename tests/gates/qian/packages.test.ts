@@ -54,7 +54,7 @@ describe('packages/qian/* 的 package.json', () => {
       expect(pkg.private).toBeUndefined();
       expect(pkg.type).toBe('module');
       expect(pkg.exports?.['.']).toBe('./src/index.ts');
-      expect(pkg.publishConfig?.access).toBe('restricted');
+      expect(pkg.publishConfig?.access).toBe('public');
       expect(pkg.publishConfig?.exports?.['.']).toEqual({ types: './dist/index.d.ts', default: './dist/index.js' });
       expect(pkg.files).toContain('dist');
       expect(pkg.scripts?.build).toBe('rslib build');

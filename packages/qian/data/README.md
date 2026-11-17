@@ -1,6 +1,17 @@
 # @cavailab/qian-data
 
-S1-YUE-008：DataTable、Tree / TreeSelect / Cascader、日期时间范围、Upload 与 ImagePreview。设计范围见 qian 规格，交互与完整属性说明以 [docs/index.mdx](docs/index.mdx) 为准；共享示例位于 docs/examples/data-demo.tsx，场景登记在 docs/scenarios.json。
+S1-YUE-008：DataTable、Tree / TreeSelect / Cascader、日期时间范围、Upload 与 ImagePreview。设计范围见 qian 规格，交互与完整属性说明以 [docs/index.mdx](https://github.com/CavaiLAB/qian/blob/main/packages/qian/data/docs/index.mdx) 为准；共享示例位于 docs/examples/data-demo.tsx，场景登记在 docs/scenarios.json。
+
+## 安装
+
+包发在 GitHub Packages 上。它的 npm 包源装公开包也要带令牌（[GitHub 文档](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages)）：本机用有 `read:packages` 权限的个人访问令牌（classic）；GitHub Actions 里用工作流的 `GITHUB_TOKEN`，工作流要声明 `packages: read`。项目的 `.npmrc` 只引用环境变量，不写令牌值：
+
+```ini
+@cavailab:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
+```
+
+令牌放进环境变量 `NODE_AUTH_TOKEN`，再 `npm install @cavailab/qian-data`。变更记录不随包发布，在[仓库里](https://github.com/CavaiLAB/qian/blob/main/packages/qian/data/CHANGELOG.md)。
 
 ## 数据与状态
 
@@ -22,7 +33,7 @@ Upload 只经注入的 PlatformClient 请求四个 FILE-003 端点，SHA-256 摘
 
 ## 已知限制与延期项
 
-真实上传及 200 MB 对象存储 E2E 属于 S1-FILE-003；参考应用列表属于 S1-QA-007。Upload 摘要当前读取整个文件，不承诺超大文件的恒定内存。树表、行内编辑、列权限与动态行高留给 S2。TanStack Virtual 会让 React Compiler 跳过该树组件的自动记忆化，保留正常 React 更新，不屏蔽 lint 规则。版本 0.1.0 尚未发布。
+真实上传及 200 MB 对象存储 E2E 属于 S1-FILE-003；参考应用列表属于 S1-QA-007。Upload 摘要当前读取整个文件，不承诺超大文件的恒定内存。树表、行内编辑、列权限与动态行高留给 S2。TanStack Virtual 会让 React Compiler 跳过该树组件的自动记忆化，保留正常 React 更新，不屏蔽 lint 规则。新名字从 0.2.0 起发布。
 
 ## 列表密度与视觉回归
 

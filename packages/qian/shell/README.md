@@ -1,9 +1,20 @@
 # @cavailab/qian-shell
 
-AppShell 单一侧栏布局、菜单 → 路由、偏好、认证页族组件与契约、会话过期对话框、站内信与兜底页。本包只放通用 UI；对接平台的接线（运行时配置、网关 BFF 会话、bootstrap、能力导航、身份服务 AuthProvider）在后端仓库的私有包 [`@qian/shell-kit`](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/packages/qian-shell-kit/README.md)，MF2 宿主与插槽在 [前端插件 SDK](../../qian-plugin-sdk/README.md)。
+AppShell 单一侧栏布局、菜单 → 路由、偏好、认证页族组件与契约、会话过期对话框、站内信与兜底页。本包只放通用 UI；对接平台的接线（运行时配置、网关 BFF 会话、bootstrap、能力导航、身份服务 AuthProvider）在后端仓库的私有包 [`@qian/shell-kit`](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/packages/qian-shell-kit/README.md)，MF2 宿主与插槽在 [前端插件 SDK](https://github.com/CavaiLAB/qian/blob/main/packages/qian-plugin-sdk/README.md)。
 
 - 分层与允许依赖：[qian 专题规格 §3.1](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/yue.md#31-包结构与依赖方向)；依赖方向由 `packages/qian/boundaries.config.mjs` 与 CI 门禁强制。
-- 实现任务：S1-YUE-006；库 API、共用示例与认证边界见 [组件文档源](docs/index.mdx)。
+- 实现任务：S1-YUE-006；库 API、共用示例与认证边界见 [组件文档源](https://github.com/CavaiLAB/qian/blob/main/packages/qian/shell/docs/index.mdx)。
+
+## 安装
+
+包发在 GitHub Packages 上。它的 npm 包源装公开包也要带令牌（[GitHub 文档](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages)）：本机用有 `read:packages` 权限的个人访问令牌（classic）；GitHub Actions 里用工作流的 `GITHUB_TOKEN`，工作流要声明 `packages: read`。项目的 `.npmrc` 只引用环境变量，不写令牌值：
+
+```ini
+@cavailab:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
+```
+
+令牌放进环境变量 `NODE_AUTH_TOKEN`，再 `npm install @cavailab/qian-shell`。变更记录不随包发布，在[仓库里](https://github.com/CavaiLAB/qian/blob/main/packages/qian/shell/CHANGELOG.md)。
 
 ## 使用与职责
 
@@ -39,5 +50,5 @@ menuTypeRegistry.toJSON 可导出菜单类型元数据，注册返回可撤销�
 
 ## 已知限制与延期项
 
-- 真实 OIDC code + PKCE、多租户选择、`prompt=select_account` 切换与 Cookie 会话由 S1-YUE-002 经网关 BFF 接线（浏览器零令牌，不再有 selection_token 进前端）；S1-YUE-012 把这些平台专有接线移到 `@qian/shell-kit`，与 S1-YUE-001 的 MF2 宿主一起融合进 `apps/qian-shell`。版本号沿用工作区 0.1.0，尚未发布。
+- 真实 OIDC code + PKCE、多租户选择、`prompt=select_account` 切换与 Cookie 会话由 S1-YUE-002 经网关 BFF 接线（浏览器零令牌，不再有 selection_token 进前端）；S1-YUE-012 把这些平台专有接线移到 `@qian/shell-kit`，与 S1-YUE-001 的 MF2 宿主一起融合进 `apps/qian-shell`。新名字从 0.2.0 起发布。
 - 验证码登录与忘记密码为 P1，Captcha 为 P2，七种布局与偏好抽屉为后续范围。

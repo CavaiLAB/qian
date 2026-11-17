@@ -5,6 +5,10 @@
 //
 // 先整组核对再上传：包源上已有同一版本的，完整性摘要必须与这次的制品相同（相同就跳过，不同就整组停下、一个都不传）；
 // 上传后逐个回读版本与摘要。包源与可见性取包里 publishConfig 的写法，这里不改；发完打印每个包在包源上的可见性，不做断言。
+//
+// 重跑（S1-YUE-024）：发到一半失败时，对同一提交重跑整个工作流即可，已上传的包按摘要相同跳过、只传剩下的。
+// 这依赖同一提交两次打包得到逐字节相同的 tarball：pnpm 打包写固定的时间戳与属主，构建产物不含路径与时间，
+// F3 实测不同目录、不同 Node 版本、macOS、Linux arm64 容器与 CI 的 x64 Linux 打出的 10 个 tarball 都相同。摘要不同说明制品真的变了，不覆盖。
 import assert from 'node:assert/strict';
 import { createHash } from 'node:crypto';
 import { execFileSync } from 'node:child_process';
@@ -32,11 +36,22 @@ for (const record of records) {
   assert.equal('sha512-' + createHash('sha512').update(readFileSync(record.archive)).digest('base64'), record.integrity, `${record.name} 的制品在打包之后被改过`);
 }
 
+const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
+
 async function registryVersion(name, version) {
   const response = await fetch(`${REGISTRY}/${encodeURIComponent(name)}`, { headers: { Authorization: `Bearer ${NODE_AUTH_TOKEN}` }, cache: 'no-store' });
   if (response.status === 404) return null;
   assert.equal(response.status, 200, `读不到 ${name} 在包源上的版本（HTTP ${response.status}）`);
   return (await response.json()).versions?.[version] ?? null;
+}
+
+// 包源刚收下的版本，回读时可能还要等一会儿才看得到：最多等 6 次（共 75 秒）再判定查不到。
+async function readBack(name, version) {
+  for (let attempt = 1; ; attempt += 1) {
+    const found = await registryVersion(name, version);
+    if (found || attempt === 6) return found;
+    await sleep(5000 * attempt);
+  }
 }
 
 // 1. 整组核对：已有的同版本必须是同一份制品。
@@ -54,18 +69,22 @@ try {
   const env = { ...process.env, NPM_CONFIG_USERCONFIG: path.join(config, 'user.npmrc') };
   for (const record of records) {
     if (!existing.get(record.name)) execFileSync('npm', ['publish', record.archive, `--registry=${REGISTRY}`, '--ignore-scripts'], { env, stdio: 'inherit' });
-    const published = await registryVersion(record.name, record.version);
-    assert(published, `${record.name}@${record.version} 发布之后在包源上查不到`);
+    const published = await readBack(record.name, record.version);
+    assert(published, `${record.name}@${record.version} 发布之后在包源上查不到（等了 75 秒）；先看包源，再对同一提交重跑`);
     assert.equal(published.dist?.integrity, record.integrity, `${record.name}@${record.version} 包源上的制品与这次的不同`);
   }
 } finally {
   rmSync(config, { recursive: true, force: true });
 }
 
-// 3. 报告：版本、摘要、这次是否上传、包源上的可见性（F3 之前由产品负责人定，这里只记录）。
+// 3. 报告：版本、摘要、这次是否上传、包源上的可见性。可见性已定为公开（docs/migration.md 第 1 节），但 GitHub 文档对
+//    工作流新建的包默认可见性说法不一（同文第 11 节），这里只记录不断言：不是 public 或读不到的，发完由人核对、在包的设置页改。
 const [owner] = REPOSITORY.split('/');
+const notPublic = [];
 for (const record of records) {
   const response = await fetch(`${GITHUB_API_URL}/orgs/${owner}/packages/npm/${encodeURIComponent(record.name.split('/')[1])}`, { headers: { Authorization: `Bearer ${NODE_AUTH_TOKEN}`, Accept: 'application/vnd.github+json', 'X-GitHub-Api-Version': '2022-11-28' } });
   const visibility = response.status === 200 ? (await response.json()).visibility : `读不到（HTTP ${response.status}）`;
+  if (visibility !== 'public') notPublic.push(`${record.name}：${visibility}`);
   console.log(JSON.stringify({ package: record.name, version: record.version, integrity: record.integrity, uploaded: !existing.get(record.name), visibility, revision: GITHUB_SHA, run: GITHUB_RUN_ID }));
 }
+if (notPublic.length) console.log(`::warning title=可见性要人工核对::${notPublic.join('；')}。按 docs/migration.md 第 11 节的发布步骤核对，必要时在包的设置页改为公开`);
