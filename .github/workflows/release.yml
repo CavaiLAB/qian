@@ -1,0 +1,84 @@
+name: release
+
+# 把 10 个包发到 GitHub Packages（S1-YUE-022 写好；首发由 F3 在产品负责人点头之后，在 Actions 里对 main 手动运行）。
+# 只能手动触发、只发 main：先核对这个提交在 qian、runtime-ts、backend-copy 三个工作流里都已通过，再打包验证、发布，
+# 发完在仓库外的空目录里从包源安装，做一次干净消费者验证。脚本与说明在 scripts/release/。
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+env:
+  TURBO_TELEMETRY_DISABLED: 1
+
+jobs:
+  gates:
+    name: 门禁已通过
+    if: github.ref == 'refs/heads/main'
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    permissions:
+      contents: read
+      actions: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: 这个提交的门禁工作流已经通过
+        run: node scripts/release/gates.mjs
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+
+  publish:
+    name: 打包并发布
+    needs: gates
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    permissions:
+      contents: read
+      packages: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: pnpm/action-setup@v4
+      - run: pnpm install --frozen-lockfile
+      - name: 打包验证（10 个包）
+        run: node scripts/release/pack.mjs "$RUNNER_TEMP/packages"
+      - name: 发布到 GitHub Packages
+        run: node scripts/release/publish.mjs "$RUNNER_TEMP/packages"
+        env:
+          NODE_AUTH_TOKEN: ${{ github.token }}
+      - name: 留存这次发布的制品
+        uses: actions/upload-artifact@v4
+        with:
+          name: qian-packages
+          path: ${{ runner.temp }}/packages/
+
+  verify:
+    name: 干净消费者验证
+    needs: publish
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    permissions:
+      contents: read
+      packages: read
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: pnpm/action-setup@v4
+      - run: pnpm install --frozen-lockfile
+      - name: 在仓库外的空目录里从包源安装，类型检查并构建
+        run: node scripts/release/consumer.mjs registry
+        env:
+          NODE_AUTH_TOKEN: ${{ github.token }}

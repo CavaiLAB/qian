@@ -18,6 +18,7 @@
   ],
   "files": [
     "dist",
+    "contracts",
     "README.md"
   ],
   "exports": {
