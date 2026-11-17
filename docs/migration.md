@@ -1,6 +1,6 @@
 # 迁移与更名
 
-> 状态：执行计划（2026-11-17）。标「已定」的出自产品负责人的裁定；标「提议」的是本计划的安排，执行中发现不对就改；标「待定」的要产品负责人定。数字取自原仓库 `idadawn/qian` 主干的提交 `aafa0cc5ab`。F1 的导入记录见第 9 节，F2 的更名记录见第 10 节。
+> 状态：执行计划（2026-11-17）。标「已定」的出自产品负责人的裁定；标「提议」的是本计划的安排，执行中发现不对就改；标「待定」的要产品负责人定。数字取自原仓库 `idadawn/qian` 主干的提交 `aafa0cc5ab`。F1 的导入记录见第 9 节，F2 的更名记录见第 10 节，F3 的首发记录见第 11 节。
 
 ## 1 裁定
 
@@ -15,6 +15,9 @@
 | 不改的 | `qian` 命令行与 `@qian/*` 的导入名 | D23.18 |
 | 许可 | MIT | D23.19 |
 | 规划中的渲染层 | 分层矩阵为运行时层预留的包定名为 renderer（`@cavailab/qian-renderer`），TypeScript 运行时的名字不变 | 产品负责人 2026-11-17，见第 10.1 节 |
+| 首发的版本号 | 10 个包统一 0.2.0 | 产品负责人 2026-11-17，照第 8 节原来的提议 |
+| 包的可见性 | 公开 | 产品负责人 2026-11-17，照第 8 节原来的提议。GitHub Packages 上怎样才算公开、要谁动手，见第 11.2 节 |
+| 发布位置 | GitHub Packages（`https://npm.pkg.github.com`，作用域 `@cavailab`） | 产品负责人 2026-11-17：知情后说按提议开工。要让外部开发者不带令牌就能装，得另发到公共的 npm 包源，那需要先有组织账号与发布令牌，现在不做 |
 
 时点一条改了合并蓝图原来的安排。蓝图写的是更名与后端 `Qian.*` 改名 `Kun.*` 放在同一个冻结窗口里、排在后端按域归并的最后一批；现在前端先走。带来的一个后果要知道：后端包名改完之前，前端的 qian 会和后端的 `Qian.*` 同时存在，读文档与代码时按包的作用域区分。蓝图上的修订标注在原仓库登记，由后端迁移一侧做。
 
@@ -150,16 +153,14 @@ F1 与 F2 分成两个 PR 的理由：F1 的 PR 只证明「搬过来的东西�
 | 契约副本与后端不一致而没人发现 | 第 4 节的摘要核对加 CI 比对 |
 | 运行时改坏了一致性，发布后才在后端发现 | 第 4 节的发布前检查 |
 | 新旧名字的包并存期间装错 | 旧名字的包不再发布新版本；F4 一次换完，F5 删除旧包 |
-| 后端仓库装不上新包 | GitHub Packages 上的 npm 包即使公开也要带令牌才能装。F3 定包的可见性，F4 在后端仓库的 CI 与本机说明里配好读取 |
+| 后端仓库装不上新包 | GitHub Packages 上的 npm 包即使公开也要带令牌才能装（出处见第 11.2 节）。包已定为公开：后端 CI 用自己的 `GITHUB_TOKEN`（声明 `packages: read`）就能读，本机用有 `read:packages` 的个人访问令牌（classic）。F4 在后端仓库的 CI 与本机说明里配好读取 |
 | 后端迁往新仓库与 F4 撞在一起 | F4 开工前与后端迁移一侧对一次：当时的主干在哪个仓库，同一批文件只有一边写 |
 
 ## 8 待定
 
 | 事项 | 提议 | 什么时候要定 |
 |---|---|---|
-| 首发的版本号 | 10 个包统一从 0.2.0 起 | F3 之前 |
-| 包的可见性 | 公开。仓库已经公开，许可是 MIT | F3 之前 |
-| 发布位置 | 先沿用 GitHub Packages。要让外部开发者不带令牌就能装，得发到公共的 npm 包源，那需要先有组织账号与发布令牌 | 可以晚于 F3 |
+| 10 个包要不要锁成同一版本 | 现在固定版本组只含 8 个层包，运行时与插件开发包各自定版本；首发碰巧都是 0.2.0。锁起来的好处是后端与文档站只记一个版本号，代价是运行时与插件开发包没有改动也要跟着升版 | 不急；F3 不定 |
 | 文档站的组件页由谁出 | 先由原文档站按标签检出本仓库来出 | F4 之前 |
 | 任务放在哪里 | 迁移期间仍登记在原仓库的 `pm/`；本仓库要不要自己的任务目录，等后端迁移一侧把看板的去向定了再说 | F5 |
 | 许可证的版权行 | `Copyright (c) 2026 Qian Framework Contributors`，F2 已按这个写进仓库根与运行时包的许可证文件 | F3 之前 |
@@ -234,6 +235,8 @@ F2（S1-YUE-022）的更名，2026-11-17。脚本与做法见[更名脚本](../s
 - `release` 工作流只试跑过门禁核对（对已有的提交，只读）并做过语法检查，首发时第一次真跑。
 - 包内说明的安装命令写的还是现在的版本号，首发版本定了以后跟着改。
 
+这几项在 F3 的处理见第 11 节。
+
 ### 10.3 留给 F4
 
 - 后端的界面清单 Schema、一致性用例与各界面清单换成 `engines.qian`；合入后在本仓库用 `node scripts/backend-copy.mjs --update` 推进来源提交，副本的领先登记随之去掉。后端的插件清单 Schema 里也有 `engines.qian`，现在指平台运行时（D23.18 要并入 `kun`），两个 Schema 里同名的键要一起理清。
@@ -243,3 +246,122 @@ F2（S1-YUE-022）的更名，2026-11-17。脚本与做法见[更名脚本](../s
 - 后端测试读的两份文件改为从安装目录读：业务选择器的接口契约在 `@cavailab/qian-biz` 包的 `contracts/` 里，基础组件包的版本号与清单文件在 `@cavailab/qian-core` 包里。
 - 后端文档站：脚本里引用的旧包名换成新包名；根脚本 `yue:docs`、`yue:auth` 与路由 `/components/yue/`、`/design/prd/specs/yue` 改不改名由 F4 定，本仓库包内说明里提到它们的地方跟着改。文档站的 `--qian-card-min` 与框架令牌同前缀，换包时留意。
 - 后端仓库读 GitHub Packages 要令牌，CI 与本机说明要配好（第 7 节）。
+
+## 11 首发记录
+
+F3（S1-YUE-024），2026-11-17 准备。本节先写准备了什么、查文档得到的结论与发布当天的步骤；发布之后把 11.5 的空格填上。
+
+### 11.1 准备了什么
+
+| 项 | 结果 |
+|---|---|
+| 版本 | `pnpm changeset version`（@changesets/cli 3.0.3）消费 23 份登记：原有 22 份，加上 F3 补的「以新名字首次发布」1 份。补的那份覆盖 10 个包，是产品负责人在「覆盖 10 个包」与「只记运行时」之间选的。10 个包都到 0.2.0：8 个层包是固定版本组、组里有 minor，插件开发包自带一条 minor，运行时由补的那一份从 0.1.1 升上来。固定版本组仍是 8 个层包。内部依赖写的是 `workspace:^`，打包后是 `^0.2.0`。锁文件不用改：pnpm 的锁文件不记工作区包自己的版本（之后 `pnpm install` 报 Lockfile is up to date），`--frozen-lockfile` 通过。版本提交是 `changeset version` 的原样产物，在它的父提交上重跑，得到的树相同 |
+| 变更记录 | 各包目录的 `CHANGELOG.md`。出版本之前，另一个提交先改了 12 份登记的原文，去掉与使用方无关的内部细节：任务号与「S1」字样、后端仓库的路径与发版的内部说明（改写成对使用方的升级注意）、后端的私有工作区包、文档与测试设施、包自己的开发检查、仓库里的脚本与 Schema 路径；功能描述不动。变更记录里没有旧包名与本机路径，也没有指向旧仓库 PR 的引用。每条前面的 7 位哈希是加入那份登记的提交，23 个都在本仓库的历史里（改过名的登记追到原来加入它的提交）。变更记录不随包发布：各包的 `files` 不含 `CHANGELOG.md`，pnpm 12.9.1 打包也不自动带上（实测）；包内说明给出它在仓库里的地址 |
+| 可见性 | 10 个包的 `publishConfig.access` 与 `.changeset/config.json` 的 `access` 由 `restricted` 改为 `public`，包形状门禁跟着改。GitHub 文档没有说这个字段对 GitHub Packages 起作用，实际可见性见 11.2 |
+| 界面契约包的声明文件 | `src/index.ts` 改为先导入 Schema 再以常量导出，生成的 `dist/index.d.ts` 直接写出每份 Schema 的类型，不再引用不随包发布的 `*.schema.json`；`dist/index.js` 里的 Schema 内容不变，只是语句顺序变了。仓库外的干净消费者连同各包的声明文件一起检查（`skipLibCheck: false`）：本仓库 10 个包 0 处错误，第三方 `@module-federation` 两处（只报告） |
+| 消费者验证的结论 | `consumer.mjs` 的声明文件检查对本仓库的包计入结论，第三方的仍只报告 |
+| 包内说明的坏链 | 打包后数到 9 处：4 处指向包目录之外（基础组件包指迁移说明、外壳包指插件开发包的说明、运行时与插件开发包各一处指发布脚本的说明），5 处指向包目录里但不随包发布的 `docs/`（基础组件包 1、表单 2、数据组件 1、外壳 1）。都改成 `https://github.com/CavaiLAB/qian/blob/main/…` 的完整地址，与各包 `homepage` 一样指主干 |
+| 打包核对新加的三条 | 包里 `.md` 的相对链接必须指向随包发布的文件；声明文件的相对引用必须在包里、且不引用 JSON（这次的 TS2307 就是这一类）；说明里写的 `@cavailab/qian-<名>@<版本>` 必须是这次打包的版本。拿主干的旧状态试过：前两条报出契约包的 7 处与上面的 9 处坏链 |
+| 安装说明 | 8 个层包的说明加「安装」一节，运行时与插件开发包的安装命令改为 0.2.0，都写明公开包也要令牌与 `.npmrc` 的写法（11.2），并给出变更记录在仓库里的地址 |
+| 旧的发布与验收脚本 | 删掉运行时的 `scripts/publish.mjs`，插件开发包的 `scripts/private-publication.mjs`、`private-package-api.mjs`、`release.mjs` 与测试 `private-publication.test.mjs`：它们是原仓库逐包发布的脚本，已被 `scripts/release/` 取代，而且是按「包是私有的」写的（`--access=restricted`、断言可见性为 private、先发私有占位版本），与已定的公开相反。留下两个 `verify-consumer.mjs`：各自在仓库外经逻辑导入名（`@qian/runtime`、`@qian/plugin-sdk`）装上制品、实际运行一遍、按 NodeNext 解析做类型检查，这是 `consumer.mjs` 没有的覆盖。运行时的那个本来就在 `runtime-ts` 工作流里；插件开发包的那个原来没有人调，现在接进 `qian` 与 `release` 工作流 |
+| 发布工作流 | 上传之前先用这批 tarball 跑干净消费者验证与两个制品验收，都过了才上传；发布之后从包源再跑两个制品验收。`publish.mjs` 回读最多等 75 秒，不是 public 的包在运行摘要里给警告 |
+| CI | `qian` 工作流 publint 一项的最后跑打包验证、干净消费者验证与插件开发包的制品验收，触发路径加上 `scripts/release/**`；unit 一项去掉已删的测试，`runtime-ts` 去掉对已删脚本的语法检查 |
+| 制品可复现 | 主干 `23f2aac` 在两个目录 × Node 24.16、24.22、26.12（macOS），以及 Linux arm64 容器（Node 24.21，在容器里重新装依赖）各打一次：10 个 tarball 逐字节相同。pnpm 打包写固定的时间（1985-10-26）与属主，gzip 头里没有平台字节。所以 `publish.mjs`「包源上已有的同一版本必须是同一份制品」在重跑时成立，判据不改。GitHub 的 npm 包源回读的 `dist.integrity` 就是上传字节的 sha512（拿旧名字已发布的运行时 0.1.1 下载核对过）。没测：x64 的 Linux（CI 的机器） |
+
+### 11.2 GitHub Packages：可见性与安装
+
+查的是 GitHub 官方文档，2026-11-17 的版本。
+
+- **安装要令牌，公开包也一样。** [Working with the npm registry](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages)：发布、安装、删除 private、internal、public 的包都要访问令牌；这个包源只支持个人访问令牌（classic）。GitHub Actions 里用 `GITHUB_TOKEN`，公开的包任何仓库的工作流都能下载（[Publishing and installing a package with GitHub Actions](https://docs.github.com/en/packages/managing-github-packages-using-github-actions-workflows/publishing-and-installing-a-package-with-github-actions#default-permissions-and-access-settings-for-packages-modified-through-workflows)）。`.npmrc` 的写法见[迁移说明](migrating-from-yue.md)第 2 节。
+- **新包的默认可见性，两页说法不一。** npm 那页「Publishing a package」：第一次发布时默认是 private；[Configuring a package's access control and visibility](https://docs.github.com/en/packages/learn-github-packages/configuring-a-packages-access-control-and-visibility) 也说组织的包首次发布默认 private，关联仓库只继承访问权限、不继承可见性。而 Actions 那页「Default permissions and access settings for packages modified through workflows」说，对支持细粒度权限的包源（npm 在内，见 [About permissions for GitHub Packages](https://docs.github.com/en/packages/learn-github-packages/about-permissions-for-github-packages)），工作流用 `GITHUB_TOKEN` 新建的包继承运行工作流的仓库的可见性与权限模型；本仓库是公开的。哪一种会发生，发布前没法验证，以发布后包源上的实际为准（`publish.mjs` 会报告）。
+- **`publishConfig.access` 起不起作用，文档没说。** 它是 npm 的设置，npm 文档讲的是它在 npm 自家包源上的含义；GitHub 的文档里找不到它对 GitHub Packages 的作用。改成 `public` 是表达意图，不能当作公开的证明。本仓库早先的私有发布脚本也写过同样的提醒：不能把 `--access=restricted` 当作私有的证明。
+- **改可见性要人动手，而且不可逆。** 包的管理员在包的设置页最下面 Danger Zone → Change visibility 改；公开之后不能再改回私有（访问控制那页）。工作流用 `GITHUB_TOKEN` 建包时，运行工作流的仓库的管理员成为包的管理员（Actions 那页）。REST 接口里只找到查询、删除与恢复，没有改可见性的。
+- **组织设置，读不到。** 组织设置 → Packages 里，「Package creation」决定成员能建哪些可见性的包（public / private / internal），「Default Package Settings」的「Inherit access from source repository」默认开着（访问控制那页）。用 REST 读不到现状：`GET /orgs/CavaiLAB` 的结果里没有这些字段，读组织的 Actions 设置要 `admin:org` 权限，这次用的令牌没有。要组织所有者在网页上看。
+- **只读查到的现状。** `CavaiLAB` 名下还没有 npm 包；包源对 `@cavailab/qian-core` 返回 404（不存在），`publish.mjs` 的首次核对按「没有」处理。本仓库公开；Actions 开着、允许所有 Action，工作流令牌的默认权限是只读，`release` 在作业上显式声明了 `packages: write`（文档：`permissions` 可以修改 `GITHUB_TOKEN` 的权限）。
+- **撤回。** [Deleting and restoring a package](https://docs.github.com/en/packages/learn-github-packages/deleting-and-restoring-a-package)：公开包的版本下载不超过 5000 次才能删，要包的管理员；删除后 30 天内可以恢复。删掉之后能不能再发同一个版本号，文档没说，按不能处理。
+
+### 11.3 发布当天的步骤
+
+0. 前提：F3 的 PR 已用合并提交合入；产品负责人点头发布。
+1. 发布之前，组织所有者在组织设置 → Packages → Package creation 看一眼是否允许 Public。不允许也可能发得出去，只是新包可能是私有的，发完要按第 5 步改。
+2. 定发布的提交：`main` 的最新提交，记为 X。从这一步到第 4 步跑完，不要往 `main` 合入任何改动：`release` 与手动触发的工作流都跑触发时 `main` 的最新提交。
+3. 门禁：X 上 `qian`、`runtime-ts`、`backend-copy` 三个工作流都要有成功的运行（push 或手动触发）。F3 的 PR 合入后，合并提交上 `qian`（改了包与 `scripts/release/`）与 `runtime-ts`（改了运行时）由 push 触发会自己跑；`backend-copy` 不跑，它只认 `backend-copy/**`、`scripts/backend-copy.mjs` 与它自己的工作流文件，要手动触发。如果 X 是之后一个只改文档的提交，三个都要手动触发。
+
+   ```bash
+   gh run list --repo CavaiLAB/qian --commit <X> --limit 20
+   ```
+
+   ```bash
+   gh workflow run backend-copy.yml --repo CavaiLAB/qian --ref main
+   ```
+
+4. 运行 `release`，三个作业依次是门禁已通过、打包并发布、干净消费者验证：
+
+   ```bash
+   gh workflow run release.yml --repo CavaiLAB/qian --ref main
+   ```
+
+5. 发完核对：
+   - 运行全绿。「打包并发布」的日志里有 10 行 JSON：版本 0.2.0、`integrity`、`uploaded: true`、`visibility`；这次运行留存的 `qian-packages` 里有 10 个 tarball 与 `packages.json`。
+   - 包源上的版本与摘要：`npm view @cavailab/qian-<名>@0.2.0 dist.integrity --registry=https://npm.pkg.github.com`（要令牌）应等于 `packages.json` 里的 `integrity`。也可以在本机检出 X 打一遍（`node scripts/release/pack.mjs <目录>`），制品可复现，摘要应当相同。
+   - 可见性与关联的仓库：`gh api /orgs/CavaiLAB/packages/npm/qian-<名> --jq '.visibility, .repository.full_name'`（要 `read:packages`），应是 `public` 与 `CavaiLAB/qian`。不是 public 的，由包的管理员在包的页面 → Package settings → Danger Zone → Change visibility 改为 Public，10 个逐个改，不可逆。
+6. 打标签，打在 X 上（就是这次 `release` 运行发布的提交，运行页面上的提交号）：
+
+   ```bash
+   git fetch origin && git switch --detach <X>
+   ```
+
+   ```bash
+   pnpm changeset tag
+   ```
+
+   ```bash
+   git push origin 'refs/tags/@cavailab/*'
+   ```
+
+   `changeset tag` 给每个包打一个带注释的标签 `<包名>@<版本>`：这次是 `@cavailab/qian-<名>@0.2.0` 共 10 个，都指向 X。提议后端仓库与文档站按版本检出时用 `refs/tags/@cavailab/qian-core@0.2.0`（8 个层包同一版本，标签指向同一个提交）；运行时与插件开发包用各自的标签，它们的版本以后可能分开。不另打 `v0.2.0` 这类总标签，免得 10 个包版本分开之后说不清它指谁。
+7. 把 11.5 填上，开一个只改文档的 PR。
+
+### 11.4 出了问题怎么办
+
+| 卡在哪一步 | 包源上已经有什么 | 怎么办 |
+|---|---|---|
+| 门禁已通过 | 没有 | 按日志手动触发缺的工作流，等它成功，再运行 `release` |
+| 打包并发布：装依赖、打包、上传之前的验证 | 没有 | 修了走 PR，合入后从第 2 步重来（发布的提交变了） |
+| 打包并发布：上传到一半 | 前几个包 | 对同一提交重跑：运行页面上 Re-run all jobs，或者 `main` 没动时再运行一次 `release`。已上传的按摘要相同跳过，只传剩下的。摘要不同说明制品变了，`publish.mjs` 一个都不传，停下来查 |
+| 打包并发布：上传后回读查不到 | 那个包可能已经上去了 | 先看包源，再对同一提交重跑，规则同上 |
+| 干净消费者验证 | 10 个包都已发布 | 包源一时出问题就重跑这个作业；包本身有问题就修了出新版本（例如 0.2.1），不覆盖、不删 |
+| 发完发现可见性不对 | 10 个包都已发布 | 按第 5 步改为公开；不会自己变 |
+
+已发布的版本原则上不撤：删版本只能在下载不超过 5000 次时由包的管理员做，删掉以后能不能重发同一版本号文档没说。要删由产品负责人定；删旧名字的包是 F5 的事。
+
+### 11.5 发布之后填写
+
+| 项 | 值 |
+|---|---|
+| 发布的提交 | （待填） |
+| `release` 运行 | （待填） |
+| 该提交上三个门禁工作流的运行 | （待填） |
+| 可见性 | （待填） |
+| 标签 | （待填） |
+
+| 包 | 版本 | 包源上的 `dist.integrity` |
+|---|---|---|
+| `@cavailab/qian-tokens` | 0.2.0 | （待填） |
+| `@cavailab/qian-contracts` | 0.2.0 | （待填） |
+| `@cavailab/qian-sdk` | 0.2.0 | （待填） |
+| `@cavailab/qian-core` | 0.2.0 | （待填） |
+| `@cavailab/qian-form` | 0.2.0 | （待填） |
+| `@cavailab/qian-data` | 0.2.0 | （待填） |
+| `@cavailab/qian-shell` | 0.2.0 | （待填） |
+| `@cavailab/qian-biz` | 0.2.0 | （待填） |
+| `@cavailab/qian-runtime` | 0.2.0 | （待填） |
+| `@cavailab/qian-plugin-sdk` | 0.2.0 | （待填） |
+
+### 11.6 留给 F4
+
+- 后端仓库从 GitHub Packages 装包：`.npmrc` 照[迁移说明](migrating-from-yue.md)第 2 节；后端 CI 的工作流声明 `packages: read`、用自己的 `GITHUB_TOKEN`。如果发完包还不是公开的，还要在每个包的设置页 Manage Actions access 里加上后端仓库。
+- 版本写精确的 0.2.0（第 4 节）。
+- 0.x 的 `^0.1.0` 不包含 0.2.0：插件开发包的宿主按清单的 `engines.qian` 做 SemVer 比对，外壳报的版本取外壳包的版本。后端各界面清单的 `engines.qian` 与远程共享依赖的 `requiredVersion` 要在换包的同一次改动里放宽到 `^0.2.0`，否则远程会被拒载。
+- 文档站按 `refs/tags/@cavailab/qian-core@<版本>` 检出本仓库（第 4 节、11.3 第 6 步）。
+- 第 10.3 节的其余各项。

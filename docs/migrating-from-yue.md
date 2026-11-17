@@ -1,6 +1,6 @@
 # 从 yue 迁移到 qian
 
-> 给框架的使用方。前端框架在 F2（S1-YUE-022）里由 yue 更名为 qian：只改名字，组件的接口与行为不变，版本号也没有动。新名字的包还没有发布，首发是 F3 的事，首发的版本号待定；在那之前可以先按这份说明把自己的代码准备好。更名的规则与经过见[迁移与更名](migration.md)第 5 节与第 10 节。
+> 给框架的使用方。前端框架在 F2（S1-YUE-022）里由 yue 更名为 qian：只改名字，组件的接口与行为不变，版本号也没有动。F3 以新名字首发：10 个包统一 0.2.0，公开发布在 GitHub Packages（安装见第 2 节）。包发出来之前可以先按这份说明把自己的代码准备好。更名的规则与经过见[迁移与更名](migration.md)第 5 节与第 10 节。
 
 ## 1 谁要改
 
@@ -19,7 +19,7 @@
 | `@idadawn/yue-<名>`（biz、contracts、core、data、form、sdk、shell、tokens） | `@cavailab/qian-<名>` |
 | `@idadawn/qian-runtime` | `@cavailab/qian-runtime` |
 | `@idadawn/qian-plugin-sdk` | `@cavailab/qian-plugin-sdk` |
-| `.npmrc`：`@idadawn:registry=https://npm.pkg.github.com` | `@cavailab:registry=https://npm.pkg.github.com`，认证那一行不变 |
+| `.npmrc`：`@idadawn:registry=https://npm.pkg.github.com` | `@cavailab:registry=https://npm.pkg.github.com`，认证那一行不变（见下面「从 GitHub Packages 安装」） |
 | 本机打包的文件名 `idadawn-yue-<名>-<版本>.tgz` | `cavailab-qian-<名>-<版本>.tgz` |
 | 后端设计文档里的包简称 `@yue/<名>`；`@yue` 指这一组包 | `@cavailab/qian-<名>`；`packages/qian/*` 的 8 个包 |
 
@@ -29,8 +29,27 @@
 - Tailwind 的工具类由使用方扫描组件源码生成。`@source` 指向安装目录的，路径里的包目录跟着换成 `@cavailab/qian-*`。
 - 微前端的共享依赖按包名登记：宿主与远程的 `shared` 键与 `requiredVersion` 要一起换成新名字，否则两边各带一份。
 - 各包导出的 `PACKAGE_NAME` 常量，值是新包名。
-- 版本：F2 不改版本号（8 个层包 0.1.0，运行时 0.1.1，插件开发包 0.1.0）。8 个层包固定同一个版本号；运行时与插件开发包也以 `@cavailab/qian-` 开头，但不在固定组里，各自定版本。
+- 版本：F2 不改版本号；F3 以新名字首发，10 个包都是 0.2.0。8 个层包固定同一个版本号；运行时与插件开发包也以 `@cavailab/qian-` 开头，但不在固定组里，各自定版本（以后要不要把 10 个包锁成同一版本还没定）。0.2.0 对旧名字的最后一个版本是 minor，0.x 期间 minor 可能有破坏性变更，插件清单里 `engines.qian` 写 `^0.1.0` 的要放宽（第 6 节）。
+- 变更记录在各包目录的 `CHANGELOG.md`（例如[基础组件包的](https://github.com/CavaiLAB/qian/blob/main/packages/qian/core/CHANGELOG.md)），不随包发布：各包的 `files` 不含它，打包也不会自动带上。
 - 旧名字已经发布过的版本（tokens、contracts、sdk、运行时、插件开发包）不再出新版本。F5 删除旧名字的 3 个私有包，旧名字的运行时与插件开发包标弃用，见[迁移与更名](migration.md)第 3 节。
+
+### 从 GitHub Packages 安装
+
+包是公开的，但 GitHub Packages 的 npm 包源装公开包也要带令牌（GitHub 文档：[Authenticating to GitHub Packages](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages)，那里写明发布、安装、删除 private、internal 与 public 的包都需要访问令牌）。不带令牌装不上是预期的，不是没发布。
+
+| 在哪里装 | 用什么令牌 |
+|---|---|
+| 本机 | 有 `read:packages` 权限的个人访问令牌（classic）。同一页写明这个包源只支持 classic 令牌 |
+| GitHub Actions | 工作流自带的 `GITHUB_TOKEN`，工作流要声明 `permissions: packages: read`。公开的包任何仓库的工作流都能下载（[GitHub 文档](https://docs.github.com/en/packages/managing-github-packages-using-github-actions-workflows/publishing-and-installing-a-package-with-github-actions#default-permissions-and-access-settings-for-packages-modified-through-workflows)），不用另配访问权限 |
+
+项目根目录的 `.npmrc`（和 `package.json` 放在一起）只引用环境变量，不写令牌值，可以提交：
+
+```ini
+@cavailab:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
+```
+
+令牌放进环境变量 `NODE_AUTH_TOKEN` 再安装，例如 `npm install @cavailab/qian-core`。在 GitHub Actions 里用同一个 `.npmrc`，把 `NODE_AUTH_TOKEN` 设为 `${{ secrets.GITHUB_TOKEN }}`（本仓库的发布工作流与消费者验证就是这样装的）。作用域要小写（同一页「Publishing a package」：包名与作用域只能用小写字母）。
 
 ## 3 样式变量与可寻址属性
 
@@ -67,7 +86,7 @@
 
 ## 6 插件清单的版本键
 
-插件界面清单里声明前端版本要求的键由 `engines.yue` 换成 `engines.qian`。取值照旧是 8 个层包的版本范围，宿主拿它和 `qianVersion` 比对。
+插件界面清单里声明前端版本要求的键由 `engines.yue` 换成 `engines.qian`。取值照旧是 8 个层包的版本范围，宿主拿它和 `qianVersion` 比对。新名字的首个版本是 0.2.0，而 0.x 的 `^0.1.0` 不包含 0.2.0：换到新包的宿主报的是 0.2.0，清单还写 `^0.1.0` 的远程会被拒载，要放宽到 `^0.2.0`（或覆盖两者的范围）后重发；微前端共享依赖的 `requiredVersion` 同理。
 
 这个键要清单、宿主与后端一起换：
 
@@ -78,7 +97,7 @@
 ## 7 不变的
 
 - 下面这些运行期字面不表示前端框架，照旧：组件 id 前缀 `qian.`、`.qian-plugin/`、`x-qian-*`、`https://qian.dev/…`（包括组件清单 Schema 的 `$id`）、`qian` 命令行、`@qian/*` 导入名。
-- 组件的接口与行为、`data-slot` 的取值、版本号。
+- 组件的接口与行为、`data-slot` 的取值。版本号在 F2 没有动，F3 首发时到 0.2.0（第 2 节）。
 - 带旧名字的任务编号 `S1-YUE-*` 与提交历史。
 
 ## 8 改完怎么查

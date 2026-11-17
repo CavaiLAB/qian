@@ -32,7 +32,7 @@
 - 框架库的改动一律在本仓库做。原仓库里这些路径从源提交 `aafa0cc5ab` 起冻结，F2 合入之后不再从那边导入。
 - 新写的代码与文档只用新名字。
 - 后端的冻结契约在本仓库只有副本（`backend-copy/`），不在这里改。要改去后端仓库改，再按 [副本的说明](backend-copy/README.md) 更新副本与来源清单。
-- 包不从本机发布，只经 `release` 工作流发布：只能在 `main` 上手动触发，见 [发布脚本](scripts/release/README.md)。发布之前要产品负责人点头；首发是 F3 的事。
+- 包不从本机发布，只经 `release` 工作流发布：只能在 `main` 上手动触发，见 [发布脚本](scripts/release/README.md)。发布之前要产品负责人点头。首发（10 个包都是 0.2.0）的准备在 F3 做完，发布当天照着做的步骤见 [迁移与更名](docs/migration.md) 第 11.3 节。
 
 ## 在本机跑门禁
 
@@ -49,12 +49,11 @@ pnpm --filter qian-playground exec playwright install chromium
 pnpm qian:gates
 ```
 
-也可以一项一项跑，与 CI 上 `qian` 工作流的检查一一对应：`pnpm qian:lint`、`qian:typecheck`、`qian:test`（unit，含真实浏览器用例）、`qian:boundaries`、`qian:circular`、`qian:publint`、`qian:a11y`、`qian:lighthouse`、`qian:visual`。a11y、lighthouse、视觉回归对构建后的演练场跑，先 `pnpm --filter qian-playground build`。CI 的 unit 一项另外跑这三条：
+也可以一项一项跑，与 CI 上 `qian` 工作流的检查一一对应：`pnpm qian:lint`、`qian:typecheck`、`qian:test`（unit，含真实浏览器用例）、`qian:boundaries`、`qian:circular`、`qian:publint`、`qian:a11y`、`qian:lighthouse`、`qian:visual`。a11y、lighthouse、视觉回归对构建后的演练场跑，先 `pnpm --filter qian-playground build`。CI 的 unit 一项另外跑这两条：
 
 ```bash
 node scripts/backend-copy.mjs
 pnpm --filter @cavailab/qian-contracts contracts:check
-node --test packages/qian-plugin-sdk/scripts/private-publication.test.mjs
 ```
 
 TypeScript 运行时（CI 上是 `runtime-ts` 工作流）：
@@ -71,7 +70,7 @@ pnpm --filter ./packages/qian-runtime test:browser
 
 视觉基线在 `apps/qian-playground/visual/__snapshots__`，只在固定的 Playwright 镜像里比对。F2 重拍了组件目录页头带旧名字的 148 张，经过见 [迁移与更名](docs/migration.md) 第 10 节。
 
-打包验证（不发布）：10 个包各打一个 tarball，再在仓库外的空目录里只用这些 tarball 装起来、做类型检查与生产构建：
+打包验证（不发布）：10 个包各打一个 tarball，再在仓库外的空目录里只用这些 tarball 装起来、做类型检查与生产构建，最后跑插件开发包的制品验收。CI 上是 `qian` 工作流 publint 那一项的最后一步：
 
 ```bash
 node scripts/release/pack.mjs <输出目录>
@@ -81,10 +80,14 @@ node scripts/release/pack.mjs <输出目录>
 node scripts/release/consumer.mjs archive <输出目录>
 ```
 
+```bash
+node packages/qian-plugin-sdk/scripts/verify-consumer.mjs archive <输出目录>
+```
+
 ## 要改文档
 
 1. 文档用中文，不写参考平台和对标项目的名字。
-2. 分清「已定」「提议」「待定」。更名、迁入的时点与范围、包名里的 `yue-` 换成 `qian-`、许可是已定的；首发的版本号、包的可见性与发布位置、文档站组件页由谁出、许可证的版权行是待定的，见 [迁移与更名](docs/migration.md) 第 8 节。
+2. 分清「已定」「提议」「待定」。更名、迁入的时点与范围、包名里的 `yue-` 换成 `qian-`、许可、首发的版本号（0.2.0）、包的可见性（公开）与发布位置（GitHub Packages）是已定的，见 [迁移与更名](docs/migration.md) 第 1 节；文档站组件页由谁出、10 个包要不要锁成同一版本、许可证的版权行是待定的，见第 8 节。
 3. 说现状的时候写清是「已有」（在原仓库里已经实现）还是「规划」。
 4. 平台级的口径（名称、三个框架的分工、契约）在 [jiangxin](https://github.com/CavaiLAB/jiangxin) 里改，这里只引用。
 5. 改动走分支和 PR，不直接推 `main`。建仓期间的初始文档除外，见平台总览的[协作约定](https://github.com/CavaiLAB/jiangxin/blob/main/docs/07-governance.md)第 2 节。
