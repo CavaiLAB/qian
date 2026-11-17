@@ -1,0 +1,30 @@
+{
+  "note": "后端冻结契约的副本。唯一来源是 source 指的仓库与提交，不在这里改：要改去后端仓库改，再按 README.md 更新副本与这份清单。",
+  "source": {
+    "repository": "idadawn/qian",
+    "pathPrefix": "",
+    "commit": "aafa0cc5ab48637a1c634867d6cddb2935837814"
+  },
+  "files": [
+    {
+      "path": "contracts/v0/error-detail.schema.json",
+      "sha256": "89e359869eaedb1ec1825bd1a77584a48be75ec74e3fa12557052328e9d9855b"
+    },
+    {
+      "path": "contracts/v0/error-codes.json",
+      "sha256": "7943e4fd35bb7d6f06a0a14dfd643964327dca3395041dae14f2e118f731f41d"
+    },
+    {
+      "path": "contracts/v0/fixtures/capability-entry.valid.json",
+      "sha256": "fa1787d3bcee813d76632bb85839dfd649fad8bbfdd0a00a347af7af1e305164"
+    },
+    {
+      "path": "schemas/v2/ui.schema.json",
+      "sha256": "a980fa980f052c52499d5ada87cecaef737af5a4a6419408188b1608430b6121"
+    },
+    {
+      "path": "tck/surfaces/cases.json",
+      "sha256": "10ba0fdbb4350be8c2294292e190e98a3c0e19a480ab2d86b7da6d6b99f96db5"
+    }
+  ]
+}

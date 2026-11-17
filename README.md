@@ -2,7 +2,7 @@
 
 [匠心智能体平台](https://github.com/CavaiLAB/jiangxin)的前端框架。TypeScript 与 React：设计令牌、组件库、应用外壳、微前端、由 Schema 驱动的界面。
 
-> **状态：迁移进行中（2026-11-17）。** 代码正在从 [`idadawn/qian`](https://github.com/idadawn/qian) 的前端工作区迁入本仓库，迁移过程中由 **yue** 更名为 qian。计划与进度见[迁移与更名](docs/migration.md)。导入合入之前，本仓库只有框架级文档。
+> **状态：迁移进行中（2026-11-17）。** 框架库已连同提交历史从 [`idadawn/qian`](https://github.com/idadawn/qian) 的前端工作区导入本仓库（F1），名字仍是 **yue**：包名 `@idadawn/yue-*`、目录 `packages/yue/`。下一步在 F2 里一次更名为 qian。计划与进度见[迁移与更名](docs/migration.md)，本机怎么跑门禁见 [AGENTS.md](AGENTS.md)。
 >
 > **名字说明：** 2026-11-17 之前，「Qian」指基于 Kun 的平台层（`idadawn/qian` 仓库里的后端、`Qian.*` 包）。那部分后端并入 [Kun](https://github.com/CavaiLAB/kun)，「Qian」今后只作前端框架的名字。读旧文档时注意区分。组件 id 前缀 `qian.`、`qian` 命令行这些保留下来的字面，不表示前端框架。
 
@@ -47,15 +47,16 @@ Qian 负责人看得见、摸得着的那一层。在平台的理念「三元全
 
 | 项 | 状态 |
 |---|---|
-| 代码 | 迁移进行中：框架库从 `idadawn/qian` 保留历史导入本仓库；导入合入之前，原仓库里的这部分已冻结 |
+| 代码 | 已导入（F1）：框架库连同 154 个提交从 `idadawn/qian` 的提交 `aafa0cc5ab` 导入，文件与源提交逐个一致；八项门禁、视觉回归与运行时测试跑在本仓库的 CI 上。F2 合入之前，框架库的功能改动仍先在原仓库合入、再补到这里 |
 | 范围 | 已定：只迁框架库（8 个包、组件演练场、前端插件开发包、TypeScript 运行时、前端门禁）。应用外壳、组件自带的界面、文档站留在后端仓库，按钉住的版本消费本仓库发布的包 |
-| 更名 | 已定：迁移过程中由 yue 更名为 qian；8 个包名字里的 `yue-` 换成 `qian-`，不换词 |
-| 包的作用域 | `@cavailab`：包发在 GitHub Packages 上，作用域要与仓库所有者同名 |
+| 更名 | 已定：迁移过程中由 yue 更名为 qian；8 个包名字里的 `yue-` 换成 `qian-`，不换词。在 F2 里做，F1 一个名字都没改 |
+| 包的作用域 | `@cavailab`：包发在 GitHub Packages 上，作用域要与仓库所有者同名。本仓库还没有发布过包，第一个版本就用新名字（F3） |
 | 许可 | 已定：MIT |
 | 待定 | 首发的版本号、包的可见性与发布位置、文档站组件页由谁出。见[迁移与更名](docs/migration.md)第 8 节 |
 
 ## 文档
 
 - [框架架构](docs/architecture.md)：分层、应用外壳、微前端、由 Schema 驱动的界面、面向智能体的界面、质量门禁。
-- [迁移与更名](docs/migration.md)：迁移的执行计划。范围、五个阶段、两个仓库之间的接口、更名规则、还有什么没定。
+- [迁移与更名](docs/migration.md)：迁移的执行计划。范围、五个阶段、两个仓库之间的接口、更名规则、还有什么没定，以及导入记录。
+- [后端契约的副本](backend-copy/README.md)：框架库构建与测试时读的后端冻结契约，在本仓库只放副本。
 - [平台总览](https://github.com/CavaiLAB/jiangxin)：理念、总体架构、插件模型、Agent 协同、路线。

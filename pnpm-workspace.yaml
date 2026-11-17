@@ -1,0 +1,81 @@
+# pnpm 工作区：yue 前端包 packages/yue/*（@idadawn/yue-<目录名>，S1-YUE-003）、前端插件开发包与 TypeScript 运行时、组件演练场、
+# 接口类型生成工具。只含从后端仓库迁入的框架库；文档站、应用外壳、组件自带的界面、参考应用与命令行留在后端仓库（S1-YUE-023）。
+packages:
+  - packages/yue/*
+  - packages/qian-plugin-sdk
+  - packages/qian-runtime
+  - apps/yue-playground
+  - tools/openapi-codegen
+
+# 允许跑 postinstall 的依赖（pnpm 12 默认拒绝未审核的构建脚本）：unrs-resolver 只在预编译二进制缺失时才编译。
+allowBuilds:
+  unrs-resolver: true
+  esbuild: true # Vite 工具链，校验/安装官方平台二进制
+
+# 版本目录：前端依赖只在这里钉一次，各包的 package.json 写 "catalog:"。版本矩阵页从这里读 @idadawn/yue-* 的工作区包。
+# typescript 钉 6.0.x：typescript-eslint 8 只支持 < 6.1。
+catalog:
+  react: 19.3.0
+  react-dom: 19.3.0
+  "@types/react": ^19.2.18
+  "@types/react-dom": ^19.2.7
+  "@types/node": ^24.0.0
+  typescript: ~6.0.3
+  "@base-ui/react": 1.8.0
+  clsx: ^2.1.1
+  tailwind-merge: ^3.7.0
+  tw-animate-css: 1.4.0
+  tailwindcss: ^4.3.3
+  "@tailwindcss/vite": ^4.3.3
+  vite: ^8.3.4
+  "@vitejs/plugin-react": ^6.1.2
+  "@rslib/core": ^1.0.3
+  vitest: ^5.0.3
+  "@vitest/browser": ^5.0.3
+  "@vitest/browser-playwright": ^5.0.3
+  playwright: ^1.64.0
+  "@playwright/test": ^1.64.0
+  "@axe-core/playwright": ^4.13.0
+  axe-core: ^4.11.0
+  "@testing-library/react": ^16.3.3
+  "@testing-library/dom": ^10.4.2
+  publint: ^0.3.25
+  lucide-react: 1.56.0
+  react-resizable-panels: 4.14.5
+  json-schema-to-typescript: 16.0.0
+  ajv: 8.20.0
+  ajv-formats: 3.0.1
+  react-hook-form: 7.90.0
+  "@tanstack/react-table": 9.3.1
+  "@tanstack/react-virtual": 3.14.21
+  i18next: 26.4.7
+  openapi-fetch: 0.17.0
+  openapi-typescript: 7.13.0
+  lossless-json: 4.3.2
+  "@rspress/shared": 2.0.23
+  "@rsbuild/core": 2.2.10
+  "@rsbuild/plugin-react": 2.1.0
+  "@rsbuild/plugin-tailwindcss": 2.0.3
+  "@babel/standalone": 7.28.5
+  monaco-editor: 0.52.2
+  "@module-federation/enhanced": 2.9.2
+  "@module-federation/vite": 1.23.5
+  semver: 7.8.5
+  "@types/semver": 7.8.0
+
+minimumReleaseAgeExclude:
+  - "@playwright/test@1.64.0"
+  - playwright-core@1.64.0
+  - playwright@1.64.0
+  - vite@8.3.4
+  - lucide-react@1.56.0
+  - react-resizable-panels@4.14.5
+  - i18next@26.4.7
+  - lossless-json@4.3.2
+  - "@tanstack/react-virtual@3.14.21"
+  - "@tanstack/virtual-core@3.19.6"
+
+# OpenAPI 生成器的 peer 仅支持 TypeScript 5；隔离工具，不改变工作区 TypeScript 6 编译基线。
+catalogs:
+  openapi-codegen:
+    typescript: 5.9.3

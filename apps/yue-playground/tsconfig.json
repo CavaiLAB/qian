@@ -1,0 +1,22 @@
+{
+  "extends": "../../packages/yue/tsconfig.base.json",
+  "compilerOptions": {
+    "declaration": false,
+    "noEmit": true,
+    "allowImportingTsExtensions": true,
+    "types": [
+      "vite/client",
+      "node"
+    ]
+  },
+  "include": [
+    "src",
+    "e2e",
+    "vite.config.ts",
+    "vite.shell.config.ts",
+    "vite.biz.config.ts",
+    "playwright.config.ts",
+    "visual",
+    "visual.config.ts"
+  ]
+}
