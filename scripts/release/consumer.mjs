@@ -137,14 +137,24 @@ await build({ root: import.meta.dirname, configFile: false, logLevel: 'warn', pl
 
   const tsc = path.join(directory, 'node_modules/typescript/bin/tsc');
   execFileSync(process.execPath, [tsc, '-p', 'tsconfig.json'], { cwd: directory, env, stdio: 'inherit' });
-  // 声明文件自检（只报告，不计入结论）：连同各包与第三方的 .d.ts 一起检查，列出有错误的声明文件。
-  let libCheck = [];
+  // 声明文件检查：连同各包与第三方的 .d.ts 一起再查一遍（skipLibCheck: false）。
+  // 本仓库 10 个包的声明文件有错误就不通过（使用方不跳过库检查时会撞上）；第三方的只报告，不计入结论。
+  // 不落在第三方声明文件里的错误（消费者自己的源码、没有文件位置的全局错误）也不通过。
+  const ownDeclarations = new RegExp(`^node_modules/(?:${PACKAGES.map(({ name }) => name.replace('/', '\\/')).join('|')})/`);
+  const declarationErrors = { own: [], thirdParty: [] };
   try {
     execFileSync(process.execPath, [tsc, '-p', 'tsconfig.json', '--skipLibCheck', 'false'], { cwd: directory, env, encoding: 'utf8', stdio: ['ignore', 'pipe', 'pipe'] });
   } catch (error) {
-    const lines = String(error.stdout ?? '').split('\n').filter((line) => /\.d\.ts\(\d+,\d+\): error/.test(line));
-    libCheck = [...new Set(lines.map((line) => line.replace(/^node_modules\//, '').replace(/\(\d+,\d+\): error (TS\d+).*$/, ' $1')))];
+    const lines = String(error.stdout ?? '').split('\n').filter((line) => /error TS\d+:/.test(line));
+    assert(lines.length, `声明文件检查失败，但没有读到 TS 错误：${error.message}`);
+    for (const line of lines) {
+      const file = line.match(/^(.+?)\(\d+,\d+\): error/)?.[1] ?? '';
+      const thirdParty = file.startsWith('node_modules/') && !ownDeclarations.test(file) && /\.d\.[cm]?ts$/.test(file);
+      declarationErrors[thirdParty ? 'thirdParty' : 'own'].push(line.trim());
+    }
   }
+  assert.deepEqual(declarationErrors.own, [], `本仓库包的声明文件（或消费者源码）在 skipLibCheck: false 下有错误：\n${declarationErrors.own.join('\n')}`);
+  const thirdPartyDeclarations = [...new Set(declarationErrors.thirdParty.map((line) => line.replace(/^node_modules\//, '').replace(/\(\d+,\d+\): error (TS\d+).*$/, ' $1')))];
   execFileSync(process.execPath, ['build.mjs'], { cwd: directory, env, stdio: 'inherit' });
 
   const assets = path.join(directory, 'dist/assets');
@@ -157,7 +167,8 @@ await build({ root: import.meta.dirname, configFile: false, logLevel: 'warn', pl
   console.log(JSON.stringify({
     phase: 'consumer', mode, directory: '<临时目录>', packages: PACKAGES.map(({ name }) => `${name}@${versions[name]}`),
     thirdParty: { ...thirdParty, ...tooling }, typecheck: 'passed', build: 'passed', assets: files.length,
-    declarationSelfCheck: libCheck.length ? libCheck : 'passed',
+    ownDeclarations: 'passed',
+    thirdPartyDeclarations: thirdPartyDeclarations.length ? thirdPartyDeclarations : 'passed',
     backendReads: ['@cavailab/qian-core/package.json#version', '@cavailab/qian-core/dist/qian-manifest.json', '@cavailab/qian-biz/contracts/biz.openapi.json'],
   }, null, 2));
 } catch (error) {
