@@ -1,0 +1,29 @@
+import { cn, Icon, Popover, PopoverContent, PopoverTitle, PopoverTrigger } from '@cavailab/qian-core/shell';
+import type { PlatformI18n } from '@cavailab/qian-sdk';
+import { useShellLocale, type ShellPartProps } from './layout';
+
+/** 顶栏站内信条目；消息来源由宿主注入（S1 没有站内信后端接口，外壳只提供弹窗）。 */
+export interface InboxMessage { id: string; title: string; body?: string; time?: string; unread?: boolean }
+export interface InboxPopoverProps extends ShellPartProps { i18n: PlatformI18n; messages: readonly InboxMessage[]; onOpen?: (message: InboxMessage) => void; onOpenChange?: (open: boolean) => void }
+
+export function InboxPopover({ i18n, messages, onOpen, onOpenChange, className, testId = 'qian-inbox' }: InboxPopoverProps) {
+  useShellLocale(i18n);
+  const unread = messages.filter(message => message.unread).length;
+  return <Popover onOpenChange={onOpenChange}>
+    <PopoverTrigger testId={`${testId}-trigger`} className={cn('relative inline-flex size-9 items-center justify-center rounded-(--qian-button-radius) text-subtle-foreground transition-colors duration-fast hover:bg-accent hover:text-foreground focus-visible:outline-2 focus-visible:outline-ring data-[popup-open]:bg-accent motion-reduce:transition-none', className)}>
+      <Icon name="bell" size={18} /><span className="sr-only">{i18n.t('shell.inbox')}</span>
+      {/* 未读只画一个红点（原型），条数留给读屏。 */}
+      {unread > 0 && <><span aria-hidden="true" data-slot="inbox-unread-dot" data-testid={`${testId}-unread-dot`} className="absolute end-2.25 top-2 size-[7px] rounded-full border-[1.5px] border-background bg-error-solid" /><span data-slot="inbox-unread" data-testid={`${testId}-unread`} className="sr-only">{unread}</span></>}
+    </PopoverTrigger>
+    <PopoverContent align="end" testId={`${testId}-content`} className="w-80 space-y-3 p-4">
+      <PopoverTitle>{i18n.t('shell.inbox')}</PopoverTitle>
+      {messages.length === 0 ? <p className="text-sm text-muted-foreground" data-slot="inbox-empty">{i18n.t('shell.inboxEmpty')}</p>
+        : <ul className="max-h-80 space-y-2 overflow-y-auto" data-slot="inbox-list">{messages.map(message => <li key={message.id}>
+          <button type="button" className={cn('w-full rounded-md border border-border p-2 text-left text-sm hover:bg-accent focus-visible:outline-2 focus-visible:outline-ring', message.unread && 'border-primary/40')} data-slot="inbox-message" onClick={() => onOpen?.(message)}>
+            <span className="block truncate font-medium">{message.title}</span>
+            {message.body && <span className="mt-1 block truncate text-muted-foreground">{message.body}</span>}
+            {message.time && <time className="mt-1 block text-xs text-muted-foreground">{message.time}</time>}
+          </button></li>)}</ul>}
+    </PopoverContent>
+  </Popover>;
+}

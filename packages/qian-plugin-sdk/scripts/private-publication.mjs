@@ -5,14 +5,14 @@ import { mkdtempSync, readFileSync, rmSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
 import path from 'node:path';
 
-export const REPOSITORY = 'idadawn/qian';
+export const REPOSITORY = 'CavaiLAB/qian';
 export const BOOTSTRAP_VERSION = '0.0.0-private.0';
 export const BOOTSTRAP_TAG = 'private-bootstrap';
 export const COHORT = Object.freeze([
-  { name: '@idadawn/yue-tokens', source: 'packages/yue/tokens' },
-  { name: '@idadawn/yue-contracts', source: 'packages/yue/contracts' },
-  { name: '@idadawn/yue-sdk', source: 'packages/yue/sdk' },
-  { name: '@idadawn/qian-plugin-sdk', source: 'packages/qian-plugin-sdk' },
+  { name: '@cavailab/qian-tokens', source: 'packages/qian/tokens' },
+  { name: '@cavailab/qian-contracts', source: 'packages/qian/contracts' },
+  { name: '@cavailab/qian-sdk', source: 'packages/qian/sdk' },
+  { name: '@cavailab/qian-plugin-sdk', source: 'packages/qian-plugin-sdk' },
 ].map(Object.freeze));
 const MARKER = 'x-qian-private-bootstrap';
 const MARKER_SCHEMA = 'qian.private-bootstrap/v1';
@@ -67,7 +67,7 @@ export function bootstrapFiles(pkg, releaseVersion, runId) {
   assert.match(pkg.version, versionPattern); assert.match(releaseVersion, versionPattern); assert.match(runId, /^[1-9]\d*$/);
   const marker = { schema: MARKER_SCHEMA, repository: REPOSITORY, runId, releaseVersion, packageName: pkg.name, packageVersion: pkg.version };
   const manifest = {
-    name: pkg.name, version: BOOTSTRAP_VERSION, description: 'Qian 私有包可见性初始化占位版本，不包含 SDK 实现。', license: 'Apache-2.0',
+    name: pkg.name, version: BOOTSTRAP_VERSION, description: 'Qian 私有包可见性初始化占位版本，不包含 SDK 实现。', license: 'MIT',
     repository: { type: 'git', url: `git+https://github.com/${REPOSITORY}.git`, directory: pkg.source },
     files: ['README.md'], publishConfig: { registry: 'https://npm.pkg.github.com', access: 'restricted' }, [MARKER]: marker,
   };

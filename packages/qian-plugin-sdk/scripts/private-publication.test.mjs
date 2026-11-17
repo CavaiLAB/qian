@@ -46,7 +46,7 @@ test('后部包同版本不同摘要也在全组上传前失败；私有且匹�
 });
 test('未知名称或不完整依赖组在任何 API/上传之前拒绝', async () => {
   const t = fixture();
-  for (const pkgs of [t.pkgs.slice(0, 3), [...t.pkgs, { name: '@idadawn/other', source: 'other', version: '0.1.0' }]]) {
+  for (const pkgs of [t.pkgs.slice(0, 3), [...t.pkgs, { name: '@cavailab/other', source: 'other', version: '0.1.0' }]]) {
     await assert.rejects(publishPrivateCohort(pkgs, t.api, t.upload), /固定顺序/);
     await assert.rejects(bootstrapPrivateCohort(pkgs, '0.1.0', '123', t.api, t.upload), /固定顺序/);
   }
@@ -72,7 +72,7 @@ test('真实 npm pack 的空归档仅两文件；源包 files/scripts/dependenci
     const files = inspectBootstrapArchive(readFileSync(artifact.archive));
     verifyBootstrapFiles(files, pkg, '0.1.0', '123');
     const manifest = JSON.parse(files['package/package.json']);
-    assert.equal(manifest.version, BOOTSTRAP_VERSION); assert.equal(manifest.repository.url, 'git+https://github.com/idadawn/qian.git');
+    assert.equal(manifest.version, BOOTSTRAP_VERSION); assert.equal(manifest.repository.url, 'git+https://github.com/CavaiLAB/qian.git');
     assert(!manifest.scripts && !manifest.dependencies && !manifest.main && !manifest.exports);
     assert.equal(manifest['x-qian-private-bootstrap'].runId, '123');
     assert(!Object.values(files).join('').includes('must-not-run'));
@@ -105,7 +105,7 @@ test('清理前版本 ID 若对应正式版本则拒绝删除', async () => {
   assert.equal(t.events.filter(event => event[0] === 'delete').length, 0);
 });
 test('所有外部写守卫拒绝非Actions、非main、错误仓库及错误输入版本', () => {
-  const env = { GITHUB_ACTIONS: 'true', GITHUB_REF: 'refs/heads/main', GITHUB_REPOSITORY: 'idadawn/qian', RELEASE_VERSION: '0.1.0', GITHUB_RUN_ID: '123', NODE_AUTH_TOKEN: 'test-only' };
+  const env = { GITHUB_ACTIONS: 'true', GITHUB_REF: 'refs/heads/main', GITHUB_REPOSITORY: 'CavaiLAB/qian', RELEASE_VERSION: '0.1.0', GITHUB_RUN_ID: '123', NODE_AUTH_TOKEN: 'test-only' };
   assert.doesNotThrow(() => assertWriteContext(env, '0.1.0'));
   for (const [key, value] of [['GITHUB_ACTIONS', 'false'], ['GITHUB_REF', 'refs/heads/other'], ['GITHUB_REPOSITORY', 'other/qian'], ['RELEASE_VERSION', '0.1.1'], ['GITHUB_RUN_ID', ''], ['NODE_AUTH_TOKEN', '']]) assert.throws(() => assertWriteContext({ ...env, [key]: value }, '0.1.0'));
 });
@@ -115,9 +115,9 @@ test('API适配器只允许固定包与版本DELETE，不支持删除整个包�
     return new Response(null, { status: options.method === 'DELETE' ? 204 : 403 });
   });
   await api.deleteVersion(COHORT[0].name, 123);
-  assert.equal(calls[0][0], 'https://api.github.com/users/idadawn/packages/npm/yue-tokens/versions/123');
+  assert.equal(calls[0][0], 'https://api.github.com/orgs/CavaiLAB/packages/npm/qian-tokens/versions/123');
   await assert.rejects(api.getPackage(COHORT[0].name), /HTTP 403/);
-  assert.throws(() => api.deleteVersion('@idadawn/unknown', 123));
+  assert.throws(() => api.deleteVersion('@cavailab/unknown', 123));
   assert.throws(() => api.deleteVersion(COHORT[0].name, '123/../..'));
 });
 test('真实302下载形态只在registry首跳带认证，固定CDN跳转不泄露凭据', async () => {

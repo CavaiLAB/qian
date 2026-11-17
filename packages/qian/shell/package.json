@@ -1,0 +1,110 @@
+{
+  "name": "@cavailab/qian-shell",
+  "version": "0.1.0",
+  "description": "AppShell 单一侧栏布局、菜单 → 路由、偏好、认证页族组件与契约、会话过期对话框、站内信与兜底页（通用 UI；平台专有接线在 @qian/shell-kit）。",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CavaiLAB/qian.git",
+    "directory": "packages/qian/shell"
+  },
+  "homepage": "https://github.com/CavaiLAB/qian/tree/main/packages/qian/shell#readme",
+  "bugs": {
+    "url": "https://github.com/CavaiLAB/qian/issues"
+  },
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "exports": {
+    ".": "./src/index.ts",
+    "./layout": "./src/layout.tsx",
+    "./preferences": "./src/preferences.tsx",
+    "./fallback": "./src/fallback.tsx",
+    "./locales": "./src/locales.ts",
+    "./router": "./src/router.ts",
+    "./menu": "./src/menu.ts",
+    "./session-dialog": "./src/session-dialog.tsx",
+    "./inbox": "./src/inbox.tsx"
+  },
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://npm.pkg.github.com",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "./layout": {
+        "types": "./dist/layout.d.ts",
+        "default": "./dist/layout.js"
+      },
+      "./preferences": {
+        "types": "./dist/preferences.d.ts",
+        "default": "./dist/preferences.js"
+      },
+      "./fallback": {
+        "types": "./dist/fallback.d.ts",
+        "default": "./dist/fallback.js"
+      },
+      "./locales": {
+        "types": "./dist/locales.d.ts",
+        "default": "./dist/locales.js"
+      },
+      "./router": {
+        "types": "./dist/router.d.ts",
+        "default": "./dist/router.js"
+      },
+      "./menu": {
+        "types": "./dist/menu.d.ts",
+        "default": "./dist/menu.js"
+      },
+      "./session-dialog": {
+        "types": "./dist/session-dialog.d.ts",
+        "default": "./dist/session-dialog.js"
+      },
+      "./inbox": {
+        "types": "./dist/inbox.d.ts",
+        "default": "./dist/inbox.js"
+      }
+    }
+  },
+  "scripts": {
+    "build": "rslib build",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "publint": "publint --strict --pack pnpm"
+  },
+  "dependencies": {
+    "@cavailab/qian-core": "workspace:^",
+    "@cavailab/qian-form": "workspace:^",
+    "@cavailab/qian-sdk": "workspace:^"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@cavailab/qian-tokens": "workspace:^",
+    "@vitejs/plugin-react": "catalog:",
+    "@tailwindcss/vite": "catalog:",
+    "@vitest/browser": "catalog:",
+    "@vitest/browser-playwright": "catalog:",
+    "@testing-library/react": "catalog:",
+    "@testing-library/dom": "catalog:",
+    "axe-core": "catalog:",
+    "playwright": "catalog:",
+    "tailwindcss": "catalog:",
+    "vitest": "catalog:",
+    "@rslib/core": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "publint": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "typescript": "catalog:"
+  }
+}

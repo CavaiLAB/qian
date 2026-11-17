@@ -1,0 +1,28 @@
+import { Checkbox as BaseCheckbox } from '@base-ui/react/checkbox';
+import { Radio as BaseRadio } from '@base-ui/react/radio';
+import { RadioGroup as BaseRadioGroup } from '@base-ui/react/radio-group';
+import { Switch as BaseSwitch } from '@base-ui/react/switch';
+import { Toggle as BaseToggle } from '@base-ui/react/toggle';
+import type { ComponentProps } from 'react';
+import { cn } from '../lib/cn';
+import { button, control } from '../lib/styles';
+import type { QianProps } from '../lib/test-id';
+import { Icon } from './icon';
+
+export type CheckboxProps = QianProps<ComponentProps<typeof BaseCheckbox.Root>>;
+export function Checkbox({ className, testId, indeterminate, ...props }: CheckboxProps) {
+  return <BaseCheckbox.Root {...props} indeterminate={indeterminate} data-slot="checkbox" data-testid={testId ?? 'qian-checkbox'} className={cn(control, 'inline-flex size-4 items-center justify-center rounded-[4px] data-[checked]:border-primary data-[checked]:bg-primary data-[checked]:text-primary-foreground', className)}><BaseCheckbox.Indicator><Icon name={indeterminate ? 'minus' : 'check'} /></BaseCheckbox.Indicator></BaseCheckbox.Root>;
+}
+export type RadioGroupProps = QianProps<ComponentProps<typeof BaseRadioGroup>>;
+export function RadioGroup({ className, testId, ...props }: RadioGroupProps) { return <BaseRadioGroup {...props} data-slot="radio-group" data-testid={testId ?? 'qian-radio-group'} className={cn('flex flex-col gap-2', className)} />; }
+export type RadioProps = QianProps<ComponentProps<typeof BaseRadio.Root>>;
+export function Radio({ className, testId, ...props }: RadioProps) { return <BaseRadio.Root {...props} data-slot="radio" data-testid={testId ?? 'qian-radio'} className={cn(control, 'inline-flex size-4 items-center justify-center rounded-full', className)}><BaseRadio.Indicator className="size-2 rounded-full bg-primary" /></BaseRadio.Root>; }
+export type SwitchProps = QianProps<ComponentProps<typeof BaseSwitch.Root>>;
+export function Switch({ className, testId, ...props }: SwitchProps) { return <BaseSwitch.Root {...props} data-slot="switch" data-testid={testId ?? 'qian-switch'} className={cn(control, 'inline-flex h-5 w-9 shrink-0 items-center rounded-full bg-input p-0.5 data-[checked]:bg-primary', className)}><BaseSwitch.Thumb className="pointer-events-none size-3.5 rounded-full bg-background shadow-xs transition-transform duration-normal data-[checked]:translate-x-3.5 rtl:data-[checked]:-translate-x-3.5 motion-reduce:transition-none" /></BaseSwitch.Root>; }
+export type ToggleProps = QianProps<ComponentProps<typeof BaseToggle>>;
+export function Toggle({ className, testId, ...props }: ToggleProps) { return <BaseToggle {...props} data-slot="toggle" data-testid={testId ?? 'qian-toggle'} className={cn(button, 'border-border hover:bg-muted data-[pressed]:bg-accent data-[pressed]:text-accent-foreground', className)} />; }
+export type SegmentedProps = RadioGroupProps;
+/** 分段选择：外框与输入框同高（--qian-input-height），表单内传 `className="flex w-full"` 并让各项 `flex-1` 等分。 */
+export function Segmented({ className, testId, ...props }: SegmentedProps) { return <BaseRadioGroup {...props} data-slot="segmented" data-testid={testId ?? 'qian-segmented'} className={cn('inline-flex h-(--qian-input-height) items-stretch gap-0.5 rounded-lg border border-border bg-muted p-[3px] text-subtle-foreground', className)} />; }
+export type SegmentedItemProps = RadioProps;
+export function SegmentedItem({ className, testId, ...props }: SegmentedItemProps) { return <BaseRadio.Root {...props} data-slot="segmented-item" data-testid={testId ?? 'qian-segmented-item'} className={cn(button, 'h-auto rounded-md px-3 text-[13px] text-subtle-foreground hover:text-foreground data-[checked]:bg-background data-[checked]:font-semibold data-[checked]:text-foreground data-[checked]:shadow-xs', className)} />; }

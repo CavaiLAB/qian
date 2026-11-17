@@ -1,0 +1,121 @@
+import { useMemo, useState, type CSSProperties, type ReactNode } from 'react';
+import { Button, Checkbox, Icon, Input, Select, SelectTrigger, SelectContent, SelectItem, Pagination, Popover, PopoverTrigger, PopoverContent, cn, useDirection } from '@cavailab/qian-core';
+import type { DataColumnMeta } from '@cavailab/qian-contracts';
+import type { PlatformI18n } from '@cavailab/qian-sdk';
+import { columnFilteringFeature, columnPinningFeature, columnSizingFeature, columnVisibilityFeature, functionalUpdate, rowPaginationFeature, rowSelectionFeature, rowSortingFeature, tableFeatures, useTable, type ColumnDef, type RowSelectionState } from '@tanstack/react-table';
+
+const features = tableFeatures({ columnFilteringFeature, columnPinningFeature, columnSizingFeature, columnVisibilityFeature, rowPaginationFeature, rowSelectionFeature, rowSortingFeature });
+export interface DataTableQuery {
+  pageIndex: number;
+  pageSize: number;
+  sorting: { id: string; desc: boolean }[];
+  filters: Record<string, string>;
+}
+export interface DataColumn<T> extends DataColumnMeta {
+  render?: (row: T) => ReactNode;
+  /** 单元格与表头的水平对齐；操作列用 end 靠右。 @default 'start' */
+  align?: 'start' | 'end';
+}
+export interface DataTableProps<T extends object> {
+  columns: DataColumn<T>[];
+  data: T[];
+  total: number;
+  query: DataTableQuery;
+  onQueryChange(query: DataTableQuery): void;
+  getRowId(row: T): string;
+  i18n: PlatformI18n;
+  label: string;
+  loading?: boolean;
+  error?: string | null;
+  onRetry?: () => void;
+  selectable?: boolean;
+  selectedIds?: string[];
+  onSelectionChange?: (ids: string[]) => void;
+  toolbar?: ReactNode;
+  /** 卡片顶部、工具行之上的区域，例如按状态切换的下划线页签（TabsList variant="line"）。 */
+  header?: ReactNode;
+  /** 工具行右端、「显示列」之后的内容，例如刷新按钮。 */
+  toolbarEnd?: ReactNode;
+  /** 是否提供「显示列」开关。 @default true */
+  columnToggle?: boolean;
+  /** 行的上下内边距：standard 12px，comfortable 14px（两行内容的审核列表）。 @default 'standard' */
+  density?: 'standard' | 'comfortable';
+  className?: string;
+  testId?: string;
+}
+
+/** 只接收服务端当前页；分页、排序、筛选变化交给消费方通过 PlatformClient 取数。 */
+export function DataTable<T extends object>({ columns, data, total, query, onQueryChange, getRowId, i18n, label, loading, error, onRetry, selectable = false, selectedIds, onSelectionChange, toolbar, header, toolbarEnd, columnToggle = true, density = 'standard', className, testId = 'qian-data-table' }: DataTableProps<T>) {
+  const direction = useDirection();
+  const [selection, setSelection] = useState<RowSelectionState>({});
+  const selected = selectedIds ? Object.fromEntries(selectedIds.map((id) => [id, true as const])) : selection;
+  const defs = useMemo<ColumnDef<typeof features, T>[]>(() => columns.map((column) => ({
+    id: column.field, accessorFn: (row) => (row as Record<string, unknown>)[column.field], header: column.titleKey,
+    size: column.width ?? 160, enableSorting: !!column.sortable, enableColumnFilter: !!column.filterable,
+  })), [columns]);
+  const table = useTable({
+    features, columns: defs, data, getRowId,
+    manualPagination: true, manualSorting: true, manualFiltering: true, rowCount: total,
+    state: { pagination: { pageIndex: query.pageIndex, pageSize: query.pageSize }, sorting: query.sorting,
+      columnFilters: Object.entries(query.filters).map(([id, value]) => ({ id, value })), rowSelection: selected,
+      columnPinning: { start: columns.filter((column) => column.fixed === (direction === 'rtl' ? 'right' : 'left')).map((column) => column.field), end: columns.filter((column) => column.fixed === (direction === 'rtl' ? 'left' : 'right')).map((column) => column.field) } },
+    onPaginationChange: (update) => onQueryChange({ ...query, ...functionalUpdate(update, { pageIndex: query.pageIndex, pageSize: query.pageSize }) }),
+    onSortingChange: (update) => onQueryChange({ ...query, pageIndex: 0, sorting: functionalUpdate(update, query.sorting) }),
+    onColumnFiltersChange: (update) => onQueryChange({ ...query, pageIndex: 0, filters: Object.fromEntries(functionalUpdate(update, Object.entries(query.filters).map(([id, value]) => ({ id, value }))).map(({ id, value }) => [id, String(value)])) }),
+    onRowSelectionChange: (update) => { const next = functionalUpdate(update, selected); if (!selectedIds) setSelection(next); onSelectionChange?.(Object.keys(next).filter((id) => next[id])); },
+  });
+  const visible = [...table.getStartVisibleLeafColumns(), ...table.getCenterVisibleLeafColumns(), ...table.getEndVisibleLeafColumns()];
+  const pinned = (id: string): CSSProperties => {
+    const column = table.getColumn(id)!;
+    const side = column.getIsPinned();
+    return { width: side || columns.find(item => item.field === id)?.width ? column.getSize() : undefined, minWidth: column.getSize(), ...(side ? { position: 'sticky', [side === 'start' ? 'insetInlineStart' : 'insetInlineEnd']: side === 'start' ? column.getStart('start') : column.getAfter('end'), zIndex: 1 } : {}) };
+  };
+  const state = loading ? 'loading' : error ? 'error' : data.length ? 'ready' : 'empty';
+  const filters = table.getAllLeafColumns().filter(column => column.getCanFilter());
+  const pageSizes = [...new Set([query.pageSize, 10, 20, 50, 100])].sort((a, b) => a - b);
+  // 行高至少为 --qian-table-row-height（标准 40px、紧凑 32px）；单元格按密度给上下内边距，两行内容时自然撑高。
+  const cell = cn('px-4 align-middle text-sm first:ps-5 last:pe-5 [[data-qian-density=compact]_&]:py-1', density === 'comfortable' ? 'py-3.5' : 'py-3');
+  const align = (id: string) => columns.find(item => item.field === id)?.align === 'end' ? 'text-end' : 'text-start';
+  return <section className={cn('overflow-hidden rounded-xl border border-border bg-card text-card-foreground', className)} data-slot="data-table" data-testid={testId} aria-label={label} aria-busy={!!loading}>
+    {header && <div data-slot="data-table-header">{header}</div>}
+    {filters.length > 0 && <div data-slot="data-table-filters" role="search" aria-label={i18n.t('data.filters')} className="flex flex-wrap items-end gap-3 px-5 pt-4">
+      {filters.map(column => <label key={column.id} className="grid min-w-40 flex-1 gap-2 text-sm font-medium sm:max-w-64">
+        <span>{i18n.t(String(column.columnDef.header))}</span>
+        <Input aria-label={i18n.t('data.filter', { column: i18n.t(String(column.columnDef.header)) })} value={String(column.getFilterValue() ?? '')} onChange={event => column.setFilterValue(event.target.value)} />
+      </label>)}
+      <Button variant="outline" onClick={() => onQueryChange({ ...query, pageIndex: 0, filters: {} })}>{i18n.t('data.reset')}</Button>
+    </div>}
+    <div data-slot="data-table-toolbar" className="flex flex-wrap items-center justify-between gap-3 px-5 py-4">
+      <div className="flex min-w-0 flex-1 flex-wrap items-center gap-3">{toolbar}</div>
+      {(columnToggle || toolbarEnd) && <div className="flex shrink-0 flex-wrap items-center gap-3">
+        {columnToggle && <Popover><PopoverTrigger render={<Button variant="outline" className="gap-1.5 px-3 text-subtle-foreground" />} testId={`${testId}-columns`}><Icon name="layoutGrid" />{i18n.t('data.columns')}</PopoverTrigger>
+          <PopoverContent align="end" aria-label={i18n.t('data.columns')} className="min-w-40 space-y-2 p-3">{table.getAllLeafColumns().map(column => <label key={column.id} className="flex items-center gap-2 text-sm"><Checkbox checked={column.getIsVisible()} onCheckedChange={value => column.toggleVisibility(!!value)} />{i18n.t(String(column.columnDef.header))}</label>)}</PopoverContent>
+        </Popover>}
+        {toolbarEnd}
+      </div>}
+    </div>
+    {/* 横向滚动区可聚焦以便键盘滚动；外层 section 已是同名地标，这里用 group，避免出现两个同名 region。 */}
+    <div className="overflow-auto outline-none focus-visible:ring-[3px] focus-visible:ring-ring/50" tabIndex={0} role="group" aria-label={label}>
+      <table dir={direction} className="w-full caption-bottom border-collapse text-sm" aria-label={label}>
+        <thead className="bg-table-header"><tr className="border-y border-border text-[13px] text-caption-foreground">{selectable && <th scope="col" className={cn(cell, 'w-10 py-2.5')}><Checkbox aria-label={i18n.t('data.selectAll')} checked={table.getIsAllPageRowsSelected()} indeterminate={table.getIsSomePageRowsSelected()} onCheckedChange={checked => table.toggleAllPageRowsSelected(!!checked)} /></th>}
+          {visible.map(column => <th scope="col" key={column.id} style={pinned(column.id)} className={cn(cell, 'py-2.5 text-[13px] font-medium', align(column.id), column.getIsPinned() && 'bg-table-header')} aria-sort={column.getIsSorted() === 'asc' ? 'ascending' : column.getIsSorted() === 'desc' ? 'descending' : undefined}>
+            {column.getCanSort() ? <Button variant="ghost" size="sm" className="-my-1 -ms-2 h-7.5 px-2 font-medium text-caption-foreground" onClick={column.getToggleSortingHandler()}>{i18n.t(String(column.columnDef.header))}{column.getIsSorted() === 'asc' ? ' ↑' : column.getIsSorted() === 'desc' ? ' ↓' : ''}</Button> : i18n.t(String(column.columnDef.header))}
+          </th>)}
+        </tr></thead>
+        <tbody>{state === 'ready' ? table.getRowModel().rows.map(row => <tr key={row.id} data-slot="data-table-row" data-testid={`${testId}-row`} data-state={row.getIsSelected() ? 'selected' : undefined} className="group h-(--qian-table-row-height) border-b border-border/70 transition-colors hover:bg-muted/40 data-[state=selected]:bg-muted">
+          {selectable && <td className={cn(cell, 'w-10')}><Checkbox aria-label={i18n.t('data.selectRow', { row: row.index + 1 })} checked={row.getIsSelected()} onCheckedChange={checked => row.toggleSelected(!!checked)} /></td>}
+          {visible.map(column => { const definition = columns.find(item => item.field === column.id)!; const value = row.getValue(column.id); return <td key={column.id} className={cn(cell, align(column.id), column.getIsPinned() && 'bg-card group-hover:bg-linear-to-b group-hover:from-muted/40 group-hover:to-muted/40 group-data-[state=selected]:bg-muted')} style={pinned(column.id)}>{definition.render ? definition.render(row.original) : value === null || value === undefined ? '' : String(value)}</td>; })}
+        </tr>) : <tr><td colSpan={Math.max(1, visible.length + (selectable ? 1 : 0))} className="h-28 p-8 text-center text-muted-foreground"><div role={state === 'error' ? 'alert' : 'status'} data-slot={`data-table-${state}`} data-testid={`${testId}-${state}`}>{state === 'error' ? error : i18n.t(`data.${state}`)}{state === 'error' && onRetry && <Button variant="outline" className="ml-3" onClick={onRetry}>{i18n.t('common.retry')}</Button>}</div></td></tr>}</tbody>
+      </table>
+    </div>
+    <div data-slot="data-table-pagination" className={cn('flex flex-wrap items-center justify-between gap-3 px-5 py-3.5 text-[13px] text-caption-foreground', state !== 'ready' && 'border-t border-border/70')}>
+      <span>{i18n.t('data.total', { total })}</span>
+      <div className="flex flex-wrap items-center gap-2">
+        <Select value={query.pageSize} items={pageSizes.map(size => ({ value: size, label: i18n.t('data.perPage', { size }) }))} disabled={loading} onValueChange={size => { if (size !== null) onQueryChange({ ...query, pageIndex: 0, pageSize: size }); }}>
+          <SelectTrigger aria-label={i18n.t('data.pageSize')} className="h-8 min-w-24 px-2 text-[13px]" /><SelectContent className="min-w-24">{pageSizes.map(size => <SelectItem key={size} value={size}>{i18n.t('data.perPage', { size })}</SelectItem>)}</SelectContent>
+        </Select>
+        <Pagination page={query.pageIndex + 1} totalPages={Math.max(1, Math.ceil(total / query.pageSize))} onPageChange={page => table.setPageIndex(page - 1)} disabled={loading} label={i18n.t('data.pagination')} previousLabel={i18n.t('data.previous')} nextLabel={i18n.t('data.next')} getPageLabel={page => i18n.t('data.page', { page })} />
+      </div>
+    </div>
+  </section>;
+}

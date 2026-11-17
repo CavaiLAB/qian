@@ -1,0 +1,73 @@
+{
+  "name": "@cavailab/qian-form",
+  "version": "0.1.0",
+  "description": "Field、SchemaForm、FormApi、联动、校验与脱敏规则目录、弹层 API 与消息出口。",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CavaiLAB/qian.git",
+    "directory": "packages/qian/form"
+  },
+  "homepage": "https://github.com/CavaiLAB/qian/tree/main/packages/qian/form#readme",
+  "bugs": {
+    "url": "https://github.com/CavaiLAB/qian/issues"
+  },
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://npm.pkg.github.com",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "scripts": {
+    "build": "rslib build",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "publint": "publint --strict --pack pnpm"
+  },
+  "dependencies": {
+    "@cavailab/qian-contracts": "workspace:^",
+    "@cavailab/qian-core": "workspace:^",
+    "@cavailab/qian-sdk": "workspace:^",
+    "react-hook-form": "catalog:"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@rslib/core": "catalog:",
+    "ajv": "catalog:",
+    "ajv-formats": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "publint": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "typescript": "catalog:",
+    "@testing-library/dom": "catalog:",
+    "@testing-library/react": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "@vitest/browser": "catalog:",
+    "@vitest/browser-playwright": "catalog:",
+    "axe-core": "catalog:",
+    "playwright": "catalog:",
+    "vitest": "catalog:",
+    "@tailwindcss/vite": "catalog:",
+    "tailwindcss": "catalog:",
+    "@cavailab/qian-tokens": "workspace:^"
+  }
+}

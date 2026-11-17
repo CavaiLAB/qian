@@ -1,0 +1,5420 @@
+{
+  "Button": {
+    "name": "Button",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        },
+        "variant": {
+          "enum": [
+            "primary",
+            "secondary",
+            "outline",
+            "ghost",
+            "destructive",
+            "destructive-outline",
+            "soft",
+            "link"
+          ],
+          "default": "primary",
+          "title": "variant",
+          "description": "按钮强调程度：soft 是主色浅底按钮，用于表格行内的主操作（如「审核」）；destructive-outline 是描边的危险操作（如抽屉页脚的「驳回」）；link 是主色文字按钮，用于「重置」一类的次要动作。"
+        },
+        "size": {
+          "enum": [
+            "xs",
+            "sm",
+            "md",
+            "lg",
+            "xl",
+            "icon"
+          ],
+          "default": "md",
+          "title": "size",
+          "description": "按钮尺寸：xs 30px、sm 32px、md 36px、lg 40px、xl 44px（认证与申请表单的主按钮）；icon 为 36px 方形。"
+        },
+        "disabled": {
+          "type": "boolean",
+          "title": "disabled"
+        },
+        "loading": {
+          "type": "boolean",
+          "title": "loading",
+          "description": "加载中时禁用操作并显示忙碌状态。"
+        },
+        "type": {
+          "enum": [
+            "button",
+            "submit",
+            "reset"
+          ],
+          "title": "type"
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "button",
+      "icon"
+    ],
+    "events": [
+      "onClick"
+    ],
+    "a11y": {
+      "role": "button",
+      "keyboard": [
+        "Enter",
+        "Space"
+      ]
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-border-strong",
+      "--qian-button-radius",
+      "--qian-control-foreground",
+      "--qian-destructive",
+      "--qian-destructive-foreground",
+      "--qian-error",
+      "--qian-error-bg",
+      "--qian-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-primary-border-strong",
+      "--qian-primary-foreground",
+      "--qian-primary-soft",
+      "--qian-primary-soft-foreground",
+      "--qian-primary-subtle",
+      "--qian-ring",
+      "--qian-secondary",
+      "--qian-secondary-foreground",
+      "--qian-subtle-foreground"
+    ],
+    "examples": [
+      {
+        "title": "Button 基础示例",
+        "props": {
+          "variant": "primary",
+          "children": "保存"
+        }
+      }
+    ],
+    "status": "stable"
+  },
+  "IconButton": {
+    "name": "IconButton",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        },
+        "label": {
+          "type": "string",
+          "title": "label"
+        },
+        "disabled": {
+          "type": "boolean",
+          "title": "disabled"
+        },
+        "loading": {
+          "type": "boolean",
+          "title": "loading",
+          "description": "加载中时禁用操作并显示忙碌状态。"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "label"
+      ]
+    },
+    "slots": [
+      "icon-button",
+      "icon"
+    ],
+    "events": [
+      "onClick"
+    ],
+    "a11y": {
+      "role": "button",
+      "keyboard": [
+        "Enter",
+        "Space"
+      ]
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-border-strong",
+      "--qian-button-radius",
+      "--qian-control-foreground",
+      "--qian-destructive",
+      "--qian-destructive-foreground",
+      "--qian-error",
+      "--qian-error-bg",
+      "--qian-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-primary-border-strong",
+      "--qian-primary-foreground",
+      "--qian-primary-soft",
+      "--qian-primary-soft-foreground",
+      "--qian-primary-subtle",
+      "--qian-ring",
+      "--qian-secondary",
+      "--qian-secondary-foreground",
+      "--qian-subtle-foreground"
+    ],
+    "examples": [
+      {
+        "title": "IconButton 基础示例",
+        "props": {
+          "label": "关闭"
+        }
+      }
+    ],
+    "status": "stable"
+  },
+  "ButtonGroup": {
+    "name": "ButtonGroup",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "button-group"
+    ],
+    "events": [],
+    "a11y": {
+      "role": "group",
+      "keyboard": []
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-destructive-foreground",
+      "--qian-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-primary-foreground",
+      "--qian-ring",
+      "--qian-secondary",
+      "--qian-secondary-foreground"
+    ],
+    "examples": [
+      {
+        "title": "ButtonGroup 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "Input": {
+    "name": "Input",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        },
+        "value": {
+          "type": "string",
+          "title": "value",
+          "description": "The value of the input. Use when controlled."
+        },
+        "defaultValue": {
+          "type": "string",
+          "title": "defaultValue",
+          "description": "The default value of the input. Use when uncontrolled."
+        },
+        "placeholder": {
+          "type": "string",
+          "title": "placeholder"
+        },
+        "disabled": {
+          "type": "boolean",
+          "title": "disabled"
+        },
+        "readOnly": {
+          "type": "boolean",
+          "title": "readOnly"
+        },
+        "required": {
+          "type": "boolean",
+          "title": "required"
+        },
+        "name": {
+          "type": "string",
+          "title": "name"
+        },
+        "type": {
+          "enum": [
+            "text",
+            "email",
+            "search",
+            "url",
+            "tel"
+          ],
+          "title": "type"
+        },
+        "maxLength": {
+          "type": "integer",
+          "minimum": 0,
+          "title": "maxLength"
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "input"
+    ],
+    "events": [
+      "onValueChange"
+    ],
+    "a11y": {
+      "role": "textbox",
+      "keyboard": [
+        "Tab"
+      ]
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "Input 基础示例",
+        "props": {
+          "aria-label": "名称",
+          "placeholder": "请输入"
+        }
+      }
+    ],
+    "status": "stable"
+  },
+  "Textarea": {
+    "name": "Textarea",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        },
+        "value": {
+          "type": "string",
+          "title": "value"
+        },
+        "defaultValue": {
+          "type": "string",
+          "title": "defaultValue"
+        },
+        "disabled": {
+          "type": "boolean",
+          "title": "disabled"
+        },
+        "readOnly": {
+          "type": "boolean",
+          "title": "readOnly"
+        },
+        "required": {
+          "type": "boolean",
+          "title": "required"
+        },
+        "name": {
+          "type": "string",
+          "title": "name"
+        },
+        "placeholder": {
+          "type": "string",
+          "title": "placeholder"
+        },
+        "rows": {
+          "type": "integer",
+          "minimum": 1,
+          "default": 3,
+          "title": "rows"
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "textarea"
+    ],
+    "events": [
+      "onValueChange"
+    ],
+    "a11y": {
+      "role": "textbox",
+      "keyboard": [
+        "Tab"
+      ]
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "Textarea 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "InputNumber": {
+    "name": "InputNumber",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id",
+          "description": "The id of the input element."
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        },
+        "value": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "title": "value",
+          "description": "The raw numeric value of the field."
+        },
+        "defaultValue": {
+          "type": "number",
+          "title": "defaultValue",
+          "description": "The uncontrolled value of the field when it's initially rendered.\n\nTo render a controlled number field, use the `value` prop instead."
+        },
+        "min": {
+          "type": "number",
+          "title": "min",
+          "description": "The minimum value of the input element."
+        },
+        "max": {
+          "type": "number",
+          "title": "max",
+          "description": "The maximum value of the input element."
+        },
+        "step": {
+          "type": "number",
+          "title": "step",
+          "description": "Amount to increment and decrement with the buttons and arrow keys, or to scrub with pointer movement in the scrub area.\nTo always enable step validation on form submission, specify the `min` prop explicitly in conjunction with this prop.\nSpecify `step=\"any\"` to always disable step validation; interactive stepping then uses a base amount of `1`, while the alt and shift keys still step by `smallStep` and `largeStep`."
+        },
+        "disabled": {
+          "type": "boolean",
+          "title": "disabled",
+          "description": "Whether the component should ignore user interaction."
+        },
+        "label": {
+          "type": "string",
+          "title": "label"
+        },
+        "decreaseLabel": {
+          "type": "string",
+          "title": "decreaseLabel"
+        },
+        "increaseLabel": {
+          "type": "string",
+          "title": "increaseLabel"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "decreaseLabel",
+        "increaseLabel"
+      ]
+    },
+    "slots": [
+      "input-number",
+      "input-number-input"
+    ],
+    "events": [
+      "onValueChange"
+    ],
+    "a11y": {
+      "role": "spinbutton",
+      "keyboard": [
+        "ArrowUp",
+        "ArrowDown"
+      ]
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "InputNumber 基础示例",
+        "props": {
+          "label": "数量",
+          "decreaseLabel": "减少",
+          "increaseLabel": "增加",
+          "defaultValue": 1
+        }
+      }
+    ],
+    "status": "stable"
+  },
+  "InputPassword": {
+    "name": "InputPassword",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        },
+        "value": {
+          "type": "string",
+          "title": "value",
+          "description": "The value of the input. Use when controlled."
+        },
+        "defaultValue": {
+          "type": "string",
+          "title": "defaultValue",
+          "description": "The default value of the input. Use when uncontrolled."
+        },
+        "disabled": {
+          "type": "boolean",
+          "title": "disabled"
+        },
+        "readOnly": {
+          "type": "boolean",
+          "title": "readOnly"
+        },
+        "name": {
+          "type": "string",
+          "title": "name"
+        },
+        "showLabel": {
+          "type": "string",
+          "title": "showLabel"
+        },
+        "hideLabel": {
+          "type": "string",
+          "title": "hideLabel"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "showLabel",
+        "hideLabel"
+      ]
+    },
+    "slots": [
+      "input-password",
+      "input",
+      "icon-button"
+    ],
+    "events": [
+      "onValueChange"
+    ],
+    "a11y": {
+      "role": "textbox",
+      "keyboard": [
+        "Tab"
+      ]
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "InputPassword 基础示例",
+        "props": {
+          "aria-label": "密码",
+          "showLabel": "显示密码",
+          "hideLabel": "隐藏密码"
+        }
+      }
+    ],
+    "status": "stable"
+  },
+  "PinInput": {
+    "name": "PinInput",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id",
+          "description": "The id of the first input element.\nSubsequent inputs derive their ids from it (`{id}-2`, `{id}-3`, and so on)."
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "length": {
+          "type": "integer",
+          "minimum": 1,
+          "maximum": 32,
+          "title": "length",
+          "description": "The number of OTP input slots.\nRequired so the root can clamp values, detect completion, and generate\nconsistent validation markup before all slots hydrate."
+        },
+        "value": {
+          "type": "string",
+          "title": "value",
+          "description": "The OTP value."
+        },
+        "defaultValue": {
+          "type": "string",
+          "title": "defaultValue",
+          "description": "The uncontrolled OTP value when the component is initially rendered."
+        },
+        "mask": {
+          "type": "boolean",
+          "title": "mask",
+          "description": "Whether the slot inputs should mask entered characters.\nPass `type` directly to individual `<OTPField.Input>` parts to use a custom\ninput type."
+        },
+        "disabled": {
+          "type": "boolean",
+          "title": "disabled",
+          "description": "Whether the component should ignore user interaction."
+        },
+        "name": {
+          "type": "string",
+          "title": "name",
+          "description": "Identifies the field when a form is submitted."
+        },
+        "validationType": {
+          "enum": [
+            "numeric",
+            "alphanumeric",
+            "none"
+          ],
+          "title": "validationType",
+          "description": "The type of input validation to apply to the OTP value."
+        },
+        "label": {
+          "type": "string",
+          "title": "label"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "length",
+        "label"
+      ]
+    },
+    "slots": [
+      "pin-input",
+      "pin-input-slot"
+    ],
+    "events": [
+      "onValueChange",
+      "onValueComplete",
+      "onValueInvalid"
+    ],
+    "a11y": {
+      "role": "group",
+      "keyboard": []
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "PinInput 基础示例",
+        "props": {
+          "length": 6,
+          "label": "验证码"
+        }
+      }
+    ],
+    "status": "stable"
+  },
+  "Checkbox": {
+    "name": "Checkbox",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id",
+          "description": "The id of the input element."
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        },
+        "checked": {
+          "type": "boolean",
+          "title": "checked",
+          "description": "Whether the checkbox is currently ticked.\n\nTo render an uncontrolled checkbox, use the `defaultChecked` prop instead."
+        },
+        "defaultChecked": {
+          "type": "boolean",
+          "title": "defaultChecked",
+          "description": "Whether the checkbox is initially ticked.\n\nTo render a controlled checkbox, use the `checked` prop instead."
+        },
+        "indeterminate": {
+          "type": "boolean",
+          "title": "indeterminate",
+          "description": "Whether the checkbox is in a mixed state: neither ticked, nor unticked."
+        },
+        "disabled": {
+          "type": "boolean",
+          "title": "disabled",
+          "description": "Whether the component should ignore user interaction."
+        },
+        "readOnly": {
+          "type": "boolean",
+          "title": "readOnly",
+          "description": "Whether the user should be unable to tick or untick the checkbox."
+        },
+        "required": {
+          "type": "boolean",
+          "title": "required",
+          "description": "Whether the user must tick the checkbox before submitting a form."
+        },
+        "name": {
+          "type": "string",
+          "title": "name",
+          "description": "Identifies the field when a form is submitted."
+        },
+        "value": {
+          "type": "string",
+          "title": "value",
+          "description": "The checkbox's value. Identifies it within a [Checkbox Group](https://base-ui.com/react/components/checkbox-group), falling back to `name` when omitted.\nWhen submitting a form, a checked box submits `value`; with no `value`, it submits the native \"on\"."
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "checkbox"
+    ],
+    "events": [
+      "onCheckedChange"
+    ],
+    "a11y": {
+      "role": "checkbox",
+      "keyboard": [
+        "Space"
+      ]
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-primary-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "Checkbox 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "Radio": {
+    "name": "Radio",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        },
+        "value": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "value",
+          "description": "The unique identifying value of the radio in a group."
+        },
+        "disabled": {
+          "type": "boolean",
+          "title": "disabled",
+          "description": "Whether the component should ignore user interaction."
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "radio"
+    ],
+    "events": [],
+    "a11y": {
+      "role": "radio",
+      "keyboard": [
+        "ArrowUp",
+        "ArrowDown",
+        "ArrowLeft",
+        "ArrowRight",
+        "Space"
+      ]
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-primary-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "Radio 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "RadioGroup": {
+    "name": "RadioGroup",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        },
+        "value": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "value",
+          "description": "The controlled value of the radio item that should be currently selected.\n\nTo render an uncontrolled radio group, use the `defaultValue` prop instead."
+        },
+        "defaultValue": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "defaultValue",
+          "description": "The uncontrolled value of the radio button that should be initially selected.\n\nTo render a controlled radio group, use the `value` prop instead."
+        },
+        "disabled": {
+          "type": "boolean",
+          "title": "disabled",
+          "description": "Whether the component should ignore user interaction."
+        },
+        "name": {
+          "type": "string",
+          "title": "name",
+          "description": "Identifies the field when a form is submitted."
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "radio-group",
+      "radio"
+    ],
+    "events": [
+      "onValueChange"
+    ],
+    "a11y": {
+      "role": "radiogroup",
+      "keyboard": [
+        "ArrowUp",
+        "ArrowDown",
+        "ArrowLeft",
+        "ArrowRight"
+      ]
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-primary-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "RadioGroup 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "Switch": {
+    "name": "Switch",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id",
+          "description": "The id of the hidden input element.\n\nWhen `nativeButton` is `true`, the id is applied to the root element."
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        },
+        "checked": {
+          "type": "boolean",
+          "title": "checked",
+          "description": "Whether the switch is currently active.\n\nTo render an uncontrolled switch, use the `defaultChecked` prop instead."
+        },
+        "defaultChecked": {
+          "type": "boolean",
+          "title": "defaultChecked",
+          "description": "Whether the switch is initially active.\n\nTo render a controlled switch, use the `checked` prop instead."
+        },
+        "disabled": {
+          "type": "boolean",
+          "title": "disabled",
+          "description": "Whether the component should ignore user interaction."
+        },
+        "readOnly": {
+          "type": "boolean",
+          "title": "readOnly",
+          "description": "Whether the user should be unable to activate or deactivate the switch."
+        },
+        "name": {
+          "type": "string",
+          "title": "name",
+          "description": "Identifies the field when a form is submitted."
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "switch"
+    ],
+    "events": [
+      "onCheckedChange"
+    ],
+    "a11y": {
+      "role": "switch",
+      "keyboard": [
+        "Space"
+      ]
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-primary-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "Switch 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "Toggle": {
+    "name": "Toggle",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        },
+        "pressed": {
+          "type": "boolean",
+          "title": "pressed",
+          "description": "Whether the toggle button is currently pressed.\nThis is the controlled counterpart of `defaultPressed`."
+        },
+        "defaultPressed": {
+          "type": "boolean",
+          "title": "defaultPressed",
+          "description": "Whether the toggle button is currently pressed.\nThis is the uncontrolled counterpart of `pressed`."
+        },
+        "disabled": {
+          "type": "boolean",
+          "title": "disabled",
+          "description": "Whether the component should ignore user interaction."
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "toggle"
+    ],
+    "events": [
+      "onPressedChange"
+    ],
+    "a11y": {
+      "role": "button",
+      "keyboard": [
+        "Enter",
+        "Space"
+      ]
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-primary-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "Toggle 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "Segmented": {
+    "name": "Segmented",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        },
+        "value": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "value",
+          "description": "The controlled value of the radio item that should be currently selected.\n\nTo render an uncontrolled radio group, use the `defaultValue` prop instead."
+        },
+        "defaultValue": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "defaultValue",
+          "description": "The uncontrolled value of the radio button that should be initially selected.\n\nTo render a controlled radio group, use the `value` prop instead."
+        },
+        "disabled": {
+          "type": "boolean",
+          "title": "disabled",
+          "description": "Whether the component should ignore user interaction."
+        },
+        "name": {
+          "type": "string",
+          "title": "name",
+          "description": "Identifies the field when a form is submitted."
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "segmented",
+      "segmented-item"
+    ],
+    "events": [
+      "onValueChange"
+    ],
+    "a11y": {
+      "role": "radiogroup",
+      "keyboard": [
+        "ArrowUp",
+        "ArrowDown",
+        "ArrowLeft",
+        "ArrowRight"
+      ]
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-primary-foreground",
+      "--qian-ring",
+      "--qian-subtle-foreground"
+    ],
+    "examples": [
+      {
+        "title": "Segmented 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "Select": {
+    "name": "Select",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "open": {
+          "type": "boolean",
+          "title": "open",
+          "description": "Whether the select popup is currently open."
+        },
+        "defaultOpen": {
+          "type": "boolean",
+          "title": "defaultOpen",
+          "description": "Whether the select popup is initially open.\n\nTo render a controlled select popup, use the `open` prop instead."
+        },
+        "value": {
+          "type": [
+            "string",
+            "number",
+            "array",
+            "null"
+          ],
+          "title": "value",
+          "description": "The value of the select. Use when controlled."
+        },
+        "defaultValue": {
+          "type": [
+            "string",
+            "number",
+            "array",
+            "null"
+          ],
+          "title": "defaultValue",
+          "description": "The uncontrolled value of the select when it's initially rendered.\n\nTo render a controlled select, use the `value` prop instead."
+        },
+        "items": {
+          "type": "array",
+          "title": "items",
+          "description": "Data structure of the items rendered in the select popup.\nWhen specified, `<Select.Value>` renders the label of the selected item instead of the raw value."
+        },
+        "disabled": {
+          "type": "boolean",
+          "title": "disabled",
+          "description": "Whether the component should ignore user interaction."
+        },
+        "name": {
+          "type": "string",
+          "title": "name",
+          "description": "Identifies the field when a form is submitted."
+        },
+        "modal": {
+          "type": "boolean",
+          "default": true,
+          "description": "Determines if the select enters a modal state when open.\n- `true`: user interaction is limited to the select: document page scroll is locked and pointer interactions on outside elements are disabled.\n- `false`: user interaction with the rest of the document is allowed.\n\nOn touch devices, a `true` modal blocks outside taps but leaves the page scrollable unless the popup spans nearly the full viewport width, matching native iOS behavior.",
+          "title": "modal"
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "select-trigger",
+      "select-content",
+      "select-item"
+    ],
+    "events": [
+      "onOpenChange",
+      "onValueChange"
+    ],
+    "a11y": {
+      "role": "combobox",
+      "keyboard": [
+        "ArrowDown",
+        "ArrowUp",
+        "Enter",
+        "Escape"
+      ]
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "Select 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "Combobox": {
+    "name": "Combobox",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "open": {
+          "type": "boolean",
+          "title": "open",
+          "description": "Whether the popup is currently open. Use when controlled."
+        },
+        "defaultOpen": {
+          "type": "boolean",
+          "title": "defaultOpen",
+          "description": "Whether the popup is initially open.\n\nTo render a controlled popup, use the `open` prop instead."
+        },
+        "value": {
+          "type": [
+            "string",
+            "number",
+            "array",
+            "null"
+          ],
+          "title": "value",
+          "description": "The selected value of the combobox. Use when controlled."
+        },
+        "defaultValue": {
+          "type": [
+            "string",
+            "number",
+            "array",
+            "null"
+          ],
+          "title": "defaultValue",
+          "description": "The uncontrolled selected value of the combobox when it's initially rendered.\n\nTo render a controlled combobox, use the `value` prop instead."
+        },
+        "items": {
+          "type": "array",
+          "title": "items",
+          "description": "The items to be displayed in the list.\nCan be a flat array of items, an array of groups with items, or a collection created by\nthe `createItems()` function, which derives each item's selection value and label.\nNullish entries are not supported: remove them from the data before passing it."
+        },
+        "disabled": {
+          "type": "boolean",
+          "title": "disabled",
+          "description": "Whether the component should ignore user interaction."
+        },
+        "name": {
+          "type": "string",
+          "title": "name",
+          "description": "Identifies the field when a form is submitted."
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "combobox-trigger",
+      "combobox-value",
+      "combobox-content",
+      "combobox-input",
+      "combobox-item"
+    ],
+    "events": [
+      "onOpenChange",
+      "onValueChange"
+    ],
+    "a11y": {
+      "role": "combobox",
+      "keyboard": [
+        "ArrowDown",
+        "ArrowUp",
+        "Enter",
+        "Escape"
+      ]
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "Combobox 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "Label": {
+    "name": "Label",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "label"
+    ],
+    "events": [],
+    "a11y": {
+      "role": "generic",
+      "keyboard": []
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "Label 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "Field": {
+    "name": "Field",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        },
+        "name": {
+          "type": "string",
+          "title": "name",
+          "description": "Identifies the field when a form is submitted.\nTakes precedence over the `name` prop on the `<Field.Control>` component."
+        },
+        "disabled": {
+          "type": "boolean",
+          "title": "disabled",
+          "description": "Whether the component should ignore user interaction.\nTakes precedence over the `disabled` prop on the `<Field.Control>` component."
+        },
+        "invalid": {
+          "type": "boolean",
+          "title": "invalid",
+          "description": "Whether the field is invalid.\nUseful when the field state is controlled by an external library."
+        },
+        "validationMode": {
+          "enum": [
+            "onSubmit",
+            "onBlur",
+            "onChange"
+          ],
+          "title": "validationMode",
+          "description": "Determines when the field should be validated.\nThis takes precedence over the `validationMode` prop on `<Form>`.\n\n- `onSubmit`: triggers validation when the form is submitted, and re-validates on change after submission.\n- `onBlur`: triggers validation when the control loses focus.\n- `onChange`: triggers validation on every change to the control value."
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "field",
+      "field-label",
+      "field-control",
+      "field-description",
+      "field-error"
+    ],
+    "events": [],
+    "a11y": {
+      "role": "group",
+      "keyboard": []
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-control-foreground",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "Field 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "Dialog": {
+    "name": "Dialog",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "open": {
+          "type": "boolean",
+          "title": "open",
+          "description": "Whether the dialog is currently open."
+        },
+        "defaultOpen": {
+          "type": "boolean",
+          "title": "defaultOpen",
+          "description": "Whether the dialog is initially open.\n\nTo render a controlled dialog, use the `open` prop instead."
+        },
+        "modal": {
+          "type": [
+            "boolean",
+            "string"
+          ],
+          "title": "modal",
+          "description": "Determines if the dialog enters a modal state when open.\n- `true`: user interaction is limited to just the dialog: focus is trapped, document page scroll is locked, and pointer interactions on outside elements are disabled.\n- `false`: user interaction with the rest of the document is allowed.\n- `'trap-focus'`: focus is trapped inside the dialog, but document page scroll is not locked and pointer interactions outside of it remain enabled.\n\nWhen `modal` is `true` or `'trap-focus'`, render `<Dialog.Close>` inside `<Dialog.Popup>` so\ntouch screen readers can escape the popup."
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "dialog-trigger",
+      "dialog-content",
+      "dialog-close-button"
+    ],
+    "events": [
+      "onOpenChange"
+    ],
+    "a11y": {
+      "role": "dialog",
+      "keyboard": [
+        "Tab",
+        "Shift+Tab",
+        "Escape"
+      ]
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-p-black",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "Dialog 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "AlertDialog": {
+    "name": "AlertDialog",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "open": {
+          "type": "boolean",
+          "title": "open",
+          "description": "Whether the dialog is currently open."
+        },
+        "defaultOpen": {
+          "type": "boolean",
+          "title": "defaultOpen",
+          "description": "Whether the dialog is initially open.\n\nTo render a controlled dialog, use the `open` prop instead."
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "alert-dialog-trigger",
+      "alert-dialog-content",
+      "alert-dialog-close-button"
+    ],
+    "events": [
+      "onOpenChange"
+    ],
+    "a11y": {
+      "role": "alertdialog",
+      "keyboard": [
+        "Tab",
+        "Shift+Tab",
+        "Escape"
+      ]
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-p-black",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "AlertDialog 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "Sheet": {
+    "name": "Sheet",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "open": {
+          "type": "boolean",
+          "title": "open",
+          "description": "Whether the dialog is currently open."
+        },
+        "defaultOpen": {
+          "type": "boolean",
+          "title": "defaultOpen",
+          "description": "Whether the dialog is initially open.\n\nTo render a controlled dialog, use the `open` prop instead."
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "sheet-trigger",
+      "sheet-content",
+      "sheet-close-button"
+    ],
+    "events": [
+      "onOpenChange"
+    ],
+    "a11y": {
+      "role": "dialog",
+      "keyboard": [
+        "Tab",
+        "Shift+Tab",
+        "Escape"
+      ]
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-p-black",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "Sheet 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "Drawer": {
+    "name": "Drawer",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "open": {
+          "type": "boolean",
+          "title": "open",
+          "description": "Whether the drawer is currently open."
+        },
+        "defaultOpen": {
+          "type": "boolean",
+          "title": "defaultOpen",
+          "description": "Whether the drawer is initially open.\n\nTo render a controlled drawer, use the `open` prop instead."
+        },
+        "swipeDirection": {
+          "enum": [
+            "up",
+            "down",
+            "left",
+            "right"
+          ],
+          "title": "swipeDirection",
+          "description": "The swipe direction used to dismiss the drawer."
+        },
+        "snapPoints": {
+          "type": "array",
+          "items": {
+            "type": "number"
+          },
+          "title": "snapPoints",
+          "description": "Snap points used to position the drawer.\nUse numbers between 0 and 1 to represent fractions of the viewport height,\nnumbers greater than 1 as pixel values, or strings in `px`/`rem` units\n(for example, `'148px'` or `'30rem'`)."
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "drawer-trigger",
+      "drawer-content"
+    ],
+    "events": [
+      "onOpenChange"
+    ],
+    "a11y": {
+      "role": "dialog",
+      "keyboard": [
+        "Tab",
+        "Shift+Tab",
+        "Escape"
+      ]
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-p-black",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "Drawer 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "Popover": {
+    "name": "Popover",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "open": {
+          "type": "boolean",
+          "title": "open",
+          "description": "Whether the popover is currently open."
+        },
+        "defaultOpen": {
+          "type": "boolean",
+          "title": "defaultOpen",
+          "description": "Whether the popover is initially open.\n\nTo render a controlled popover, use the `open` prop instead."
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "popover-trigger",
+      "popover-content"
+    ],
+    "events": [
+      "onOpenChange"
+    ],
+    "a11y": {
+      "role": "dialog",
+      "keyboard": [
+        "Tab",
+        "Shift+Tab",
+        "Escape"
+      ]
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "Popover 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "Tooltip": {
+    "name": "Tooltip",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "open": {
+          "type": "boolean",
+          "title": "open",
+          "description": "Whether the tooltip is currently open."
+        },
+        "defaultOpen": {
+          "type": "boolean",
+          "title": "defaultOpen",
+          "description": "Whether the tooltip is initially open.\n\nTo render a controlled tooltip, use the `open` prop instead."
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "tooltip-trigger",
+      "tooltip-content"
+    ],
+    "events": [
+      "onOpenChange"
+    ],
+    "a11y": {
+      "role": "tooltip",
+      "keyboard": []
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-primary-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "Tooltip 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "HoverCard": {
+    "name": "HoverCard",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "open": {
+          "type": "boolean",
+          "title": "open",
+          "description": "Whether the preview card is currently open."
+        },
+        "defaultOpen": {
+          "type": "boolean",
+          "title": "defaultOpen",
+          "description": "Whether the preview card is initially open.\n\nTo render a controlled preview card, use the `open` prop instead."
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "hover-card-trigger",
+      "hover-card-content"
+    ],
+    "events": [
+      "onOpenChange"
+    ],
+    "a11y": {
+      "role": "dialog",
+      "keyboard": [
+        "Tab",
+        "Shift+Tab",
+        "Escape"
+      ]
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "HoverCard 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "Menu": {
+    "name": "Menu",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "open": {
+          "type": "boolean",
+          "title": "open",
+          "description": "Whether the menu is currently open."
+        },
+        "defaultOpen": {
+          "type": "boolean",
+          "title": "defaultOpen",
+          "description": "Whether the menu is initially open.\n\nTo render a controlled menu, use the `open` prop instead."
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "menu-trigger",
+      "menu-content",
+      "menu-item"
+    ],
+    "events": [
+      "onOpenChange"
+    ],
+    "a11y": {
+      "role": "menu",
+      "keyboard": [
+        "ArrowDown",
+        "ArrowUp",
+        "Home",
+        "End",
+        "Enter",
+        "Escape"
+      ]
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "Menu 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "DropdownMenu": {
+    "name": "DropdownMenu",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "open": {
+          "type": "boolean",
+          "title": "open",
+          "description": "Whether the menu is currently open."
+        },
+        "defaultOpen": {
+          "type": "boolean",
+          "title": "defaultOpen",
+          "description": "Whether the menu is initially open.\n\nTo render a controlled menu, use the `open` prop instead."
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "menu-trigger",
+      "menu-content",
+      "menu-item"
+    ],
+    "events": [
+      "onOpenChange"
+    ],
+    "a11y": {
+      "role": "menu",
+      "keyboard": [
+        "ArrowDown",
+        "ArrowUp",
+        "Home",
+        "End",
+        "Enter",
+        "Escape"
+      ]
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "DropdownMenu 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "ContextMenu": {
+    "name": "ContextMenu",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "open": {
+          "type": "boolean",
+          "title": "open",
+          "description": "Whether the menu is currently open."
+        },
+        "defaultOpen": {
+          "type": "boolean",
+          "title": "defaultOpen",
+          "description": "Whether the menu is initially open.\n\nTo render a controlled menu, use the `open` prop instead."
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "context-menu-trigger",
+      "context-menu-content",
+      "context-menu-item"
+    ],
+    "events": [
+      "onOpenChange"
+    ],
+    "a11y": {
+      "role": "menu",
+      "keyboard": [
+        "ArrowDown",
+        "ArrowUp",
+        "Home",
+        "End",
+        "Enter",
+        "Escape"
+      ]
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "ContextMenu 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "Tabs": {
+    "name": "Tabs",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        },
+        "value": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "value",
+          "description": "The value of the currently active `Tab`. Use when the component is controlled.\nWhen the value is `null`, no Tab will be active."
+        },
+        "defaultValue": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "defaultValue",
+          "description": "The default value. Use when the component is not controlled.\nWhen the value is `null`, no Tab will be active."
+        },
+        "orientation": {
+          "enum": [
+            "horizontal",
+            "vertical"
+          ],
+          "title": "orientation",
+          "description": "The component orientation (layout flow direction)."
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "tabs",
+      "tabs-list",
+      "tabs-tab",
+      "tabs-panel"
+    ],
+    "events": [
+      "onValueChange"
+    ],
+    "a11y": {
+      "role": "tablist",
+      "keyboard": [
+        "ArrowLeft",
+        "ArrowRight",
+        "Home",
+        "End"
+      ]
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-caption-foreground",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-primary-soft",
+      "--qian-primary-soft-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "Tabs 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "Accordion": {
+    "name": "Accordion",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        },
+        "value": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "value",
+          "description": "The controlled value of the item(s) that should be expanded.\n\nTo render an uncontrolled accordion, use the `defaultValue` prop instead."
+        },
+        "defaultValue": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          },
+          "title": "defaultValue",
+          "description": "The uncontrolled value of the item(s) that should be initially expanded.\n\nTo render a controlled accordion, use the `value` prop instead."
+        },
+        "multiple": {
+          "type": "boolean",
+          "title": "multiple",
+          "description": "Whether multiple items can be open at the same time."
+        },
+        "disabled": {
+          "type": "boolean",
+          "title": "disabled",
+          "description": "Whether the component should ignore user interaction."
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "accordion",
+      "accordion-item",
+      "accordion-header",
+      "accordion-trigger",
+      "accordion-content"
+    ],
+    "events": [
+      "onValueChange"
+    ],
+    "a11y": {
+      "role": "region",
+      "keyboard": []
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "Accordion 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "Card": {
+    "name": "Card",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "card",
+      "card-header",
+      "card-title",
+      "card-description",
+      "card-content",
+      "card-footer"
+    ],
+    "events": [],
+    "a11y": {
+      "role": "generic",
+      "keyboard": []
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-card",
+      "--qian-card-foreground",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "Card 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "Separator": {
+    "name": "Separator",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        },
+        "orientation": {
+          "enum": [
+            "horizontal",
+            "vertical"
+          ],
+          "title": "orientation",
+          "description": "The orientation of the separator."
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "separator"
+    ],
+    "events": [],
+    "a11y": {
+      "role": "separator",
+      "keyboard": [
+        "ArrowLeft",
+        "ArrowRight",
+        "Home",
+        "End"
+      ]
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-card",
+      "--qian-card-foreground",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "Separator 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "ScrollArea": {
+    "name": "ScrollArea",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        },
+        "label": {
+          "type": "string",
+          "title": "label"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "label"
+      ]
+    },
+    "slots": [
+      "scroll-area"
+    ],
+    "events": [],
+    "a11y": {
+      "role": "region",
+      "keyboard": []
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-card",
+      "--qian-card-foreground",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "ScrollArea 基础示例",
+        "props": {
+          "label": "滚动内容"
+        }
+      }
+    ],
+    "status": "stable"
+  },
+  "Resizable": {
+    "name": "Resizable",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id",
+          "description": "Uniquely identifies this group within an application.\r\nFalls back to `useId` when not provided.\r\n\r\nℹ️ This value will also be assigned to the `id` and `data-testid` attributes; (an explicit `data-testid` prop will take precedence)."
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children",
+          "description": "Panel and Separator components that comprise this group."
+        },
+        "orientation": {
+          "enum": [
+            "horizontal",
+            "vertical"
+          ],
+          "title": "orientation",
+          "description": "Specifies the resizable orientation (\"horizontal\" or \"vertical\"); defaults to \"horizontal\""
+        },
+        "disabled": {
+          "type": "boolean",
+          "title": "disabled",
+          "description": "Disable resize functionality."
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "resizable",
+      "resizable-panel",
+      "resizable-handle"
+    ],
+    "events": [
+      "onLayoutChanged"
+    ],
+    "a11y": {
+      "role": "separator",
+      "keyboard": [
+        "ArrowLeft",
+        "ArrowRight",
+        "Home",
+        "End"
+      ]
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-card",
+      "--qian-card-foreground",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "Resizable 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "Badge": {
+    "name": "Badge",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        },
+        "tone": {
+          "enum": [
+            "ok",
+            "warn",
+            "error",
+            "info",
+            "neutral"
+          ],
+          "title": "tone"
+        },
+        "dot": {
+          "type": "boolean",
+          "default": false,
+          "title": "dot",
+          "description": "在文字前显示同色圆点，用于状态列。"
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "badge"
+    ],
+    "events": [],
+    "a11y": {
+      "role": "generic",
+      "keyboard": []
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-error",
+      "--qian-error-bg",
+      "--qian-error-border",
+      "--qian-error-solid",
+      "--qian-foreground",
+      "--qian-info",
+      "--qian-info-bg",
+      "--qian-info-border",
+      "--qian-info-solid",
+      "--qian-muted",
+      "--qian-muted-foreground",
+      "--qian-neutral",
+      "--qian-neutral-bg",
+      "--qian-neutral-border",
+      "--qian-neutral-solid",
+      "--qian-ok",
+      "--qian-ok-bg",
+      "--qian-ok-border",
+      "--qian-ok-solid",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-ring",
+      "--qian-warn",
+      "--qian-warn-bg",
+      "--qian-warn-border",
+      "--qian-warn-solid"
+    ],
+    "examples": [
+      {
+        "title": "Badge 基础示例",
+        "props": {}
+      },
+      {
+        "title": "Badge 状态圆点",
+        "props": {
+          "tone": "ok",
+          "dot": true,
+          "children": "正常"
+        }
+      }
+    ],
+    "status": "stable"
+  },
+  "Tag": {
+    "name": "Tag",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        },
+        "tone": {
+          "enum": [
+            "ok",
+            "warn",
+            "error",
+            "info",
+            "neutral"
+          ],
+          "title": "tone"
+        },
+        "removeLabel": {
+          "type": "string",
+          "title": "removeLabel"
+        },
+        "dot": {
+          "type": "boolean",
+          "default": false,
+          "title": "dot",
+          "description": "在文字前显示同色圆点，用于状态列。"
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "tag"
+    ],
+    "events": [
+      "onRemove"
+    ],
+    "a11y": {
+      "role": "generic",
+      "keyboard": []
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-error",
+      "--qian-error-bg",
+      "--qian-error-solid",
+      "--qian-foreground",
+      "--qian-info",
+      "--qian-info-bg",
+      "--qian-info-solid",
+      "--qian-muted",
+      "--qian-muted-foreground",
+      "--qian-neutral",
+      "--qian-neutral-bg",
+      "--qian-neutral-solid",
+      "--qian-ok",
+      "--qian-ok-bg",
+      "--qian-ok-solid",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-ring",
+      "--qian-warn",
+      "--qian-warn-bg",
+      "--qian-warn-solid"
+    ],
+    "examples": [
+      {
+        "title": "Tag 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "Avatar": {
+    "name": "Avatar",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        },
+        "tint": {
+          "enum": [
+            "primary",
+            "solid",
+            "blue",
+            "green",
+            "amber",
+            "violet",
+            "teal",
+            "gray"
+          ],
+          "title": "tint",
+          "description": "无图片时的底色与文字色。"
+        },
+        "shape": {
+          "enum": [
+            "circle",
+            "square"
+          ],
+          "default": "circle",
+          "title": "shape",
+          "description": "circle 用于人，square 用于企业、应用等对象的标识色块。"
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "avatar",
+      "avatar-image",
+      "avatar-fallback"
+    ],
+    "events": [],
+    "a11y": {
+      "role": "generic",
+      "keyboard": []
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-info",
+      "--qian-info-bg",
+      "--qian-muted",
+      "--qian-muted-foreground",
+      "--qian-neutral",
+      "--qian-neutral-bg",
+      "--qian-ok",
+      "--qian-ok-bg",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-primary-foreground",
+      "--qian-primary-soft",
+      "--qian-primary-soft-foreground",
+      "--qian-ring",
+      "--qian-tint-teal",
+      "--qian-tint-teal-foreground",
+      "--qian-tint-violet",
+      "--qian-tint-violet-foreground",
+      "--qian-warn",
+      "--qian-warn-bg"
+    ],
+    "examples": [
+      {
+        "title": "Avatar 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "Skeleton": {
+    "name": "Skeleton",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "skeleton"
+    ],
+    "events": [],
+    "a11y": {
+      "role": "generic",
+      "keyboard": []
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-error",
+      "--qian-error-bg",
+      "--qian-foreground",
+      "--qian-info",
+      "--qian-info-bg",
+      "--qian-muted",
+      "--qian-muted-foreground",
+      "--qian-neutral",
+      "--qian-neutral-bg",
+      "--qian-ok",
+      "--qian-ok-bg",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-ring",
+      "--qian-warn",
+      "--qian-warn-bg"
+    ],
+    "examples": [
+      {
+        "title": "Skeleton 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "Spinner": {
+    "name": "Spinner",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        },
+        "label": {
+          "type": "string",
+          "title": "label"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "label"
+      ]
+    },
+    "slots": [
+      "spinner"
+    ],
+    "events": [],
+    "a11y": {
+      "role": "status",
+      "keyboard": []
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-error",
+      "--qian-error-bg",
+      "--qian-foreground",
+      "--qian-info",
+      "--qian-info-bg",
+      "--qian-muted",
+      "--qian-muted-foreground",
+      "--qian-neutral",
+      "--qian-neutral-bg",
+      "--qian-ok",
+      "--qian-ok-bg",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-ring",
+      "--qian-warn",
+      "--qian-warn-bg"
+    ],
+    "examples": [
+      {
+        "title": "Spinner 基础示例",
+        "props": {
+          "label": "加载中"
+        }
+      }
+    ],
+    "status": "stable"
+  },
+  "Progress": {
+    "name": "Progress",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        },
+        "value": {
+          "type": [
+            "number",
+            "null"
+          ],
+          "title": "value",
+          "description": "The current value. The component is indeterminate when value is `null`."
+        },
+        "max": {
+          "type": "number",
+          "title": "max",
+          "description": "The maximum value."
+        },
+        "min": {
+          "type": "number",
+          "title": "min",
+          "description": "The minimum value."
+        },
+        "label": {
+          "type": "string",
+          "title": "label"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "value"
+      ]
+    },
+    "slots": [
+      "progress"
+    ],
+    "events": [],
+    "a11y": {
+      "role": "progressbar",
+      "keyboard": []
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-error",
+      "--qian-error-bg",
+      "--qian-foreground",
+      "--qian-info",
+      "--qian-info-bg",
+      "--qian-muted",
+      "--qian-muted-foreground",
+      "--qian-neutral",
+      "--qian-neutral-bg",
+      "--qian-ok",
+      "--qian-ok-bg",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-ring",
+      "--qian-warn",
+      "--qian-warn-bg"
+    ],
+    "examples": [
+      {
+        "title": "Progress 基础示例",
+        "props": {
+          "label": "完成进度",
+          "value": 40
+        }
+      }
+    ],
+    "status": "stable"
+  },
+  "Alert": {
+    "name": "Alert",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title",
+          "description": "加粗的标题行；有标题时正文在其下方。"
+        },
+        "action": {
+          "type": "string",
+          "title": "action",
+          "description": "右侧操作，例如「重试」「刷新页面」按钮；窄屏时换到正文下方。"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        },
+        "tone": {
+          "enum": [
+            "ok",
+            "warn",
+            "error",
+            "info",
+            "neutral"
+          ],
+          "title": "tone"
+        },
+        "icon": {
+          "type": "boolean",
+          "default": true,
+          "title": "icon",
+          "description": "是否在左侧显示按语气选择的图标。"
+        },
+        "role": {
+          "enum": [
+            "alert",
+            "status"
+          ],
+          "title": "role"
+        },
+        "size": {
+          "enum": [
+            "sm",
+            "md"
+          ],
+          "default": "md",
+          "title": "size",
+          "description": "尺寸：sm 用在表单内（13px、紧凑内边距），md 用在页面与卡片。"
+        }
+      },
+      "additionalProperties": false
+    },
+    "slots": [
+      "alert",
+      "alert-action"
+    ],
+    "events": [],
+    "a11y": {
+      "role": "status",
+      "keyboard": []
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-error",
+      "--qian-error-bg",
+      "--qian-error-border",
+      "--qian-error-solid",
+      "--qian-error-strong",
+      "--qian-foreground",
+      "--qian-info",
+      "--qian-info-bg",
+      "--qian-info-border",
+      "--qian-info-solid",
+      "--qian-info-strong",
+      "--qian-muted",
+      "--qian-muted-foreground",
+      "--qian-neutral",
+      "--qian-neutral-bg",
+      "--qian-neutral-border",
+      "--qian-neutral-solid",
+      "--qian-neutral-strong",
+      "--qian-ok",
+      "--qian-ok-bg",
+      "--qian-ok-border",
+      "--qian-ok-solid",
+      "--qian-ok-strong",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-ring",
+      "--qian-warn",
+      "--qian-warn-bg",
+      "--qian-warn-border",
+      "--qian-warn-solid",
+      "--qian-warn-strong"
+    ],
+    "examples": [
+      {
+        "title": "Alert 基础示例",
+        "props": {}
+      }
+    ],
+    "status": "stable"
+  },
+  "Toast": {
+    "name": "Toast",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        },
+        "toast": {
+          "type": "object",
+          "required": [
+            "id"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "title": "id",
+              "description": "The unique identifier for the toast."
+            },
+            "title": {
+              "type": "string",
+              "title": "title",
+              "description": "The title of the toast."
+            },
+            "description": {
+              "type": "string",
+              "title": "description",
+              "description": "The description of the toast."
+            },
+            "type": {
+              "type": "string",
+              "title": "type",
+              "description": "The type of the toast. Used to conditionally style the toast,\nincluding conditionally rendering elements based on the type."
+            },
+            "timeout": {
+              "type": "number",
+              "minimum": 0,
+              "title": "timeout",
+              "description": "The amount of time (in ms) before the toast is auto dismissed.\nA value of `0` will prevent the toast from being dismissed automatically."
+            }
+          },
+          "additionalProperties": false,
+          "title": "toast",
+          "description": "The toast to render."
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "toast"
+      ]
+    },
+    "slots": [
+      "toast",
+      "toast-title",
+      "toast-description",
+      "toast-action",
+      "toast-close"
+    ],
+    "events": [],
+    "a11y": {
+      "role": "status",
+      "keyboard": []
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring",
+      "--qian-secondary",
+      "--qian-secondary-foreground"
+    ],
+    "examples": [
+      {
+        "title": "Toast 基础示例",
+        "props": {
+          "toast": {
+            "id": "example",
+            "title": "已保存"
+          }
+        }
+      }
+    ],
+    "status": "stable"
+  },
+  "Notification": {
+    "name": "Notification",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        },
+        "toast": {
+          "type": "object",
+          "required": [
+            "id"
+          ],
+          "properties": {
+            "id": {
+              "type": "string",
+              "title": "id",
+              "description": "The unique identifier for the toast."
+            },
+            "title": {
+              "type": "string",
+              "title": "title",
+              "description": "The title of the toast."
+            },
+            "description": {
+              "type": "string",
+              "title": "description",
+              "description": "The description of the toast."
+            },
+            "type": {
+              "const": "notification",
+              "title": "type",
+              "description": "The type of the toast. Used to conditionally style the toast,\nincluding conditionally rendering elements based on the type."
+            },
+            "timeout": {
+              "const": 0,
+              "title": "timeout",
+              "description": "The amount of time (in ms) before the toast is auto dismissed.\nA value of `0` will prevent the toast from being dismissed automatically."
+            }
+          },
+          "additionalProperties": false,
+          "title": "toast",
+          "description": "The toast to render."
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "toast"
+      ]
+    },
+    "slots": [
+      "notification",
+      "toast-title",
+      "toast-description",
+      "toast-action",
+      "toast-close"
+    ],
+    "events": [],
+    "a11y": {
+      "role": "status",
+      "keyboard": []
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring",
+      "--qian-secondary",
+      "--qian-secondary-foreground"
+    ],
+    "examples": [
+      {
+        "title": "Notification 基础示例",
+        "props": {
+          "toast": {
+            "id": "example",
+            "title": "任务完成",
+            "type": "notification",
+            "timeout": 0
+          }
+        }
+      }
+    ],
+    "status": "stable"
+  },
+  "Empty": {
+    "name": "Empty",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "testId": {
+          "type": "string",
+          "title": "testId"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "description": {
+          "type": "string",
+          "title": "description"
+        },
+        "icon": {
+          "enum": [
+            "info",
+            "alert",
+            "check"
+          ],
+          "title": "icon"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "title"
+      ]
+    },
+    "slots": [
+      "empty"
+    ],
+    "events": [],
+    "a11y": {
+      "role": "status",
+      "keyboard": []
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-error",
+      "--qian-error-bg",
+      "--qian-foreground",
+      "--qian-info",
+      "--qian-info-bg",
+      "--qian-muted",
+      "--qian-muted-foreground",
+      "--qian-neutral",
+      "--qian-neutral-bg",
+      "--qian-ok",
+      "--qian-ok-bg",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-ring",
+      "--qian-warn",
+      "--qian-warn-bg"
+    ],
+    "examples": [
+      {
+        "title": "Empty 基础示例",
+        "props": {
+          "title": "暂无数据"
+        }
+      }
+    ],
+    "status": "stable"
+  },
+  "Result": {
+    "name": "Result",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "testId": {
+          "type": "string",
+          "title": "testId"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "description": {
+          "type": "string",
+          "title": "description"
+        },
+        "tone": {
+          "enum": [
+            "ok",
+            "warn",
+            "error",
+            "info",
+            "neutral"
+          ],
+          "title": "tone"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "title"
+      ]
+    },
+    "slots": [
+      "result"
+    ],
+    "events": [],
+    "a11y": {
+      "role": "region",
+      "keyboard": []
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-error",
+      "--qian-error-bg",
+      "--qian-error-icon",
+      "--qian-foreground",
+      "--qian-info",
+      "--qian-info-bg",
+      "--qian-info-icon",
+      "--qian-muted",
+      "--qian-muted-foreground",
+      "--qian-neutral",
+      "--qian-neutral-bg",
+      "--qian-neutral-icon",
+      "--qian-ok",
+      "--qian-ok-bg",
+      "--qian-ok-icon",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-ring",
+      "--qian-warn",
+      "--qian-warn-bg",
+      "--qian-warn-icon"
+    ],
+    "examples": [
+      {
+        "title": "Result 基础示例",
+        "props": {
+          "title": "操作成功"
+        }
+      }
+    ],
+    "status": "stable"
+  },
+  "Breadcrumb": {
+    "name": "Breadcrumb",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "label": {
+          "type": "string",
+          "title": "label"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "key",
+              "label"
+            ],
+            "properties": {
+              "key": {
+                "type": "string",
+                "title": "key"
+              },
+              "label": {
+                "type": "string",
+                "title": "label"
+              },
+              "href": {
+                "type": "string",
+                "title": "href"
+              }
+            },
+            "additionalProperties": false
+          },
+          "title": "items"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "items"
+      ]
+    },
+    "slots": [
+      "breadcrumb"
+    ],
+    "events": [],
+    "a11y": {
+      "role": "navigation",
+      "keyboard": []
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "Breadcrumb 基础示例",
+        "props": {
+          "label": "当前位置",
+          "items": [
+            {
+              "key": "home",
+              "label": "首页",
+              "href": "/"
+            },
+            {
+              "key": "current",
+              "label": "设置"
+            }
+          ]
+        }
+      }
+    ],
+    "status": "stable"
+  },
+  "Pagination": {
+    "name": "Pagination",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "testId": {
+          "type": "string",
+          "title": "testId"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "page": {
+          "type": "integer",
+          "minimum": 1,
+          "title": "page"
+        },
+        "defaultPage": {
+          "type": "integer",
+          "minimum": 1,
+          "title": "defaultPage"
+        },
+        "totalPages": {
+          "type": "integer",
+          "minimum": 1,
+          "title": "totalPages"
+        },
+        "label": {
+          "type": "string",
+          "title": "label"
+        },
+        "previousLabel": {
+          "type": "string",
+          "title": "previousLabel"
+        },
+        "nextLabel": {
+          "type": "string",
+          "title": "nextLabel"
+        },
+        "disabled": {
+          "type": "boolean",
+          "title": "disabled"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "label",
+        "previousLabel",
+        "nextLabel",
+        "totalPages"
+      ]
+    },
+    "slots": [
+      "pagination"
+    ],
+    "events": [
+      "onPageChange"
+    ],
+    "a11y": {
+      "role": "navigation",
+      "keyboard": []
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-border-strong",
+      "--qian-button-radius",
+      "--qian-control-foreground",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary-soft-foreground",
+      "--qian-ring",
+      "--qian-subtle-foreground"
+    ],
+    "examples": [
+      {
+        "title": "Pagination 基础示例",
+        "props": {
+          "label": "分页",
+          "previousLabel": "上一页",
+          "nextLabel": "下一页",
+          "totalPages": 10
+        }
+      }
+    ],
+    "status": "stable"
+  },
+  "BackTop": {
+    "name": "BackTop",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "testId": {
+          "type": "string",
+          "title": "testId"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "label": {
+          "type": "string",
+          "title": "label"
+        },
+        "visibilityHeight": {
+          "type": "number",
+          "minimum": 0,
+          "default": 400,
+          "title": "visibilityHeight"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "label"
+      ]
+    },
+    "slots": [
+      "back-top"
+    ],
+    "events": [],
+    "a11y": {
+      "role": "button",
+      "keyboard": [
+        "Enter",
+        "Space"
+      ]
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "BackTop 基础示例",
+        "props": {
+          "label": "返回顶部"
+        }
+      }
+    ],
+    "status": "stable"
+  },
+  "FullScreen": {
+    "name": "FullScreen",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "testId": {
+          "type": "string",
+          "title": "testId"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "enterLabel": {
+          "type": "string",
+          "title": "enterLabel"
+        },
+        "exitLabel": {
+          "type": "string",
+          "title": "exitLabel"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "enterLabel",
+        "exitLabel"
+      ]
+    },
+    "slots": [
+      "full-screen"
+    ],
+    "events": [
+      "onError"
+    ],
+    "a11y": {
+      "role": "button",
+      "keyboard": [
+        "Enter",
+        "Space"
+      ]
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "FullScreen 基础示例",
+        "props": {
+          "enterLabel": "进入全屏",
+          "exitLabel": "退出全屏"
+        }
+      }
+    ],
+    "status": "stable"
+  },
+  "Icon": {
+    "name": "Icon",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title",
+          "description": "透传 SVG 的 title 属性；可访问名称由 label 提供。"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        },
+        "name": {
+          "enum": [
+            "arrowUp",
+            "arrowRight",
+            "check",
+            "chevronDown",
+            "chevronLeft",
+            "chevronRight",
+            "chevronsUpDown",
+            "alert",
+            "circleCheck",
+            "circleX",
+            "help",
+            "eye",
+            "eyeOff",
+            "info",
+            "spinner",
+            "maximize",
+            "minimize",
+            "minus",
+            "plus",
+            "close",
+            "home",
+            "dashboard",
+            "building",
+            "users",
+            "user",
+            "inbox",
+            "clipboardCheck",
+            "settings",
+            "package",
+            "fileText",
+            "search",
+            "refresh",
+            "more",
+            "columns",
+            "pencil",
+            "undo",
+            "logOut",
+            "bell",
+            "sun",
+            "moon",
+            "monitor",
+            "languages",
+            "shieldCheck",
+            "clock",
+            "calendar",
+            "mail",
+            "phone",
+            "externalLink",
+            "panelLeftClose",
+            "panelLeftOpen",
+            "globe",
+            "key",
+            "lock",
+            "message",
+            "network",
+            "shield",
+            "sliders",
+            "layoutGrid"
+          ],
+          "title": "name"
+        },
+        "label": {
+          "type": "string",
+          "title": "label"
+        },
+        "size": {
+          "type": "number",
+          "minimum": 1,
+          "title": "size"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "name"
+      ]
+    },
+    "slots": [
+      "icon"
+    ],
+    "events": [],
+    "a11y": {
+      "role": "img",
+      "keyboard": []
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "Icon 基础示例",
+        "props": {
+          "name": "check"
+        }
+      }
+    ],
+    "status": "stable"
+  },
+  "Descriptions": {
+    "name": "Descriptions",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "children": {
+          "type": [
+            "string",
+            "number"
+          ],
+          "title": "children"
+        },
+        "items": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "required": [
+              "key",
+              "label",
+              "children"
+            ],
+            "properties": {
+              "key": {
+                "type": "string",
+                "title": "key"
+              },
+              "label": {
+                "type": "string",
+                "title": "label"
+              },
+              "children": {
+                "type": "string",
+                "title": "children"
+              },
+              "span": {
+                "enum": [
+                  "full"
+                ],
+                "title": "span",
+                "description": "独占一整行（stacked 与 grid 布局），用于申请说明一类的长文本。"
+              }
+            },
+            "additionalProperties": false
+          },
+          "title": "items"
+        },
+        "layout": {
+          "enum": [
+            "inline",
+            "stacked",
+            "grid",
+            "justified"
+          ],
+          "default": "inline",
+          "title": "layout",
+          "description": "inline：标签与值同行两列；stacked：小号标签在上、值在下，按可用宽度自动分栏；grid：定宽标签在左、值在右，按可用宽度自动分栏（摘要框）；justified：每行标签靠左、值靠右（侧栏信息卡）。"
+        }
+      },
+      "additionalProperties": false,
+      "required": [
+        "items"
+      ]
+    },
+    "slots": [
+      "descriptions"
+    ],
+    "events": [],
+    "a11y": {
+      "role": "list",
+      "keyboard": []
+    },
+    "tokens": [
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-card",
+      "--qian-card-foreground",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
+    ],
+    "examples": [
+      {
+        "title": "Descriptions 基础示例",
+        "props": {
+          "items": [
+            {
+              "key": "name",
+              "label": "名称",
+              "children": "示例"
+            }
+          ]
+        }
+      }
+    ],
+    "status": "stable"
+  },
+  "Steps": {
+    "name": "Steps",
+    "props": {
+      "$schema": "https://json-schema.org/draft/2020-12/schema",
+      "type": "object",
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "testId": {
+          "type": "string",
+          "title": "testId",
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
+        },
+        "className": {
+          "type": "string",
+          "title": "className"
+        },
+        "title": {
+          "type": "string",
+          "title": "title"
+        },
+        "aria-label": {
+          "type": "string",
+          "title": "aria-label",
+          "description": "Defines a string value that labels the current element."
+        },
+        "aria-labelledby": {
+          "type": "string",
+          "title": "aria-labelledby",
+          "description": "Identifies the element (or elements) that labels the current element."
+        },
+        "aria-describedby": {
+          "type": "string",
+          "title": "aria-describedby",
+          "description": "Identifies the element (or elements) that describes the object."
+        },
+        "aria-invalid": {
+          "type": "boolean",
+          "title": "aria-invalid",
+          "description": "Indicates the entered value does not conform to the format expected by the application."
+        },
+        "label": {
+          "type": "string",
+          "title": "label",
+          "description": "列表的可访问名称，例如「开通进度」。"
+        },
+        "items": {
+          "type": "array",
+          "title": "items",
+          "items": {
+            "type": "object",
+            "required": [
+              "key",
+              "title",
+              "status"
+            ],
+            "properties": {
+              "key": {
+                "type": "string",
+                "title": "key"
+              },
+              "title": {
+                "type": "string",
+                "title": "title"
+              },
+              "description": {
+                "type": "string",
+                "title": "description"
+              },
+              "status": {
+                "enum": [
+                  "done",
+                  "current",
+                  "failed",
+                  "todo"
+                ],
+                "title": "status"
+              }
+            },
+            "additionalProperties": false
+          }
+        },
+        "statusLabels": {
+          "type": "object",
+          "title": "statusLabels",
+          "required": [
+            "done",
+            "current",
+            "failed",
+            "todo"
+          ],
+          "properties": {
+            "done": {
+              "type": "string",
+              "title": "done"
+            },
+            "current": {
+              "type": "string",
+              "title": "current"
+            },
+            "failed": {
+              "type": "string",
+              "title": "failed"
+            },
+            "todo": {
+              "type": "string",
+              "title": "todo"
+            }
+          },
+          "additionalProperties": false,
+          "description": "每种状态读给辅助技术的文字，由宿主本地化。"
+        },
+        "orientation": {
+          "enum": [
+            "horizontal",
+            "vertical"
+          ],
+          "default": "horizontal",
+          "title": "orientation"
+        },
+        "tone": {
+          "enum": [
+            "default",
+            "inverse"
+          ],
+          "default": "default",
+          "title": "tone",
+          "description": "配色：inverse 用在品牌深色面上（认证与申请页的侧栏）。"
+        },
+        "size": {
+          "enum": [
+            "md",
+            "lg"
+          ],
+          "default": "md",
+          "title": "size",
+          "description": "标记尺寸：md 为 28px、说明 12px；lg 为 32px、说明 13px。"
+        }
+      },
+      "required": [
+        "label",
+        "items",
+        "statusLabels"
+      ],
+      "additionalProperties": false
+    },
+    "slots": [
+      "steps",
+      "steps-item",
+      "steps-marker",
+      "steps-connector"
+    ],
+    "events": [],
+    "a11y": {
+      "role": "list",
+      "keyboard": []
+    },
+    "tokens": [
+      "--qian-background",
+      "--qian-border",
+      "--qian-border-strong",
+      "--qian-destructive",
+      "--qian-destructive-foreground",
+      "--qian-foreground",
+      "--qian-inverse",
+      "--qian-inverse-foreground",
+      "--qian-inverse-muted-foreground",
+      "--qian-muted-foreground",
+      "--qian-primary",
+      "--qian-primary-foreground",
+      "--qian-primary-soft",
+      "--qian-primary-soft-foreground"
+    ],
+    "examples": [
+      {
+        "title": "Steps 基础示例",
+        "props": {
+          "label": "开通进度",
+          "statusLabels": {
+            "done": "已完成",
+            "current": "进行中",
+            "failed": "未通过",
+            "todo": "未开始"
+          },
+          "items": [
+            {
+              "key": "submit",
+              "title": "提交申请",
+              "description": "10-20 14:32",
+              "status": "done"
+            },
+            {
+              "key": "review",
+              "title": "平台审核",
+              "description": "进行中",
+              "status": "current"
+            },
+            {
+              "key": "provision",
+              "title": "开通企业",
+              "status": "todo"
+            }
+          ]
+        }
+      }
+    ],
+    "status": "stable"
+  }
+}

@@ -1,14 +1,18 @@
 {
-  "name": "@idadawn/qian-plugin-sdk",
+  "name": "@cavailab/qian-plugin-sdk",
   "version": "0.1.0",
   "description": "Qian 前端插件契约、作用域插槽、MF2 加载与桥接 API。",
   "type": "module",
-  "license": "Apache-2.0",
+  "license": "MIT",
   "sideEffects": false,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/idadawn/qian.git",
+    "url": "git+https://github.com/CavaiLAB/qian.git",
     "directory": "packages/qian-plugin-sdk"
+  },
+  "homepage": "https://github.com/CavaiLAB/qian/tree/main/packages/qian-plugin-sdk#readme",
+  "bugs": {
+    "url": "https://github.com/CavaiLAB/qian/issues"
   },
   "files": [
     "dist",
@@ -40,8 +44,8 @@
     "publint": "publint --strict --pack pnpm"
   },
   "dependencies": {
-    "@idadawn/qian-runtime": "workspace:^",
-    "@idadawn/yue-sdk": "workspace:^",
+    "@cavailab/qian-runtime": "workspace:^",
+    "@cavailab/qian-sdk": "workspace:^",
     "@module-federation/enhanced": "catalog:",
     "semver": "catalog:"
   },

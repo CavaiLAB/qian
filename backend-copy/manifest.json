@@ -1,5 +1,5 @@
 {
-  "note": "后端冻结契约的副本。唯一来源是 source 指的仓库与提交，不在这里改：要改去后端仓库改，再按 README.md 更新副本与这份清单。",
+  "note": "后端冻结契约的副本。唯一来源是 source 指的仓库与提交，不在这里改：要改去后端仓库改，再按 README.md 更新副本与这份清单。带 lead 的文件领先于来源：副本是来源按 lead.replace 逐条替换的结果，lead.sourceSha256 是来源在来源提交的摘要，见 README.md「领先于来源的副本」。",
   "source": {
     "repository": "idadawn/qian",
     "pathPrefix": "",
@@ -20,11 +20,40 @@
     },
     {
       "path": "schemas/v2/ui.schema.json",
-      "sha256": "a980fa980f052c52499d5ada87cecaef737af5a4a6419408188b1608430b6121"
+      "sha256": "f2dd427c4166a7589fff185d56c61e87ce19adca78b7553b7daf2105cdcdbf81",
+      "lead": {
+        "sourceSha256": "a980fa980f052c52499d5ada87cecaef737af5a4a6419408188b1608430b6121",
+        "reason": "界面清单声明前端版本要求的键由 engines.yue 改为 engines.qian（F2 更名，S1-YUE-022，见 docs/migration.md 第 5 节）。这份文件的唯一来源在后端仓库，后端要等新名字的包发布、改为消费新包时才改，副本先改。",
+        "resolvedBy": "S1-YUE-025",
+        "replace": [
+          {
+            "from": "\"yue\"",
+            "to": "\"qian\"",
+            "count": 2
+          }
+        ]
+      }
     },
     {
       "path": "tck/surfaces/cases.json",
-      "sha256": "10ba0fdbb4350be8c2294292e190e98a3c0e19a480ab2d86b7da6d6b99f96db5"
+      "sha256": "0d2501e54366f9a3660de6f1948c98c414efcf6afdd778700feeed22b01894ef",
+      "lead": {
+        "sourceSha256": "10ba0fdbb4350be8c2294292e190e98a3c0e19a480ab2d86b7da6d6b99f96db5",
+        "reason": "界面清单声明前端版本要求的键由 engines.yue 改为 engines.qian（F2 更名，S1-YUE-022，见 docs/migration.md 第 5 节）。这份文件的唯一来源在后端仓库，后端要等新名字的包发布、改为消费新包时才改，副本先改。",
+        "resolvedBy": "S1-YUE-025",
+        "replace": [
+          {
+            "from": "\\\"yue\\\":",
+            "to": "\\\"qian\\\":",
+            "count": 27
+          },
+          {
+            "from": "#/engines/yue\"",
+            "to": "#/engines/qian\"",
+            "count": 1
+          }
+        ]
+      }
     }
   ]
 }

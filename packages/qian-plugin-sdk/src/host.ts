@@ -1,5 +1,5 @@
 import { ShellError } from './errors';
-import { PluginLoader, type Context } from '@idadawn/qian-runtime';
+import { PluginLoader, type Context } from '@cavailab/qian-runtime';
 import { satisfies, valid, validRange } from 'semver';
 import { BridgeDispatcher, slotKey, type PublicBridge } from './bridge';
 import type { RemoteModule, RemoteRegistration, ShellHostOptions, ShellScope, SlotContribution, SlotDescriptor, SlotId, SlotOutputs } from './contracts';
@@ -23,7 +23,7 @@ export class ShellHost {
   readonly #listeners = new Set<() => void>();
   readonly bridge: PublicBridge;
   constructor(options: ShellHostOptions) {
-    if (!valid(options.yueVersion)) throw new ShellError('INPUT_INVALID', {}, '/yueVersion');
+    if (!valid(options.qianVersion)) throw new ShellError('INPUT_INVALID', {}, '/qianVersion');
     this.#options = options;
     this.#dispatcher = new BridgeDispatcher({ ...options, isMounted: (id, scope) => !this.#disposed && this.#entries.has(identity(id, scope)) && options.isMounted(id, scope) });
     this.bridge = this.#dispatcher.publicApi();
@@ -38,7 +38,7 @@ export class ShellHost {
     if (!input || !/^[a-z][a-z0-9]*(?:[.-][a-z0-9]+)+$/.test(input.id) || !valid(input.version)
       || (input.scope !== 'global' && !/^tenant:[A-Za-z0-9_-]+$/.test(input.scope))) throw new ShellError('INPUT_INVALID');
     validateManifest(input.manifest);
-    if (!validRange(input.manifest.engines.yue)) throw new ShellError('INPUT_INVALID', {}, '/engines/yue');
+    if (!validRange(input.manifest.engines.qian)) throw new ShellError('INPUT_INVALID', {}, '/engines/qian');
     const registration = immutable(input);
     const url = new URL(registration.manifest.federation.manifest, this.#options.baseUrl);
     const allowed = new Set([new URL(this.#options.baseUrl).origin, ...this.#options.trustedOrigins ?? []]);
@@ -55,10 +55,10 @@ export class ShellHost {
     return entry.descriptors.filter((item) => item.slot === slot && this.#options.hasPermission(item.permission, remote.scope));
   }
   async #version(entry: Entry): Promise<void> {
-    if (satisfies(this.#options.yueVersion, entry.registration.manifest.engines.yue)) return;
-    const error = new ShellError('INPUT_INVALID', {}, '/engines/yue');
-    const event = { name: 'shell.remote.rejected' as const, remoteId: entry.registration.id, scope: entry.registration.scope, reason: 'engines.yue' as const, code: error.code,
-      hostVersion: this.#options.yueVersion, requiredVersion: entry.registration.manifest.engines.yue };
+    if (satisfies(this.#options.qianVersion, entry.registration.manifest.engines.qian)) return;
+    const error = new ShellError('INPUT_INVALID', {}, '/engines/qian');
+    const event = { name: 'shell.remote.rejected' as const, remoteId: entry.registration.id, scope: entry.registration.scope, reason: 'engines.qian' as const, code: error.code,
+      hostVersion: this.#options.qianVersion, requiredVersion: entry.registration.manifest.engines.qian };
     console.error('qian.shell.remote.rejected', event);
     await this.#options.audit(immutable(event));
     throw error;

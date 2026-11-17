@@ -1,10 +1,10 @@
-# pnpm 工作区：yue 前端包 packages/yue/*（@idadawn/yue-<目录名>，S1-YUE-003）、前端插件开发包与 TypeScript 运行时、组件演练场、
+# pnpm 工作区：qian 前端包 packages/qian/*（@cavailab/qian-<目录名>，S1-YUE-003）、前端插件开发包与 TypeScript 运行时、组件演练场、
 # 接口类型生成工具。只含从后端仓库迁入的框架库；文档站、应用外壳、组件自带的界面、参考应用与命令行留在后端仓库（S1-YUE-023）。
 packages:
-  - packages/yue/*
+  - packages/qian/*
   - packages/qian-plugin-sdk
   - packages/qian-runtime
-  - apps/yue-playground
+  - apps/qian-playground
   - tools/openapi-codegen
 
 # 允许跑 postinstall 的依赖（pnpm 12 默认拒绝未审核的构建脚本）：unrs-resolver 只在预编译二进制缺失时才编译。
@@ -12,7 +12,7 @@ allowBuilds:
   unrs-resolver: true
   esbuild: true # Vite 工具链，校验/安装官方平台二进制
 
-# 版本目录：前端依赖只在这里钉一次，各包的 package.json 写 "catalog:"。版本矩阵页从这里读 @idadawn/yue-* 的工作区包。
+# 版本目录：前端依赖只在这里钉一次，各包的 package.json 写 "catalog:"。版本矩阵页从这里读 @cavailab/qian-* 的工作区包。
 # typescript 钉 6.0.x：typescript-eslint 8 只支持 < 6.1。
 catalog:
   react: 19.3.0

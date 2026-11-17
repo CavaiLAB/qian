@@ -1,0 +1,5 @@
+@import 'tailwindcss';
+@import '@cavailab/qian-tokens/theme.css';
+@source '../../../packages/qian';
+
+body { @apply font-sans text-sm bg-background text-foreground; }

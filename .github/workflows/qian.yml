@@ -1,0 +1,156 @@
+name: qian
+
+# qian 前端工作区的 CI 门禁矩阵（S1-YUE-003；PRD §07 7.15.2、docs/prd/specs/yue.md §8「工程化」，文档在后端仓库）：
+# lint、typecheck、unit、a11y、lighthouse、boundaries、publint、circular 八项各是一个检查，在 PR 上独立显示；视觉回归另是一项。
+# 本地一把跑：pnpm qian:gates（见 AGENTS.md 与 packages/qian/README.md）。
+# S1-YUE-023 起跑在本仓库：触发路径只含迁入的框架库；文档站、外壳、界面包、参考应用的门禁留在后端仓库。
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - "scripts/qian-visual.mjs"
+      - "packages/qian/**"
+      - "backend-copy/**"
+      - "scripts/backend-copy.mjs"
+      - "packages/qian-plugin-sdk/**"
+      - "packages/qian-runtime/**"
+      - "tools/openapi-codegen/**"
+      - "apps/**"
+      - "tests/gates/qian/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - "turbo.json"
+      - "eslint.config.mjs"
+      - "eslint.boundaries.config.mjs"
+      - ".dependency-cruiser.cjs"
+      - "vitest.config.ts"
+      - ".github/workflows/qian.yml"
+  pull_request:
+    paths:
+      - "scripts/qian-visual.mjs"
+      - "packages/qian/**"
+      - "backend-copy/**"
+      - "scripts/backend-copy.mjs"
+      - "packages/qian-plugin-sdk/**"
+      - "packages/qian-runtime/**"
+      - "tools/openapi-codegen/**"
+      - "apps/**"
+      - "tests/gates/qian/**"
+      - "package.json"
+      - "pnpm-lock.yaml"
+      - "pnpm-workspace.yaml"
+      - "turbo.json"
+      - "eslint.config.mjs"
+      - "eslint.boundaries.config.mjs"
+      - ".dependency-cruiser.cjs"
+      - "vitest.config.ts"
+      - ".github/workflows/qian.yml"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: qian-${{ github.ref }}
+  cancel-in-progress: true
+
+env:
+  TURBO_TELEMETRY_DISABLED: 1
+  CI: true
+
+jobs:
+  gate:
+    name: 门禁 (${{ matrix.gate }})
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    strategy:
+      fail-fast: false
+      matrix:
+        gate: [lint, typecheck, unit, a11y, lighthouse, boundaries, publint, circular]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: pnpm/action-setup@v4
+      - name: pnpm 缓存目录
+        id: pnpm-store
+        run: echo "path=$(pnpm store path --silent)" >> "$GITHUB_OUTPUT"
+      - uses: actions/cache@v4
+        with:
+          path: ${{ steps.pnpm-store.outputs.path }}
+          key: pnpm-${{ runner.os }}-${{ hashFiles('pnpm-lock.yaml') }}
+          restore-keys: pnpm-${{ runner.os }}-
+      - run: pnpm install --frozen-lockfile
+
+      - name: Playwright Chromium（unit / a11y）
+        if: matrix.gate == 'unit' || matrix.gate == 'a11y'
+        run: pnpm --filter qian-playground exec playwright install --with-deps chromium
+
+      - name: 构建靶场（a11y / lighthouse）
+        if: matrix.gate == 'a11y' || matrix.gate == 'lighthouse'
+        run: pnpm --filter qian-playground build
+
+      - name: lint
+        if: matrix.gate == 'lint'
+        run: pnpm qian:lint
+      - name: typecheck
+        if: matrix.gate == 'typecheck'
+        run: pnpm qian:typecheck
+      - name: unit（Vitest：门禁自测、SSR、浏览器测试）
+        if: matrix.gate == 'unit'
+        run: |
+          node scripts/backend-copy.mjs
+          pnpm --filter @cavailab/qian-contracts contracts:check
+          node --test packages/qian-plugin-sdk/scripts/private-publication.test.mjs
+          pnpm qian:test
+      - name: a11y（Playwright + axe，critical / serious = 0）
+        if: matrix.gate == 'a11y'
+        run: pnpm qian:a11y
+      - name: lighthouse（首屏 script 体积预算）
+        if: matrix.gate == 'lighthouse'
+        run: pnpm qian:lighthouse
+      - name: boundaries（分层边界）
+        if: matrix.gate == 'boundaries'
+        run: pnpm qian:boundaries
+      - name: publint（发布形状，先 build）
+        if: matrix.gate == 'publint'
+        run: pnpm qian:publint
+      - name: circular（循环依赖）
+        if: matrix.gate == 'circular'
+        run: pnpm qian:circular
+
+      - name: 上传报告
+        if: failure() && (matrix.gate == 'a11y' || matrix.gate == 'lighthouse')
+        uses: actions/upload-artifact@v4
+        with:
+          name: qian-${{ matrix.gate }}-report
+          path: |
+            apps/qian-playground/playwright-report
+            apps/qian-playground/test-results
+            apps/qian-playground/.lighthouseci
+          if-no-files-found: ignore
+
+  visual:
+    name: 视觉回归
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - uses: pnpm/action-setup@v4
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter qian-playground build
+      - name: 在统一 Linux 浏览器与系统字体环境校验基线
+        run: pnpm qian:visual
+      - name: 上传视觉差异与追踪
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: qian-visual-report
+          path: apps/qian-playground/.visual-results/results
+          if-no-files-found: ignore

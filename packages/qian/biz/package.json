@@ -1,0 +1,74 @@
+{
+  "name": "@cavailab/qian-biz",
+  "version": "0.1.0",
+  "description": "业务选择器：远程选项、字典、组织 / 用户 / 角色选择器、菜单与按钮授权树、IconPicker。",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CavaiLAB/qian.git",
+    "directory": "packages/qian/biz"
+  },
+  "homepage": "https://github.com/CavaiLAB/qian/tree/main/packages/qian/biz#readme",
+  "bugs": {
+    "url": "https://github.com/CavaiLAB/qian/issues"
+  },
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist",
+    "contracts",
+    "README.md"
+  ],
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://npm.pkg.github.com",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "scripts": {
+    "build": "rslib build",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "publint": "publint --strict --pack pnpm",
+    "test": "vitest run",
+    "contracts:generate": "pnpm --workspace-root openapi:generate --source packages/qian/biz/contracts/biz.openapi.json --output packages/qian/biz/src/biz.generated.ts",
+    "contracts:check": "pnpm --workspace-root openapi:generate --source packages/qian/biz/contracts/biz.openapi.json --output packages/qian/biz/src/biz.generated.ts --check"
+  },
+  "dependencies": {
+    "@cavailab/qian-core": "workspace:^",
+    "@cavailab/qian-data": "workspace:^",
+    "@cavailab/qian-sdk": "workspace:^"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@cavailab/qian-tokens": "workspace:^",
+    "@rslib/core": "catalog:",
+    "@tailwindcss/vite": "catalog:",
+    "@testing-library/dom": "catalog:",
+    "@testing-library/react": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "@vitejs/plugin-react": "catalog:",
+    "@vitest/browser": "catalog:",
+    "@vitest/browser-playwright": "catalog:",
+    "axe-core": "catalog:",
+    "playwright": "catalog:",
+    "publint": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "tailwindcss": "catalog:",
+    "typescript": "catalog:",
+    "vitest": "catalog:"
+  }
+}

@@ -1,0 +1,66 @@
+{
+  "name": "@cavailab/qian-tokens",
+  "version": "0.1.0",
+  "description": "三层设计令牌（primitive → semantic → component）、明暗两态、Tone 类型与运行时主题注入点。",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CavaiLAB/qian.git",
+    "directory": "packages/qian/tokens"
+  },
+  "homepage": "https://github.com/CavaiLAB/qian/tree/main/packages/qian/tokens#readme",
+  "bugs": {
+    "url": "https://github.com/CavaiLAB/qian/issues"
+  },
+  "type": "module",
+  "sideEffects": [
+    "*.css",
+    "**/theme-init.js"
+  ],
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "exports": {
+    ".": "./src/index.ts",
+    "./index.css": "./src/index.css",
+    "./theme-init.js": "./src/theme-init.js",
+    "./theme.css": "./src/theme.css"
+  },
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://npm.pkg.github.com",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      },
+      "./index.css": "./dist/index.css",
+      "./theme-init.js": "./dist/theme-init.js",
+      "./theme.css": "./dist/theme.css"
+    }
+  },
+  "scripts": {
+    "build": "rslib build",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "publint": "publint --strict --pack pnpm",
+    "tokens:generate": "rslib build && node scripts/generate-css.mjs",
+    "tokens:check": "rslib build && node scripts/check-tokens.mjs"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@rslib/core": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "publint": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "typescript": "catalog:"
+  },
+  "dependencies": {
+    "tw-animate-css": "catalog:"
+  }
+}

@@ -1,7 +1,7 @@
-// 只跑 yue 分层边界门禁（pnpm yue:boundaries）；规则本体在 packages/yue/boundaries.config.mjs。
-import { yueBoundariesConfig } from './packages/yue/boundaries.config.mjs';
+// 只跑 qian 分层边界门禁（pnpm qian:boundaries）；规则本体在 packages/qian/boundaries.config.mjs。
+import { qianBoundariesConfig } from './packages/qian/boundaries.config.mjs';
 
 export default [
   { ignores: ['**/node_modules/**', '**/dist/**', 'tests/**'] },
-  ...yueBoundariesConfig,
+  ...qianBoundariesConfig,
 ];

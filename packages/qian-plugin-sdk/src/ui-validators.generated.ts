@@ -11,7 +11,7 @@ function jsonEqual(a, b) {
   return keys.every((key) => Object.prototype.hasOwnProperty.call(b, key) && jsonEqual(a[key], b[key]));
 }
 export const validateUiManifest = validate20;
-const schema31 = {"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://qian.dev/schemas/ui/v2","title":"Qian 组件 UI 表面","description":"静态 UI 描述；桥接授权为显式可选扩展，contributions 必须声明 bridge。浏览器运行时可进一步拒绝尚未实现的表面。","type":"object","additionalProperties":false,"required":["$schema","federation","engines"],"properties":{"$schema":{"const":"https://qian.dev/schemas/ui/v2"},"federation":{"type":"object","additionalProperties":false,"required":["manifest","exposes"],"properties":{"manifest":{"type":"string","minLength":1,"maxLength":2048},"exposes":{"type":"array","minItems":1,"uniqueItems":true,"items":{"$ref":"#/$defs/expose"}}}},"engines":{"type":"object","additionalProperties":false,"required":["yue"],"properties":{"yue":{"$ref":"#/$defs/text"}}},"pages":{"type":"array","items":{"$ref":"#/$defs/page"}},"widgets":{"type":"array","items":{"$ref":"#/$defs/widget"}},"settingsCards":{"type":"array","items":{"$ref":"#/$defs/settingsCard"}},"contributions":{"type":"array","items":{"$ref":"#/$defs/contribution"}},"bridge":{"type":"object","additionalProperties":false,"required":["slots","navigate","notify","capabilities"],"properties":{"slots":{"type":"array","items":{"$ref":"#/$defs/slotId"},"uniqueItems":true},"navigate":{"type":"array","items":{"$ref":"#/$defs/route"},"uniqueItems":true},"notify":{"type":"boolean"},"capabilities":{"type":"array","items":{"$ref":"#/$defs/bridgeCapability"}}}}},"allOf":[{"if":{"required":["contributions"],"properties":{"contributions":{}}},"then":{"required":["bridge"],"properties":{"bridge":{}}}}],"$defs":{"text":{"type":"string","minLength":1,"maxLength":256},"id":{"type":"string","minLength":1,"maxLength":256,"pattern":"^(?:[A-Za-z0-9][A-Za-z0-9._/-]*|/(?!/)[A-Za-z0-9._/-]*)$"},"expose":{"type":"string","minLength":1,"maxLength":256,"pattern":"^[A-Za-z][A-Za-z0-9_-]*$"},"route":{"type":"string","minLength":1,"maxLength":256,"pattern":"^/(?!/)(?!\\.{1,2}(?:/|$))(?!.*\\/\\.{1,2}(?:/|$))[^\\\\?#\\u0000-\\u0020]*$"},"slotId":{"enum":["qian.shell.nav/v1","qian.shell.settings/v1","qian.shell.user-menu/v1","qian.shell.command/v1","qian.shell.preview/v1","qian.shell.client-action/v1"]},"contribution":{"type":"object","additionalProperties":false,"required":["slot","id","title","description","permission","expose"],"properties":{"slot":{"$ref":"#/$defs/slotId"},"id":{"$ref":"#/$defs/id"},"title":{"$ref":"#/$defs/text"},"description":{"$ref":"#/$defs/text"},"permission":{"$ref":"#/$defs/text"},"expose":{"$ref":"#/$defs/expose"},"route":{"$ref":"#/$defs/route"},"parameters":{"type":"object"}},"allOf":[{"if":{"properties":{"slot":{"const":"qian.shell.nav/v1"}},"required":["slot"]},"then":{"required":["route"],"properties":{"route":{}}}},{"if":{"properties":{"slot":{"const":"qian.shell.client-action/v1"}},"required":["slot"]},"then":{"required":["parameters"],"properties":{"parameters":{}}}}]},"page":{"type":"object","additionalProperties":false,"required":["route","expose","permission","nav"],"properties":{"route":{"$ref":"#/$defs/route"},"expose":{"$ref":"#/$defs/expose"},"permission":{"$ref":"#/$defs/text"},"nav":{"type":"object","additionalProperties":false,"required":["title"],"properties":{"title":{"$ref":"#/$defs/text"},"icon":{"$ref":"#/$defs/text"},"order":{"type":"integer"}}}}},"widget":{"type":"object","additionalProperties":false,"required":["type","expose"],"properties":{"type":{"$ref":"#/$defs/text"},"expose":{"$ref":"#/$defs/expose"}}},"settingsCard":{"type":"object","additionalProperties":false,"required":["expose","scope","permission"],"properties":{"expose":{"$ref":"#/$defs/expose"},"scope":{"enum":["global","tenant","app","agent-session"]},"permission":{"$ref":"#/$defs/text"}}},"bridgeCapability":{"type":"object","additionalProperties":false,"required":["id","permission","sideEffect"],"properties":{"id":{"type":"string","minLength":1,"maxLength":256,"pattern":"^[a-z][a-z0-9.]+/[A-Za-z0-9._-]+$"},"permission":{"$ref":"#/$defs/text"},"sideEffect":{"enum":["read","write"]}}}}};
+const schema31 = {"$schema":"https://json-schema.org/draft/2020-12/schema","$id":"https://qian.dev/schemas/ui/v2","title":"Qian 组件 UI 表面","description":"静态 UI 描述；桥接授权为显式可选扩展，contributions 必须声明 bridge。浏览器运行时可进一步拒绝尚未实现的表面。","type":"object","additionalProperties":false,"required":["$schema","federation","engines"],"properties":{"$schema":{"const":"https://qian.dev/schemas/ui/v2"},"federation":{"type":"object","additionalProperties":false,"required":["manifest","exposes"],"properties":{"manifest":{"type":"string","minLength":1,"maxLength":2048},"exposes":{"type":"array","minItems":1,"uniqueItems":true,"items":{"$ref":"#/$defs/expose"}}}},"engines":{"type":"object","additionalProperties":false,"required":["qian"],"properties":{"qian":{"$ref":"#/$defs/text"}}},"pages":{"type":"array","items":{"$ref":"#/$defs/page"}},"widgets":{"type":"array","items":{"$ref":"#/$defs/widget"}},"settingsCards":{"type":"array","items":{"$ref":"#/$defs/settingsCard"}},"contributions":{"type":"array","items":{"$ref":"#/$defs/contribution"}},"bridge":{"type":"object","additionalProperties":false,"required":["slots","navigate","notify","capabilities"],"properties":{"slots":{"type":"array","items":{"$ref":"#/$defs/slotId"},"uniqueItems":true},"navigate":{"type":"array","items":{"$ref":"#/$defs/route"},"uniqueItems":true},"notify":{"type":"boolean"},"capabilities":{"type":"array","items":{"$ref":"#/$defs/bridgeCapability"}}}}},"allOf":[{"if":{"required":["contributions"],"properties":{"contributions":{}}},"then":{"required":["bridge"],"properties":{"bridge":{}}}}],"$defs":{"text":{"type":"string","minLength":1,"maxLength":256},"id":{"type":"string","minLength":1,"maxLength":256,"pattern":"^(?:[A-Za-z0-9][A-Za-z0-9._/-]*|/(?!/)[A-Za-z0-9._/-]*)$"},"expose":{"type":"string","minLength":1,"maxLength":256,"pattern":"^[A-Za-z][A-Za-z0-9_-]*$"},"route":{"type":"string","minLength":1,"maxLength":256,"pattern":"^/(?!/)(?!\\.{1,2}(?:/|$))(?!.*\\/\\.{1,2}(?:/|$))[^\\\\?#\\u0000-\\u0020]*$"},"slotId":{"enum":["qian.shell.nav/v1","qian.shell.settings/v1","qian.shell.user-menu/v1","qian.shell.command/v1","qian.shell.preview/v1","qian.shell.client-action/v1"]},"contribution":{"type":"object","additionalProperties":false,"required":["slot","id","title","description","permission","expose"],"properties":{"slot":{"$ref":"#/$defs/slotId"},"id":{"$ref":"#/$defs/id"},"title":{"$ref":"#/$defs/text"},"description":{"$ref":"#/$defs/text"},"permission":{"$ref":"#/$defs/text"},"expose":{"$ref":"#/$defs/expose"},"route":{"$ref":"#/$defs/route"},"parameters":{"type":"object"}},"allOf":[{"if":{"properties":{"slot":{"const":"qian.shell.nav/v1"}},"required":["slot"]},"then":{"required":["route"],"properties":{"route":{}}}},{"if":{"properties":{"slot":{"const":"qian.shell.client-action/v1"}},"required":["slot"]},"then":{"required":["parameters"],"properties":{"parameters":{}}}}]},"page":{"type":"object","additionalProperties":false,"required":["route","expose","permission","nav"],"properties":{"route":{"$ref":"#/$defs/route"},"expose":{"$ref":"#/$defs/expose"},"permission":{"$ref":"#/$defs/text"},"nav":{"type":"object","additionalProperties":false,"required":["title"],"properties":{"title":{"$ref":"#/$defs/text"},"icon":{"$ref":"#/$defs/text"},"order":{"type":"integer"}}}}},"widget":{"type":"object","additionalProperties":false,"required":["type","expose"],"properties":{"type":{"$ref":"#/$defs/text"},"expose":{"$ref":"#/$defs/expose"}}},"settingsCard":{"type":"object","additionalProperties":false,"required":["expose","scope","permission"],"properties":{"expose":{"$ref":"#/$defs/expose"},"scope":{"enum":["global","tenant","app","agent-session"]},"permission":{"$ref":"#/$defs/text"}}},"bridgeCapability":{"type":"object","additionalProperties":false,"required":["id","permission","sideEffect"],"properties":{"id":{"type":"string","minLength":1,"maxLength":256,"pattern":"^[a-z][a-z0-9.]+/[A-Za-z0-9._-]+$"},"permission":{"$ref":"#/$defs/text"},"sideEffect":{"enum":["read","write"]}}}}};
 const schema32 = {"type":"string","minLength":1,"maxLength":256,"pattern":"^[A-Za-z][A-Za-z0-9_-]*$"};
 const schema33 = {"type":"string","minLength":1,"maxLength":256};
 const schema47 = {"enum":["qian.shell.nav/v1","qian.shell.settings/v1","qian.shell.user-menu/v1","qian.shell.command/v1","qian.shell.preview/v1","qian.shell.client-action/v1"]};
@@ -1639,8 +1639,8 @@ errors++;
 if(data.engines !== undefined){
 let data5 = data.engines;
 if(data5 && typeof data5 == "object" && !Array.isArray(data5)){
-if(data5.yue === undefined){
-const err22 = {instancePath:instancePath+"/engines",schemaPath:"#/properties/engines/required",keyword:"required",params:{missingProperty: "yue"},message:"must have required property '"+"yue"+"'"};
+if(data5.qian === undefined){
+const err22 = {instancePath:instancePath+"/engines",schemaPath:"#/properties/engines/required",keyword:"required",params:{missingProperty: "qian"},message:"must have required property '"+"qian"+"'"};
 if(vErrors === null){
 vErrors = [err22];
 }
@@ -1650,7 +1650,7 @@ vErrors.push(err22);
 errors++;
 }
 for(const key2 in data5){
-if(!(key2 === "yue")){
+if(!(key2 === "qian")){
 const err23 = {instancePath:instancePath+"/engines",schemaPath:"#/properties/engines/additionalProperties",keyword:"additionalProperties",params:{additionalProperty: key2},message:"must NOT have additional properties"};
 if(vErrors === null){
 vErrors = [err23];
@@ -1661,11 +1661,11 @@ vErrors.push(err23);
 errors++;
 }
 }
-if(data5.yue !== undefined){
-let data6 = data5.yue;
+if(data5.qian !== undefined){
+let data6 = data5.qian;
 if(typeof data6 === "string"){
 if(func1(data6) > 256){
-const err24 = {instancePath:instancePath+"/engines/yue",schemaPath:"#/$defs/text/maxLength",keyword:"maxLength",params:{limit: 256},message:"must NOT have more than 256 characters"};
+const err24 = {instancePath:instancePath+"/engines/qian",schemaPath:"#/$defs/text/maxLength",keyword:"maxLength",params:{limit: 256},message:"must NOT have more than 256 characters"};
 if(vErrors === null){
 vErrors = [err24];
 }
@@ -1675,7 +1675,7 @@ vErrors.push(err24);
 errors++;
 }
 if(func1(data6) < 1){
-const err25 = {instancePath:instancePath+"/engines/yue",schemaPath:"#/$defs/text/minLength",keyword:"minLength",params:{limit: 1},message:"must NOT have fewer than 1 characters"};
+const err25 = {instancePath:instancePath+"/engines/qian",schemaPath:"#/$defs/text/minLength",keyword:"minLength",params:{limit: 1},message:"must NOT have fewer than 1 characters"};
 if(vErrors === null){
 vErrors = [err25];
 }
@@ -1686,7 +1686,7 @@ errors++;
 }
 }
 else {
-const err26 = {instancePath:instancePath+"/engines/yue",schemaPath:"#/$defs/text/type",keyword:"type",params:{type: "string"},message:"must be string"};
+const err26 = {instancePath:instancePath+"/engines/qian",schemaPath:"#/$defs/text/type",keyword:"type",params:{type: "string"},message:"must be string"};
 if(vErrors === null){
 vErrors = [err26];
 }

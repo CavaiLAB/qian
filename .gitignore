@@ -9,8 +9,8 @@ __pycache__/
 *.pyc
 TestResults/
 
-# yue 前端工作区（S1-YUE-003）：构建产物、Turborepo 缓存、测试与 Lighthouse 报告
-packages/yue/*/dist/
+# qian 前端工作区（S1-YUE-003）：构建产物、Turborepo 缓存、测试与 Lighthouse 报告
+packages/qian/*/dist/
 apps/*/dist/
 .turbo/
 test-results/

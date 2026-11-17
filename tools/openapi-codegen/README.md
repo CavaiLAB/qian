@@ -1,6 +1,6 @@
 # OpenAPI 类型生成工具
 
-此私有工具为前端消费方从组件 OpenAPI 生成 paths 与模型类型，HTTP 请求仍由 yue SDK 的 PlatformClient 执行。
+此私有工具为前端消费方从组件 OpenAPI 生成 paths 与模型类型，HTTP 请求仍由 qian SDK 的 PlatformClient 执行。
 
 根目录运行 `pnpm openapi:generate --source <契约.json> --output <生成.ts>`；加 `--check` 只比对，不改文件。各消费包提供 contracts:generate / contracts:check 别名，CI 检查契约和类型是否漂移。
 

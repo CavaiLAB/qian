@@ -6,7 +6,7 @@ import { PlatformClient, ShellHost, SLOT_IDS, slotContracts, validateSlot, type 
 const nav: SlotDescriptor = { slot: 'qian.shell.nav/v1', id: 'tenants', title: '租户', description: '管理当前租户的配置', permission: 'tenant:read', route: '/tenants', expose: 'Page' };
 const action: SlotDescriptor = { slot: 'qian.shell.client-action/v1', id: 'refresh', title: '刷新', description: '刷新当前列表中的租户记录', permission: 'tenant:read', expose: 'Page', parameters: { type: 'object', additionalProperties: false, required: ['force'], properties: { force: { type: 'boolean' } } } };
 function registration(scope: RemoteRegistration['scope'] = 'global', id = 'qian.test'): RemoteRegistration {
-  return { id, version: '1.0.0', scope, manifest: { $schema: 'https://qian.dev/schemas/ui/v2', federation: { manifest: '/remote/mf-manifest.json', exposes: ['Page'] }, engines: { yue: '^0.1.0' }, contributions: [nav, action], bridge: { slots: [...SLOT_IDS], navigate: ['/tenants'], notify: true, capabilities: [{ id: 'qian.test/save', permission: 'tenant:write', sideEffect: 'write' }] } } };
+  return { id, version: '1.0.0', scope, manifest: { $schema: 'https://qian.dev/schemas/ui/v2', federation: { manifest: '/remote/mf-manifest.json', exposes: ['Page'] }, engines: { qian: '^0.1.0' }, contributions: [nav, action], bridge: { slots: [...SLOT_IDS], navigate: ['/tenants'], notify: true, capabilities: [{ id: 'qian.test/save', permission: 'tenant:write', sideEffect: 'write' }] } } };
 }
 async function setup(module: RemoteModule = { default: 'Page' }) {
   let context: ShellContext = { tenant: { id: 'a', name: '甲' }, membership: { id: 'member-a', permissions: ['tenant:read', 'tenant:write'] }, app: { id: 'app', name: '应用' }, locale: 'zh-CN', theme: 'light' };
@@ -16,7 +16,7 @@ async function setup(module: RemoteModule = { default: 'Page' }) {
   const federation = { registerRemotes: vi.fn(), loadRemote: vi.fn(async <T>() => module as T), preloadRemote: vi.fn(async () => {}), removeRemote: vi.fn() };
   const navigate = vi.fn(), notify = vi.fn(), audit = vi.fn(async () => {});
   const isMounted = vi.fn(() => true), isEntitled = vi.fn(() => true);
-  const host = new ShellHost({ yueVersion: '0.1.0', baseUrl: 'https://shell.test', client, federation, getContext: () => context, isMounted, isEntitled,
+  const host = new ShellHost({ qianVersion: '0.1.0', baseUrl: 'https://shell.test', client, federation, getContext: () => context, isMounted, isEntitled,
     hasPermission: (permission) => context.membership?.permissions.includes(permission) ?? false, navigate, notify, audit });
   await host.start();
   return { host, federation, navigate, notify, audit, requests, transport, isMounted, isEntitled, context, setContext: (value: ShellContext) => { context = value; } };
@@ -76,12 +76,12 @@ describe('真实 Qian 插件树与 MF2 加载边界', () => {
     await t.host.loadSlot(nav.slot); await t.host.preloadSlot(nav.slot);
     expect(t.federation.registerRemotes).not.toHaveBeenCalled(); expect(t.federation.loadRemote).not.toHaveBeenCalled(); expect(t.federation.preloadRemote).not.toHaveBeenCalled(); await t.host.dispose();
   });
-  it('不满足 engines.yue 在任何网络请求前留下结构化控制台与必需审计记录', async () => {
-    const t = await setup(); const remote = registration(); remote.manifest.engines.yue = '^9.0.0'; t.host.registerRemote(remote);
+  it('不满足 engines.qian 在任何网络请求前留下结构化控制台与必需审计记录', async () => {
+    const t = await setup(); const remote = registration(); remote.manifest.engines.qian = '^9.0.0'; t.host.registerRemote(remote);
     const consoleError = vi.spyOn(console, 'error').mockImplementation(() => {});
     try {
-      await expect(t.host.loadSlot(nav.slot)).rejects.toMatchObject({ code: 'INPUT_INVALID', pointer: '/engines/yue' });
-      expect(consoleError).toHaveBeenCalledOnce(); expect(t.audit).toHaveBeenCalledWith(expect.objectContaining({ remoteId: 'qian.test', reason: 'engines.yue', code: 'INPUT_INVALID' }));
+      await expect(t.host.loadSlot(nav.slot)).rejects.toMatchObject({ code: 'INPUT_INVALID', pointer: '/engines/qian' });
+      expect(consoleError).toHaveBeenCalledOnce(); expect(t.audit).toHaveBeenCalledWith(expect.objectContaining({ remoteId: 'qian.test', reason: 'engines.qian', code: 'INPUT_INVALID' }));
       expect(t.federation.registerRemotes).not.toHaveBeenCalled();
       t.audit.mockRejectedValueOnce(new Error('审计失败'));
       await expect(t.host.preloadSlot(nav.slot)).rejects.toThrow('审计失败'); expect(t.federation.preloadRemote).not.toHaveBeenCalled();

@@ -1,0 +1,61 @@
+{
+  "name": "@cavailab/qian-sdk",
+  "version": "0.1.0",
+  "description": "注册表 API、PlatformClient、请求拦截器链、i18n、mock 与运行时配置注入。",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/CavaiLAB/qian.git",
+    "directory": "packages/qian/sdk"
+  },
+  "homepage": "https://github.com/CavaiLAB/qian/tree/main/packages/qian/sdk#readme",
+  "bugs": {
+    "url": "https://github.com/CavaiLAB/qian/issues"
+  },
+  "type": "module",
+  "sideEffects": [
+    "*.css"
+  ],
+  "files": [
+    "dist",
+    "README.md"
+  ],
+  "exports": {
+    ".": "./src/index.ts"
+  },
+  "publishConfig": {
+    "access": "restricted",
+    "registry": "https://npm.pkg.github.com",
+    "exports": {
+      ".": {
+        "types": "./dist/index.d.ts",
+        "default": "./dist/index.js"
+      }
+    }
+  },
+  "scripts": {
+    "build": "rslib build",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "publint": "publint --strict --pack pnpm"
+  },
+  "dependencies": {
+    "i18next": "catalog:",
+    "openapi-fetch": "catalog:",
+    "lossless-json": "catalog:",
+    "@cavailab/qian-contracts": "workspace:^",
+    "@cavailab/qian-tokens": "workspace:^"
+  },
+  "peerDependencies": {
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0"
+  },
+  "devDependencies": {
+    "@rslib/core": "catalog:",
+    "@types/react": "catalog:",
+    "@types/react-dom": "catalog:",
+    "publint": "catalog:",
+    "react": "catalog:",
+    "react-dom": "catalog:",
+    "typescript": "catalog:"
+  }
+}

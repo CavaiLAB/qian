@@ -9,6 +9,8 @@ on:
     paths: ['packages/qian-runtime/**', 'backend-copy/**', 'scripts/backend-copy.mjs', 'pnpm*', 'package.json', '.github/workflows/runtime-ts.yml']
   pull_request:
     paths: ['packages/qian-runtime/**', 'backend-copy/**', 'scripts/backend-copy.mjs', 'pnpm*', 'package.json', '.github/workflows/runtime-ts.yml']
+  # 发布工作流要求待发布的提交在这里通过过；路径过滤让它没在那个提交上跑时，手动运行一次。
+  workflow_dispatch:
 permissions:
   contents: read
 concurrency:
@@ -39,7 +41,7 @@ jobs:
           mkdir -p TestResults
           pnpm --filter ./packages/qian-runtime pack --pack-destination "$GITHUB_WORKSPACE/TestResults"
           node --check packages/qian-runtime/scripts/publish.mjs
-          node packages/qian-runtime/scripts/verify-consumer.mjs "file:$GITHUB_WORKSPACE/TestResults/idadawn-qian-runtime-$(node -p 'require("./packages/qian-runtime/package.json").version').tgz"
+          node packages/qian-runtime/scripts/verify-consumer.mjs "file:$GITHUB_WORKSPACE/TestResults/cavailab-qian-runtime-$(node -p 'require("./packages/qian-runtime/package.json").version').tgz"
       - uses: actions/upload-artifact@v4
         with:
           name: qian-runtime-package
