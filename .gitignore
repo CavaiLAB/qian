@@ -1,8 +1,5 @@
 .DS_Store
 node_modules/
-bin/
-obj/
-.vs/
 .idea/
 *.user
 .env
@@ -12,18 +9,6 @@ __pycache__/
 *.pyc
 TestResults/
 
-# 文档站：构建产物与构建前由脚本生成的目录（见 website/README.md「生成目录」）
-website/doc_build/
-website/docs/components/
-website/docs/start/versions.md
-website/docs/cli/
-website/docs/design/
-# Kun 小节与 API 参考（docs-site.md §2b）：只有手写页 with-qian.mdx 进 Git；生成缓存（kun 克隆、DocFX）不进
-website/docs/sdk/kun/*
-!website/docs/sdk/kun/with-qian.mdx
-website/docs/sdk/api/
-website/.cache/
-
 # yue 前端工作区（S1-YUE-003）：构建产物、Turborepo 缓存、测试与 Lighthouse 报告
 packages/yue/*/dist/
 apps/*/dist/
@@ -31,24 +16,5 @@ apps/*/dist/
 test-results/
 playwright-report/
 .lighthouseci/
-
-# Rspress 组件演示与离线编辑器资源，由 website 构建生成
-website/docs/public/yue-demo/
-website/docs/public/yue-vendor/
-
-# 任务看板生成物（S1-PM-004）：scripts/pm.py build 按任务文件生成，不进 git；集群看板由看板 Pod 按 main 自行生成
-pm/index.html
-pm/tasks.json
-pm/STATUS.md
-
-# 本机租户运营手测环境（S1-QA-012）：开发密钥、PostgreSQL 管理员口令等本机状态，不进 git
-.qian-dev/
-
-# 租户运营页面构建产物
-packages/qian-tenancy-ui/dist/
-packages/qian-tenancy-signup-ui/dist/
-packages/qian-identity-ui/dist/
-# 参考应用远程模块构建产物（S1-YUE-012）
-samples/qian-sample-crm-ui/dist/
 # 固定浏览器环境的视觉差异报告
 .visual-results/

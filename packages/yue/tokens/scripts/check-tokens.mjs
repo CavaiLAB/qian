@@ -11,5 +11,5 @@ for(const pair of tokenContrasts())if(pair.ratio<pair.minimum)errors.push(`对�
 const smoothing=/@apply[^;]*\bantialiased\b|-webkit-font-smoothing\s*:\s*antialiased|-moz-osx-font-smoothing\s*:\s*grayscale/;
 function visit(directory,roles=true){for(const entry of readdirSync(directory,{withFileTypes:true})){if(['node_modules','dist','.turbo','test-results','playwright-report','.lighthouseci'].includes(entry.name))continue;const file=path.join(directory,entry.name);if(entry.isDirectory())visit(file,roles);else if(entry.name.endsWith('.css')){const css=readFileSync(file,'utf8');if(roles&&file!==canonical)errors.push(...lintTokenCss(css).map(error=>`${path.relative(root,file)}: ${error}`));if(smoothing.test(css.replace(/\/\*[\s\S]*?\*\//g,'')))errors.push(`${path.relative(root,file)}: 不要强制灰阶抗锯齿（antialiased / font-smoothing），正文字形用浏览器缺省。`);}}}
 visit(path.join(root,'packages/yue'));visit(path.join(root,'apps'));
-for(const consumer of ['packages/qian-tenancy-ui','packages/qian-tenancy-signup-ui','packages/qian-plugin-sdk','packages/qian-identity-ui','packages/qian-shell-kit','samples/qian-sample-crm-ui','website/demo'])visit(path.join(root,consumer),false);
+for(const consumer of ['packages/qian-plugin-sdk'])visit(path.join(root,consumer),false);
 if(errors.length){process.stderr.write(errors.join('\n')+'\n');process.exitCode=1;}

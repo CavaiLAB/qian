@@ -1,11 +1,10 @@
-# pnpm 工作区：文档站 website/、Qian 的 Node 包 packages/qian-*、yue 前端包 packages/yue/*（@idadawn/yue-<目录名>，S1-YUE-003）、前端应用 apps/*、
-# 参考应用的远程模块 samples/qian-sample-crm-ui（S1-YUE-012）。
+# pnpm 工作区：yue 前端包 packages/yue/*（@idadawn/yue-<目录名>，S1-YUE-003）、前端插件开发包与 TypeScript 运行时、组件演练场、
+# 接口类型生成工具。只含从后端仓库迁入的框架库；文档站、应用外壳、组件自带的界面、参考应用与命令行留在后端仓库（S1-YUE-023）。
 packages:
-  - website
-  - packages/qian-*
   - packages/yue/*
-  - apps/*
-  - samples/qian-sample-crm-ui
+  - packages/qian-plugin-sdk
+  - packages/qian-runtime
+  - apps/yue-playground
   - tools/openapi-codegen
 
 # 允许跑 postinstall 的依赖（pnpm 12 默认拒绝未审核的构建脚本）：unrs-resolver 只在预编译二进制缺失时才编译。
