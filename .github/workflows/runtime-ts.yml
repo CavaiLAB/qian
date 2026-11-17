@@ -1,10 +1,14 @@
 name: runtime-ts
+# TypeScript 运行时（S1-RT-003）。S1-YUE-023 起跑在本仓库，只留 TypeScript 一侧：
+# - runtime：构建、公共 API、类型测试、单测、浏览器冒烟、可分发包；
+# - tck：与 .NET 运行时共用的一致性用例留在后端仓库。按 backend-copy/manifest.json 记的仓库、路径前缀与提交检出后端，
+#   在检出里构建命令行（profile 装配器），再用本仓库工作区里的运行时跑那套用例（QIAN_TCK_BACKEND_DIR）。
 on:
   push:
     branches: [main]
-    paths: ['packages/qian-runtime/**', 'packages/Qian.Runtime/**', 'tck/runtime/**', 'tck/profiles/**', 'packages/qian-cli/**', 'packages/qian-surfaces/**', 'packages/Qian.Profiles*/**', 'packages/Qian.Surfaces*/**', 'tests/Qian.Runtime.Tests/**', 'contracts/v0/**', 'pnpm*', '*.props', '*.targets', 'global.json', 'package.json', '.github/workflows/runtime-ts.yml', '.github/workflows/runtime-ts-release.yml']
+    paths: ['packages/qian-runtime/**', 'backend-copy/**', 'scripts/backend-copy.mjs', 'pnpm*', 'package.json', '.github/workflows/runtime-ts.yml']
   pull_request:
-    paths: ['packages/qian-runtime/**', 'packages/Qian.Runtime/**', 'tck/runtime/**', 'tck/profiles/**', 'packages/qian-cli/**', 'packages/qian-surfaces/**', 'packages/Qian.Profiles*/**', 'packages/Qian.Surfaces*/**', 'tests/Qian.Runtime.Tests/**', 'contracts/v0/**', 'pnpm*', '*.props', '*.targets', 'global.json', 'package.json', '.github/workflows/runtime-ts.yml', '.github/workflows/runtime-ts-release.yml']
+    paths: ['packages/qian-runtime/**', 'backend-copy/**', 'scripts/backend-copy.mjs', 'pnpm*', 'package.json', '.github/workflows/runtime-ts.yml']
 permissions:
   contents: read
 concurrency:
@@ -12,7 +16,7 @@ concurrency:
   cancel-in-progress: true
 jobs:
   runtime:
-    name: TS 运行时与共用 TCK
+    name: TS 运行时
     runs-on: ubuntu-latest
     timeout-minutes: 15
     steps:
@@ -20,21 +24,14 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: '22'
-      - uses: actions/setup-dotnet@v4
-        with:
-          global-json-file: global.json
       - uses: pnpm/action-setup@v4
         with:
           version: 12.9.1
       - run: pnpm install --frozen-lockfile
-      - run: pnpm --filter @qian/surfaces build
-      - run: pnpm --filter qian build
       - run: pnpm --filter ./packages/qian-runtime build
       - run: pnpm --filter ./packages/qian-runtime check:api
       - run: pnpm --filter ./packages/qian-runtime test:types
       - run: pnpm --filter ./packages/qian-runtime test
-      - name: 同一组 YAML 的 .NET 侧
-        run: dotnet run --project tests/Qian.Runtime.Tests -c Release
       - run: pnpm --filter ./packages/qian-runtime exec playwright install --with-deps chromium
       - run: pnpm --filter ./packages/qian-runtime test:browser
       - name: 验证可分发包含类型和许可证
@@ -47,3 +44,38 @@ jobs:
         with:
           name: qian-runtime-package
           path: TestResults/*.tgz
+
+  tck:
+    name: 运行时一致性用例（后端 TCK）
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 12.9.1
+      - name: 读来源清单
+        id: source
+        run: node scripts/backend-copy.mjs --print-source >> "$GITHUB_OUTPUT"
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm --filter ./packages/qian-runtime build
+      - name: 按清单的提交检出后端仓库
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ steps.source.outputs.repository }}
+          ref: ${{ steps.source.outputs.commit }}
+          path: .backend
+          persist-credentials: false
+      - name: 在后端检出里构建命令行
+        working-directory: .backend/${{ steps.source.outputs.path-prefix }}
+        run: |
+          pnpm install --frozen-lockfile --filter 'qian...'
+          pnpm --filter @qian/surfaces build
+          pnpm --filter qian build
+      - name: 用本仓库的运行时跑后端的一致性用例
+        env:
+          QIAN_TCK_BACKEND_DIR: ${{ github.workspace }}/.backend/${{ steps.source.outputs.path-prefix }}
+        run: pnpm --filter ./packages/qian-runtime test:tck

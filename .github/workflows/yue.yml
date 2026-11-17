@@ -1,8 +1,9 @@
 name: yue
 
-# yue 前端工作区的 CI 门禁矩阵（S1-YUE-003；PRD §07 7.15.2、docs/prd/specs/yue.md §8「工程化」）：
-# lint、typecheck、unit、a11y、lighthouse、boundaries、publint、circular 八项各是一个检查，在 PR 上独立显示。
-# 本地一把跑：pnpm yue:gates（见 packages/yue/README.md）。
+# yue 前端工作区的 CI 门禁矩阵（S1-YUE-003；PRD §07 7.15.2、docs/prd/specs/yue.md §8「工程化」，文档在后端仓库）：
+# lint、typecheck、unit、a11y、lighthouse、boundaries、publint、circular 八项各是一个检查，在 PR 上独立显示；视觉回归另是一项。
+# 本地一把跑：pnpm yue:gates（见 AGENTS.md 与 packages/yue/README.md）。
+# S1-YUE-023 起跑在本仓库：触发路径只含迁入的框架库；文档站、外壳、界面包、参考应用的门禁留在后端仓库。
 
 on:
   push:
@@ -10,11 +11,8 @@ on:
     paths:
       - "scripts/yue-visual.mjs"
       - "packages/yue/**"
-      - "packages/qian-tenancy-ui/**"
-      - "packages/qian-identity-ui/**"
-      - "packages/qian-shell-kit/**"
-      - "samples/qian-sample-crm-ui/**"
-      - "schemas/v2/ui.schema.json"
+      - "backend-copy/**"
+      - "scripts/backend-copy.mjs"
       - "packages/qian-plugin-sdk/**"
       - "packages/qian-runtime/**"
       - "tools/openapi-codegen/**"
@@ -33,11 +31,8 @@ on:
     paths:
       - "scripts/yue-visual.mjs"
       - "packages/yue/**"
-      - "packages/qian-tenancy-ui/**"
-      - "packages/qian-identity-ui/**"
-      - "packages/qian-shell-kit/**"
-      - "samples/qian-sample-crm-ui/**"
-      - "schemas/v2/ui.schema.json"
+      - "backend-copy/**"
+      - "scripts/backend-copy.mjs"
       - "packages/qian-plugin-sdk/**"
       - "packages/qian-runtime/**"
       - "tools/openapi-codegen/**"
@@ -107,6 +102,7 @@ jobs:
       - name: unit（Vitest：门禁自测、SSR、浏览器测试）
         if: matrix.gate == 'unit'
         run: |
+          node scripts/backend-copy.mjs
           pnpm --filter @idadawn/yue-contracts contracts:check
           node --test packages/qian-plugin-sdk/scripts/private-publication.test.mjs
           pnpm yue:test

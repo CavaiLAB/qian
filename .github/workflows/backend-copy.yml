@@ -1,0 +1,44 @@
+name: backend-copy
+
+# 后端契约副本（backend-copy/）与来源逐个文件比对（S1-YUE-023）。按 backend-copy/manifest.json 记的仓库、路径前缀与提交
+# 只检出副本对应的那几个文件，再跑 scripts/backend-copy.mjs --source。本机只核对摘要（门禁 unit 那一项也跑），说明见 backend-copy/README.md。
+
+on:
+  push:
+    branches: [main]
+    paths: ['backend-copy/**', 'scripts/backend-copy.mjs', '.github/workflows/backend-copy.yml']
+  pull_request:
+    paths: ['backend-copy/**', 'scripts/backend-copy.mjs', '.github/workflows/backend-copy.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+concurrency:
+  group: backend-copy-${{ github.ref }}
+  cancel-in-progress: true
+
+jobs:
+  compare:
+    name: 契约副本与后端比对
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+      - name: 读来源清单
+        id: source
+        run: node scripts/backend-copy.mjs --print-source >> "$GITHUB_OUTPUT"
+      - name: 按清单的提交检出后端仓库（只取副本对应的文件）
+        uses: actions/checkout@v4
+        with:
+          repository: ${{ steps.source.outputs.repository }}
+          ref: ${{ steps.source.outputs.commit }}
+          path: .backend
+          sparse-checkout: ${{ steps.source.outputs.paths }}
+          sparse-checkout-cone-mode: false
+          persist-credentials: false
+      - name: 逐个文件比对
+        run: node scripts/backend-copy.mjs --source .backend
