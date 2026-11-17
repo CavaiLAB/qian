@@ -4,7 +4,19 @@
 
 ### Minor Changes
 
-- 7121e04: 以新名字首次发布。前端框架更名为 qian：包名改为 `@cavailab/qian-<名>`，许可改为 MIT；样式变量与可寻址属性的前缀、测试标识的默认前缀、导出的公共类型名、浏览器里主题与外壳偏好的存储键（旧值不迁移）、插件界面清单的前端版本键一并换名，组件的接口与行为不变。新旧名字的逐项对照与使用方要改什么，见[迁移说明](https://github.com/CavaiLAB/qian/blob/main/docs/migrating-from-yue.md)。
+- 7121e04: 以新名字首次发布。新旧名字的逐项对照与使用方要改什么，见[迁移说明](https://github.com/CavaiLAB/qian/blob/main/docs/migrating-from-yue.md)。
+  
+  - 包名：8 个层包（tokens、contracts、sdk、core、form、data、shell、biz）由 `@idadawn/yue-<名>` 改为 `@cavailab/qian-<名>`；`@cavailab/qian-runtime` 与 `@cavailab/qian-plugin-sdk` 原来就叫 qian，只把作用域由 `@idadawn` 改为 `@cavailab`。
+  - 许可：10 个包都由 Apache-2.0 改为 MIT。
+  - 随框架更名由 yue 改为 qian 的名字如下，每项只涉及写明的包：
+    - CSS 变量前缀 `--yue-` 改为 `--qian-`：`@cavailab/qian-tokens` 定义的设计令牌，以及 `@cavailab/qian-core`、`@cavailab/qian-form`、`@cavailab/qian-data`、`@cavailab/qian-shell` 样式里用到的变量；`@cavailab/qian-contracts` 的组件清单 Schema 里，`tokens` 只接受 `--qian-` 开头的变量名。
+    - 密度属性 `data-yue-density` 改为 `data-qian-density`（加在外层元素上切换表格行高）：`@cavailab/qian-tokens` 的样式与 `@cavailab/qian-data` 的表格。
+    - 组件 `data-testid` 默认值的前缀 `yue-` 改为 `qian-`（例如 `qian-accordion`）：`@cavailab/qian-core`、`@cavailab/qian-form`、`@cavailab/qian-data`、`@cavailab/qian-shell`、`@cavailab/qian-biz`；`data-slot` 不变。
+    - 导出的类型 `YueProps` 改为 `QianProps`：`@cavailab/qian-core`。
+    - 机器清单文件 `dist/yue-manifest.json` 改为 `dist/qian-manifest.json`，子路径导出 `./manifest.json` 不变：`@cavailab/qian-core`。
+    - 浏览器存储键（旧键里存的值不迁移，读不到时用默认值）：`@cavailab/qian-tokens` 主题偏好的默认键 `yue-theme` 改为 `qian-theme`；`@cavailab/qian-shell` 外壳偏好的键 `yue.preferences.<命名空间>` 改为 `qian.preferences.<命名空间>`。
+    - 插件界面清单的前端版本键 `engines.yue` 改为 `engines.qian`，`ShellHost` 的选项 `yueVersion` 改为 `qianVersion`：`@cavailab/qian-plugin-sdk`。
+  - 除了上面这些名字，更名没有改别的接口与行为。
 - c7a5953: @cavailab/qian-shell 增加外壳首屏用的子路径导出 `./router`、`./menu`、`./inbox` 与按需加载的 `./session-dialog`（`SessionExpiredDialog` 仍从根入口导出）；`initPreferences` 新增 `defaults`：部署缺省（如运行时配置给的语言）低于已保存的偏好，且不写进偏好存储；偏好存储改为只记用户改过的键（`update` 增量合并，`reset` 写空对象），此前每次更新都写整份快照。@cavailab/qian-core 的外壳子集 `./shell` 补上 `Badge` 与 `Popover` / `PopoverTrigger` / `PopoverContent` / `PopoverTitle`，站内信弹窗不再把完整组件目录拉进首屏。
   
   @cavailab/qian-plugin-sdk 的 UI 清单与插槽贡献校验改为构建期预编译（由 UI 清单的 JSON Schema 经 Ajv standalone 生成）：浏览器运行时不再携带 Ajv 编译器、不在运行期生成代码，`ajv` 改为开发依赖。客户端动作的参数 Schema 改由可解释子集校验（类型、枚举 / 常量、对象、数组、字符串与数值约束及说明关键字）；`$ref`、组合、条件、`format` 等子集外关键字拒绝登记（`INPUT_INVALID`，指针 `/parameters`），此前按完整 2020-12 编译放行。

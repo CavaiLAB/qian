@@ -4,7 +4,19 @@
 
 ### Minor Changes
 
-- 7121e04: 以新名字首次发布。前端框架更名为 qian：包名改为 `@cavailab/qian-<名>`，许可改为 MIT；样式变量与可寻址属性的前缀、测试标识的默认前缀、导出的公共类型名、浏览器里主题与外壳偏好的存储键（旧值不迁移）、插件界面清单的前端版本键一并换名，组件的接口与行为不变。新旧名字的逐项对照与使用方要改什么，见[迁移说明](https://github.com/CavaiLAB/qian/blob/main/docs/migrating-from-yue.md)。
+- 7121e04: 以新名字首次发布。新旧名字的逐项对照与使用方要改什么，见[迁移说明](https://github.com/CavaiLAB/qian/blob/main/docs/migrating-from-yue.md)。
+  
+  - 包名：8 个层包（tokens、contracts、sdk、core、form、data、shell、biz）由 `@idadawn/yue-<名>` 改为 `@cavailab/qian-<名>`；`@cavailab/qian-runtime` 与 `@cavailab/qian-plugin-sdk` 原来就叫 qian，只把作用域由 `@idadawn` 改为 `@cavailab`。
+  - 许可：10 个包都由 Apache-2.0 改为 MIT。
+  - 随框架更名由 yue 改为 qian 的名字如下，每项只涉及写明的包：
+    - CSS 变量前缀 `--yue-` 改为 `--qian-`：`@cavailab/qian-tokens` 定义的设计令牌，以及 `@cavailab/qian-core`、`@cavailab/qian-form`、`@cavailab/qian-data`、`@cavailab/qian-shell` 样式里用到的变量；`@cavailab/qian-contracts` 的组件清单 Schema 里，`tokens` 只接受 `--qian-` 开头的变量名。
+    - 密度属性 `data-yue-density` 改为 `data-qian-density`（加在外层元素上切换表格行高）：`@cavailab/qian-tokens` 的样式与 `@cavailab/qian-data` 的表格。
+    - 组件 `data-testid` 默认值的前缀 `yue-` 改为 `qian-`（例如 `qian-accordion`）：`@cavailab/qian-core`、`@cavailab/qian-form`、`@cavailab/qian-data`、`@cavailab/qian-shell`、`@cavailab/qian-biz`；`data-slot` 不变。
+    - 导出的类型 `YueProps` 改为 `QianProps`：`@cavailab/qian-core`。
+    - 机器清单文件 `dist/yue-manifest.json` 改为 `dist/qian-manifest.json`，子路径导出 `./manifest.json` 不变：`@cavailab/qian-core`。
+    - 浏览器存储键（旧键里存的值不迁移，读不到时用默认值）：`@cavailab/qian-tokens` 主题偏好的默认键 `yue-theme` 改为 `qian-theme`；`@cavailab/qian-shell` 外壳偏好的键 `yue.preferences.<命名空间>` 改为 `qian.preferences.<命名空间>`。
+    - 插件界面清单的前端版本键 `engines.yue` 改为 `engines.qian`，`ShellHost` 的选项 `yueVersion` 改为 `qianVersion`：`@cavailab/qian-plugin-sdk`。
+  - 除了上面这些名字，更名没有改别的接口与行为。
 - 30acf0c: SchemaForm 的数据 Schema 与 FormSchema / ListSchema / WidgetMeta 元数据 Schema 改为解释型校验，不在运行期生成代码（外壳 CSP 不放行 `'unsafe-eval'` 也能用），不再依赖 ajv / ajv-formats。只接受 SchemaForm 用到的 JSON Schema 2020-12 子集，子集内的判定、错误顺序与错误对象与此前的 Ajv 2020（allErrors、strict: false、ajv-formats full）逐条一致；子集外的关键字、格式与引用在渲染前由 `assertFormSchema` 拒绝（`form.error.unsupportedKeyword`），参数不合法拒绝（`form.error.schema`），此前它们会被 Ajv 照常校验或忽略，属于收窄。`validateValues` / `validateMetadata` 的错误类型改为本包导出的 `SchemaError`（与 Ajv `ErrorObject` 同形），声明文件不再引用 ajv。
   
   升级注意：8 个层包是固定版本组，这条 minor 把整组带到 0.2.0。插件开发包的宿主拿宿主传入的 `qianVersion`（平台外壳取 @cavailab/qian-shell 的版本）与远程清单的 `engines.qian` 做 SemVer 比对，`^0.1.0` 不包含 0.2.0，远程会被拒载。换到 0.2.0 时，远程清单的 `engines.qian` 与远程构建配置里共享依赖的 `requiredVersion`（包括同样升了 minor 的 `@cavailab/qian-plugin-sdk`）要一起放宽后重发。
