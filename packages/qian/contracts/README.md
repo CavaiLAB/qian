@@ -2,6 +2,17 @@
 
 不依赖 UI 的 Schema 与 TypeScript 契约层。S1-YUE-005 已交付 `component-manifest.schema.json`，统一组件名称、版本、可序列化 props、slots、events、a11y、令牌与示例形状。
 
+## 安装
+
+包发在 GitHub Packages 上。它的 npm 包源装公开包也要带令牌（[GitHub 文档](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages)）：本机用有 `read:packages` 权限的个人访问令牌（classic）；GitHub Actions 里用工作流的 `GITHUB_TOKEN`，工作流要声明 `packages: read`。项目的 `.npmrc` 只引用环境变量，不写令牌值：
+
+```ini
+@cavailab:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
+```
+
+令牌放进环境变量 `NODE_AUTH_TOKEN`，再 `npm install @cavailab/qian-contracts`。变更记录不随包发布，在[仓库里](https://github.com/CavaiLAB/qian/blob/main/packages/qian/contracts/CHANGELOG.md)。
+
 `componentManifestSchema` 为运行时导出，`ComponentManifest` 类型由 Schema 生成：
 
 ```bash

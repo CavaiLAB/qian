@@ -1,8 +1,17 @@
 # @cavailab/qian-core
 
-Qian 的基础组件层，基于 Base UI 1.8、统一 qian 令牌与 Lucide 图标。S1-YUE-005 提供 51 个组件入口及配套部件（S1-YUE-017 增加 Steps，现为 52 个）、机器可读 manifest、Rspress 组件文档、SSR/键盘与无障碍验收。后端设计文档写于更名之前，用旧名字与旧的包简称称呼本包，对照见[迁移说明](../../../docs/migrating-from-yue.md)。
+Qian 的基础组件层，基于 Base UI 1.8、统一 qian 令牌与 Lucide 图标。S1-YUE-005 提供 51 个组件入口及配套部件（S1-YUE-017 增加 Steps，现为 52 个）、机器可读 manifest、Rspress 组件文档、SSR/键盘与无障碍验收。后端设计文档写于更名之前，用旧名字与旧的包简称称呼本包，对照见[迁移说明](https://github.com/CavaiLAB/qian/blob/main/docs/migrating-from-yue.md)。
 
 ## 边界与安装
+
+包发在 GitHub Packages 上。它的 npm 包源装公开包也要带令牌（[GitHub 文档](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages)）：本机用有 `read:packages` 权限的个人访问令牌（classic）；GitHub Actions 里用工作流的 `GITHUB_TOKEN`，工作流要声明 `packages: read`。项目的 `.npmrc` 只引用环境变量，不写令牌值：
+
+```ini
+@cavailab:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
+```
+
+令牌放进环境变量 `NODE_AUTH_TOKEN`，再 `npm install @cavailab/qian-core`。变更记录不随包发布，在[仓库里](https://github.com/CavaiLAB/qian/blob/main/packages/qian/core/CHANGELOG.md)。
 
 本层只依赖 tokens、contracts 和基础原语，不连接业务 API、不提供 SchemaForm 或命令式弹层引擎。Toast 与 Notification 共用 Base UI 的同一消息队列；上层 form 的统一消息出口可复用它。消费者安装 `@cavailab/qian-core`、React 19 与 React DOM，并引入 `@cavailab/qian-tokens/index.css`，以 Tailwind v4 扫描本包源码/发布代码中的工具类。
 
@@ -85,7 +94,7 @@ Props 从真实 TypeScript checker 提取；相同的 DOM/ARIA/事件声明按�
 
 ## 视觉配方与回归（S1-YUE-011）
 
-基础配方以官方 shadcn CLI 4.21.5 的 `base-nova` / `neutral` / `cssVariables: true` 为来源；[逐组件对应与来源摘要](docs/visual-reference.json) 覆盖全部 52 个入口（Steps 在基准里没有对应组件，组合 badge 与 separator 的配方）。复合入口使用对应基础组件组合，保留 qian 公开 API、标识、国际化与受控协议。品牌蓝、系统字体、Button 的 32 / 36 / 40px 尺寸，以及优先满足 4.5:1 / 3:1 的颜色是已说明的差异。
+基础配方以官方 shadcn CLI 4.21.5 的 `base-nova` / `neutral` / `cssVariables: true` 为来源；[逐组件对应与来源摘要](https://github.com/CavaiLAB/qian/blob/main/packages/qian/core/docs/visual-reference.json) 覆盖全部 52 个入口（Steps 在基准里没有对应组件，组合 badge 与 separator 的配方）。复合入口使用对应基础组件组合，保留 qian 公开 API、标识、国际化与受控协议。品牌蓝、系统字体、Button 的 32 / 36 / 40px 尺寸，以及优先满足 4.5:1 / 3:1 的颜色是已说明的差异。
 
 宿主导入 `@cavailab/qian-tokens/theme.css`。颜色使用 `bg-primary`、`text-muted-foreground`、`border-input` 等语义工具类，透明度使用 `/90`、`/50`；尺寸与位置变量用 Tailwind v4 的括号语法。门禁拒绝变量颜色任意值和 `brightness-*` 配方。弹层以 Base UI 的 `data-starting-style` / `data-ending-style` 过渡，尊重 reduced-motion；无障碍测试等待有限动画和焦点安排完成后检查完整规则。
 
@@ -110,4 +119,4 @@ Dialog / AlertDialog / Sheet 明暗六个反例先证明隐藏关闭 X 会落在
 - 元数据驱动表单、控件注册、Field Type 配对、业务远程选项与条件构建器分别由 form/data/sdk/widgets 任务交付。
 - 本包提供展示与交互，不在前端执行权限判定；a11y 依赖宿主传入有意义的本地化名称和合法组合。
 - FullScreen 的实际可用性由浏览器与嵌入策略决定；上层通过 onError 给出反馈。
-- 私有 npm 首次发布与版本推进遵循工作区 Changesets 流程，本地文档构建本身不代表已部署正式站点。
+- 版本推进遵循工作区 Changesets 流程，包只经本仓库的 `release` 工作流发布到 GitHub Packages；本地文档构建本身不代表已部署正式站点。

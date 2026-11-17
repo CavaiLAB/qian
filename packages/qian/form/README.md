@@ -2,6 +2,17 @@
 
 唯一的 SchemaForm、FormApi、弹层和消息 API。S1-YUE-007 按 S1-DEC-024 / R108 在靶场对 SDK mock 验收；真实租户页面归 S1-TEN-005。
 
+## 安装
+
+包发在 GitHub Packages 上。它的 npm 包源装公开包也要带令牌（[GitHub 文档](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages)）：本机用有 `read:packages` 权限的个人访问令牌（classic）；GitHub Actions 里用工作流的 `GITHUB_TOKEN`，工作流要声明 `packages: read`。项目的 `.npmrc` 只引用环境变量，不写令牌值：
+
+```ini
+@cavailab:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
+```
+
+令牌放进环境变量 `NODE_AUTH_TOKEN`，再 `npm install @cavailab/qian-form`。变更记录不随包发布，在[仓库里](https://github.com/CavaiLAB/qian/blob/main/packages/qian/form/CHANGELOG.md)。
+
 ## 使用
 
 `SchemaForm` 接收 `schema`、`i18n`、`initialValues` 和 `onSubmit`；从 JSON Schema 2020-12 提取字段类型与约束，以 react-hook-form 管理状态，控件复用 core。字段标签用 `ui.layout[].labelKey` 或数据 Schema 的 title key。原始 Schema 不被联动修改。
@@ -28,7 +39,7 @@ FormSchema / ListSchema / WidgetMeta 的 Schema 和生成类型在 contracts 包
 
 ## 文档与验证
 
-权威交互说明是 [docs/index.mdx](docs/index.mdx)，共用示例在 [docs/examples/schema-form-demo.tsx](docs/examples/schema-form-demo.tsx)，状态登记在 docs/scenarios.json。Rspress 收集这些源到组件页，靶场 `/form.html` 用相同示例。运行 `pnpm qian:gates` 验证整体；浏览器测试覆盖字段校验、联动、ErrorDetail、焦点及 FormApi，SSR 测试覆盖元数据和只读，靶场与文档 E2E 覆盖真实交互及 axe。
+权威交互说明是 [docs/index.mdx](https://github.com/CavaiLAB/qian/blob/main/packages/qian/form/docs/index.mdx)，共用示例在 [docs/examples/schema-form-demo.tsx](https://github.com/CavaiLAB/qian/blob/main/packages/qian/form/docs/examples/schema-form-demo.tsx)，状态登记在 docs/scenarios.json。Rspress 收集这些源到组件页，靶场 `/form.html` 用相同示例。运行 `pnpm qian:gates` 验证整体；浏览器测试覆盖字段校验、联动、ErrorDetail、焦点及 FormApi，SSR 测试覆盖元数据和只读，靶场与文档 E2E 覆盖真实交互及 axe。
 
 ## 已知限制与延期项
 

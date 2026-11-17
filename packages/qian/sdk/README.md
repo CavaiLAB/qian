@@ -5,6 +5,17 @@
 - 分层与允许依赖：[qian 专题规格 §3.1](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/yue.md#31-包结构与依赖方向)；依赖方向由 `packages/qian/boundaries.config.mjs` 与 CI 门禁强制。
 - 实现任务：S1-YUE-009（S1-DEC-024 / R109）。
 
+## 安装
+
+包发在 GitHub Packages 上。它的 npm 包源装公开包也要带令牌（[GitHub 文档](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages)）：本机用有 `read:packages` 权限的个人访问令牌（classic）；GitHub Actions 里用工作流的 `GITHUB_TOKEN`，工作流要声明 `packages: read`。项目的 `.npmrc` 只引用环境变量，不写令牌值：
+
+```ini
+@cavailab:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
+```
+
+令牌放进环境变量 `NODE_AUTH_TOKEN`，再 `npm install @cavailab/qian-sdk`。变更记录不随包发布，在[仓库里](https://github.com/CavaiLAB/qian/blob/main/packages/qian/sdk/CHANGELOG.md)。
+
 ## 使用
 
 `PlatformClient` 的 `api<paths>()` 接收从组件 OpenAPI 生成的类型，返回 openapi-fetch 客户端。`GET` / `POST` 等方法的参数、请求体与响应均由契约推导；不手写另一份接口类型。
@@ -52,4 +63,4 @@ HttpOnly Cookie 会话的宿主改用 `sessionProvider: { refreshSession(): Prom
 
 - SDK 不提供登录页、OIDC 流程或 HTTP 刷新端点，分别由外壳与身份组件承接；组件消费方提供对应 OpenAPI 生成类型。
 - SSE 为 S1 草案，只提供 Schema 与类型；流连接、重连与 Agent 界面归后续任务。客户端动作参数须由执行方按注册表 Schema 校验，服务端权限判定不由前端替代。
-- 本包由构造参数注入配置；平台外壳的运行时配置（同源 `/app-config.json`）由 `@qian/shell-kit` 的 `loadAppConfig` 读取与校验（S1-YUE-012），外壳据此构造 `PlatformClient`。版本 0.1.0 尚未发布。
+- 本包由构造参数注入配置；平台外壳的运行时配置（同源 `/app-config.json`）由 `@qian/shell-kit` 的 `loadAppConfig` 读取与校验（S1-YUE-012），外壳据此构造 `PlatformClient`。新名字从 0.2.0 起发布。

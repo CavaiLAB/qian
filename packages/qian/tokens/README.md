@@ -2,6 +2,17 @@
 
 三层设计令牌（primitive → semantic → component）、明暗两态、状态色与 `Tone` 类型、浏览器主题控制器及首帧初始化脚本。包不依赖其他 qian 包；规格见 [qian §3.5](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/yue.md#35-令牌命名)，实现任务为 S1-YUE-004 与 S1-YUE-011。
 
+## 安装
+
+包发在 GitHub Packages 上。它的 npm 包源装公开包也要带令牌（[GitHub 文档](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages)）：本机用有 `read:packages` 权限的个人访问令牌（classic）；GitHub Actions 里用工作流的 `GITHUB_TOKEN`，工作流要声明 `packages: read`。项目的 `.npmrc` 只引用环境变量，不写令牌值：
+
+```ini
+@cavailab:registry=https://npm.pkg.github.com
+//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
+```
+
+令牌放进环境变量 `NODE_AUTH_TOKEN`，再 `npm install @cavailab/qian-tokens`。变更记录不随包发布，在[仓库里](https://github.com/CavaiLAB/qian/blob/main/packages/qian/tokens/CHANGELOG.md)。
+
 ## 令牌与样式
 
 `src/registry.json` 是名称、角色、配对与品牌映射的唯一源。基础层包含 oklch 色阶、间距、圆角、字号、行高、阴影、动效、层级和断点；语义层包含页面、操作、边界、侧栏、图形及状态角色；组件层只引用前两层。
@@ -69,4 +80,4 @@ pnpm qian:build && pnpm qian:a11y && pnpm qian:lighthouse
 
 `src/index.css`、`src/theme.css` 与 `src/theme-init.js` 是提交在仓库中的生成资产；`tokens:check` 校验新鲜度、引用层级、角色重名与对比度，并拒绝工作区消费 CSS 重新声明已登记的语义/组件/别名。该检查已接入 `qian:lint`。浏览器测试覆盖第一次动画帧、存储拒绝、服务端品牌、运行时切换及系统主题变化。
 
-靶场启动后可访问 `/tokens.html` 查看品牌、明暗、状态与语义色；它是验证页。Rspress 已统一提供组件交互文档与令牌页；DTCG 导出仍为 P2。当前版本尚未发布到私有 feed，发布验收由发布任务完成。
+靶场启动后可访问 `/tokens.html` 查看品牌、明暗、状态与语义色；它是验证页。Rspress 已统一提供组件交互文档与令牌页；DTCG 导出仍为 P2。新名字从 0.2.0 起发布到 GitHub Packages，发布与验收由本仓库的 `release` 工作流完成。
