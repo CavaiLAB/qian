@@ -1,6 +1,6 @@
 import { ShellError } from './errors';
-import { type Context, type Disposer } from '@idadawn/qian-runtime';
-import type { JsonValue } from '@idadawn/yue-sdk';
+import { type Context, type Disposer } from '@cavailab/qian-runtime';
+import type { JsonValue } from '@cavailab/qian-sdk';
 import type { BridgeCaller, ClientActionDescriptor, DeepReadonly, RemoteBridge, RemoteRegistration, ShellContext, ShellHostOptions, SlotContribution, SlotId } from './contracts';
 import { compileParameters, immutable, pageContributions, validateSlot } from './validation';
 

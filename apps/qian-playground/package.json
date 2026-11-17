@@ -1,8 +1,8 @@
 {
-  "name": "yue-playground",
+  "name": "qian-playground",
   "version": "0.0.0",
   "private": true,
-  "description": "yue 验证门与门禁靶场：Base UI 六个原语的键盘 / 可访问性页面，Playwright + axe 与 Lighthouse 在这里跑。",
+  "description": "qian 验证门与门禁靶场：Base UI 六个原语的键盘 / 可访问性页面，Playwright + axe 与 Lighthouse 在这里跑。",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -13,15 +13,15 @@
     "lighthouse": "lhci autorun"
   },
   "dependencies": {
-    "@idadawn/yue-biz": "workspace:^",
-    "@idadawn/yue-shell": "workspace:^",
-    "@idadawn/yue-core": "workspace:^",
-    "@idadawn/yue-data": "workspace:^",
-    "@idadawn/yue-tokens": "workspace:^",
+    "@cavailab/qian-biz": "workspace:^",
+    "@cavailab/qian-shell": "workspace:^",
+    "@cavailab/qian-core": "workspace:^",
+    "@cavailab/qian-data": "workspace:^",
+    "@cavailab/qian-tokens": "workspace:^",
     "react": "catalog:",
     "react-dom": "catalog:",
-    "@idadawn/yue-form": "workspace:*",
-    "@idadawn/yue-sdk": "workspace:*"
+    "@cavailab/qian-form": "workspace:*",
+    "@cavailab/qian-sdk": "workspace:*"
   },
   "devDependencies": {
     "@axe-core/playwright": "catalog:",

@@ -1,12 +1,12 @@
 {
-  "name": "@idadawn/yue-contracts",
+  "name": "@cavailab/qian-contracts",
   "version": "0.1.0",
   "description": "FormSchema / ListSchema / 控件 manifest / SSE 事件的 JSON Schema 与生成的 TS 类型（无 UI）。",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/idadawn/qian.git",
-    "directory": "packages/yue/contracts"
+    "directory": "packages/qian/contracts"
   },
   "type": "module",
   "sideEffects": [

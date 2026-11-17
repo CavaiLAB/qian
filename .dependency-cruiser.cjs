@@ -1,5 +1,5 @@
-// 循环依赖门禁（pnpm yue:circular）：packages/yue/*、apps/* 与前端插件开发包的 import 图不得有环、不得引到解析不到的模块。
-// 分层方向由 eslint-plugin-boundaries 管（packages/yue/boundaries.config.mjs），这里不重复。
+// 循环依赖门禁（pnpm qian:circular）：packages/qian/*、apps/* 与前端插件开发包的 import 图不得有环、不得引到解析不到的模块。
+// 分层方向由 eslint-plugin-boundaries 管（packages/qian/boundaries.config.mjs），这里不重复。
 /** @type {import('dependency-cruiser').IConfiguration} */
 module.exports = {
   forbidden: [
@@ -13,13 +13,13 @@ module.exports = {
     {
       name: 'not-to-unresolvable',
       severity: 'error',
-      comment: 'import 的模块必须能解析到（包没装、路径写错、还没建的 @yue 包）',
+      comment: 'import 的模块必须能解析到（包没装、路径写错、还没建的 @cavailab/qian-* 包）',
       from: {},
       to: { couldNotResolve: true },
     },
   ],
   options: {
-    includeOnly: '^(packages/yue|packages/qian-plugin-sdk|apps)/',
+    includeOnly: '^(packages/qian|packages/qian-plugin-sdk|apps)/',
     exclude: { path: ['node_modules', '/dist/', '\\.d\\.ts$'] },
     doNotFollow: { path: ['node_modules'] },
     tsPreCompilationDeps: true,

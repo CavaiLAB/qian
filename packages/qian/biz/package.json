@@ -1,12 +1,12 @@
 {
-  "name": "@idadawn/yue-biz",
+  "name": "@cavailab/qian-biz",
   "version": "0.1.0",
   "description": "业务选择器：远程选项、字典、组织 / 用户 / 角色选择器、菜单与按钮授权树、IconPicker。",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/idadawn/qian.git",
-    "directory": "packages/yue/biz"
+    "directory": "packages/qian/biz"
   },
   "type": "module",
   "sideEffects": [
@@ -34,20 +34,20 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "publint": "publint --strict --pack pnpm",
     "test": "vitest run",
-    "contracts:generate": "pnpm --workspace-root openapi:generate --source packages/yue/biz/contracts/biz.openapi.json --output packages/yue/biz/src/biz.generated.ts",
-    "contracts:check": "pnpm --workspace-root openapi:generate --source packages/yue/biz/contracts/biz.openapi.json --output packages/yue/biz/src/biz.generated.ts --check"
+    "contracts:generate": "pnpm --workspace-root openapi:generate --source packages/qian/biz/contracts/biz.openapi.json --output packages/qian/biz/src/biz.generated.ts",
+    "contracts:check": "pnpm --workspace-root openapi:generate --source packages/qian/biz/contracts/biz.openapi.json --output packages/qian/biz/src/biz.generated.ts --check"
   },
   "dependencies": {
-    "@idadawn/yue-core": "workspace:^",
-    "@idadawn/yue-data": "workspace:^",
-    "@idadawn/yue-sdk": "workspace:^"
+    "@cavailab/qian-core": "workspace:^",
+    "@cavailab/qian-data": "workspace:^",
+    "@cavailab/qian-sdk": "workspace:^"
   },
   "peerDependencies": {
     "react": "^19.0.0",
     "react-dom": "^19.0.0"
   },
   "devDependencies": {
-    "@idadawn/yue-tokens": "workspace:^",
+    "@cavailab/qian-tokens": "workspace:^",
     "@rslib/core": "catalog:",
     "@tailwindcss/vite": "catalog:",
     "@testing-library/dom": "catalog:",

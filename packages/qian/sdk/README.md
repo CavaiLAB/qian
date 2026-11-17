@@ -1,8 +1,8 @@
-# @idadawn/yue-sdk
+# @cavailab/qian-sdk
 
 注册表 API、PlatformClient、请求拦截器链、i18n 与 mock；配置由宿主经构造参数注入。
 
-- 分层与允许依赖：[yue 专题规格 §3.1](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/yue.md#31-包结构与依赖方向)；依赖方向由 `packages/yue/boundaries.config.mjs` 与 CI 门禁强制。
+- 分层与允许依赖：[qian 专题规格 §3.1](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/yue.md#31-包结构与依赖方向)；依赖方向由 `packages/qian/boundaries.config.mjs` 与 CI 门禁强制。
 - 实现任务：S1-YUE-009（S1-DEC-024 / R109）。
 
 ## 使用
@@ -10,7 +10,7 @@
 `PlatformClient` 的 `api<paths>()` 接收从组件 OpenAPI 生成的类型，返回 openapi-fetch 客户端。`GET` / `POST` 等方法的参数、请求体与响应均由契约推导；不手写另一份接口类型。
 
 ```ts
-import { PlatformClient, createMockTransport, createI18n, createRegistries } from '@idadawn/yue-sdk';
+import { PlatformClient, createMockTransport, createI18n, createRegistries } from '@cavailab/qian-sdk';
 import type { paths } from './generated/http-v1';
 
 const client = new PlatformClient({
@@ -42,11 +42,11 @@ HttpOnly Cookie 会话的宿主改用 `sessionProvider: { refreshSession(): Prom
 
 ## 契约与模型体验
 
-`@idadawn/yue-contracts` 导出 SSE 九类事件的 Schema 与生成类型；ErrorDetail 的发布副本从 `contracts/v0/error-detail.schema.json` 复制，生成检查拒绝漂移。运行 `pnpm --filter @idadawn/yue-contracts contracts:generate` 更新，`contracts:check` 验证。注册表 JSON 可供目录、设计器与模型读取，不含运行时函数或认证凭据。
+`@cavailab/qian-contracts` 导出 SSE 九类事件的 Schema 与生成类型；ErrorDetail 的发布副本从 `contracts/v0/error-detail.schema.json` 复制，生成检查拒绝漂移。运行 `pnpm --filter @cavailab/qian-contracts contracts:generate` 更新，`contracts:check` 验证。注册表 JSON 可供目录、设计器与模型读取，不含运行时函数或认证凭据。
 
 ## 验证
 
-`pnpm exec vitest run --project sdk` 覆盖并发刷新、失败释放、取消、晚到 401（含刷新结论之后才到达的 401）、宿主回调抛错隔离、租户切换、错误指针、大整数、mock、注册冲突与多语言。整体门禁运行 `pnpm yue:gates`。
+`pnpm exec vitest run --project sdk` 覆盖并发刷新、失败释放、取消、晚到 401（含刷新结论之后才到达的 401）、宿主回调抛错隔离、租户切换、错误指针、大整数、mock、注册冲突与多语言。整体门禁运行 `pnpm qian:gates`。
 
 ## 已知限制与延期项
 

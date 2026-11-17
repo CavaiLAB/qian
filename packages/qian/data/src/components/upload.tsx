@@ -1,6 +1,6 @@
 import { useEffect, useId, useRef, useState } from 'react';
-import { Button, Input, Label } from '@idadawn/yue-core';
-import { PlatformError, type PlatformClient, type PlatformI18n } from '@idadawn/yue-sdk';
+import { Button, Input, Label } from '@cavailab/qian-core';
+import { PlatformError, type PlatformClient, type PlatformI18n } from '@cavailab/qian-sdk';
 import { uploadFile, type UploadedFile, type UploadProgress } from '../upload';
 
 export interface UploadProps {
@@ -14,7 +14,7 @@ export interface UploadProps {
   className?: string;
   testId?: string;
 }
-export function Upload({ client, i18n, label, accept, disabled, onComplete, onError, className, testId = 'yue-upload' }: UploadProps) {
+export function Upload({ client, i18n, label, accept, disabled, onComplete, onError, className, testId = 'qian-upload' }: UploadProps) {
   const id = useId();
   const current = useRef<AbortController | null>(null);
   const [file, setFile] = useState<File | null>(null);

@@ -1,5 +1,5 @@
-import type { FormSchema } from '@idadawn/yue-contracts';
-import { createI18n } from '@idadawn/yue-sdk';
+import type { FormSchema } from '@cavailab/qian-contracts';
+import { createI18n } from '@cavailab/qian-sdk';
 export const i18n = createI18n();
 i18n.addLanguagePack('zh-CN', { 'test.name': '名称', 'test.code': '编码', 'test.enabled': '启用联系', 'test.phone': '电话', 'test.username': '账号', 'test.password': '密码' });
 export const schema: FormSchema = {

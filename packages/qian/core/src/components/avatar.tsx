@@ -1,7 +1,7 @@
 import { Avatar as BaseAvatar } from '@base-ui/react/avatar';
 import type { ComponentProps } from 'react';
 import { cn } from '../lib/cn';
-import type { YueProps } from '../lib/test-id';
+import type { QianProps } from '../lib/test-id';
 
 /** 头像与标识色块的配色：primary 为主色柔底、solid 为主色实底，其余为固定色相的点缀色（不随品牌变化），gray 用于停用对象。 */
 export type AvatarTint = 'primary' | 'solid' | 'blue' | 'green' | 'amber' | 'violet' | 'teal' | 'gray';
@@ -25,22 +25,22 @@ export function avatarTint(seed: string): AvatarTint {
   return AVATAR_TINTS[hash % AVATAR_TINTS.length]!;
 }
 
-export type AvatarProps = YueProps<ComponentProps<typeof BaseAvatar.Root>> & {
+export type AvatarProps = QianProps<ComponentProps<typeof BaseAvatar.Root>> & {
   /** 无图片时的底色与文字色。 */
   tint?: AvatarTint;
   /** circle 用于人，square 用于企业、应用等对象的标识色块。 @default 'circle' */
   shape?: 'circle' | 'square';
 };
 export function Avatar({ className, testId, tint, shape = 'circle', ...props }: AvatarProps) {
-  return <BaseAvatar.Root {...props} data-slot="avatar" data-shape={shape} data-testid={testId ?? 'yue-avatar'} className={cn('relative inline-flex size-8 shrink-0 overflow-hidden bg-muted text-muted-foreground', shape === 'square' ? 'rounded-md' : 'rounded-full', tint && tints[tint], className)} />;
+  return <BaseAvatar.Root {...props} data-slot="avatar" data-shape={shape} data-testid={testId ?? 'qian-avatar'} className={cn('relative inline-flex size-8 shrink-0 overflow-hidden bg-muted text-muted-foreground', shape === 'square' ? 'rounded-md' : 'rounded-full', tint && tints[tint], className)} />;
 }
 
-export type AvatarImageProps = YueProps<ComponentProps<typeof BaseAvatar.Image>> & { alt: string };
+export type AvatarImageProps = QianProps<ComponentProps<typeof BaseAvatar.Image>> & { alt: string };
 export function AvatarImage({ className, testId, ...props }: AvatarImageProps) {
-  return <BaseAvatar.Image {...props} data-slot="avatar-image" data-testid={testId ?? 'yue-avatar-image'} className={cn('size-full object-cover', className)} />;
+  return <BaseAvatar.Image {...props} data-slot="avatar-image" data-testid={testId ?? 'qian-avatar-image'} className={cn('size-full object-cover', className)} />;
 }
 
-export type AvatarFallbackProps = YueProps<ComponentProps<typeof BaseAvatar.Fallback>>;
+export type AvatarFallbackProps = QianProps<ComponentProps<typeof BaseAvatar.Fallback>>;
 export function AvatarFallback({ className, testId, ...props }: AvatarFallbackProps) {
-  return <BaseAvatar.Fallback {...props} data-slot="avatar-fallback" data-testid={testId ?? 'yue-avatar-fallback'} className={cn('flex size-full items-center justify-center text-sm font-semibold', className)} />;
+  return <BaseAvatar.Fallback {...props} data-slot="avatar-fallback" data-testid={testId ?? 'qian-avatar-fallback'} className={cn('flex size-full items-center justify-center text-sm font-semibold', className)} />;
 }

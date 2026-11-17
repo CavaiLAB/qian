@@ -1,5 +1,5 @@
 {
-  "extends": "../../packages/yue/tsconfig.base.json",
+  "extends": "../../packages/qian/tsconfig.base.json",
   "compilerOptions": {
     "declaration": false,
     "noEmit": true,

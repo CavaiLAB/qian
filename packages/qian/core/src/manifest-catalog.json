@@ -12,7 +12,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -112,30 +112,30 @@
       ]
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-border-strong",
-      "--yue-button-radius",
-      "--yue-control-foreground",
-      "--yue-destructive",
-      "--yue-destructive-foreground",
-      "--yue-error",
-      "--yue-error-bg",
-      "--yue-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-primary",
-      "--yue-primary-border-strong",
-      "--yue-primary-foreground",
-      "--yue-primary-soft",
-      "--yue-primary-soft-foreground",
-      "--yue-primary-subtle",
-      "--yue-ring",
-      "--yue-secondary",
-      "--yue-secondary-foreground",
-      "--yue-subtle-foreground"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-border-strong",
+      "--qian-button-radius",
+      "--qian-control-foreground",
+      "--qian-destructive",
+      "--qian-destructive-foreground",
+      "--qian-error",
+      "--qian-error-bg",
+      "--qian-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-primary-border-strong",
+      "--qian-primary-foreground",
+      "--qian-primary-soft",
+      "--qian-primary-soft-foreground",
+      "--qian-primary-subtle",
+      "--qian-ring",
+      "--qian-secondary",
+      "--qian-secondary-foreground",
+      "--qian-subtle-foreground"
     ],
     "examples": [
       {
@@ -161,7 +161,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -232,30 +232,30 @@
       ]
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-border-strong",
-      "--yue-button-radius",
-      "--yue-control-foreground",
-      "--yue-destructive",
-      "--yue-destructive-foreground",
-      "--yue-error",
-      "--yue-error-bg",
-      "--yue-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-primary",
-      "--yue-primary-border-strong",
-      "--yue-primary-foreground",
-      "--yue-primary-soft",
-      "--yue-primary-soft-foreground",
-      "--yue-primary-subtle",
-      "--yue-ring",
-      "--yue-secondary",
-      "--yue-secondary-foreground",
-      "--yue-subtle-foreground"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-border-strong",
+      "--qian-button-radius",
+      "--qian-control-foreground",
+      "--qian-destructive",
+      "--qian-destructive-foreground",
+      "--qian-error",
+      "--qian-error-bg",
+      "--qian-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-primary-border-strong",
+      "--qian-primary-foreground",
+      "--qian-primary-soft",
+      "--qian-primary-soft-foreground",
+      "--qian-primary-subtle",
+      "--qian-ring",
+      "--qian-secondary",
+      "--qian-secondary-foreground",
+      "--qian-subtle-foreground"
     ],
     "examples": [
       {
@@ -280,7 +280,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -329,21 +329,21 @@
       "keyboard": []
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-destructive-foreground",
-      "--yue-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-primary",
-      "--yue-primary-foreground",
-      "--yue-ring",
-      "--yue-secondary",
-      "--yue-secondary-foreground"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-destructive-foreground",
+      "--qian-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-primary-foreground",
+      "--qian-ring",
+      "--qian-secondary",
+      "--qian-secondary-foreground"
     ],
     "examples": [
       {
@@ -366,7 +366,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -464,16 +464,16 @@
       ]
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -499,7 +499,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -586,16 +586,16 @@
       ]
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -619,7 +619,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -724,16 +724,16 @@
       ]
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -761,7 +761,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -850,16 +850,16 @@
       ]
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -887,7 +887,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -983,16 +983,16 @@
       "keyboard": []
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -1019,7 +1019,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -1112,19 +1112,19 @@
       ]
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-muted",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-primary",
-      "--yue-primary-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-primary-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -1147,7 +1147,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -1215,19 +1215,19 @@
       ]
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-muted",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-primary",
-      "--yue-primary-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-primary-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -1250,7 +1250,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -1333,19 +1333,19 @@
       ]
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-muted",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-primary",
-      "--yue-primary-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-primary-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -1369,7 +1369,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -1447,19 +1447,19 @@
       ]
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-muted",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-primary",
-      "--yue-primary-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-primary-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -1482,7 +1482,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -1551,19 +1551,19 @@
       ]
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-muted",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-primary",
-      "--yue-primary-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-primary-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -1586,7 +1586,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -1669,20 +1669,20 @@
       ]
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-muted",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-primary",
-      "--yue-primary-foreground",
-      "--yue-ring",
-      "--yue-subtle-foreground"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-primary-foreground",
+      "--qian-ring",
+      "--qian-subtle-foreground"
     ],
     "examples": [
       {
@@ -1771,17 +1771,17 @@
       ]
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-muted-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -1866,17 +1866,17 @@
       ]
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-muted-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -1899,7 +1899,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -1948,16 +1948,16 @@
       "keyboard": []
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -1980,7 +1980,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -2057,18 +2057,18 @@
       "keyboard": []
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-control-foreground",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-muted-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-control-foreground",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -2122,18 +2122,18 @@
       ]
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-muted-foreground",
-      "--yue-p-black",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-p-black",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -2179,18 +2179,18 @@
       ]
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-muted-foreground",
-      "--yue-p-black",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-p-black",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -2236,18 +2236,18 @@
       ]
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-muted-foreground",
-      "--yue-p-black",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-p-black",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -2310,18 +2310,18 @@
       ]
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-muted-foreground",
-      "--yue-p-black",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-p-black",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -2366,17 +2366,17 @@
       ]
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-muted-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -2417,18 +2417,18 @@
       "keyboard": []
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-primary",
-      "--yue-primary-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-primary-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -2473,16 +2473,16 @@
       ]
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -2531,17 +2531,17 @@
       ]
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-muted-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -2590,17 +2590,17 @@
       ]
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-muted-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -2649,16 +2649,16 @@
       ]
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -2681,7 +2681,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -2764,22 +2764,22 @@
       ]
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-caption-foreground",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-muted",
-      "--yue-muted-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-primary",
-      "--yue-primary-soft",
-      "--yue-primary-soft-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-caption-foreground",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-primary-soft",
+      "--qian-primary-soft-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -2802,7 +2802,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -2883,16 +2883,16 @@
       "keyboard": []
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -2915,7 +2915,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -2969,19 +2969,19 @@
       "keyboard": []
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-card",
-      "--yue-card-foreground",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-muted-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-card",
+      "--qian-card-foreground",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -3004,7 +3004,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -3066,19 +3066,19 @@
       ]
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-card",
-      "--yue-card-foreground",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-muted-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-card",
+      "--qian-card-foreground",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -3101,7 +3101,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -3157,19 +3157,19 @@
       "keyboard": []
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-card",
-      "--yue-card-foreground",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-muted-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-card",
+      "--qian-card-foreground",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -3195,7 +3195,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -3267,19 +3267,19 @@
       ]
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-card",
-      "--yue-card-foreground",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-muted-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-card",
+      "--qian-card-foreground",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -3302,7 +3302,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -3367,39 +3367,39 @@
       "keyboard": []
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-error",
-      "--yue-error-bg",
-      "--yue-error-border",
-      "--yue-error-solid",
-      "--yue-foreground",
-      "--yue-info",
-      "--yue-info-bg",
-      "--yue-info-border",
-      "--yue-info-solid",
-      "--yue-muted",
-      "--yue-muted-foreground",
-      "--yue-neutral",
-      "--yue-neutral-bg",
-      "--yue-neutral-border",
-      "--yue-neutral-solid",
-      "--yue-ok",
-      "--yue-ok-bg",
-      "--yue-ok-border",
-      "--yue-ok-solid",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-primary",
-      "--yue-ring",
-      "--yue-warn",
-      "--yue-warn-bg",
-      "--yue-warn-border",
-      "--yue-warn-solid"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-error",
+      "--qian-error-bg",
+      "--qian-error-border",
+      "--qian-error-solid",
+      "--qian-foreground",
+      "--qian-info",
+      "--qian-info-bg",
+      "--qian-info-border",
+      "--qian-info-solid",
+      "--qian-muted",
+      "--qian-muted-foreground",
+      "--qian-neutral",
+      "--qian-neutral-bg",
+      "--qian-neutral-border",
+      "--qian-neutral-solid",
+      "--qian-ok",
+      "--qian-ok-bg",
+      "--qian-ok-border",
+      "--qian-ok-solid",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-ring",
+      "--qian-warn",
+      "--qian-warn-bg",
+      "--qian-warn-border",
+      "--qian-warn-solid"
     ],
     "examples": [
       {
@@ -3430,7 +3430,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -3501,34 +3501,34 @@
       "keyboard": []
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-error",
-      "--yue-error-bg",
-      "--yue-error-solid",
-      "--yue-foreground",
-      "--yue-info",
-      "--yue-info-bg",
-      "--yue-info-solid",
-      "--yue-muted",
-      "--yue-muted-foreground",
-      "--yue-neutral",
-      "--yue-neutral-bg",
-      "--yue-neutral-solid",
-      "--yue-ok",
-      "--yue-ok-bg",
-      "--yue-ok-solid",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-primary",
-      "--yue-ring",
-      "--yue-warn",
-      "--yue-warn-bg",
-      "--yue-warn-solid"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-error",
+      "--qian-error-bg",
+      "--qian-error-solid",
+      "--qian-foreground",
+      "--qian-info",
+      "--qian-info-bg",
+      "--qian-info-solid",
+      "--qian-muted",
+      "--qian-muted-foreground",
+      "--qian-neutral",
+      "--qian-neutral-bg",
+      "--qian-neutral-solid",
+      "--qian-ok",
+      "--qian-ok-bg",
+      "--qian-ok-solid",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-ring",
+      "--qian-warn",
+      "--qian-warn-bg",
+      "--qian-warn-solid"
     ],
     "examples": [
       {
@@ -3551,7 +3551,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -3625,34 +3625,34 @@
       "keyboard": []
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-info",
-      "--yue-info-bg",
-      "--yue-muted",
-      "--yue-muted-foreground",
-      "--yue-neutral",
-      "--yue-neutral-bg",
-      "--yue-ok",
-      "--yue-ok-bg",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-primary",
-      "--yue-primary-foreground",
-      "--yue-primary-soft",
-      "--yue-primary-soft-foreground",
-      "--yue-ring",
-      "--yue-tint-teal",
-      "--yue-tint-teal-foreground",
-      "--yue-tint-violet",
-      "--yue-tint-violet-foreground",
-      "--yue-warn",
-      "--yue-warn-bg"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-info",
+      "--qian-info-bg",
+      "--qian-muted",
+      "--qian-muted-foreground",
+      "--qian-neutral",
+      "--qian-neutral-bg",
+      "--qian-ok",
+      "--qian-ok-bg",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-primary-foreground",
+      "--qian-primary-soft",
+      "--qian-primary-soft-foreground",
+      "--qian-ring",
+      "--qian-tint-teal",
+      "--qian-tint-teal-foreground",
+      "--qian-tint-violet",
+      "--qian-tint-violet-foreground",
+      "--qian-warn",
+      "--qian-warn-bg"
     ],
     "examples": [
       {
@@ -3675,7 +3675,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -3724,29 +3724,29 @@
       "keyboard": []
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-error",
-      "--yue-error-bg",
-      "--yue-foreground",
-      "--yue-info",
-      "--yue-info-bg",
-      "--yue-muted",
-      "--yue-muted-foreground",
-      "--yue-neutral",
-      "--yue-neutral-bg",
-      "--yue-ok",
-      "--yue-ok-bg",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-primary",
-      "--yue-ring",
-      "--yue-warn",
-      "--yue-warn-bg"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-error",
+      "--qian-error-bg",
+      "--qian-foreground",
+      "--qian-info",
+      "--qian-info-bg",
+      "--qian-muted",
+      "--qian-muted-foreground",
+      "--qian-neutral",
+      "--qian-neutral-bg",
+      "--qian-ok",
+      "--qian-ok-bg",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-ring",
+      "--qian-warn",
+      "--qian-warn-bg"
     ],
     "examples": [
       {
@@ -3769,7 +3769,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -3825,29 +3825,29 @@
       "keyboard": []
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-error",
-      "--yue-error-bg",
-      "--yue-foreground",
-      "--yue-info",
-      "--yue-info-bg",
-      "--yue-muted",
-      "--yue-muted-foreground",
-      "--yue-neutral",
-      "--yue-neutral-bg",
-      "--yue-ok",
-      "--yue-ok-bg",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-primary",
-      "--yue-ring",
-      "--yue-warn",
-      "--yue-warn-bg"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-error",
+      "--qian-error-bg",
+      "--qian-foreground",
+      "--qian-info",
+      "--qian-info-bg",
+      "--qian-muted",
+      "--qian-muted-foreground",
+      "--qian-neutral",
+      "--qian-neutral-bg",
+      "--qian-ok",
+      "--qian-ok-bg",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-ring",
+      "--qian-warn",
+      "--qian-warn-bg"
     ],
     "examples": [
       {
@@ -3872,7 +3872,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -3947,29 +3947,29 @@
       "keyboard": []
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-error",
-      "--yue-error-bg",
-      "--yue-foreground",
-      "--yue-info",
-      "--yue-info-bg",
-      "--yue-muted",
-      "--yue-muted-foreground",
-      "--yue-neutral",
-      "--yue-neutral-bg",
-      "--yue-ok",
-      "--yue-ok-bg",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-primary",
-      "--yue-ring",
-      "--yue-warn",
-      "--yue-warn-bg"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-error",
+      "--qian-error-bg",
+      "--qian-foreground",
+      "--qian-info",
+      "--qian-info-bg",
+      "--qian-muted",
+      "--qian-muted-foreground",
+      "--qian-neutral",
+      "--qian-neutral-bg",
+      "--qian-ok",
+      "--qian-ok-bg",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-ring",
+      "--qian-warn",
+      "--qian-warn-bg"
     ],
     "examples": [
       {
@@ -3995,7 +3995,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -4083,44 +4083,44 @@
       "keyboard": []
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-error",
-      "--yue-error-bg",
-      "--yue-error-border",
-      "--yue-error-solid",
-      "--yue-error-strong",
-      "--yue-foreground",
-      "--yue-info",
-      "--yue-info-bg",
-      "--yue-info-border",
-      "--yue-info-solid",
-      "--yue-info-strong",
-      "--yue-muted",
-      "--yue-muted-foreground",
-      "--yue-neutral",
-      "--yue-neutral-bg",
-      "--yue-neutral-border",
-      "--yue-neutral-solid",
-      "--yue-neutral-strong",
-      "--yue-ok",
-      "--yue-ok-bg",
-      "--yue-ok-border",
-      "--yue-ok-solid",
-      "--yue-ok-strong",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-primary",
-      "--yue-ring",
-      "--yue-warn",
-      "--yue-warn-bg",
-      "--yue-warn-border",
-      "--yue-warn-solid",
-      "--yue-warn-strong"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-error",
+      "--qian-error-bg",
+      "--qian-error-border",
+      "--qian-error-solid",
+      "--qian-error-strong",
+      "--qian-foreground",
+      "--qian-info",
+      "--qian-info-bg",
+      "--qian-info-border",
+      "--qian-info-solid",
+      "--qian-info-strong",
+      "--qian-muted",
+      "--qian-muted-foreground",
+      "--qian-neutral",
+      "--qian-neutral-bg",
+      "--qian-neutral-border",
+      "--qian-neutral-solid",
+      "--qian-neutral-strong",
+      "--qian-ok",
+      "--qian-ok-bg",
+      "--qian-ok-border",
+      "--qian-ok-solid",
+      "--qian-ok-strong",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-ring",
+      "--qian-warn",
+      "--qian-warn-bg",
+      "--qian-warn-border",
+      "--qian-warn-solid",
+      "--qian-warn-strong"
     ],
     "examples": [
       {
@@ -4143,7 +4143,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -4236,19 +4236,19 @@
       "keyboard": []
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-muted-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring",
-      "--yue-secondary",
-      "--yue-secondary-foreground"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring",
+      "--qian-secondary",
+      "--qian-secondary-foreground"
     ],
     "examples": [
       {
@@ -4276,7 +4276,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -4368,19 +4368,19 @@
       "keyboard": []
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-muted-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring",
-      "--yue-secondary",
-      "--yue-secondary-foreground"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring",
+      "--qian-secondary",
+      "--qian-secondary-foreground"
     ],
     "examples": [
       {
@@ -4442,29 +4442,29 @@
       "keyboard": []
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-error",
-      "--yue-error-bg",
-      "--yue-foreground",
-      "--yue-info",
-      "--yue-info-bg",
-      "--yue-muted",
-      "--yue-muted-foreground",
-      "--yue-neutral",
-      "--yue-neutral-bg",
-      "--yue-ok",
-      "--yue-ok-bg",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-primary",
-      "--yue-ring",
-      "--yue-warn",
-      "--yue-warn-bg"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-error",
+      "--qian-error-bg",
+      "--qian-foreground",
+      "--qian-info",
+      "--qian-info-bg",
+      "--qian-muted",
+      "--qian-muted-foreground",
+      "--qian-neutral",
+      "--qian-neutral-bg",
+      "--qian-ok",
+      "--qian-ok-bg",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-ring",
+      "--qian-warn",
+      "--qian-warn-bg"
     ],
     "examples": [
       {
@@ -4523,34 +4523,34 @@
       "keyboard": []
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-error",
-      "--yue-error-bg",
-      "--yue-error-icon",
-      "--yue-foreground",
-      "--yue-info",
-      "--yue-info-bg",
-      "--yue-info-icon",
-      "--yue-muted",
-      "--yue-muted-foreground",
-      "--yue-neutral",
-      "--yue-neutral-bg",
-      "--yue-neutral-icon",
-      "--yue-ok",
-      "--yue-ok-bg",
-      "--yue-ok-icon",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-primary",
-      "--yue-ring",
-      "--yue-warn",
-      "--yue-warn-bg",
-      "--yue-warn-icon"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-error",
+      "--qian-error-bg",
+      "--qian-error-icon",
+      "--qian-foreground",
+      "--qian-info",
+      "--qian-info-bg",
+      "--qian-info-icon",
+      "--qian-muted",
+      "--qian-muted-foreground",
+      "--qian-neutral",
+      "--qian-neutral-bg",
+      "--qian-neutral-icon",
+      "--qian-ok",
+      "--qian-ok-bg",
+      "--qian-ok-icon",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary",
+      "--qian-ring",
+      "--qian-warn",
+      "--qian-warn-bg",
+      "--qian-warn-icon"
     ],
     "examples": [
       {
@@ -4575,7 +4575,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -4651,17 +4651,17 @@
       "keyboard": []
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-muted-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -4749,21 +4749,21 @@
       "keyboard": []
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-border-strong",
-      "--yue-button-radius",
-      "--yue-control-foreground",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-muted-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-primary-soft-foreground",
-      "--yue-ring",
-      "--yue-subtle-foreground"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-border-strong",
+      "--qian-button-radius",
+      "--qian-control-foreground",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-primary-soft-foreground",
+      "--qian-ring",
+      "--qian-subtle-foreground"
     ],
     "examples": [
       {
@@ -4820,17 +4820,17 @@
       ]
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-muted-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -4885,17 +4885,17 @@
       ]
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-muted-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -4921,7 +4921,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -5046,16 +5046,16 @@
       "keyboard": []
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -5080,7 +5080,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -5177,19 +5177,19 @@
       "keyboard": []
     },
     "tokens": [
-      "--yue-accent",
-      "--yue-accent-foreground",
-      "--yue-background",
-      "--yue-border",
-      "--yue-button-radius",
-      "--yue-card",
-      "--yue-card-foreground",
-      "--yue-destructive",
-      "--yue-foreground",
-      "--yue-muted-foreground",
-      "--yue-popover",
-      "--yue-popover-foreground",
-      "--yue-ring"
+      "--qian-accent",
+      "--qian-accent-foreground",
+      "--qian-background",
+      "--qian-border",
+      "--qian-button-radius",
+      "--qian-card",
+      "--qian-card-foreground",
+      "--qian-destructive",
+      "--qian-foreground",
+      "--qian-muted-foreground",
+      "--qian-popover",
+      "--qian-popover-foreground",
+      "--qian-ring"
     ],
     "examples": [
       {
@@ -5220,7 +5220,7 @@
         "testId": {
           "type": "string",
           "title": "testId",
-          "description": "覆盖默认的 `data-testid`（默认 `yue-<组件>-<部件>`）。"
+          "description": "覆盖默认的 `data-testid`（默认 `qian-<组件>-<部件>`）。"
         },
         "className": {
           "type": "string",
@@ -5367,20 +5367,20 @@
       "keyboard": []
     },
     "tokens": [
-      "--yue-background",
-      "--yue-border",
-      "--yue-border-strong",
-      "--yue-destructive",
-      "--yue-destructive-foreground",
-      "--yue-foreground",
-      "--yue-inverse",
-      "--yue-inverse-foreground",
-      "--yue-inverse-muted-foreground",
-      "--yue-muted-foreground",
-      "--yue-primary",
-      "--yue-primary-foreground",
-      "--yue-primary-soft",
-      "--yue-primary-soft-foreground"
+      "--qian-background",
+      "--qian-border",
+      "--qian-border-strong",
+      "--qian-destructive",
+      "--qian-destructive-foreground",
+      "--qian-foreground",
+      "--qian-inverse",
+      "--qian-inverse-foreground",
+      "--qian-inverse-muted-foreground",
+      "--qian-muted-foreground",
+      "--qian-primary",
+      "--qian-primary-foreground",
+      "--qian-primary-soft",
+      "--qian-primary-soft-foreground"
     ],
     "examples": [
       {

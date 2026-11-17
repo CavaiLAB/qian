@@ -38,17 +38,17 @@ test('Upload 从真实文件输入完成分片与进度，页面可访问', asyn
 
 test('页长切换与紧凑密度使用同一表格协议，选择态有一致样式', async ({ page }) => {
   await page.goto('/data.html');
-  await expect(page.getByTestId('yue-data-table-row')).toHaveCount(5);
-  const normal = await page.getByTestId('yue-data-table-row').first().evaluate(row => row.getBoundingClientRect().height);
+  await expect(page.getByTestId('qian-data-table-row')).toHaveCount(5);
+  const normal = await page.getByTestId('qian-data-table-row').first().evaluate(row => row.getBoundingClientRect().height);
   await page.getByRole('combobox', { name: '每页条数' }).click();
   await page.getByRole('option', { name: '10 条/页', exact: true }).click();
-  await expect(page.getByTestId('yue-data-table-row')).toHaveCount(10);
+  await expect(page.getByTestId('qian-data-table-row')).toHaveCount(10);
   await expect(page.getByRole('button', { name: '第 1 页', exact: true })).toHaveAttribute('aria-current', 'page');
   await page.getByRole('checkbox', { name: '选择第 1 行' }).check();
-  await expect(page.getByTestId('yue-data-table-row').first()).toHaveAttribute('data-state', 'selected');
+  await expect(page.getByTestId('qian-data-table-row').first()).toHaveAttribute('data-state', 'selected');
   await page.goto('/data.html?state=Compact');
-  await expect(page.getByTestId('yue-data-table-row')).toHaveCount(5);
-  const compact = await page.getByTestId('yue-data-table-row').first().evaluate(row => row.getBoundingClientRect().height);
+  await expect(page.getByTestId('qian-data-table-row')).toHaveCount(5);
+  const compact = await page.getByTestId('qian-data-table-row').first().evaluate(row => row.getBoundingClientRect().height);
   // 标准密度按原型：单元格上下 12px、正文 22px 行高，单行 47px（含 1px 分隔线）；紧凑密度取 32px 最小行高。
   expect(normal).toBe(47); expect(compact).toBe(32);
 });

@@ -1,4 +1,4 @@
-export const PACKAGE_NAME = '@idadawn/yue-contracts' as const;
+export const PACKAGE_NAME = '@cavailab/qian-contracts' as const;
 export type { ComponentManifest } from './component-manifest.generated';
 export { default as componentManifestSchema } from './component-manifest.schema.json';
 export type { ErrorDetail } from './error-detail.generated';

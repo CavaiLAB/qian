@@ -1,7 +1,7 @@
-import { createI18n, type LanguagePack, type Locale, type PlatformI18n } from '@idadawn/yue-sdk';
-import { addDataLanguagePacks } from '@idadawn/yue-data';
+import { createI18n, type LanguagePack, type Locale, type PlatformI18n } from '@cavailab/qian-sdk';
+import { addDataLanguagePacks } from '@cavailab/qian-data';
 
-// 业务选择器的文案资源：三种语言的 key 集合必须一致（locales.browser.test.tsx 校验）。组织选择器复用 @yue/data 的 TreeSelect，一并装入 data 的语言包。
+// 业务选择器的文案资源：三种语言的 key 集合必须一致（locales.browser.test.tsx 校验）。组织选择器复用 @cavailab/qian-data 的 TreeSelect，一并装入 data 的语言包。
 export const bizLanguagePacks: Record<Locale, LanguagePack> = {
   'zh-CN': {
     'biz.select': '请选择', 'biz.search': '搜索{{label}}', 'biz.options': '{{label}}选项', 'biz.clear': '清空{{label}}', 'biz.selected': '已选 {{n}} 项',

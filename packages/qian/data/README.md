@@ -1,6 +1,6 @@
-# @idadawn/yue-data
+# @cavailab/qian-data
 
-S1-YUE-008：DataTable、Tree / TreeSelect / Cascader、日期时间范围、Upload 与 ImagePreview。设计范围见 yue 规格，交互与完整属性说明以 [docs/index.mdx](docs/index.mdx) 为准；共享示例位于 docs/examples/data-demo.tsx，场景登记在 docs/scenarios.json。
+S1-YUE-008：DataTable、Tree / TreeSelect / Cascader、日期时间范围、Upload 与 ImagePreview。设计范围见 qian 规格，交互与完整属性说明以 [docs/index.mdx](docs/index.mdx) 为准；共享示例位于 docs/examples/data-demo.tsx，场景登记在 docs/scenarios.json。
 
 ## 数据与状态
 
@@ -12,13 +12,13 @@ Tree 延续既有键盘与 ARIA 实现，使用 TanStack Virtual 对超过 100 �
 
 Upload 只经注入的 PlatformClient 请求四个 FILE-003 端点，SHA-256 摘要、秒传、可重入 init、确认分片和 complete 共用同一请求链。取消或失败后，再次 init 读取已确认分片，只发送剩余部分。分片序号从 1 开始，进度按确认字节统计；取消不调用 complete。
 
-组件 mock 契约草案在 contracts/upload.openapi.json，生成类型用 `pnpm --filter @idadawn/yue-data contracts:generate`，CI 的 `contracts:check` 拒绝漂移。默认响应为 uploadId、partSize、uploadedParts 和文件 id / name / size / contentType；这是提供方接线输入，不代表真实文件端点已交付。OpenAPI 生成器隔离在 tools/openapi-codegen，满足其 TypeScript 5 peer；产品工作区仍使用 TypeScript 6。
+组件 mock 契约草案在 contracts/upload.openapi.json，生成类型用 `pnpm --filter @cavailab/qian-data contracts:generate`，CI 的 `contracts:check` 拒绝漂移。默认响应为 uploadId、partSize、uploadedParts 和文件 id / name / size / contentType；这是提供方接线输入，不代表真实文件端点已交付。OpenAPI 生成器隔离在 tools/openapi-codegen，满足其 TypeScript 5 peer；产品工作区仍使用 TypeScript 6。
 
 列 Schema、上传 OpenAPI 与可寻址 data-slot / data-testid 可供工具读取。令牌由 SDK 内存提供器处理，不存储于 URL、iframe 或 localStorage；图片预览不会追加认证令牌。
 
 ## 验证与边界
 
-`pnpm yue:gates` 覆盖类型、分层、循环依赖、发布形状、浏览器、SSR、靶场、Lighthouse 与 Rspress。靶场 `/data.html` 使用与 Rspress 相同示例。浏览器验证一万节点跨窗口键盘定位、服务端查询回调、分片请求体/摘要/进度、失败重入、取消与秒传；页面 E2E 实际选择文件并验证完成状态。
+`pnpm qian:gates` 覆盖类型、分层、循环依赖、发布形状、浏览器、SSR、靶场、Lighthouse 与 Rspress。靶场 `/data.html` 使用与 Rspress 相同示例。浏览器验证一万节点跨窗口键盘定位、服务端查询回调、分片请求体/摘要/进度、失败重入、取消与秒传；页面 E2E 实际选择文件并验证完成状态。
 
 ## 已知限制与延期项
 
@@ -26,6 +26,6 @@ Upload 只经注入的 PlatformClient 请求四个 FILE-003 端点，SHA-256 摘
 
 ## 列表密度与视觉回归
 
-DataTable 在表格上方显示查询条件与重置，工具栏保留宿主操作槽，右侧为列显隐。表头与行使用水平分隔线；固定列表头与普通表头共用预合成的不透明底色，避免半透明背景重复叠加。分页条左侧是总数和 yue Select 页长选择，右侧复用 core Pagination。服务端查询与选择回调不变。
+DataTable 在表格上方显示查询条件与重置，工具栏保留宿主操作槽，右侧为列显隐。表头与行使用水平分隔线；固定列表头与普通表头共用预合成的不透明底色，避免半透明背景重复叠加。分页条左侧是总数和 qian Select 页长选择，右侧复用 core Pagination。服务端查询与选择回调不变。
 
-行高由单元格内边距撑开：`density` 为 standard 时上下 12px、comfortable 时 14px，配正文 22px 行高，单行内容的行高 47px（含 1px 分隔线），表头 43px，与开通流程原型一致。`--yue-table-row-height` 是最小行高（default 40px）；宿主在表格外设置 `data-yue-density="compact"` 时单元格上下 4px、最小行高 32px。无需第二套表格或新的公开属性。共用示例的「紧凑」状态与明暗截图已进入视觉回归。
+行高由单元格内边距撑开：`density` 为 standard 时上下 12px、comfortable 时 14px，配正文 22px 行高，单行内容的行高 47px（含 1px 分隔线），表头 43px，与开通流程原型一致。`--qian-table-row-height` 是最小行高（default 40px）；宿主在表格外设置 `data-qian-density="compact"` 时单元格上下 4px、最小行高 32px。无需第二套表格或新的公开属性。共用示例的「紧凑」状态与明暗截图已进入视觉回归。

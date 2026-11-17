@@ -4,8 +4,8 @@ import scenarios from '../docs/scenarios.json';
 import docs from '../docs/catalog.json';
 import { Ajv2020 } from 'ajv/dist/2020.js';
 import { describe, expect, it } from 'vitest';
-import { componentManifestSchema } from '@idadawn/yue-contracts';
-import { TOKEN_REGISTRY, primitiveColors } from '@idadawn/yue-tokens';
+import { componentManifestSchema } from '@cavailab/qian-contracts';
+import { TOKEN_REGISTRY, primitiveColors } from '@cavailab/qian-tokens';
 import { CORE_COMPONENT_MANIFESTS } from './manifests';
 
 const ajv = new Ajv2020({ allErrors: true, strict: false });

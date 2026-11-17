@@ -1,4 +1,4 @@
-import { PlatformError } from '@idadawn/yue-sdk';
+import { PlatformError } from '@cavailab/qian-sdk';
 import { errorCatalog } from './error-catalog';
 /** 前端错误保持 ErrorDetail；目录从冻结协议派生，不扩写 Runtime 包的内部错误集合。 */
 export class ShellError extends PlatformError {

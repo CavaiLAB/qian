@@ -1,12 +1,12 @@
 {
-  "name": "@idadawn/yue-core",
+  "name": "@cavailab/qian-core",
   "version": "0.1.0",
   "description": "Base UI + shadcn 源码自有化的基础组件（52 个）。",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/idadawn/qian.git",
-    "directory": "packages/yue/core"
+    "directory": "packages/qian/core"
   },
   "type": "module",
   "sideEffects": [
@@ -18,7 +18,7 @@
   ],
   "exports": {
     ".": "./src/index.ts",
-    "./manifest.json": "./dist/yue-manifest.json",
+    "./manifest.json": "./dist/qian-manifest.json",
     "./shell": "./src/shell.ts"
   },
   "publishConfig": {
@@ -29,7 +29,7 @@
         "types": "./dist/index.d.ts",
         "default": "./dist/index.js"
       },
-      "./manifest.json": "./dist/yue-manifest.json",
+      "./manifest.json": "./dist/qian-manifest.json",
       "./shell": {
         "types": "./dist/shell.d.ts",
         "default": "./dist/shell.js"
@@ -47,12 +47,12 @@
   },
   "dependencies": {
     "@base-ui/react": "catalog:",
-    "@idadawn/yue-tokens": "workspace:^",
+    "@cavailab/qian-tokens": "workspace:^",
     "clsx": "catalog:",
     "tailwind-merge": "catalog:",
     "lucide-react": "catalog:",
     "react-resizable-panels": "catalog:",
-    "@idadawn/yue-contracts": "workspace:^"
+    "@cavailab/qian-contracts": "workspace:^"
   },
   "peerDependencies": {
     "react": "^19.0.0",

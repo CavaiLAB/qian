@@ -54,7 +54,7 @@ it('TreeSelect 与 Cascader 一万节点复用同一虚拟化树，选择值可�
   expect(screen.getAllByRole('treeitem').length).toBeLessThan(40);
   await userEvent.click(screen.getByRole('treeitem', { name: '节点 2' }));
   expect(select).toHaveBeenCalledWith('2');
-  await vi.waitFor(() => expect(screen.queryByTestId('yue-tree-select-popup')).toBeNull());
+  await vi.waitFor(() => expect(screen.queryByTestId('qian-tree-select-popup')).toBeNull());
   await userEvent.click(screen.getByRole('button', { name: '层级 请选择' }));
   await userEvent.click(screen.getByRole('treeitem', { name: '总部' }));
   expect(screen.getAllByRole('treeitem').length).toBeLessThan(45);

@@ -38,16 +38,16 @@ export interface MenuMatch { item: ShellMenuItem; href: string }
 
 /** 把当前路径对到菜单项：先精确匹配 pathname，再按最长路径前缀匹配（`/customers` 命中 `/customers/42`）；外链不参与。 */
 export function matchMenuItem(menu: readonly ShellMenuItem[], path: string, registry: MenuTypeRegistry = menuTypeRegistry): MenuMatch | undefined {
-  const pathname = new URL(path, 'https://yue.local').pathname;
+  const pathname = new URL(path, 'https://qian.local').pathname;
   let best: MenuMatch | undefined;
   const visit = (items: readonly ShellMenuItem[]): MenuMatch | undefined => {
     for (const item of items) {
       const destination = registry.resolve(item);
       if (!destination.external) {
-        const target = new URL(destination.href, 'https://yue.local').pathname;
+        const target = new URL(destination.href, 'https://qian.local').pathname;
         if (target === pathname) return { item, href: destination.href };
         // 根路径「/」只精确命中：否则它是所有路径的前缀，没有更具体的菜单项时任何地址都会落到首页项上。
-        if (target !== '/' && pathname.startsWith(target.endsWith('/') ? target : `${target}/`) && (!best || target.length > new URL(best.href, 'https://yue.local').pathname.length)) best = { item, href: destination.href };
+        if (target !== '/' && pathname.startsWith(target.endsWith('/') ? target : `${target}/`) && (!best || target.length > new URL(best.href, 'https://qian.local').pathname.length)) best = { item, href: destination.href };
       }
       if (item.children) { const exact = visit(item.children); if (exact) return exact; }
     }

@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import '@idadawn/yue-tokens/theme.css';
-@source '../../../packages/yue';
+@import '@cavailab/qian-tokens/theme.css';
+@source '../../../packages/qian';
 
 body { @apply font-sans text-sm bg-background text-foreground; }

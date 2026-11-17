@@ -1,9 +1,9 @@
 import { Fragment, useContext, useEffect, useId, useImperativeHandle, useMemo, useRef, type BaseSyntheticEvent, type ReactNode, type Ref } from 'react';
 import { createPortal } from 'react-dom';
 import { Controller, useForm, useWatch, type FieldErrors, type Resolver } from 'react-hook-form';
-import { Button, Checkbox, cn, Field as CoreField, FieldDescription, FieldLabel, Input, Segmented, SegmentedItem, Select, SelectContent, SelectItem, SelectTrigger, Textarea } from '@idadawn/yue-core';
-import { PlatformError, pointerSegments, type ErrorDetail, type PlatformI18n } from '@idadawn/yue-sdk';
-import type { FormSchema, UiNode } from '@idadawn/yue-contracts';
+import { Button, Checkbox, cn, Field as CoreField, FieldDescription, FieldLabel, Input, Segmented, SegmentedItem, Select, SelectContent, SelectItem, SelectTrigger, Textarea } from '@cavailab/qian-core';
+import { PlatformError, pointerSegments, type ErrorDetail, type PlatformI18n } from '@cavailab/qian-sdk';
+import type { FormSchema, UiNode } from '@cavailab/qian-contracts';
 import { OverlayFormContext } from './overlay-form-context';
 import { assertFormSchema, effectiveSchema, getValue, maskValue, validateValues, type DataSchema, type FormValues } from './schema';
 
@@ -104,11 +104,11 @@ function FieldGroup({ id, node, i18n, testId, variant, children }: { id: string;
   </fieldset>;
 }
 // lg：控件 40px、操作按钮 44px（申请表单）；xl：控件与按钮都是 44px（认证页）。
-const heights = { md: '', lg: '[--yue-input-height:2.5rem] [--yue-button-height:2.75rem]', xl: '[--yue-input-height:2.75rem] [--yue-button-height:2.75rem]' } as const;
+const heights = { md: '', lg: '[--qian-input-height:2.5rem] [--qian-button-height:2.75rem]', xl: '[--qian-input-height:2.75rem] [--qian-button-height:2.75rem]' } as const;
 const columns = { sm: 'grid-cols-[repeat(auto-fit,minmax(min(15rem,100%),1fr))] gap-x-5 gap-y-3.5', md: 'grid-cols-[repeat(auto-fit,minmax(min(17.5rem,100%),1fr))] gap-x-5 gap-y-4.5' } as const;
 
 /** 编辑、只读与字段错误共享同一份 Schema、RHF 状态和字段目录。 */
-export function SchemaForm({ schema, i18n, initialValues, mode = 'edit', onSubmit, onError, apiRef, className, testId = 'yue-schema-form', submitLabel, inlineActions = false, fieldExtra, fieldAdornment, size = 'md', layout = 'stack', columnWidth = 'md', groupVariant = 'divided', children }: SchemaFormProps) {
+export function SchemaForm({ schema, i18n, initialValues, mode = 'edit', onSubmit, onError, apiRef, className, testId = 'qian-schema-form', submitLabel, inlineActions = false, fieldExtra, fieldAdornment, size = 'md', layout = 'stack', columnWidth = 'md', groupVariant = 'divided', children }: SchemaFormProps) {
   useMemo(() => assertFormSchema(schema), [schema]);
   const id = useId();
   const overlay = useContext(OverlayFormContext);
@@ -204,7 +204,7 @@ export function SchemaForm({ schema, i18n, initialValues, mode = 'edit', onSubmi
       return <CoreField className={horizontal ? cn('grid grid-cols-[1rem_minmax(0,1fr)] items-center gap-x-3 gap-y-2', full && 'col-span-full') : full ? 'col-span-full' : undefined} key={path} name={path} invalid={!!error} data-slot="schema-field" testId={`${testId}-field-${path}`}>
         <FieldLabel className={horizontal ? 'col-start-2 row-start-1 leading-5' : undefined} htmlFor={fieldId}>{label}{required ? <span aria-hidden className="text-destructive"> *</span> : null}</FieldLabel>
         {(() => { const control = <Controller name={path} control={form.control} render={({ field }) => {
-          if (readonly) return <output id={fieldId} className="min-h-(--yue-input-height) rounded-md bg-muted/40 px-3 py-2 text-sm text-foreground" data-slot="schema-field-readonly" data-testid={`${testId}-readonly-${path}`} aria-describedby={describedBy}>{maskValue(field.value, password ? 'full' : typeof ui.props?.readonlyMask === 'string' ? ui.props.readonlyMask : 'none')}</output>;
+          if (readonly) return <output id={fieldId} className="min-h-(--qian-input-height) rounded-md bg-muted/40 px-3 py-2 text-sm text-foreground" data-slot="schema-field-readonly" data-testid={`${testId}-readonly-${path}`} aria-describedby={describedBy}>{maskValue(field.value, password ? 'full' : typeof ui.props?.readonlyMask === 'string' ? ui.props.readonlyMask : 'none')}</output>;
           const common = { id: fieldId, name: field.name, ref: field.ref, onBlur: field.onBlur, disabled: state?.disabled || isSubmitting, 'aria-required': required, 'aria-invalid': !!error, 'aria-describedby': describedBy };
           if (hasType(fieldSchema, 'boolean')) return <Checkbox {...common} className="col-start-1 row-start-1" checked={!!field.value} onCheckedChange={field.onChange} aria-label={label} />;
           if (fieldSchema.enum && ui.widget === 'qian.segmented') return <Segmented id={fieldId} value={field.value ?? null} onValueChange={field.onChange} disabled={common.disabled} aria-label={label} aria-describedby={describedBy} aria-invalid={!!error} className="flex w-full">
@@ -234,7 +234,7 @@ export function SchemaForm({ schema, i18n, initialValues, mode = 'edit', onSubmi
           return <div className="flex min-w-0 gap-2" data-slot="schema-field-control">
             <div className="relative flex min-w-0 flex-1 items-center">{control}{suffix && <span id={`${fieldId}-suffix`} data-slot="schema-field-suffix" data-testid={`${testId}-suffix-${path}`} className="pointer-events-none absolute end-3 inline-flex max-w-24 items-center gap-1 truncate text-[13px] text-muted-foreground">{suffix}</span>}</div>
             {unit && <span id={`${fieldId}-unit`} data-slot="schema-field-unit" data-testid={`${testId}-unit-${path}`} className="inline-flex shrink-0 items-center text-caption-foreground">{unit}</span>}
-            {adornment.addon && <div className="flex shrink-0 items-stretch [--yue-button-height:var(--yue-input-height)]" data-slot="schema-field-addon">{adornment.addon}</div>}
+            {adornment.addon && <div className="flex shrink-0 items-stretch [--qian-button-height:var(--qian-input-height)]" data-slot="schema-field-addon">{adornment.addon}</div>}
           </div>;
         })()}
         {hasExtra && <div id={`${fieldId}-extra`} data-slot="schema-field-extra" data-testid={`${testId}-extra-${path}`} className={horizontal ? 'col-start-2 text-xs leading-4.5' : 'text-xs leading-4.5'}>{extra}</div>}

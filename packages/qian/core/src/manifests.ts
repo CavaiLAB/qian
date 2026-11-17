@@ -1,4 +1,4 @@
-import type { ComponentManifest } from '@idadawn/yue-contracts';
+import type { ComponentManifest } from '@cavailab/qian-contracts';
 import catalog from './manifest-catalog.json';
 import packageInfo from '../package.json';
 
@@ -7,7 +7,7 @@ const manifest = (name: keyof typeof catalog): ComponentManifest => {
   const [firstSlot, ...slots] = entry.slots;
   const [firstExample, ...examples] = entry.examples;
   if (!firstSlot || !firstExample) throw new Error('组件目录必须包含部件与示例。');
-  return { ...entry, slots: [firstSlot, ...slots], examples: [firstExample, ...examples], package: '@idadawn/yue-core', version: packageInfo.version, status: 'stable' };
+  return { ...entry, slots: [firstSlot, ...slots], examples: [firstExample, ...examples], package: '@cavailab/qian-core', version: packageInfo.version, status: 'stable' };
 };
 export const ButtonManifest = manifest('Button');
 export const IconButtonManifest = manifest('IconButton');

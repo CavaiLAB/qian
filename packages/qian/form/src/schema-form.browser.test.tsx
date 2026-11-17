@@ -3,8 +3,8 @@ import { cleanup, render, screen, within } from '@testing-library/react';
 import axe from 'axe-core';
 import { afterEach, expect, it, vi } from 'vitest';
 import { userEvent } from 'vitest/browser';
-import { PlatformError } from '@idadawn/yue-sdk';
-import type { FormSchema } from '@idadawn/yue-contracts';
+import { PlatformError } from '@cavailab/qian-sdk';
+import type { FormSchema } from '@cavailab/qian-contracts';
 import { SchemaForm, type FormApi } from './schema-form';
 import { FeedbackProvider, useConfirm, useDrawer } from './overlays';
 import { credentialSchema, i18n, schema } from './test/fixture';
@@ -32,7 +32,7 @@ it('密码字段沿用 Schema 校验与提交，浏览器语义可访问且只�
   const result = await axe.run(document.body);
   expect(result.violations.filter((v) => v.impact === 'critical' || v.impact === 'serious')).toEqual([]);
   view.rerender(<SchemaForm schema={credentialSchema} i18n={i18n} mode="readonly" />);
-  expect(screen.getByTestId('yue-schema-form-readonly-password').textContent).toBe('••••');
+  expect(screen.getByTestId('qian-schema-form-readonly-password').textContent).toBe('••••');
   expect(document.body.textContent).not.toContain('example-password');
 });
 
@@ -136,7 +136,7 @@ it('枚举按 optionLabelKey 取文案；qian.segmented 渲染分段控件；抽
   await userEvent.click(within(dialog).getByRole('radio', { name: '正式' }));
   await userEvent.click(within(dialog).getByRole('combobox', { name: /企业规模/ }));
   await userEvent.click(await screen.findByRole('option', { name: '500 人以上' }));
-  const footer = within(dialog).getByTestId('yue-sheet-footer');
+  const footer = within(dialog).getByTestId('qian-sheet-footer');
   const confirm = within(footer).getByRole('button', { name: '确认开通' });
   expect(within(footer).getByRole('button', { name: '取消' })).toBeTruthy();
   expect(confirm.getAttribute('form')).toBe(dialog.querySelector('form')?.id);
@@ -156,7 +156,7 @@ it('抽屉里的子步骤表单（inlineActions）按钮紧跟表单、不带取
   await userEvent.click(screen.getByRole('button', { name: '打开' }));
   const dialog = await screen.findByRole('dialog', { name: '选择管理员' });
   const form = within(dialog).getByTestId('lookup');
-  const footer = within(dialog).getByTestId('yue-sheet-footer');
+  const footer = within(dialog).getByTestId('qian-sheet-footer');
   expect(within(form).queryByRole('button', { name: '取消' })).toBeNull();
   expect(within(footer).queryByRole('button', { name: '查找账号' })).toBeNull();
   expect(within(footer).getByRole('button', { name: '关闭' })).toBeTruthy();
@@ -225,7 +225,7 @@ it('确认框：危险操作的确认按钮用危险色并写明动作，取消�
   render(<FeedbackProvider i18n={i18n}><Host /></FeedbackProvider>);
   await userEvent.click(screen.getByRole('button', { name: '冻结' }));
   const dialog = await screen.findByRole('alertdialog', { name: '冻结租户' });
-  const ok = within(dialog).getByTestId('yue-form-confirm-ok');
+  const ok = within(dialog).getByTestId('qian-form-confirm-ok');
   expect(ok.textContent).toBe('冻结');
   expect(ok.className).toContain('bg-destructive');
   const cancel = within(dialog).getByRole('button', { name: '取消' });

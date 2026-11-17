@@ -1,7 +1,7 @@
 import { Linter } from 'eslint';
 import tseslint from 'typescript-eslint';
 import { expect, it } from 'vitest';
-import { noHardcodedText } from '../../../packages/yue/sdk/eslint-i18n.mjs';
+import { noHardcodedText } from '../../../packages/qian/sdk/eslint-i18n.mjs';
 
 it('文案门禁拒绝 JSX 文字、可访问名称与中文常量，允许 key 和注入的 label', () => {
   const linter = new Linter();

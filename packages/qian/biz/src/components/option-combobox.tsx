@@ -1,6 +1,6 @@
 import { useMemo, type ReactNode } from 'react';
-import { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList, ComboboxTrigger, ComboboxValue, Icon, IconButton, cn, type TestIdProps } from '@idadawn/yue-core';
-import type { PlatformI18n } from '@idadawn/yue-sdk';
+import { Combobox, ComboboxContent, ComboboxEmpty, ComboboxInput, ComboboxItem, ComboboxList, ComboboxTrigger, ComboboxValue, Icon, IconButton, cn, type TestIdProps } from '@cavailab/qian-core';
+import type { PlatformI18n } from '@cavailab/qian-sdk';
 import { SelectStatus } from './select-status';
 
 // ApiSelect、DictSelect、UserSelect、RoleSelect、IconPicker 共用的可搜索选择器外形：core Combobox（Base UI，验证门已通过）的触发器 + 弹层内输入框，

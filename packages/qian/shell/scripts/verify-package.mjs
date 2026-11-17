@@ -1,4 +1,4 @@
-// 仓库根运行：先 pnpm yue:build，再 node packages/yue/shell/scripts/verify-package.mjs。
+// 仓库根运行：先 pnpm qian:build，再 node packages/qian/shell/scripts/verify-package.mjs。
 // 使用真实 tarball 和独立消费者，不设源码 alias，也不向浏览器注入 React 全局变量。
 import { mkdtempSync, readFileSync, writeFileSync } from 'node:fs';
 import { tmpdir } from 'node:os';
@@ -7,9 +7,9 @@ import { createRequire } from 'node:module';
 import { spawnSync } from 'node:child_process';
 
 const root = resolve(import.meta.dirname, '../../../..');
-const output = mkdtempSync(join(tmpdir(), 'yue-shell-package-'));
-const appRequire = createRequire(join(root, 'apps/yue-playground/package.json'));
-const installed = name => JSON.parse(readFileSync(join(root, name === 'playwright' ? 'packages/yue/shell' : 'apps/yue-playground', 'node_modules', name, 'package.json'), 'utf8')).version;
+const output = mkdtempSync(join(tmpdir(), 'qian-shell-package-'));
+const appRequire = createRequire(join(root, 'apps/qian-playground/package.json'));
+const installed = name => JSON.parse(readFileSync(join(root, name === 'playwright' ? 'packages/qian/shell' : 'apps/qian-playground', 'node_modules', name, 'package.json'), 'utf8')).version;
 const viteRequire = createRequire(appRequire.resolve('vite/package.json'));
 const rolldown = JSON.parse(readFileSync(viteRequire.resolve('rolldown/package.json'), 'utf8')).version;
 function run(args, cwd = root) {
@@ -19,19 +19,19 @@ function run(args, cwd = root) {
 }
 const overrides = {};
 for (const name of ['shell', 'core', 'form', 'sdk', 'tokens', 'contracts']) {
-  const pkg = `@idadawn/yue-${name}`;
-  const version = JSON.parse(readFileSync(join(root, `packages/yue/${name}/package.json`), 'utf8')).version;
+  const pkg = `@cavailab/qian-${name}`;
+  const version = JSON.parse(readFileSync(join(root, `packages/qian/${name}/package.json`), 'utf8')).version;
   run(['--filter', pkg, 'pack', '--pack-destination', output]);
-  overrides[pkg] = `file:${join(output, `idadawn-yue-${name}-${version}.tgz`)}`;
+  overrides[pkg] = `file:${join(output, `cavailab-qian-${name}-${version}.tgz`)}`;
 }
-writeFileSync(join(output, 'package.json'), JSON.stringify({ name: 'yue-shell-package-consumer', private: true, type: 'module', packageManager: JSON.parse(readFileSync(join(root, 'package.json'), 'utf8')).packageManager, dependencies: { ...overrides, ...Object.fromEntries(['react', 'react-dom', 'vite', '@vitejs/plugin-react', 'playwright'].map(name => [name, installed(name)])) } }, null, 2));
+writeFileSync(join(output, 'package.json'), JSON.stringify({ name: 'qian-shell-package-consumer', private: true, type: 'module', packageManager: JSON.parse(readFileSync(join(root, 'package.json'), 'utf8')).packageManager, dependencies: { ...overrides, ...Object.fromEntries(['react', 'react-dom', 'vite', '@vitejs/plugin-react', 'playwright'].map(name => [name, installed(name)])) } }, null, 2));
 writeFileSync(join(output, 'pnpm-workspace.yaml'), `overrides:\n${Object.entries({ ...overrides, rolldown }).map(([name, value]) => `  ${JSON.stringify(name)}: ${JSON.stringify(value)}`).join('\n')}\n`);
 writeFileSync(join(output, 'index.html'), '<!doctype html><html><head><meta charset="utf-8"><title>Package proof</title></head><body><div id="root"></div><script type="module" src="/main.jsx"></script></body></html>');
 writeFileSync(join(output, 'main.jsx'), `
 import { useState } from 'react';
 import { createRoot } from 'react-dom/client';
-import { createI18n } from '@idadawn/yue-sdk';
-import { AppShell, Authentication, Page, PageHeader, PreferencesProvider, initPreferences, installShellLanguagePacks } from '@idadawn/yue-shell';
+import { createI18n } from '@cavailab/qian-sdk';
+import { AppShell, Authentication, Page, PageHeader, PreferencesProvider, initPreferences, installShellLanguagePacks } from '@cavailab/qian-shell';
 const i18n = createI18n(); installShellLanguagePacks(i18n);
 const preferences = initPreferences({ namespace: 'packed', storage: null });
 const provider = { signIn: async () => ({ kind: 'authenticated', session: { subjectId: 'test', displayName: 'test', tenantId: 'a', tenants: [] } }), selectTenant: async () => { throw new Error('unused'); }, switchTenant: async () => { throw new Error('unused'); } };

@@ -69,15 +69,15 @@ test('401 且刷新失败只弹一个过期弹窗，明确重新登录后恢复'
 
 test('菜单路由、侧栏、偏好、代管横幅及异常恢复可操作', async ({ page }) => {
   await page.goto('/shell.html?state=Managed');
-  await expect(page.getByTestId('yue-app-shell-managed')).toBeVisible();
+  await expect(page.getByTestId('qian-app-shell-managed')).toBeVisible();
   await page.getByRole('link', { name: '应用设置', exact: true }).click(); await expect(page.getByRole('heading', { name: '应用设置', exact: true })).toBeVisible();
   await expect(page.getByRole('link', { name: '应用设置', exact: true })).toHaveAttribute('aria-current', 'page');
   await expect(page.getByRole('link', { name: '开发文档' })).toHaveAttribute('rel', 'noopener noreferrer');
   await page.getByRole('button', { name: '收起侧栏' }).click(); await expect(page.getByRole('button', { name: '展开侧栏' })).toHaveAttribute('aria-expanded', 'false');
   await page.getByRole('button', { name: '主题', exact: true }).click(); await accessible(page); await page.getByRole('menuitemradio', { name: '暗色' }).click(); await expect(page.locator('html')).toHaveAttribute('data-theme', 'dark');
-  await page.getByRole('button', { name: '刷新页面', exact: true }).click(); await expect(page.getByTestId('yue-update-banner')).not.toBeVisible();
+  await page.getByRole('button', { name: '刷新页面', exact: true }).click(); await expect(page.getByTestId('qian-update-banner')).not.toBeVisible();
   await page.getByRole('button', { name: '模拟渲染失败' }).click(); await expect(page.getByRole('heading', { name: '页面暂时无法使用' })).toBeVisible(); await expect(page.locator('body')).not.toContainText('internal-stack');
-  await page.getByRole('button', { name: '重试', exact: true }).click(); await expect(page.getByTestId('yue-fallback-page')).not.toBeVisible();
+  await page.getByRole('button', { name: '重试', exact: true }).click(); await expect(page.getByTestId('qian-fallback-page')).not.toBeVisible();
   await page.getByRole('button', { name: '用户菜单' }).click(); await accessible(page); await page.keyboard.press('Escape');
   // 语言在账号菜单的子菜单里（S1-YUE-019 按原型），顶栏只留主题；子菜单用方向键打开（合成点击瞬移指针会被悬停判定关掉，见 qian-shell federation.spec）。
   await page.getByRole('button', { name: '用户菜单' }).click(); await page.getByRole('menuitem', { name: '语言', exact: true }).press('ArrowRight'); await page.getByRole('menuitemradio', { name: 'English' }).click(); await expect(page.getByRole('button', { name: 'Expand sidebar' })).toBeVisible(); await noCredentials(page);
@@ -85,8 +85,8 @@ test('菜单路由、侧栏、偏好、代管横幅及异常恢复可操作', as
 
 test('浏览器离线事件显示横幅，恢复后保留页面', async ({ page, context }) => {
   await page.goto('/shell.html'); await expect(page.getByRole('heading', { name: '工作台', exact: true })).toBeVisible();
-  await context.setOffline(true); await expect(page.getByTestId('yue-offline-banner')).toBeVisible(); await accessible(page);
-  await context.setOffline(false); await expect(page.getByTestId('yue-offline-banner')).not.toBeVisible(); await expect(page.getByRole('heading', { name: '工作台', exact: true })).toBeVisible();
+  await context.setOffline(true); await expect(page.getByTestId('qian-offline-banner')).toBeVisible(); await accessible(page);
+  await context.setOffline(false); await expect(page.getByTestId('qian-offline-banner')).not.toBeVisible(); await expect(page.getByRole('heading', { name: '工作台', exact: true })).toBeVisible();
 });
 
 for (const theme of ['light', 'dark']) for (const [state, title] of [['Forbidden', '无权访问此页面'], ['NotFound', '页面不存在'], ['ServerError', '页面暂时无法使用'], ['Offline', '网络连接已断开']]) test(`兜底 ${state} ${theme} 无障碍和恢复`, async ({ page }) => {

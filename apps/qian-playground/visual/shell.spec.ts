@@ -1,5 +1,5 @@
 import { expect, test } from '@playwright/test';
-import scenarios from '../../../packages/yue/shell/docs/scenarios.json' with { type: 'json' };
+import scenarios from '../../../packages/qian/shell/docs/scenarios.json' with { type: 'json' };
 
 for (const scenario of scenarios) for (const theme of ['light', 'dark'] as const) test(`shell ${scenario.id} ${theme}`, async ({ page }) => {
   await page.emulateMedia({ colorScheme: theme });

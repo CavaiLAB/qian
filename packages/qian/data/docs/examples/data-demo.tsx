@@ -1,7 +1,7 @@
 import { useEffect, useMemo, useState } from 'react';
-import { Button } from '@idadawn/yue-core';
-import { createMockTransport, PlatformClient } from '@idadawn/yue-sdk';
-import { Cascader, DataTable, DatePicker, DateRange, ImagePreview, TimePicker, TimeRange, Tree, TreeSelect, Upload, createDataI18n, fileSha256, type DataTableQuery } from '@idadawn/yue-data';
+import { Button } from '@cavailab/qian-core';
+import { createMockTransport, PlatformClient } from '@cavailab/qian-sdk';
+import { Cascader, DataTable, DatePicker, DateRange, ImagePreview, TimePicker, TimeRange, Tree, TreeSelect, Upload, createDataI18n, fileSha256, type DataTableQuery } from '@cavailab/qian-data';
 
 interface Row { id: string; name: string }
 interface Paths { '/rows': { get: { parameters: { query: { skip: number; take: number; name?: string; sort?: string; desc?: boolean } }; responses: { 200: { content: { 'application/json': { items: Row[]; total: number } } } } } } }
@@ -64,7 +64,7 @@ export default function DataDemo({ kind = 'DataTable', loading = false, empty = 
   if (kind === 'ImagePreview') return <ImagePreview i18n={i18n} alt="示例图片" src="data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///ywAAAAAAQABAAACAUwAOw==" />;
   // 工具行场景：「显示列」之后接刷新按钮（toolbarEnd），行距用 comfortable（两行内容的审核列表）。
   const toolProps = tools ? { density: 'comfortable' as const, toolbarEnd: <Button variant="outline" size="sm" onClick={() => { setResponse((current) => ({ ...current, loading: true })); setQuery((current) => ({ ...current })); }}>刷新</Button> } : {};
-  return <div data-yue-density={compact ? 'compact' : 'default'}><DataTable {...toolProps} columns={[{ field: 'id', titleKey: 'demo.id', fixed: 'left', width: 100 }, { field: 'name', titleKey: 'demo.name', sortable: true, filterable: true }]} data={empty ? [] : response.items} total={empty ? 0 : response.total} query={query} onQueryChange={(next) => { setResponse((current) => ({ ...current, loading: true })); setQuery(next); }} getRowId={(row) => row.id} i18n={i18n} label="客户列表" loading={loading || response.loading} error={invalid ? '加载失败' : response.error} selectedIds={selectedRows} onSelectionChange={setSelectedRows} toolbar={<><Button variant="outline" size="sm" disabled={!selectedRows.length} onClick={() => setSelectedRows([])}>清空选择</Button><span className="text-sm text-muted-foreground">已选 {selectedRows.length} 条</span></>} selectable /></div>;
+  return <div data-qian-density={compact ? 'compact' : 'default'}><DataTable {...toolProps} columns={[{ field: 'id', titleKey: 'demo.id', fixed: 'left', width: 100 }, { field: 'name', titleKey: 'demo.name', sortable: true, filterable: true }]} data={empty ? [] : response.items} total={empty ? 0 : response.total} query={query} onQueryChange={(next) => { setResponse((current) => ({ ...current, loading: true })); setQuery(next); }} getRowId={(row) => row.id} i18n={i18n} label="客户列表" loading={loading || response.loading} error={invalid ? '加载失败' : response.error} selectedIds={selectedRows} onSelectionChange={setSelectedRows} toolbar={<><Button variant="outline" size="sm" disabled={!selectedRows.length} onClick={() => setSelectedRows([])}>清空选择</Button><span className="text-sm text-muted-foreground">已选 {selectedRows.length} 条</span></>} selectable /></div>;
 }
 
 export const DATA_DEMOS = Object.fromEntries(DATA_COMPONENTS.map((name) => [name, DataDemo]));

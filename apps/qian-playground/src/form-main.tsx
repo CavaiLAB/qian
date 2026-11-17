@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client';
-import scenarios from '../../../packages/yue/form/docs/scenarios.json';
-import SchemaFormDemo from '../../../packages/yue/form/docs/examples/schema-form-demo';
+import scenarios from '../../../packages/qian/form/docs/scenarios.json';
+import SchemaFormDemo from '../../../packages/qian/form/docs/examples/schema-form-demo';
 import './index.css';
 const theme = new URLSearchParams(location.search).get('theme');
 if (theme === 'dark' || theme === 'light') { document.documentElement.dataset.theme = theme; document.documentElement.classList.toggle('dark', theme === 'dark'); }

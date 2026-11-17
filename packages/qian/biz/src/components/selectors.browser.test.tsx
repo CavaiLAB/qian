@@ -2,7 +2,7 @@ import { cleanup, render, screen, within } from '@testing-library/react';
 import { useState } from 'react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { userEvent } from 'vitest/browser';
-import type { IconName } from '@idadawn/yue-core';
+import type { IconName } from '@cavailab/qian-core';
 import { blockingViolations, describeViolations, runAxe } from '../test/axe';
 import { ORGANIZATIONS, createFixture, directoryMember, uuid } from '../test/fixtures';
 import { createBizI18n } from '../locales';
@@ -40,7 +40,7 @@ describe('OrganizeSelect', () => {
     const { client, requests } = createFixture();
     function Example() { const [selected, setSelected] = useState<string | null>(null); return <><OrganizeSelect client={client} i18n={i18n} label="部门" value={selected} onChange={setSelected} /><Value value={selected} /></>; }
     render(<Example />);
-    await vi.waitFor(() => expect(screen.queryByTestId('yue-organize-select-loading')).toBeNull());
+    await vi.waitFor(() => expect(screen.queryByTestId('qian-organize-select-loading')).toBeNull());
     expect(requests).toEqual([{ method: 'GET', url: '/api/directory/orgs/tree', tenant: expect.any(String) }]);
     await userEvent.click(screen.getByRole('button', { name: /^部门/ }));
     const root = await screen.findByRole('treeitem', { name: '总部' });
@@ -75,7 +75,7 @@ describe('OrganizeSelect', () => {
     const many = Array.from({ length: 150 }, (_, index) => ({ ...ORGANIZATIONS[0]!, id: uuid(1000 + index), name: `事业部 ${index + 1}`, path: `/${uuid(1000 + index)}/` }));
     const { client } = createFixture({ routes: [{ method: 'GET', path: '/api/directory/orgs/tree', respond: () => Response.json({ items: many }) }] });
     render(<><OrganizeSelect client={client} i18n={i18n} label="部门" value={null} onChange={() => {}} /><OrganizeSelect client={client} i18n={i18n} label="归属组织" multiple value={[]} onChange={() => {}} /></>);
-    await vi.waitFor(() => expect(screen.queryAllByTestId('yue-organize-select-loading')).toHaveLength(0));
+    await vi.waitFor(() => expect(screen.queryAllByTestId('qian-organize-select-loading')).toHaveLength(0));
     async function popupWidth(label: string) {
       await userEvent.click(screen.getByRole('button', { name: new RegExp(`^${label}`) }));
       const tree = await screen.findByRole('tree', { name: label });

@@ -1,10 +1,10 @@
 import { settleVisuals } from './settle';
 import { expect, test, type Page } from '@playwright/test';
 import AxeBuilder from '@axe-core/playwright';
-import scenarios from '../../../packages/yue/biz/docs/scenarios.json' with { type: 'json' };
+import scenarios from '../../../packages/qian/biz/docs/scenarios.json' with { type: 'json' };
 
 // S1-YUE-010 验收 2（靶场，R109）：OrganizeSelect 选部门、UserSelect 选人、RoleSelect 选角色、授权树勾选，
-// 数据由 @yue/sdk 的 mock 中间件按 PRD 7.4.3 目录 API 与 PRD 7.5 角色 / 权限点目录返回；全程键盘，axe critical / serious = 0。
+// 数据由 @cavailab/qian-sdk 的 mock 中间件按 PRD 7.4.3 目录 API 与 PRD 7.5 角色 / 权限点目录返回；全程键盘，axe critical / serious = 0。
 const uuid = (n: number) => `0193a000-0000-7000-8000-${String(n).padStart(12, '0')}`;
 
 async function expectNoBlocking(page: Page, where: string) {

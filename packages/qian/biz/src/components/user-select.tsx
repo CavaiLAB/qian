@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import type { PlatformClient, PlatformI18n } from '@idadawn/yue-sdk';
+import type { PlatformClient, PlatformI18n } from '@cavailab/qian-sdk';
 import { MEMBER_SEARCH_LIMIT, loadMembersByIds, searchMembers, type DirectoryMember } from '../api';
 import { useRemoteResource } from '../remote-options';
 import { OptionCombobox, selectedValues, type BizSelectBaseProps, type SelectOption, type Selection } from './option-combobox';
@@ -64,7 +64,7 @@ export function UserSelect(props: UserSelectProps) {
   const page = search.data;
   // 选项含状态文案：每次渲染按当前语言生成，宿主切换语言后重渲染即可更新。
   const options = (page?.items ?? []).map((member) => memberOption(member, i18n, valueKey));
-  return <OptionCombobox slot="user-select" defaultTestId="yue-user-select" selection={props} options={options} labels={labels}
+  return <OptionCombobox slot="user-select" defaultTestId="qian-user-select" selection={props} options={options} labels={labels}
     loading={search.loading || resolve.loading} error={search.error ?? resolve.error} onRetry={() => { search.reload(); resolve.reload(); }}
     notice={page?.more ? i18n.t('biz.member.more', { n: MEMBER_SEARCH_LIMIT }) : undefined}
     search="server" keyword={keyword} onKeywordChange={setKeyword}

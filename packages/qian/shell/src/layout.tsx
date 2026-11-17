@@ -1,26 +1,26 @@
 import { useId, useSyncExternalStore, type ComponentProps, type ReactNode } from 'react';
-import { Alert, cn, Icon, IconButton, isIconName, Menu, MenuContent, MenuItem, MenuRadioGroup, MenuRadioItem, MenuSeparator, MenuSub, MenuSubTrigger, MenuTrigger, type IconName } from '@idadawn/yue-core/shell';
-import type { Locale, PlatformI18n } from '@idadawn/yue-sdk';
+import { Alert, cn, Icon, IconButton, isIconName, Menu, MenuContent, MenuItem, MenuRadioGroup, MenuRadioItem, MenuSeparator, MenuSub, MenuSubTrigger, MenuTrigger, type IconName } from '@cavailab/qian-core/shell';
+import type { Locale, PlatformI18n } from '@cavailab/qian-sdk';
 import { menuTypeRegistry, type MenuTypeRegistry, type ShellMenuItem } from './menu';
 import { usePreferences, type Preferences } from './preferences';
 
 export interface ShellPartProps { children?: ReactNode; className?: string; testId?: string }
 export interface PageProps extends ShellPartProps { header?: ReactNode }
-export function Page({ header, children, className, testId = 'yue-page' }: PageProps) {
+export function Page({ header, children, className, testId = 'qian-page' }: PageProps) {
   return <section data-slot="page" data-testid={testId} className={cn('min-w-0 space-y-4 p-4 md:p-6', className)}>{header}{children}</section>;
 }
 export interface PageHeaderProps extends ShellPartProps { title: string; description?: string; actions?: ReactNode; breadcrumb?: ReactNode }
 /** 页头：粗标题与一行说明，操作靠右、与标题块底边对齐。 */
-export function PageHeader({ title, description, actions, breadcrumb, children, className, testId = 'yue-page-header' }: PageHeaderProps) {
+export function PageHeader({ title, description, actions, breadcrumb, children, className, testId = 'qian-page-header' }: PageHeaderProps) {
   return <header data-slot="page-header" data-testid={testId} className={cn('space-y-3', className)}>{breadcrumb}<div className="flex flex-wrap items-end justify-between gap-4"><div className="min-w-0 space-y-1"><h1 className="text-[22px] font-bold leading-[30px] tracking-tight">{title}</h1>{description && <p className="text-sm text-muted-foreground">{description}</p>}</div>{actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}</div>{children}</header>;
 }
 export interface ColPageProps extends ShellPartProps { aside: ReactNode }
-export function ColPage({ aside, children, className, testId = 'yue-col-page' }: ColPageProps) {
+export function ColPage({ aside, children, className, testId = 'qian-col-page' }: ColPageProps) {
   return <div data-slot="col-page" data-testid={testId} className={cn('grid min-w-0 gap-6 md:grid-cols-[14rem_minmax(0,1fr)]', className)}>{aside}<div className="min-w-0">{children}</div></div>;
 }
 /** 左栏容器；树的键盘与选择行为由消费方传入同一 data Tree，不复制树引擎。 */
 export interface LeftTreeProps extends ShellPartProps { label: string }
-export function LeftTree({ label, children, className, testId = 'yue-left-tree' }: LeftTreeProps) {
+export function LeftTree({ label, children, className, testId = 'qian-left-tree' }: LeftTreeProps) {
   return <aside aria-label={label} data-slot="left-tree" data-testid={testId} className={cn('min-w-0 rounded-xl border border-border bg-card p-4', className)}>{children}</aside>;
 }
 
@@ -41,7 +41,7 @@ export interface PreferenceControlsProps extends ShellPartProps {
   localeStyle?: 'icon' | 'label';
 }
 /** 顶栏偏好：主题与语言各一个图标按钮，展开为单选菜单，选中即关闭；当前值有勾号，读屏读作「已选中」。 */
-export function PreferenceControls({ i18n, locale = true, localeStyle = 'icon', className, testId = 'yue-preference-controls' }: PreferenceControlsProps) {
+export function PreferenceControls({ i18n, locale = true, localeStyle = 'icon', className, testId = 'qian-preference-controls' }: PreferenceControlsProps) {
   const { preferences, updatePreferences } = usePreferences();
   useShellLocale(i18n);
   const trigger = cn(quietTrigger, 'size-9 text-subtle-foreground hover:bg-accent hover:text-foreground data-[popup-open]:bg-accent [&_svg]:size-4.5');
@@ -73,7 +73,7 @@ function LocaleRadioGroup({ i18n }: { i18n: PlatformI18n }) {
 }
 export interface LocaleMenuProps { i18n: PlatformI18n; testId?: string }
 /** 账号菜单里的「语言」子菜单：与顶栏语言按钮同一份偏好，原型把语言收进账号菜单。 */
-export function LocaleMenu({ i18n, testId = 'yue-locale-menu' }: LocaleMenuProps) {
+export function LocaleMenu({ i18n, testId = 'qian-locale-menu' }: LocaleMenuProps) {
   useShellLocale(i18n);
   return <MenuSub><MenuSubTrigger testId={testId}><Icon name="globe" />{i18n.t('shell.language')}</MenuSubTrigger>
     <MenuContent side="right" align="start" className="w-auto"><LocaleRadioGroup i18n={i18n} /></MenuContent></MenuSub>;
@@ -92,7 +92,7 @@ export interface WorkspaceCardProps extends ShellPartProps {
   onClick?: () => void;
 }
 /** 侧栏品牌下方的工作空间卡片：显示当前所在的平台控制台或企业，点按进入切换。 */
-export function WorkspaceCard({ title, description, tile, label, href, onClick, className, testId = 'yue-workspace-card' }: WorkspaceCardProps) {
+export function WorkspaceCard({ title, description, tile, label, href, onClick, className, testId = 'qian-workspace-card' }: WorkspaceCardProps) {
   const body = <><span className="sr-only">{label}</span><span aria-hidden="true" className="inline-flex shrink-0">{tile}</span>
     <span className="flex min-w-0 flex-1 flex-col leading-4.5"><span className="truncate font-semibold">{title}</span>{description && <span className="truncate text-xs text-muted-foreground">{description}</span>}</span>
     <Icon name="chevronsUpDown" className="text-muted-foreground" /></>;
@@ -131,7 +131,7 @@ function sections(items: readonly ShellMenuItem[]): { group?: string; items: She
 }
 
 /** 单一侧栏布局：侧栏放品牌（含收起开关）、工作空间卡片、分组导航与账号；顶栏放面包屑与工具；主区是画布底色。 */
-export function AppShell({ i18n, brand, menu, activePath, registry = menuTypeRegistry, onNavigate, toolbar, userName, onSignOut, managed, managedLabel, userMenu, logo, workspace, breadcrumb, userDescription, children, className, testId = 'yue-app-shell' }: AppShellProps) {
+export function AppShell({ i18n, brand, menu, activePath, registry = menuTypeRegistry, onNavigate, toolbar, userName, onSignOut, managed, managedLabel, userMenu, logo, workspace, breadcrumb, userDescription, children, className, testId = 'qian-app-shell' }: AppShellProps) {
   const { preferences, updatePreferences } = usePreferences();
   useShellLocale(i18n);
   const contentId = useId();

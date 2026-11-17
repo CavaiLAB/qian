@@ -1,4 +1,4 @@
-import { cn, useDirection, type TestIdProps } from '@idadawn/yue-core';
+import { cn, useDirection, type TestIdProps } from '@cavailab/qian-core';
 import { useCallback, useEffect, useId, useMemo, useRef, useState, type KeyboardEvent } from 'react';
 import { useVirtualizer } from '@tanstack/react-virtual';
 
@@ -177,7 +177,7 @@ export function Tree({
       aria-labelledby={aria['aria-labelledby']}
       aria-multiselectable={checkedIds ? true : undefined}
       data-slot="tree"
-      data-testid={testId ?? 'yue-tree'}
+      data-testid={testId ?? 'qian-tree'}
       className={cn('m-0 list-none p-0 text-foreground', className)}
       style={virtualized ? { height, overflow: 'auto', position: 'relative' } : undefined}
     >
@@ -202,7 +202,7 @@ export function Tree({
             aria-disabled={node.disabled || undefined}
             tabIndex={tabStopId === node.id ? 0 : -1}
             data-slot="tree-item"
-            data-testid="yue-tree-item"
+            data-testid="qian-tree-item"
             data-node-id={node.id}
             data-level={level}
             className={cn(

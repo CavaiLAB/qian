@@ -1,5 +1,5 @@
 import { useMemo, useState } from 'react';
-import type { PlatformClient } from '@idadawn/yue-sdk';
+import type { PlatformClient } from '@cavailab/qian-sdk';
 import { useRemoteOptions, type RemoteLoader } from '../remote-options';
 import { OptionCombobox, type BizSelectBaseProps, type Selection } from './option-combobox';
 
@@ -27,7 +27,7 @@ export function ApiSelect<T>(props: ApiSelectProps<T>) {
   const remote = useRemoteOptions({ client, load, keyword: search === 'server' ? keyword : '', debounceMs, reloadKey });
   const options = useMemo(() => remote.items.map((item) => ({ value: getValue(item), label: getLabel(item), description: getDescription?.(item), disabled: isItemDisabled?.(item) })), [remote.items, getValue, getLabel, getDescription, isItemDisabled]);
   const labels = useMemo(() => new Map(remote.seen.map((item) => [getValue(item), getLabel(item)])), [remote.seen, getValue, getLabel]);
-  return <OptionCombobox slot="api-select" defaultTestId="yue-api-select" selection={props} options={options} labels={labels}
+  return <OptionCombobox slot="api-select" defaultTestId="qian-api-select" selection={props} options={options} labels={labels}
     loading={remote.loading} error={remote.error} onRetry={remote.reload} search={search} keyword={keyword} onKeywordChange={setKeyword}
     i18n={i18n} label={label} disabled={disabled} className={className} testId={testId} />;
 }

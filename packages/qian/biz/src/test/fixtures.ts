@@ -1,4 +1,4 @@
-import { createMockTransport, PlatformClient, type MockRoute } from '@idadawn/yue-sdk';
+import { createMockTransport, PlatformClient, type MockRoute } from '@cavailab/qian-sdk';
 import type { AuthzRole, DirectoryMember, DirectoryOrganization, PermissionCatalog } from '../api';
 
 // 测试夹具：形状与 Identity Server 目录 API（PRD 7.4.3）和 PRD 7.5 角色 / 权限点目录草案一致；取数只经 SDK 的 mock 传输层。

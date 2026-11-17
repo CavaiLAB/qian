@@ -1,4 +1,4 @@
-import type { PlatformClient } from '@idadawn/yue-sdk';
+import type { PlatformClient } from '@cavailab/qian-sdk';
 import { loadOrganizationTypes } from '../api';
 import { useRemoteOptions } from '../remote-options';
 import { OptionCombobox, type BizSelectBaseProps, type Selection } from './option-combobox';
@@ -71,7 +71,7 @@ export function DictSelect(props: DictSelectProps) {
   const { client, dictionary, i18n, label, disabled, className, testId } = props;
   const remote = useRemoteOptions({ client, load: (current, { signal }) => loadDictionary(current, dictionary, signal), reloadKey: dictionary.id });
   const options = remote.items.map((item) => ({ value: item.value, label: item.labelKey ? i18n.t(item.labelKey) : item.label ?? item.value, disabled: item.disabled }));
-  return <OptionCombobox slot="dict-select" defaultTestId="yue-dict-select" selection={props} options={options}
+  return <OptionCombobox slot="dict-select" defaultTestId="qian-dict-select" selection={props} options={options}
     loading={remote.loading} error={remote.error} onRetry={remote.reload}
     i18n={i18n} label={label} disabled={disabled} className={className} testId={testId} />;
 }

@@ -1,13 +1,13 @@
 import { useState, useSyncExternalStore, type ComponentProps, type ReactNode } from 'react';
 import { cn } from '../lib/cn';
-import type { YueProps } from '../lib/test-id';
+import type { QianProps } from '../lib/test-id';
 import { Button, IconButton } from './button';
 import { Icon } from './icon';
 
 export interface BreadcrumbItem { key: string; label: ReactNode; href?: string }
-export type BreadcrumbProps = Omit<YueProps<ComponentProps<'nav'>>, 'children'> & { label: string; items: readonly BreadcrumbItem[] };
+export type BreadcrumbProps = Omit<QianProps<ComponentProps<'nav'>>, 'children'> & { label: string; items: readonly BreadcrumbItem[] };
 export function Breadcrumb({ label, items, className, testId, ...props }: BreadcrumbProps) {
-  return <nav {...props} aria-label={label} data-slot="breadcrumb" data-testid={testId ?? 'yue-breadcrumb'} className={className}><ol className="m-0 flex list-none flex-wrap items-center gap-2 p-0 text-sm text-muted-foreground">{items.map((item, index) => <li key={item.key} className="inline-flex items-center gap-2">{index > 0 && <Icon name="chevronRight" size={14} className="rtl:rotate-180" />}{index === items.length - 1 ? <span aria-current="page" className="font-medium text-foreground">{item.label}</span> : item.href ? <a href={item.href} className="text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-ring">{item.label}</a> : <span>{item.label}</span>}</li>)}</ol></nav>;
+  return <nav {...props} aria-label={label} data-slot="breadcrumb" data-testid={testId ?? 'qian-breadcrumb'} className={className}><ol className="m-0 flex list-none flex-wrap items-center gap-2 p-0 text-sm text-muted-foreground">{items.map((item, index) => <li key={item.key} className="inline-flex items-center gap-2">{index > 0 && <Icon name="chevronRight" size={14} className="rtl:rotate-180" />}{index === items.length - 1 ? <span aria-current="page" className="font-medium text-foreground">{item.label}</span> : item.href ? <a href={item.href} className="text-muted-foreground transition-colors hover:text-foreground focus-visible:outline-ring">{item.label}</a> : <span>{item.label}</span>}</li>)}</ol></nav>;
 }
 export interface PaginationProps {
   page?: number; defaultPage?: number; totalPages: number; onPageChange?: (page: number) => void;
@@ -21,7 +21,7 @@ export function Pagination({ page, defaultPage = 1, totalPages, onPageChange, la
   const change = (next: number) => { setInternal(next); onPageChange?.(next); };
   const pages = [...new Set([1, current - 1, current, current + 1, totalPages])].filter(value => value >= 1 && value <= totalPages).sort((a, b) => a - b);
   const step = 'size-8 text-subtle-foreground disabled:border-border disabled:text-muted-foreground disabled:opacity-60';
-  return <nav aria-label={label} data-slot="pagination" data-testid={testId ?? 'yue-pagination'} className={cn('flex items-center gap-2', className)}><IconButton label={previousLabel} variant="outline" className={step} disabled={disabled || current === 1} onClick={() => change(current - 1)}><Icon name="chevronLeft" className="rtl:rotate-180" /></IconButton>{pages.map((value, index) => <span key={value} className="contents">{index > 0 && value - pages[index - 1]! > 1 && <span aria-hidden="true" className="px-1 text-muted-foreground">…</span>}<Button variant="ghost" className="h-8 min-w-8 px-2 tabular-nums text-control-foreground aria-[current=page]:border-primary aria-[current=page]:bg-background aria-[current=page]:font-semibold aria-[current=page]:text-primary-soft-foreground" aria-current={value === current ? 'page' : undefined} aria-label={getPageLabel(value)} disabled={disabled} onClick={() => change(value)}>{value}</Button></span>)}<IconButton label={nextLabel} variant="outline" className={step} disabled={disabled || current === totalPages} onClick={() => change(current + 1)}><Icon name="chevronRight" className="rtl:rotate-180" /></IconButton></nav>;
+  return <nav aria-label={label} data-slot="pagination" data-testid={testId ?? 'qian-pagination'} className={cn('flex items-center gap-2', className)}><IconButton label={previousLabel} variant="outline" className={step} disabled={disabled || current === 1} onClick={() => change(current - 1)}><Icon name="chevronLeft" className="rtl:rotate-180" /></IconButton>{pages.map((value, index) => <span key={value} className="contents">{index > 0 && value - pages[index - 1]! > 1 && <span aria-hidden="true" className="px-1 text-muted-foreground">…</span>}<Button variant="ghost" className="h-8 min-w-8 px-2 tabular-nums text-control-foreground aria-[current=page]:border-primary aria-[current=page]:bg-background aria-[current=page]:font-semibold aria-[current=page]:text-primary-soft-foreground" aria-current={value === current ? 'page' : undefined} aria-label={getPageLabel(value)} disabled={disabled} onClick={() => change(value)}>{value}</Button></span>)}<IconButton label={nextLabel} variant="outline" className={step} disabled={disabled || current === totalPages} onClick={() => change(current + 1)}><Icon name="chevronRight" className="rtl:rotate-180" /></IconButton></nav>;
 }
 const serverZero = () => 0;
 function subscribeScroll(callback: () => void) { window.addEventListener('scroll', callback, { passive: true }); return () => window.removeEventListener('scroll', callback); }
@@ -30,7 +30,7 @@ export interface BackTopProps { label: string; visibilityHeight?: number; classN
 export function BackTop({ label, visibilityHeight = 400, className, testId }: BackTopProps) {
   const position = useSyncExternalStore(subscribeScroll, scrollSnapshot, serverZero);
   if (position < visibilityHeight) return null;
-  return <span data-slot="back-top" data-testid={testId ?? 'yue-back-top'}><IconButton label={label} testId={`${testId ?? 'yue-back-top'}-button`} className={className} onClick={() => window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })}><Icon name="arrowUp" /></IconButton></span>;
+  return <span data-slot="back-top" data-testid={testId ?? 'qian-back-top'}><IconButton label={label} testId={`${testId ?? 'qian-back-top'}-button`} className={className} onClick={() => window.scrollTo({ top: 0, behavior: window.matchMedia('(prefers-reduced-motion: reduce)').matches ? 'instant' : 'smooth' })}><Icon name="arrowUp" /></IconButton></span>;
 }
 function subscribeFullscreen(callback: () => void) { document.addEventListener('fullscreenchange', callback); return () => document.removeEventListener('fullscreenchange', callback); }
 function fullscreenSnapshot() { return document.fullscreenElement; }
@@ -39,5 +39,5 @@ export interface FullScreenProps { enterLabel: string; exitLabel: string; target
 export function FullScreen({ enterLabel, exitLabel, target, onError, className, testId }: FullScreenProps) {
   const active = useSyncExternalStore(subscribeFullscreen, fullscreenSnapshot, serverNull);
   const toggle = async () => { try { if (active) await document.exitFullscreen(); else await (target ?? document.documentElement).requestFullscreen(); } catch (error) { onError(error); } };
-  return <span data-slot="full-screen" data-testid={testId ?? 'yue-full-screen'}><IconButton label={active ? exitLabel : enterLabel} aria-pressed={!!active} testId={`${testId ?? 'yue-full-screen'}-button`} className={className} onClick={() => void toggle()}><Icon name={active ? 'minimize' : 'maximize'} /></IconButton></span>;
+  return <span data-slot="full-screen" data-testid={testId ?? 'qian-full-screen'}><IconButton label={active ? exitLabel : enterLabel} aria-pressed={!!active} testId={`${testId ?? 'qian-full-screen'}-button`} className={className} onClick={() => void toggle()}><Icon name={active ? 'minimize' : 'maximize'} /></IconButton></span>;
 }

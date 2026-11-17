@@ -1,5 +1,5 @@
-import type { Disposer, ScopeKey } from '@idadawn/qian-runtime';
-import type { JsonSchema, JsonValue, PlatformClient } from '@idadawn/yue-sdk';
+import type { Disposer, ScopeKey } from '@cavailab/qian-runtime';
+import type { JsonSchema, JsonValue, PlatformClient } from '@cavailab/qian-sdk';
 import metadata from '../package.json';
 
 export const SDK_VERSION: string = metadata.version;
@@ -27,7 +27,7 @@ export interface SlotDescriptor {
 export interface UiManifest {
   $schema: 'https://qian.dev/schemas/ui/v2';
   federation: { manifest: string; exposes: string[] };
-  engines: { yue: string };
+  engines: { qian: string };
   pages?: { route: string; expose: string; permission: string; nav: { title: string; icon?: string; order?: number } }[];
   /** 与 pages 同属 ui/v2 表面的六种版本化插槽；nav 不得与 pages 重复。 */
   contributions?: SlotDescriptor[];
@@ -95,13 +95,13 @@ export interface ShellAuditEvent {
   name: 'shell.remote.rejected';
   remoteId: string;
   scope: ShellScope;
-  reason: 'engines.yue' | 'load';
+  reason: 'engines.qian' | 'load';
   code: string;
   hostVersion: string;
   requiredVersion: string;
 }
 export interface ShellHostOptions {
-  yueVersion: string;
+  qianVersion: string;
   baseUrl: string;
   /** 默认仅同源；跨源远程必须由宿主显式列入可信源。 */
   trustedOrigins?: readonly string[];

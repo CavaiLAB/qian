@@ -1,6 +1,6 @@
 import { useId, useState } from 'react';
-import { Popover, PopoverContent, PopoverTrigger, Button } from '@idadawn/yue-core';
-import type { PlatformI18n } from '@idadawn/yue-sdk';
+import { Popover, PopoverContent, PopoverTrigger, Button } from '@cavailab/qian-core';
+import type { PlatformI18n } from '@cavailab/qian-sdk';
 import { Tree, type TreeNode } from './tree';
 
 export interface TreeSelectProps {
@@ -27,7 +27,7 @@ function useTriggerName() {
   const valueId = useId();
   return { labelId, valueId, labelledBy: `${labelId} ${valueId}` };
 }
-export function TreeSelect({ nodes, value, onChange, label, i18n, disabled, className, testId = 'yue-tree-select' }: TreeSelectProps) {
+export function TreeSelect({ nodes, value, onChange, label, i18n, disabled, className, testId = 'qian-tree-select' }: TreeSelectProps) {
   const [open, setOpen] = useState(false);
   const name = useTriggerName();
   const path = value ? findTreePath(nodes, value) : [];
@@ -46,7 +46,7 @@ export interface CascaderProps extends Omit<TreeSelectProps, 'value' | 'onChange
   value?: string[];
   onChange?: (path: string[]) => void;
 }
-export function Cascader({ nodes, value = [], onChange, label, i18n, disabled, className, testId = 'yue-cascader' }: CascaderProps) {
+export function Cascader({ nodes, value = [], onChange, label, i18n, disabled, className, testId = 'qian-cascader' }: CascaderProps) {
   const [open, setOpen] = useState(false);
   const [trail, setTrail] = useState<string[]>(value);
   const name = useTriggerName();

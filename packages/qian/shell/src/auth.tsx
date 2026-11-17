@@ -1,6 +1,6 @@
 import { lazy, Suspense, useCallback, useEffect, useId, useRef, useState, type ReactNode } from 'react';
-import { Alert, Avatar, AvatarFallback, avatarTint, Button, cn, Icon, Select, SelectContent, SelectItem, SelectTrigger, Spinner } from '@idadawn/yue-core';
-import type { PlatformI18n } from '@idadawn/yue-sdk';
+import { Alert, Avatar, AvatarFallback, avatarTint, Button, cn, Icon, Select, SelectContent, SelectItem, SelectTrigger, Spinner } from '@cavailab/qian-core';
+import type { PlatformI18n } from '@cavailab/qian-sdk';
 import { safeNavigationUrl } from './menu';
 import { useShellLocale, type ShellPartProps } from './layout';
 import type { PasswordCredentials, PasswordLoginProps } from './password-login';
@@ -57,7 +57,7 @@ export interface TenantSelectionProps extends ShellPartProps {
 }
 function initialOf(name: string): string { return Array.from(name.trim())[0]?.toUpperCase() ?? '?'; }
 /** 选择工作空间：平台控制台与各企业是一张张卡片，卡片名即按钮的可访问名称，租户号与角色作为说明。 */
-export function TenantSelection({ i18n, tenants, onSelect, onBack, busy, error, applyHref, hideBack = false, className, testId = 'yue-tenant-selection' }: TenantSelectionProps) {
+export function TenantSelection({ i18n, tenants, onSelect, onBack, busy, error, applyHref, hideBack = false, className, testId = 'qian-tenant-selection' }: TenantSelectionProps) {
   useShellLocale(i18n);
   const id = useId();
   const companies = tenants.filter(tenant => !tenant.platform).length;
@@ -88,7 +88,7 @@ export function TenantSelection({ i18n, tenants, onSelect, onBack, busy, error, 
 }
 
 export interface SsoCallbackProps extends ShellPartProps { i18n: PlatformI18n; provider: AuthProvider; callback: AuthCallback; onResult: (result: AuthResult) => void; onBack: () => void }
-export function SsoCallback({ i18n, provider, callback, onResult, onBack, className, testId = 'yue-sso-callback' }: SsoCallbackProps) {
+export function SsoCallback({ i18n, provider, callback, onResult, onBack, className, testId = 'qian-sso-callback' }: SsoCallbackProps) {
   useShellLocale(i18n);
   const [failedFor, setFailedFor] = useState<{ provider: AuthProvider; code?: string; state?: string } | null>(null);
   const invalid = !!callback.error || !callback.code || !callback.state || !provider.completeSso;
@@ -120,7 +120,7 @@ export interface AuthenticationProps extends ShellPartProps {
   /** 透传给选择工作空间的附加项：「申请开通新企业」地址、是否隐藏列表下方的「返回登录」。 */
   selectionProps?: Pick<TenantSelectionProps, 'applyHref' | 'hideBack'>;
 }
-export function Authentication({ provider, i18n, callback, onAuthenticated, onRedirect, onCallbackConsumed, frame, loginProps, selectionProps, className, testId = 'yue-authentication' }: AuthenticationProps) {
+export function Authentication({ provider, i18n, callback, onAuthenticated, onRedirect, onCallbackConsumed, frame, loginProps, selectionProps, className, testId = 'qian-authentication' }: AuthenticationProps) {
   const [selection, setSelection] = useState<readonly AuthTenant[] | null>(null);
   const [changing, setChanging] = useState(false);
   const callbackKey = callback ? JSON.stringify([callback.code, callback.state, callback.error]) : null;
@@ -170,7 +170,7 @@ export function Authentication({ provider, i18n, callback, onAuthenticated, onRe
 }
 
 export interface TenantSwitcherProps extends ShellPartProps { i18n: PlatformI18n; provider: AuthProvider; session: AuthSession; onChanged: (session: AuthSession) => void }
-export function TenantSwitcher({ i18n, provider, session, onChanged, className, testId = 'yue-tenant-switcher' }: TenantSwitcherProps) {
+export function TenantSwitcher({ i18n, provider, session, onChanged, className, testId = 'qian-tenant-switcher' }: TenantSwitcherProps) {
   useShellLocale(i18n);
   const [busy, setBusy] = useState(false);
   const [failed, setFailed] = useState(false);

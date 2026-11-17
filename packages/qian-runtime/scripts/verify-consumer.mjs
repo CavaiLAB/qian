@@ -7,17 +7,17 @@ import {fileURLToPath} from 'node:url';
 
 // 在仓库外安装真实制品，禁止 workspace 链接代替消费验收。
 const source=process.argv[2];
-assert(source?.startsWith('file:') || /^npm:@idadawn\/qian-runtime@\d+\.\d+\.\d+$/.test(source),'需要本地 tgz 或固定版本的私有 npm alias');
+assert(source?.startsWith('file:') || /^npm:@cavailab\/qian-runtime@\d+\.\d+\.\d+$/.test(source),'需要本地 tgz 或固定版本的私有 npm alias');
 const expected=JSON.parse(readFileSync(new URL('../package.json',import.meta.url),'utf8'));
 const directory=mkdtempSync(path.join(tmpdir(),'qian-runtime-consumer-'));
 try {
  writeFileSync(path.join(directory,'package.json'),JSON.stringify({private:true,type:'module',dependencies:{'@qian/runtime':source}}));
- writeFileSync(path.join(directory,'user.npmrc'),'registry=https://registry.npmjs.org/\n@idadawn:registry=https://npm.pkg.github.com\n'+(process.env.NODE_AUTH_TOKEN?'//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}\n':''),{mode:0o600});
+ writeFileSync(path.join(directory,'user.npmrc'),'registry=https://registry.npmjs.org/\n@cavailab:registry=https://npm.pkg.github.com\n'+(process.env.NODE_AUTH_TOKEN?'//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}\n':''),{mode:0o600});
  const env={...process.env,NPM_CONFIG_USERCONFIG:path.join(directory,'user.npmrc'),NPM_CONFIG_CACHE:path.join(directory,'npm-cache')};
  execFileSync('npm',['install','--ignore-scripts','--no-audit','--no-fund'],{cwd:directory,env,stdio:'inherit'});
  const installed=path.join(directory,'node_modules/@qian/runtime');
  const pkg=JSON.parse(readFileSync(path.join(installed,'package.json'),'utf8'));
- assert.equal(pkg.name,'@idadawn/qian-runtime');assert.equal(pkg.version,expected.version);
+ assert.equal(pkg.name,'@cavailab/qian-runtime');assert.equal(pkg.version,expected.version);
  assert.equal(pkg.repository.url,'https://github.com/idadawn/qian.git');
  assert.equal(pkg.repository.directory,'packages/qian-runtime');
  assert.match(readFileSync(path.join(installed,'README.md'),'utf8'),/模型体验/);

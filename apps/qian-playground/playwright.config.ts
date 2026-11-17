@@ -1,6 +1,6 @@
 import { defineConfig, devices } from '@playwright/test';
 
-// a11y 门禁（pnpm yue:a11y）：对构建后的靶场页跑 axe + 键盘路径，critical / serious = 0。先 pnpm --filter yue-playground build。
+// a11y 门禁（pnpm qian:a11y）：对构建后的靶场页跑 axe + 键盘路径，critical / serious = 0。先 pnpm --filter qian-playground build。
 export default defineConfig({
   testDir: './e2e',
   snapshotPathTemplate: '{testDir}/__snapshots__/{testFilePath}/{arg}{ext}',

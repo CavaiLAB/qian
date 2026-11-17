@@ -13,13 +13,13 @@ function depcruise(config: string, ...targets: string[]) {
 
 describe('循环依赖门禁（dependency-cruiser）', () => {
   it('样例 a ↔ b 被 no-circular 拦下', () => {
-    const r = depcruise('tests/gates/yue/depcruise.fixture.cjs', 'tests/gates/yue/fixtures/cycle');
+    const r = depcruise('tests/gates/qian/depcruise.fixture.cjs', 'tests/gates/qian/fixtures/cycle');
     expect(r.status).not.toBe(0);
     expect(r.out).toContain('no-circular');
   });
 
-  it('真实的 packages/yue 与 apps 通过', () => {
-    const r = depcruise('.dependency-cruiser.cjs', 'packages/yue', 'apps');
+  it('真实的 packages/qian 与 apps 通过', () => {
+    const r = depcruise('.dependency-cruiser.cjs', 'packages/qian', 'apps');
     expect(r.out).not.toContain('error');
     expect(r.status).toBe(0);
   });

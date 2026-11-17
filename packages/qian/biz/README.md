@@ -1,14 +1,14 @@
-# @idadawn/yue-biz
+# @cavailab/qian-biz
 
 业务选择器：ApiSelect / `useRemoteOptions`、DictSelect、OrganizeSelect、UserSelect、RoleSelect、菜单 / 按钮授权树（AuthorizationTree）、IconPicker。
 
-- 分层与允许依赖：[yue 专题规格 §3.1](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/yue.md#31-包结构与依赖方向)；依赖方向由 `packages/yue/boundaries.config.mjs` 与 CI 门禁强制（biz 只依赖 core、data、form、sdk 与底层包，本包实际用到 core、data、sdk）。
-- 实现任务：S1-YUE-010（S1-DEC-024 / R109 自 S1-YUE-009 拆出）。组件文档与交互示例：文档站「组件 → yue 组件库 → 业务选择器」，源在 `docs/index.mdx`。
+- 分层与允许依赖：[qian 专题规格 §3.1](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/yue.md#31-包结构与依赖方向)；依赖方向由 `packages/qian/boundaries.config.mjs` 与 CI 门禁强制（biz 只依赖 core、data、form、sdk 与底层包，本包实际用到 core、data、sdk）。
+- 实现任务：S1-YUE-010（S1-DEC-024 / R109 自 S1-YUE-009 拆出）。组件文档与交互示例：文档站「组件 → qian 组件库 → 业务选择器」，源在 `docs/index.mdx`。
 
 ## 使用
 
 ```tsx
-import { OrganizeSelect, UserSelect, RoleSelect, AuthorizationTree, createBizI18n } from '@idadawn/yue-biz';
+import { OrganizeSelect, UserSelect, RoleSelect, AuthorizationTree, createBizI18n } from '@cavailab/qian-biz';
 
 const i18n = createBizI18n(); // 已有 PlatformI18n 实例时改用 addBizLanguagePacks(i18n)
 <OrganizeSelect client={client} i18n={i18n} label="部门" value={orgId} onChange={setOrgId} />
@@ -17,17 +17,17 @@ const i18n = createBizI18n(); // 已有 PlatformI18n 实例时改用 addBizLangu
 <AuthorizationTree client={client} i18n={i18n} label="角色权限" value={grants} onChange={setGrants} />
 ```
 
-- **取数**：全部经宿主注入的 `PlatformClient`（`client` 属性）。路径与类型由 `contracts/biz.openapi.json` 生成到 `src/biz.generated.ts`，改契约后运行 `pnpm --filter @idadawn/yue-biz contracts:generate`，`pnpm yue:test` 会比对漂移。`/api/directory/**` 与身份组件 Identity Server 逐字段一致；`/api/authz/roles`、`/api/authz/permissions` 是 PRD 7.5 角色与权限点目录的草案，由 S1-AZ-005 接线时确认。
+- **取数**：全部经宿主注入的 `PlatformClient`（`client` 属性）。路径与类型由 `contracts/biz.openapi.json` 生成到 `src/biz.generated.ts`，改契约后运行 `pnpm --filter @cavailab/qian-biz contracts:generate`，`pnpm qian:test` 会比对漂移。`/api/directory/**` 与身份组件 Identity Server 逐字段一致；`/api/authz/roles`、`/api/authz/permissions` 是 PRD 7.5 角色与权限点目录的草案，由 S1-AZ-005 接线时确认。
 - **取值**：OrganizeSelect 给组织 id；UserSelect 默认给目录成员 id，`valueKey="person"` 给自然人 id（授权侧 user 主体的 subjectId）；RoleSelect 给角色 code；授权树给权限点全名数组。
 - **文案**：组件不写死面向用户的文字，key 前缀 `biz.`，内置 zh-CN / zh-TW / en-US（`bizLanguagePacks`）。
-- **树**：OrganizeSelect 单选复用 `@idadawn/yue-data` 的 TreeSelect，多选与授权树用同一 Tree 的复选（多选组织 `cascade={false}`），不另做一套树（规格 D3）。
+- **树**：OrganizeSelect 单选复用 `@cavailab/qian-data` 的 TreeSelect，多选与授权树用同一 Tree 的复选（多选组织 `cascade={false}`），不另做一套树（规格 D3）。
 - **可复用的数据口径**：`buildOrganizationTree`、`memberOption`、`roleLabel`、`groupPermissionCatalog`、`buildAuthorizationTree`、`linkAuthorization`、成员检索 `searchMembers` / 按 id 批量 `loadMembersByIds` 与各 `load*` 加载函数。
 
 ## 验证
 
 - `pnpm exec vitest run --project biz-browser`：键盘路径、ARIA、axe（critical / serious = 0）；`acceptance.browser.test.tsx` 断言七个组件的请求全部经过注入客户端的中间件、没有任何直接网络调用，并用伪语言包检查界面上没有硬编码文案。
-- `pnpm exec vitest run --project yue-ssr packages/yue/biz`：首帧 SSR 与源码静态约束（只有 `api.ts` 调用 `client.api()`，用到的 key 都已登记）。
-- 靶场 `apps/yue-playground/biz.html` 与 `e2e/biz.spec.ts`：角色授予组合页全程键盘完成选部门、选人、选角色与授权树勾选；文档场景登记在 `docs/scenarios.json`，站点 E2E 为 `website/e2e/biz.spec.ts`。
+- `pnpm exec vitest run --project qian-ssr packages/qian/biz`：首帧 SSR 与源码静态约束（只有 `api.ts` 调用 `client.api()`，用到的 key 都已登记）。
+- 靶场 `apps/qian-playground/biz.html` 与 `e2e/biz.spec.ts`：角色授予组合页全程键盘完成选部门、选人、选角色与授权树勾选；文档场景登记在 `docs/scenarios.json`，站点 E2E 为 `website/e2e/biz.spec.ts`。
 
 ## 已知限制与延期项
 

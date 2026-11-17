@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useEffectEvent, useMemo, useState } from 'react';
-import type { PlatformClient } from '@idadawn/yue-sdk';
+import type { PlatformClient } from '@cavailab/qian-sdk';
 
 export interface RemoteQuery {
   /** 搜索关键字（已去抖）；不做服务端搜索的加载器可以忽略。 */

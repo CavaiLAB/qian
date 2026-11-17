@@ -1,10 +1,10 @@
 import { writeFileSync } from 'node:fs';
 import { stripVTControlCharacters } from 'node:util';
 import { test, expect, type Page } from '@playwright/test';
-import manifest from '../../../packages/yue/core/src/manifest-catalog.json' with { type: 'json' };
-import coreScenarios from '../../../packages/yue/core/docs/scenarios.json' with { type: 'json' };
-import dataScenarios from '../../../packages/yue/data/docs/scenarios.json' with { type: 'json' };
-import formScenarios from '../../../packages/yue/form/docs/scenarios.json' with { type: 'json' };
+import manifest from '../../../packages/qian/core/src/manifest-catalog.json' with { type: 'json' };
+import coreScenarios from '../../../packages/qian/core/docs/scenarios.json' with { type: 'json' };
+import dataScenarios from '../../../packages/qian/data/docs/scenarios.json' with { type: 'json' };
+import formScenarios from '../../../packages/qian/form/docs/scenarios.json' with { type: 'json' };
 
 const names = Object.keys(manifest);
 const openings: Record<string, string> = { Dialog: '打开对话框', AlertDialog: '打开确认框', Sheet: '打开侧栏', Drawer: '打开抽屉', Popover: '打开浮层', Menu: '打开菜单', DropdownMenu: '打开菜单', Toast: '显示消息', Notification: '显示消息', Accordion: '如何使用' };
@@ -13,8 +13,8 @@ async function openComponent(page: Page, name: string, state: string) {
   if (state === 'Hover') { await page.getByRole('button').first().hover(); return; }
   if (openings[name]) await page.getByRole('button', { name: openings[name], exact: true }).click();
   if (name === 'Select') await page.getByRole('combobox').click();
-  if (name === 'Combobox') await page.getByTestId('yue-combobox-trigger').click();
-  if (name === 'ContextMenu') await page.getByTestId('yue-context-menu-trigger').press('Shift+F10');
+  if (name === 'Combobox') await page.getByTestId('qian-combobox-trigger').click();
+  if (name === 'ContextMenu') await page.getByTestId('qian-context-menu-trigger').press('Shift+F10');
   if (name === 'Tooltip') { await page.getByRole('button', { name: '查看提示' }).focus(); await expect(page.getByRole('tooltip')).toBeVisible(); }
   if (name === 'HoverCard') { await page.getByRole('link', { name: '查看用户' }).hover(); await expect(page.getByText('示例用户', { exact: true })).toBeVisible(); }
   if (name === 'Toast' || name === 'Notification') await expect(page.getByText(name === 'Toast' ? '保存成功' : '任务已完成', { exact: true })).toBeVisible();
@@ -58,7 +58,7 @@ for (const [name, slot] of [['Dialog', 'dialog'], ['AlertDialog', 'alert-dialog'
     await openComponent(page, name, 'Default');
     const screenshot = `core-${name}-Default-${theme}.png`;
     await expect(page).toHaveScreenshot(screenshot, { fullPage: true });
-    await page.getByTestId(`yue-${slot}-close-button`).evaluate(button => { button.style.visibility = 'hidden'; });
+    await page.getByTestId(`qian-${slot}-close-button`).evaluate(button => { button.style.visibility = 'hidden'; });
     const viewport = page.viewportSize()!;
     const oldBudget = Math.floor(viewport.width * viewport.height * 0.001);
     // 同一缺陷在旧比例预算内被接受，随后必须被实际门禁的绝对上限拒绝。

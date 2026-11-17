@@ -1,6 +1,6 @@
 import { renderToString } from 'react-dom/server';
 import { describe, expect, it } from 'vitest';
-import { listSchema, type ListSchema } from '@idadawn/yue-contracts';
+import { listSchema, type ListSchema } from '@cavailab/qian-contracts';
 import { SchemaForm } from './schema-form';
 import { assertFormSchema, effectiveSchema, exportRuleCatalog, maskValue, validateMetadata, validateValues } from './schema';
 import { credentialSchema, i18n, schema } from './test/fixture';

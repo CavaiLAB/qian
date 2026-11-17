@@ -1,4 +1,4 @@
-import { formSchema, listSchema, widgetSchema, type FormSchema } from '@idadawn/yue-contracts';
+import { formSchema, listSchema, widgetSchema, type FormSchema } from '@cavailab/qian-contracts';
 import { compileSchema, type SchemaError, type SchemaValidator } from './json-schema';
 
 export type { SchemaError } from './json-schema';

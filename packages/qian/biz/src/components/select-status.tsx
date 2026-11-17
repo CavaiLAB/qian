@@ -1,5 +1,5 @@
-import { Button } from '@idadawn/yue-core';
-import type { PlatformI18n } from '@idadawn/yue-sdk';
+import { Button } from '@cavailab/qian-core';
+import type { PlatformI18n } from '@cavailab/qian-sdk';
 
 export interface SelectStatusProps {
   slot: string;

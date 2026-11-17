@@ -1,6 +1,6 @@
 import { act, cleanup, render, screen } from '@testing-library/react';
 import { afterEach, describe, expect, it, vi } from 'vitest';
-import { createMockTransport, PlatformClient } from '@idadawn/yue-sdk';
+import { createMockTransport, PlatformClient } from '@cavailab/qian-sdk';
 import { useRemoteOptions, type RemoteLoader } from './remote-options';
 
 // useRemoteOptions 的竞态：只采纳最新请求。加载器故意不理会 signal（宿主自己写的加载器可能如此），被中止的旧请求照样会返回或失败，

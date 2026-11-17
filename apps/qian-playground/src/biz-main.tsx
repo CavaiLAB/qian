@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client';
-import scenarios from '../../../packages/yue/biz/docs/scenarios.json';
-import BizDemo from '../../../packages/yue/biz/docs/examples/biz-demo';
+import scenarios from '../../../packages/qian/biz/docs/scenarios.json';
+import BizDemo from '../../../packages/qian/biz/docs/examples/biz-demo';
 import './index.css';
 const query = new URLSearchParams(location.search);
 const theme = query.get('theme');

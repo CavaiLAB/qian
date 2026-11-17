@@ -10,6 +10,6 @@ describe('SSR', () => {
     expect(html).toContain('role="tree"');
     expect(html).toContain('aria-expanded="true"');
     expect(html).toContain('data-node-id="b"');
-    expect(html).toContain('data-testid="yue-tree"');
+    expect(html).toContain('data-testid="qian-tree"');
   });
 });

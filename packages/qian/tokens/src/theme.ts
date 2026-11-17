@@ -21,7 +21,7 @@ function settings(options: ThemeOptions): BootstrapSettings {
   const defaultTheme = options.defaultTheme ?? 'system';
   if (!['light', 'dark', 'system'].includes(defaultTheme)) throw new Error('主题模式无效。');
   if (options.brand !== undefined && !/^[a-z][a-z0-9-]{0,63}$/.test(options.brand)) throw new Error('品牌标识无效。');
-  return { storageKey: options.storageKey ?? 'yue-theme', defaultTheme, brand: options.brand };
+  return { storageKey: options.storageKey ?? 'qian-theme', defaultTheme, brand: options.brand };
 }
 /** 放在 head 中、样式和应用模块之前；服务端须按 CSP 提供 nonce/hash。 */
 export function createThemeInitializationScript(options: ThemeOptions = {}): string {

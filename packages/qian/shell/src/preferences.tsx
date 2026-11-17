@@ -1,5 +1,5 @@
 import { createContext, useContext, useSyncExternalStore, type ReactNode } from 'react';
-import type { Locale } from '@idadawn/yue-sdk';
+import type { Locale } from '@cavailab/qian-sdk';
 
 export interface Preferences { theme: 'light' | 'dark' | 'system'; locale: Locale; sidebarCollapsed: boolean }
 export interface PreferenceStorage { getItem(key: string): string | null; setItem(key: string, value: string): void }
@@ -31,7 +31,7 @@ function browserStorage(): PreferenceStorage | undefined { try { return typeof w
  */
 export function initPreferences({ namespace, overrides, defaults: deployment, storage = browserStorage() }: { namespace: string; overrides?: Partial<Preferences>; defaults?: Partial<Preferences>; storage?: PreferenceStorage | null }): PreferencesStore {
   if (!/^[a-zA-Z0-9._-]+$/.test(namespace)) throw new TypeError('shell.error.preferenceNamespace');
-  const key = `yue.preferences.${namespace}`;
+  const key = `qian.preferences.${namespace}`;
   const initial = Object.freeze({ ...defaults, ...pick(deployment), ...pick(overrides) });
   let saved: Partial<Preferences> = {};
   try { saved = pick(JSON.parse(storage?.getItem(key) ?? '{}')); } catch { /* 存储损坏或被禁用时仍可使用当前会话。 */ }

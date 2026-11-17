@@ -2,17 +2,17 @@
 title: 外壳、页面与认证
 description: 单侧栏布局、可扩展菜单、Preferences、注入式认证、多租户选择与错误兜底。
 part: components
-project: yue
+project: qian
 audience: [developer]
 updated: 2026-11-11
-component: '@idadawn/yue-shell'
+component: '@cavailab/qian-shell'
 ---
 
 import { ComponentDemo } from '@theme';
 
 # 外壳、页面与认证
 
-`@idadawn/yue-shell` 是独立 React 库。以下示例与靶场共用源码，请求均经 SDK 的 mock transport。认证 provider 可替换为真实宿主实现；当前示例不代表真实身份服务已接通。Authentication 仅在显示密码登录时懒加载密码表单，不把它放进 AppShell 首屏；需要同步 SSR 时直接使用 PasswordLogin。
+`@cavailab/qian-shell` 是独立 React 库。以下示例与靶场共用源码，请求均经 SDK 的 mock transport。认证 provider 可替换为真实宿主实现；当前示例不代表真实身份服务已接通。Authentication 仅在显示密码登录时懒加载密码表单，不把它放进 AppShell 首屏；需要同步 SSR 时直接使用 PasswordLogin。
 
 ## AppShell 与页面族
 
@@ -24,11 +24,11 @@ import { ComponentDemo } from '@theme';
 
 ### 安装与用法
 
-在项目中安装 `@idadawn/yue-shell` 与 React 19，加载 tokens 的主题 CSS，并让 Tailwind 扫描 yue 源码。私有包源配置沿用 yue 工作区约定。
+在项目中安装 `@cavailab/qian-shell` 与 React 19，加载 tokens 的主题 CSS，并让 Tailwind 扫描 qian 源码。私有包源配置沿用 qian 工作区约定。
 
 ```tsx
-import { createI18n } from '@idadawn/yue-sdk';
-import { AppShell, Page, PageHeader, PreferencesProvider, initPreferences, installShellLanguagePacks } from '@idadawn/yue-shell';
+import { createI18n } from '@cavailab/qian-sdk';
+import { AppShell, Page, PageHeader, PreferencesProvider, initPreferences, installShellLanguagePacks } from '@cavailab/qian-shell';
 
 const i18n = createI18n();
 installShellLanguagePacks(i18n);
@@ -57,7 +57,7 @@ export default function Workspace() {
 | LocaleMenu | 必填 i18n；可选 testId；放进 AppShell 的 userMenu，与顶栏语言按钮共用同一份偏好 |
 | AuthLayout | 必填 brand、headline；可选 brandHref、description、aside、footer、toolbar、legal、variant（sign-in：侧栏 440px 起、内容 400px 宽并垂直居中；form：侧栏 360px 起、内容 720px 宽）、children、className、testId；sign-in 的侧栏标题在品牌行与底部之间垂直居中，传不传 footer 都不会压住底部装饰条；窄屏时品牌面折到上方 |
 | PlainLayout | 必填 brand；可选 account（顶栏右侧）、width（sm 600px、md 760px）、children、className、testId |
-| BrandMark | 可选 size、inverse、className、testId（默认 yue-brand-mark，data-slot 为 brand-mark）；装饰图形，可访问名称由旁边的品牌名提供 |
+| BrandMark | 可选 size、inverse、className、testId（默认 qian-brand-mark，data-slot 为 brand-mark）；装饰图形，可访问名称由旁边的品牌名提供 |
 
 ### 菜单与 Preferences
 

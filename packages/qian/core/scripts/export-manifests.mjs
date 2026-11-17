@@ -30,9 +30,9 @@ const generated = JSON.stringify(catalog, null, 2) + '\n';
 if (process.argv.includes('--generate')) {
   await writeFile(source, generated);
 } else {
-  if (original !== generated) throw new Error('manifest 属性注释已过期，请运行 pnpm --filter @idadawn/yue-core manifest:generate');
+  if (original !== generated) throw new Error('manifest 属性注释已过期，请运行 pnpm --filter @cavailab/qian-core manifest:generate');
   if (!process.argv.includes('--check')) {
     const { name, version } = JSON.parse(await readFile(new URL('../package.json', import.meta.url), 'utf8'));
-    await writeFile(new URL('../dist/yue-manifest.json', import.meta.url), JSON.stringify(Object.values(catalog).map(item => ({ ...item, package: name, version })), null, 2) + '\n');
+    await writeFile(new URL('../dist/qian-manifest.json', import.meta.url), JSON.stringify(Object.values(catalog).map(item => ({ ...item, package: name, version })), null, 2) + '\n');
   }
 }

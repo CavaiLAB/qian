@@ -117,7 +117,7 @@ describe('MenuRadioGroup / MenuRadioItem', () => {
     const light = await screen.findByRole('menuitemradio', { name: '明亮' });
     expect(light.getAttribute('aria-checked')).toBe('true');
     expect(screen.getByRole('menuitemradio', { name: '暗色' }).getAttribute('aria-checked')).toBe('false');
-    expect(within(light).getByTestId('yue-menu-radio-item-indicator')).toBeTruthy();
+    expect(within(light).getByTestId('qian-menu-radio-item-indicator')).toBeTruthy();
     const violations = blockingViolations(await runAxe());
     expect(violations, describeViolations(violations)).toHaveLength(0);
     await userEvent.click(screen.getByRole('menuitemradio', { name: '暗色' }));

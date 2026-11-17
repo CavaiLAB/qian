@@ -8,7 +8,7 @@ import { fileURLToPath } from 'node:url';
 const root = fileURLToPath(new URL('../../../', import.meta.url));
 const [mode, artifactDirectory] = process.argv.slice(2);
 assert(['archive', 'registry'].includes(mode), '需要 archive 或 registry 消费验证模式');
-const paths = ['packages/qian-runtime', 'packages/yue/tokens', 'packages/yue/contracts', 'packages/yue/sdk', 'packages/qian-plugin-sdk'];
+const paths = ['packages/qian-runtime', 'packages/qian/tokens', 'packages/qian/contracts', 'packages/qian/sdk', 'packages/qian-plugin-sdk'];
 const packages = paths.map((source) => JSON.parse(readFileSync(path.join(root, source, 'package.json'), 'utf8')));
 const sdk = packages.at(-1);
 const artifacts = mode === 'archive' ? JSON.parse(readFileSync(path.join(path.resolve(artifactDirectory), 'packages.json'), 'utf8')) : [];
@@ -21,7 +21,7 @@ try {
       : pkg === sdk ? `npm:${pkg.name}@${pkg.version}` : pkg.version;
   }
   writeFileSync(path.join(directory, 'package.json'), JSON.stringify({ private: true, type: 'module', dependencies }));
-  const configuration = 'registry=https://registry.npmjs.org/\n@idadawn:registry=https://npm.pkg.github.com\n'
+  const configuration = 'registry=https://registry.npmjs.org/\n@cavailab:registry=https://npm.pkg.github.com\n'
     + (process.env.NODE_AUTH_TOKEN ? '//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}\n' : '');
   writeFileSync(path.join(directory, 'user.npmrc'), configuration, { mode: 0o600 });
   const env = { ...process.env, NPM_CONFIG_USERCONFIG: path.join(directory, 'user.npmrc'), NPM_CONFIG_CACHE: path.join(directory, 'npm-cache') };
@@ -43,11 +43,11 @@ import {adaptFederation} from '@qian/plugin-sdk/federation';
 assert.equal(typeof adaptFederation,'function');assert.equal(SLOT_IDS.length,6);
 let intercepted=0,navigated='',registered=0;const requests=[];
 const client=new PlatformClient({baseUrl:'https://consumer.test',getTenantId:()=> 'tenant-a',middleware:[async(r,next)=>{intercepted++;return next(r)}],transport:async(r)=>{requests.push(r);return Response.json({saved:true})}});
-const host=new ShellHost({yueVersion:'0.1.0',baseUrl:'https://consumer.test',client,
+const host=new ShellHost({qianVersion:'0.1.0',baseUrl:'https://consumer.test',client,
  federation:{registerRemotes(){registered++},loadRemote:async()=>({default:()=>null}),preloadRemote:async()=>{},removeRemote(){}},
  getContext:()=>({tenant:{id:'tenant-a',name:'验收'},membership:{id:'member-a',permissions:['read','write']},app:null,locale:'zh-CN',theme:'light'}),
  isMounted:()=>true,isEntitled:()=>true,hasPermission:()=>true,navigate:(r)=>{navigated=r},notify(){},audit:async()=>{throw Error('unexpected audit')}});
-await host.start();host.registerRemote({id:'qian.consumer',version:'1.0.0',scope:'tenant:tenant-a',manifest:{$schema:'https://qian.dev/schemas/ui/v2',federation:{manifest:'/mf-manifest.json',exposes:['Page']},engines:{yue:'^0.1.0'},
+await host.start();host.registerRemote({id:'qian.consumer',version:'1.0.0',scope:'tenant:tenant-a',manifest:{$schema:'https://qian.dev/schemas/ui/v2',federation:{manifest:'/mf-manifest.json',exposes:['Page']},engines:{qian:'^0.1.0'},
  contributions:[{slot:'qian.shell.nav/v1',id:'page',title:'页面',description:'消费者验证页面',permission:'read',expose:'Page',route:'/page'}],
  bridge:{slots:['qian.shell.nav/v1','qian.shell.command/v1'],navigate:['/page'],notify:false,capabilities:[{id:'qian.consumer/save',permission:'write',sideEffect:'write'}]}}});
 assert.equal(registered,0);await host.loadSlot('qian.shell.nav/v1');assert.equal(registered,1);

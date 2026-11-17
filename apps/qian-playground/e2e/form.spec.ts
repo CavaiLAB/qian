@@ -60,7 +60,7 @@ test('弹层表单取消与保存共用页脚，取消不提交且恢复触发�
   const dialog = page.getByRole('dialog', { name: '新建客户' });
   const footer = dialog.locator('[data-slot="schema-form-actions"]');
   await expect(footer.getByRole('button')).toHaveText(['取消', '保存']);
-  await expect(dialog.getByTestId('yue-form-modal-close')).toHaveAccessibleName('关闭');
+  await expect(dialog.getByTestId('qian-form-modal-close')).toHaveAccessibleName('关闭');
   await expect(footer.getByRole('button', { name: '关闭', exact: true })).toHaveCount(0);
   await footer.getByRole('button', { name: '取消' }).click();
   await expect(dialog).not.toBeVisible();
@@ -73,7 +73,7 @@ test('布尔字段的复选框与标签同行，描述在标签后，右上角�
   await page.goto('/form.html');
   const trigger = page.getByRole('button', { name: '新建客户', exact: true });
   await trigger.click();
-  const field = page.getByTestId('yue-schema-form-field-contactEnabled');
+  const field = page.getByTestId('qian-schema-form-field-contactEnabled');
   const checkbox = field.getByRole('checkbox');
   const label = field.locator('label');
   const box = await checkbox.boundingBox(); const text = await label.boundingBox();
@@ -82,7 +82,7 @@ test('布尔字段的复选框与标签同行，描述在标签后，右上角�
   await expect(checkbox).toHaveCSS('border-top-left-radius', '4px');
   const description = field.getByText('勾选后，手机号码为必填项。');
   expect((await description.boundingBox())!.y).toBeGreaterThan(text!.y);
-  await page.getByTestId('yue-form-modal-close').click();
+  await page.getByTestId('qian-form-modal-close').click();
   await expect(page.getByRole('dialog')).not.toBeVisible(); await expect(trigger).toBeFocused();
   await expect(page.getByRole('status').filter({ hasText: '已保存：' })).toHaveCount(0);
 });

@@ -16,8 +16,8 @@ export interface TokenRegistry {
 export const TOKEN_REGISTRY: Readonly<TokenRegistry> = source as TokenRegistry;
 export const TONES: readonly Tone[] = ['ok', 'warn', 'error', 'info', 'neutral'];
 export function primitiveColors(registry: TokenRegistry = TOKEN_REGISTRY): ReadonlyMap<string, Oklch> {
-  const colors = new Map<string, Oklch>([['--yue-p-white', [1, 0, 0]], ['--yue-p-black', [0, 0, 0]]]);
-  for (const palette of registry.palettes) for (const scale of registry.scale) colors.set(`--yue-p-${palette.name}-${scale.step}`, fitSrgb([scale.lightness, palette.chroma * scale.chromaFactor, palette.hue]));
+  const colors = new Map<string, Oklch>([['--qian-p-white', [1, 0, 0]], ['--qian-p-black', [0, 0, 0]]]);
+  for (const palette of registry.palettes) for (const scale of registry.scale) colors.set(`--qian-p-${palette.name}-${scale.step}`, fitSrgb([scale.lightness, palette.chroma * scale.chromaFactor, palette.hue]));
   return colors;
 }
 export function tokenValue(name: string, theme: Theme, brand = 'default', registry: TokenRegistry = TOKEN_REGISTRY): Oklch {
@@ -25,7 +25,7 @@ export function tokenValue(name: string, theme: Theme, brand = 'default', regist
   if (!palette) throw new Error('未知品牌令牌组。');
   const definition = registry.semantics.find(item => item.name === name);
   const reference = definition?.[theme] ?? name;
-  const color = primitiveColors(registry).get(reference.replace('--yue-p-brand-', `--yue-p-${palette}-`));
+  const color = primitiveColors(registry).get(reference.replace('--qian-p-brand-', `--qian-p-${palette}-`));
   if (!color) throw new Error('该令牌不是已登记的颜色。'); return color;
 }
 export interface TokenContrast { theme: Theme; brand: string; token: string; against: string; ratio: number; contrast: ContrastKind; minimum: number }
@@ -41,10 +41,10 @@ export function tokenContrasts(registry: TokenRegistry = TOKEN_REGISTRY): TokenC
 /** 名称不能跨角色复用；所有引用必须指向正确层级，所有语义色都有明确对比背景。 */
 export function validateTokenRegistry(registry: TokenRegistry = TOKEN_REGISTRY): string[] {
   const errors: string[] = [], names = new Map<string, string>(), primitives = new Set(primitiveColors(registry).keys());
-  for (const scale of registry.scale) primitives.add(`--yue-p-brand-${scale.step}`);
+  for (const scale of registry.scale) primitives.add(`--qian-p-brand-${scale.step}`);
   const add = (name: string, meaning: string): void => { if (names.has(name)) errors.push(`同名异义或重复令牌：${name}（${names.get(name)} / ${meaning}）`); names.set(name, meaning); };
   for (const name of primitives) add(name, '基础色阶');
-  for (const token of registry.primitives) { add(token.name, token.meaning); primitives.add(token.name); if (!token.name.startsWith('--yue-p-')) errors.push(`primitive 命名无效：${token.name}`); }
+  for (const token of registry.primitives) { add(token.name, token.meaning); primitives.add(token.name); if (!token.name.startsWith('--qian-p-')) errors.push(`primitive 命名无效：${token.name}`); }
   const semantics = new Set(registry.semantics.map(item => item.name));
   for (const token of registry.semantics) {
     add(token.name, token.meaning);
@@ -70,11 +70,11 @@ export function tokenColor(name: string, alpha = 1): string {
 }
 export function generateTokenCss(registry: TokenRegistry = TOKEN_REGISTRY): string {
   const errors = validateTokenRegistry(registry); if (errors.length) throw new Error(errors.join('\n'));
-  const lines = ['/* 由 registry.json 生成；运行 pnpm --filter @idadawn/yue-tokens tokens:generate。 */', ':root {', '  color-scheme: light;'];
+  const lines = ['/* 由 registry.json 生成；运行 pnpm --filter @cavailab/qian-tokens tokens:generate。 */', ':root {', '  color-scheme: light;'];
   for (const [name, color] of primitiveColors(registry)) lines.push(`  ${name}: ${color.join(' ')};`);
   for (const token of registry.primitives) lines.push(`  ${token.name}: ${token.value};`);
   const primary = registry.brands.find(item => item.id === 'default')!;
-  for (const scale of registry.scale) lines.push(`  --yue-p-brand-${scale.step}: var(--yue-p-${primary.palette}-${scale.step});`);
+  for (const scale of registry.scale) lines.push(`  --qian-p-brand-${scale.step}: var(--qian-p-${primary.palette}-${scale.step});`);
   const semanticValue = (token: TokenDefinition, theme: Theme): string => `var(${token[theme]})${token[`${theme}Alpha`] === undefined ? '' : ` / ${token[`${theme}Alpha`]}`}`;
   for (const token of registry.semantics) lines.push(`  ${token.name}: ${semanticValue(token, 'light')};`);
   for (const token of registry.components) lines.push(`  ${token.name}: ${token.value};`);
@@ -82,9 +82,9 @@ export function generateTokenCss(registry: TokenRegistry = TOKEN_REGISTRY): stri
   lines.push('}', 'html.dark, html[data-theme="dark"] {', '  color-scheme: dark;');
   for (const token of registry.semantics) lines.push(`  ${token.name}: ${semanticValue(token, 'dark')};`);
   lines.push('}', 'html[data-theme="light"] { color-scheme: light; }');
-  lines.push('[data-yue-density="compact"] { --yue-table-row-height: var(--yue-table-row-height-compact); }', '[data-yue-density="default"] { --yue-table-row-height: var(--yue-p-space-10); }');
-  for (const brand of registry.brands) { lines.push(`html[data-brand="${brand.id}"] {`); for (const scale of registry.scale) lines.push(`  --yue-p-brand-${scale.step}: var(--yue-p-${brand.palette}-${scale.step});`); lines.push('}'); }
-  lines.push('@media (prefers-reduced-motion: reduce) {', '  :root { --yue-p-duration-fast: 0ms; --yue-p-duration-normal: 0ms; --yue-p-duration-slow: 0ms; }', '}');
+  lines.push('[data-qian-density="compact"] { --qian-table-row-height: var(--qian-table-row-height-compact); }', '[data-qian-density="default"] { --qian-table-row-height: var(--qian-p-space-10); }');
+  for (const brand of registry.brands) { lines.push(`html[data-brand="${brand.id}"] {`); for (const scale of registry.scale) lines.push(`  --qian-p-brand-${scale.step}: var(--qian-p-${brand.palette}-${scale.step});`); lines.push('}'); }
+  lines.push('@media (prefers-reduced-motion: reduce) {', '  :root { --qian-p-duration-fast: 0ms; --qian-p-duration-normal: 0ms; --qian-p-duration-slow: 0ms; }', '}');
   return lines.join('\n') + '\n';
 }
 
@@ -92,13 +92,13 @@ export function generateTokenCss(registry: TokenRegistry = TOKEN_REGISTRY): stri
 export function generateThemeCss(registry: TokenRegistry = TOKEN_REGISTRY): string {
   const lines = ['/* 由 registry.json 生成；运行 tokens:generate。 */', "@import './index.css';", "@import 'tw-animate-css';", '@custom-variant dark (&:where(.dark, .dark *, [data-theme="dark"], [data-theme="dark"] *));', '@theme inline {'];
   for (const alias of registry.aliases) if (registry.semantics.find(token => token.name === alias.target)?.kind === 'color') lines.push(`  --color-${alias.name.slice(2)}: var(${alias.name});`);
-  lines.push('  --color-table-header: var(--yue-table-header-background);');
-  lines.push('  --font-sans: var(--yue-p-font-sans);', '  --font-mono: var(--yue-p-font-mono);', '  --radius-sm: calc(var(--radius) - 4px);', '  --radius-md: calc(var(--radius) - 2px);', '  --radius-lg: var(--radius);', '  --radius-xl: calc(var(--radius) + 2px);');
+  lines.push('  --color-table-header: var(--qian-table-header-background);');
+  lines.push('  --font-sans: var(--qian-p-font-sans);', '  --font-mono: var(--qian-p-font-mono);', '  --radius-sm: calc(var(--radius) - 4px);', '  --radius-md: calc(var(--radius) - 2px);', '  --radius-lg: var(--radius);', '  --radius-xl: calc(var(--radius) + 2px);');
   // 正文 14px 配 22px 行高（开通流程原型的全页基准）。用绝对值而不是倍数：继承它的 13px 文字也按 22px 排（倍数会按各自字号重算成约 20.4px），
   // 表头、列表行与说明行的高度与原型一致。
   lines.push('  --text-sm--line-height: 1.375rem;');
-  for (const size of ['xs', 'sm', 'md', 'lg', 'xl']) lines.push(`  --shadow-${size}: var(--yue-p-shadow-${size});`);
-  for (const speed of ['fast', 'normal', 'slow']) lines.push(`  --transition-duration-${speed}: var(--yue-p-duration-${speed});`);
-  lines.push('  --ease-standard: var(--yue-p-ease-standard);', '}', '@layer base {', '  body { @apply font-sans text-sm bg-background text-foreground; }', '}', '');
+  for (const size of ['xs', 'sm', 'md', 'lg', 'xl']) lines.push(`  --shadow-${size}: var(--qian-p-shadow-${size});`);
+  for (const speed of ['fast', 'normal', 'slow']) lines.push(`  --transition-duration-${speed}: var(--qian-p-duration-${speed});`);
+  lines.push('  --ease-standard: var(--qian-p-ease-standard);', '}', '@layer base {', '  body { @apply font-sans text-sm bg-background text-foreground; }', '}', '');
   return lines.join('\n');
 }

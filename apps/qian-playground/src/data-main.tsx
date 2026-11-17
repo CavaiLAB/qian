@@ -1,6 +1,6 @@
 import { createRoot } from 'react-dom/client';
-import scenarios from '../../../packages/yue/data/docs/scenarios.json';
-import DataDemo from '../../../packages/yue/data/docs/examples/data-demo';
+import scenarios from '../../../packages/qian/data/docs/scenarios.json';
+import DataDemo from '../../../packages/qian/data/docs/examples/data-demo';
 import './index.css';
 const theme = new URLSearchParams(location.search).get('theme');
 if (theme === 'dark' || theme === 'light') { document.documentElement.dataset.theme = theme; document.documentElement.classList.toggle('dark', theme === 'dark'); }

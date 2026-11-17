@@ -46,7 +46,7 @@ test('后部包同版本不同摘要也在全组上传前失败；私有且匹�
 });
 test('未知名称或不完整依赖组在任何 API/上传之前拒绝', async () => {
   const t = fixture();
-  for (const pkgs of [t.pkgs.slice(0, 3), [...t.pkgs, { name: '@idadawn/other', source: 'other', version: '0.1.0' }]]) {
+  for (const pkgs of [t.pkgs.slice(0, 3), [...t.pkgs, { name: '@cavailab/other', source: 'other', version: '0.1.0' }]]) {
     await assert.rejects(publishPrivateCohort(pkgs, t.api, t.upload), /固定顺序/);
     await assert.rejects(bootstrapPrivateCohort(pkgs, '0.1.0', '123', t.api, t.upload), /固定顺序/);
   }
@@ -115,9 +115,9 @@ test('API适配器只允许固定包与版本DELETE，不支持删除整个包�
     return new Response(null, { status: options.method === 'DELETE' ? 204 : 403 });
   });
   await api.deleteVersion(COHORT[0].name, 123);
-  assert.equal(calls[0][0], 'https://api.github.com/users/idadawn/packages/npm/yue-tokens/versions/123');
+  assert.equal(calls[0][0], 'https://api.github.com/users/idadawn/packages/npm/qian-tokens/versions/123');
   await assert.rejects(api.getPackage(COHORT[0].name), /HTTP 403/);
-  assert.throws(() => api.deleteVersion('@idadawn/unknown', 123));
+  assert.throws(() => api.deleteVersion('@cavailab/unknown', 123));
   assert.throws(() => api.deleteVersion(COHORT[0].name, '123/../..'));
 });
 test('真实302下载形态只在registry首跳带认证，固定CDN跳转不泄露凭据', async () => {

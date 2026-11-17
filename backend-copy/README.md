@@ -15,7 +15,7 @@
 
 | 副本 | 谁在用 | 用途 |
 |---|---|---|
-| `contracts/v0/error-detail.schema.json` | `packages/yue/contracts/scripts/generate.mjs`、`packages/qian-runtime/test/errors.test.mjs` | 结构化错误的 Schema；界面契约包随包发布它的一份拷贝并由它生成类型 |
+| `contracts/v0/error-detail.schema.json` | `packages/qian/contracts/scripts/generate.mjs`、`packages/qian-runtime/test/errors.test.mjs` | 结构化错误的 Schema；界面契约包随包发布它的一份拷贝并由它生成类型 |
 | `contracts/v0/error-codes.json` | `packages/qian-runtime/scripts/prepare.mjs`、`packages/qian-plugin-sdk/scripts/errors.mjs` | 内置错误码目录，两个包的 `src/error-catalog.ts` 由它派生 |
 | `contracts/v0/fixtures/capability-entry.valid.json` | `packages/qian-plugin-sdk/test/host.test.ts` | 能力条目的测试夹具 |
 | `schemas/v2/ui.schema.json` | `packages/qian-plugin-sdk/scripts/ui-schema.mjs`、`packages/qian-plugin-sdk/test/ui-schema.test.ts` | 界面清单的 Schema，派生类型副本与预编译的校验器 |
@@ -49,7 +49,7 @@ node scripts/backend-copy.mjs --source <后端仓库的检出>
 3. 重新生成派生物，再跑门禁：
 
    ```bash
-   pnpm --filter @idadawn/yue-contracts contracts:generate
+   pnpm --filter @cavailab/qian-contracts contracts:generate
    ```
 
    ```bash
@@ -60,7 +60,7 @@ node scripts/backend-copy.mjs --source <后端仓库的检出>
    node packages/qian-plugin-sdk/scripts/ui-schema.mjs
    ```
 
-   运行时的 `src/error-catalog.ts` 在 `pnpm --filter @idadawn/qian-runtime build` 时重新生成；业务选择器与数据组件的接口类型用各自的 `contracts:generate`。
+   运行时的 `src/error-catalog.ts` 在 `pnpm --filter @cavailab/qian-runtime build` 时重新生成；业务选择器与数据组件的接口类型用各自的 `contracts:generate`。
 
 4. 提 PR，说明来源提交从哪里升到哪里、哪些副本变了。
 

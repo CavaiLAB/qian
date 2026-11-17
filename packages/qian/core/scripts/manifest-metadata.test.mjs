@@ -6,7 +6,7 @@ import { after, test } from 'node:test';
 import ts from 'typescript';
 import { updatePropsMetadata } from './manifest-metadata.mjs';
 
-const directory = mkdtempSync(path.join(tmpdir(), 'yue-metadata-'));
+const directory = mkdtempSync(path.join(tmpdir(), 'qian-metadata-'));
 after(() => rmSync(directory, { recursive: true, force: true }));
 const file = path.join(directory, 'fixture.ts');
 writeFileSync(file, `

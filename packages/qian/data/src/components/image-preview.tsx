@@ -1,8 +1,8 @@
 import { useState } from 'react';
-import { Button, Dialog, DialogClose, DialogContent, DialogTitle } from '@idadawn/yue-core';
-import type { PlatformI18n } from '@idadawn/yue-sdk';
+import { Button, Dialog, DialogClose, DialogContent, DialogTitle } from '@cavailab/qian-core';
+import type { PlatformI18n } from '@cavailab/qian-sdk';
 export interface ImagePreviewProps { src: string; alt: string; i18n: PlatformI18n; className?: string; testId?: string }
-export function ImagePreview({ src, alt, i18n, className, testId = 'yue-image-preview' }: ImagePreviewProps) {
+export function ImagePreview({ src, alt, i18n, className, testId = 'qian-image-preview' }: ImagePreviewProps) {
   const [open, setOpen] = useState(false);
   const valid = /^(https?:\/\/|blob:|data:image\/(png|jpeg|gif|webp);|\/(?!\/))/.test(src);
   if (!valid) throw new Error('data.error.imageSource');

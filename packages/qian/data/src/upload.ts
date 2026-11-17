@@ -1,4 +1,4 @@
-import { HttpResponseError, PlatformError, type PlatformClient } from '@idadawn/yue-sdk';
+import { HttpResponseError, PlatformError, type PlatformClient } from '@cavailab/qian-sdk';
 import type { components, paths } from './upload.generated';
 export type UploadedFile = components['schemas']['FileObject'];
 export interface UploadProgress { stage: 'hashing' | 'uploading' | 'complete'; loaded: number; total: number; deduplicated?: boolean }

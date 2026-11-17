@@ -6,7 +6,7 @@ type Frame = { theme: string; preference: string; brand: string; dark: boolean; 
 async function firstFrame(page: Page, stored: string | null, blocked = false): Promise<void> {
   await page.addInitScript(({ stored, blocked }) => {
     if (blocked) Object.defineProperty(window, 'localStorage', { get() { throw new DOMException('blocked', 'SecurityError'); } });
-    else { window.localStorage.clear(); if (stored !== null) window.localStorage.setItem('yue-theme', stored); }
+    else { window.localStorage.clear(); if (stored !== null) window.localStorage.setItem('qian-theme', stored); }
     const state = window as typeof window & { firstThemeFrame?: Frame };
     requestAnimationFrame(() => {
       const root = document.documentElement;
@@ -20,19 +20,19 @@ async function frame(page: Page): Promise<Frame> {
 
 test('首帧读取偏好，明暗/品牌同步切换，系统变化不切换品牌', async ({ page }) => {
   await page.emulateMedia({ colorScheme: 'light' }); await firstFrame(page, 'dark');
-  await page.goto('/tokens.html'); await expect(page.getByTestId('yue-theme-select')).toBeVisible();
+  await page.goto('/tokens.html'); await expect(page.getByTestId('qian-theme-select')).toBeVisible();
   await expect.poll(() => page.evaluate(() => (window as typeof window & { firstThemeFrame?: Frame }).firstThemeFrame)).toBeTruthy();
   const initial = await page.evaluate(() => (window as typeof window & { firstThemeFrame: Frame }).firstThemeFrame);
   expect(initial).toEqual({ theme: 'dark', preference: 'dark', brand: 'default', dark: true, scheme: 'dark' });
   expect(JSON.stringify(initial, null, 2)).toMatchSnapshot('first-frame-dark.txt');
-  const primary = page.getByTestId('yue-token-primary');
+  const primary = page.getByTestId('qian-token-primary');
   const blue = await primary.evaluate(element => getComputedStyle(element).backgroundColor);
-  await page.getByTestId('yue-brand-select').selectOption('teal');
+  await page.getByTestId('qian-brand-select').selectOption('teal');
   expect(await primary.evaluate(element => getComputedStyle(element).backgroundColor)).not.toBe(blue);
   expect(JSON.stringify(await frame(page), null, 2)).toMatchSnapshot('dark-teal.txt');
-  await page.getByTestId('yue-theme-select').selectOption('light');
+  await page.getByTestId('qian-theme-select').selectOption('light');
   expect(JSON.stringify(await frame(page), null, 2)).toMatchSnapshot('light-teal.txt');
-  await page.getByTestId('yue-theme-select').selectOption('system'); await page.emulateMedia({ colorScheme: 'dark' });
+  await page.getByTestId('qian-theme-select').selectOption('system'); await page.emulateMedia({ colorScheme: 'dark' });
   await expect.poll(async () => (await frame(page)).theme).toBe('dark');
   expect((await frame(page)).brand).toBe('teal');
 });
@@ -40,16 +40,16 @@ test('首帧读取偏好，明暗/品牌同步切换，系统变化不切换品�
 test('拒绝存储时首帧仍按系统渲染，服务端品牌不被覆盖', async ({ page }) => {
   await page.emulateMedia({ colorScheme: 'dark' }); await firstFrame(page, null, true);
   await page.route('**/tokens.html', async route => { const response = await route.fetch(); const body = (await response.text()).replace('data-brand="default"', 'data-brand="teal"'); await route.fulfill({ response, body }); });
-  await page.goto('/tokens.html'); await expect(page.getByTestId('yue-theme-select')).toBeVisible();
+  await page.goto('/tokens.html'); await expect(page.getByTestId('qian-theme-select')).toBeVisible();
   await expect.poll(() => page.evaluate(() => (window as typeof window & { firstThemeFrame?: Frame }).firstThemeFrame)).toBeTruthy();
   const initial = await page.evaluate(() => (window as typeof window & { firstThemeFrame: Frame }).firstThemeFrame);
   expect(initial).toEqual({ theme: 'dark', preference: 'system', brand: 'teal', dark: true, scheme: 'dark' });
   expect(JSON.stringify(initial, null, 2)).toMatchSnapshot('first-frame-system-teal.txt');
-  await page.getByTestId('yue-theme-select').selectOption('light'); expect((await frame(page)).theme).toBe('light');
+  await page.getByTestId('qian-theme-select').selectOption('light'); expect((await frame(page)).theme).toBe('light');
 });
 
 for (const mode of ['light', 'dark'] as const) test(`令牌页 ${mode} 状态无严重无障碍问题`, async ({ page }) => {
-  await firstFrame(page, mode); await page.goto('/tokens.html'); await expect(page.getByTestId('yue-token-lab')).toBeVisible();
+  await firstFrame(page, mode); await page.goto('/tokens.html'); await expect(page.getByTestId('qian-token-lab')).toBeVisible();
   await settleVisuals(page);
   const result = await new AxeBuilder({ page }).analyze();
   expect(result.violations.filter(issue => issue.impact === 'critical' || issue.impact === 'serious')).toEqual([]);
@@ -57,7 +57,7 @@ for (const mode of ['light', 'dark'] as const) test(`令牌页 ${mode} 状态无
 
 for (const mode of ['light', 'dark'] as const) test(`浏览器 ${mode} 实际合成后的输入边界与系统字体契约`, async ({ page }) => {
   await firstFrame(page, mode); await page.goto('/tokens.html');
-  await expect(page.getByTestId('yue-theme-select')).toBeVisible();
+  await expect(page.getByTestId('qian-theme-select')).toBeVisible();
   const result = await page.evaluate(() => {
     const root = getComputedStyle(document.documentElement);
     const body = getComputedStyle(document.body);

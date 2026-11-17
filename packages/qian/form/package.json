@@ -1,12 +1,12 @@
 {
-  "name": "@idadawn/yue-form",
+  "name": "@cavailab/qian-form",
   "version": "0.1.0",
   "description": "Field、SchemaForm、FormApi、联动、校验与脱敏规则目录、弹层 API 与消息出口。",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/idadawn/qian.git",
-    "directory": "packages/yue/form"
+    "directory": "packages/qian/form"
   },
   "type": "module",
   "sideEffects": [
@@ -35,9 +35,9 @@
     "publint": "publint --strict --pack pnpm"
   },
   "dependencies": {
-    "@idadawn/yue-contracts": "workspace:^",
-    "@idadawn/yue-core": "workspace:^",
-    "@idadawn/yue-sdk": "workspace:^",
+    "@cavailab/qian-contracts": "workspace:^",
+    "@cavailab/qian-core": "workspace:^",
+    "@cavailab/qian-sdk": "workspace:^",
     "react-hook-form": "catalog:"
   },
   "peerDependencies": {
@@ -64,6 +64,6 @@
     "vitest": "catalog:",
     "@tailwindcss/vite": "catalog:",
     "tailwindcss": "catalog:",
-    "@idadawn/yue-tokens": "workspace:^"
+    "@cavailab/qian-tokens": "workspace:^"
   }
 }

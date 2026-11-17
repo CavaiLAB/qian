@@ -1,27 +1,27 @@
 # Qian TypeScript 运行时
 
-依据 [组件模型 §5](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/component-model.md#5-运行时模型) 与 [S1-RT-003](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/pm/tasks/S1-RT-003.md)。S1-DEC-014 已批准：物理包名 `@idadawn/qian-runtime`，发布到 GitHub Packages 私有源；消费者通过 npm alias 保留公共逻辑导入名 `@qian/runtime`。
+依据 [组件模型 §5](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/component-model.md#5-运行时模型) 与 [S1-RT-003](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/pm/tasks/S1-RT-003.md)。S1-DEC-014 已批准：物理包名 `@cavailab/qian-runtime`，发布到 GitHub Packages 私有源；消费者通过 npm alias 保留公共逻辑导入名 `@qian/runtime`。
 
 ## 私有源安装
 
 消费项目的 `.npmrc` 只引用环境变量，不写入令牌值：
 
 ```ini
-@idadawn:registry=https://npm.pkg.github.com
+@cavailab:registry=https://npm.pkg.github.com
 //npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
 ```
 
 在环境中提供具有该包读取权限的令牌后安装固定版本：
 
 ```bash
-npm install '@qian/runtime@npm:@idadawn/qian-runtime@0.1.1'
+npm install '@qian/runtime@npm:@cavailab/qian-runtime@0.1.1'
 ```
 
-`package.json` 的依赖值为 `"@qian/runtime": "npm:@idadawn/qian-runtime@0.1.1"`，下文逻辑导入名保持一致。源码工作区内部构建按目录筛选包；发版只运行 main 的 `runtime-ts-release` 工作流，输入版本必须等于清单版本。工作流校验私有可见性与制品摘要，再在仓库外的干净项目完成真实安装、运行、类型和许可证验收；首次发布证据记录在任务中。
+`package.json` 的依赖值为 `"@qian/runtime": "npm:@cavailab/qian-runtime@0.1.1"`，下文逻辑导入名保持一致。源码工作区内部构建按目录筛选包；发版只运行 main 的 `runtime-ts-release` 工作流，输入版本必须等于清单版本。工作流校验私有可见性与制品摘要，再在仓库外的干净项目完成真实安装、运行、类型和许可证验收；首次发布证据记录在任务中。
 
 ## 装配与使用
 
-本目录包含上下文、作用域服务、事件、效果栈与装载器。可用于所有 TS profile，主要承载 yue 外壳插件树；这是运行时底座，不新增业务 seam，也不依赖平台三件套。`qian add` 的安装编排由后续 CLI 任务消费本包，当前不执行包安装或远程代码装载。
+本目录包含上下文、作用域服务、事件、效果栈与装载器。可用于所有 TS profile，主要承载 qian 外壳插件树；这是运行时底座，不新增业务 seam，也不依赖平台三件套。`qian add` 的安装编排由后续 CLI 任务消费本包，当前不执行包安装或远程代码装载。
 
 ```ts
 import { PluginLoader } from '@qian/runtime';

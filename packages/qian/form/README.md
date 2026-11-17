@@ -1,4 +1,4 @@
-# @idadawn/yue-form
+# @cavailab/qian-form
 
 唯一的 SchemaForm、FormApi、弹层和消息 API。S1-YUE-007 按 S1-DEC-024 / R108 在靶场对 SDK mock 验收；真实租户页面归 S1-TEN-005。
 
@@ -24,11 +24,11 @@
 
 ## 契约与模型体验
 
-FormSchema / ListSchema / WidgetMeta 的 Schema 和生成类型在 contracts 包。运行 `pnpm --filter @idadawn/yue-contracts contracts:generate` 更新，`contracts:check` 验证。SDK 的 WidgetMeta 同源。FormSchema 带 ui.device 与 auth，ListSchema 带 overrides 与 auth；模型生成的元数据先经 validateMetadata 验证，再渲染。`exportRuleCatalog()` 导出校验和脱敏规则的 id 与参数 Schema。
+FormSchema / ListSchema / WidgetMeta 的 Schema 和生成类型在 contracts 包。运行 `pnpm --filter @cavailab/qian-contracts contracts:generate` 更新，`contracts:check` 验证。SDK 的 WidgetMeta 同源。FormSchema 带 ui.device 与 auth，ListSchema 带 overrides 与 auth；模型生成的元数据先经 validateMetadata 验证，再渲染。`exportRuleCatalog()` 导出校验和脱敏规则的 id 与参数 Schema。
 
 ## 文档与验证
 
-权威交互说明是 [docs/index.mdx](docs/index.mdx)，共用示例在 [docs/examples/schema-form-demo.tsx](docs/examples/schema-form-demo.tsx)，状态登记在 docs/scenarios.json。Rspress 收集这些源到组件页，靶场 `/form.html` 用相同示例。运行 `pnpm yue:gates` 验证整体；浏览器测试覆盖字段校验、联动、ErrorDetail、焦点及 FormApi，SSR 测试覆盖元数据和只读，靶场与文档 E2E 覆盖真实交互及 axe。
+权威交互说明是 [docs/index.mdx](docs/index.mdx)，共用示例在 [docs/examples/schema-form-demo.tsx](docs/examples/schema-form-demo.tsx)，状态登记在 docs/scenarios.json。Rspress 收集这些源到组件页，靶场 `/form.html` 用相同示例。运行 `pnpm qian:gates` 验证整体；浏览器测试覆盖字段校验、联动、ErrorDetail、焦点及 FormApi，SSR 测试覆盖元数据和只读，靶场与文档 E2E 覆盖真实交互及 axe。
 
 ## 已知限制与延期项
 

@@ -1,6 +1,6 @@
 import { useId, useState, type FormEvent, type ReactNode } from 'react';
-import { Alert, Button, Checkbox, cn, Field, FieldError, FieldLabel, Icon, Input, InputPassword } from '@idadawn/yue-core';
-import type { PlatformI18n } from '@idadawn/yue-sdk';
+import { Alert, Button, Checkbox, cn, Field, FieldError, FieldLabel, Icon, Input, InputPassword } from '@cavailab/qian-core';
+import type { PlatformI18n } from '@cavailab/qian-sdk';
 import { useShellLocale, type ShellPartProps } from './layout';
 
 export interface PasswordCredentials { username: string; password: string }
@@ -34,7 +34,7 @@ function writeRemembered(key: string, value: string | null) {
 }
 
 /** 账号密码登录：44px 控件、记住账号与「其他登录方式」；提交后清空密码，账号只在勾选「记住账号」时存在本机。 */
-export function PasswordLogin({ i18n, onSubmit, onSso, busy, error, title, description, rememberKey, forgotHref, alternatives, footer, className, testId = 'yue-password-login' }: PasswordLoginProps) {
+export function PasswordLogin({ i18n, onSubmit, onSso, busy, error, title, description, rememberKey, forgotHref, alternatives, footer, className, testId = 'qian-password-login' }: PasswordLoginProps) {
   useShellLocale(i18n);
   const id = useId();
   // 记住的账号在首次渲染时读入（认证页是纯客户端渲染；服务端读不到本机存储时为空）。
@@ -63,7 +63,7 @@ export function PasswordLogin({ i18n, onSubmit, onSso, busy, error, title, descr
       <p className="m-0 text-muted-foreground">{description ?? i18n.t('shell.loginHelp')}</p>
     </div>
     {error && <Alert tone="error" role="alert" size="sm" testId={`${testId}-error`}>{i18n.t('shell.authError')}</Alert>}
-    <form noValidate onSubmit={event => void submit(event)} data-slot="password-login-form" data-testid={`${testId}-form`} className="m-0 flex flex-col gap-4.5 [--yue-input-height:2.75rem]">
+    <form noValidate onSubmit={event => void submit(event)} data-slot="password-login-form" data-testid={`${testId}-form`} className="m-0 flex flex-col gap-4.5 [--qian-input-height:2.75rem]">
       <Field invalid={missing.username} testId={`${testId}-username`}>
         <FieldLabel htmlFor={`${id}-username`}>{i18n.t('shell.username')}</FieldLabel>
         <Input id={`${id}-username`} name="username" autoComplete="username" value={username} aria-required onChange={event => { setUsername(event.currentTarget.value); if (event.currentTarget.value.trim()) setMissing(value => ({ ...value, username: false })); }} />

@@ -1,7 +1,7 @@
 import { settleVisuals } from './settle';
 import AxeBuilder from '@axe-core/playwright';
 import { expect, test } from '@playwright/test';
-import catalog from '../../../packages/yue/core/src/manifest-catalog.json' with { type: 'json' };
+import catalog from '../../../packages/qian/core/src/manifest-catalog.json' with { type: 'json' };
 const opening: Record<string, string> = { Dialog: '打开对话框', AlertDialog: '打开确认框', Sheet: '打开侧栏', Drawer: '打开抽屉', Popover: '打开浮层', Menu: '打开菜单', DropdownMenu: '打开菜单', Toast: '显示消息', Notification: '显示消息', Accordion: '如何使用' };
 for (const name of Object.keys(catalog)) {
   test(`${name} 真实构建页面与弹出态通过 axe`, async ({ page }) => {
@@ -9,10 +9,10 @@ for (const name of Object.keys(catalog)) {
     await expect(page.getByRole('heading', { name, exact: true })).toBeVisible();
     if (opening[name]) await page.getByRole('button', { name: opening[name], exact: true }).click();
     if (name === 'Select') await page.getByRole('combobox').click();
-    if (name === 'Combobox') await page.getByTestId('yue-combobox-trigger').click();
+    if (name === 'Combobox') await page.getByTestId('qian-combobox-trigger').click();
     if (name === 'Tooltip') await page.getByRole('button', { name: '查看提示' }).focus();
     if (name === 'HoverCard') await page.getByRole('link', { name: '查看用户' }).hover();
-    if (name === 'ContextMenu') { await page.getByTestId('yue-context-menu-trigger').focus(); await page.keyboard.press('Shift+F10'); }
+    if (name === 'ContextMenu') { await page.getByTestId('qian-context-menu-trigger').focus(); await page.keyboard.press('Shift+F10'); }
     if (['Dialog', 'Sheet', 'Drawer', 'Popover'].includes(name)) await expect(page.getByRole('dialog')).toBeVisible();
     if (name === 'AlertDialog') await expect(page.getByRole('alertdialog')).toBeVisible();
     if (['Menu', 'DropdownMenu', 'ContextMenu'].includes(name)) await expect(page.getByRole('menu')).toBeVisible();
@@ -35,11 +35,11 @@ for (const [name, slot, triggerName] of [['Dialog', 'dialog', '打开对话框']
   await page.goto(`/core.html?component=${name}`);
   const trigger = page.getByRole('button', { name: triggerName, exact: true });
   await trigger.click();
-  const close = page.getByTestId(`yue-${slot}-close-button`);
-  const content = await page.getByTestId(`yue-${slot}-content`).boundingBox();
+  const close = page.getByTestId(`qian-${slot}-close-button`);
+  const content = await page.getByTestId(`qian-${slot}-content`).boundingBox();
   const button = await close.boundingBox();
   expect(button!.x).toBeGreaterThan(content!.x + content!.width / 2);
   expect(button!.y - content!.y).toBeLessThan(24);
   await close.focus(); await close.press('Enter');
-  await expect(page.getByTestId(`yue-${slot}-content`)).not.toBeVisible(); await expect(trigger).toBeFocused();
+  await expect(page.getByTestId(`qian-${slot}-content`)).not.toBeVisible(); await expect(trigger).toBeFocused();
 });

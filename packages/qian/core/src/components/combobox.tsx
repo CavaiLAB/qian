@@ -11,7 +11,7 @@ import type {
 import type { ComponentProps } from 'react';
 import { cn } from '../lib/cn';
 import { control, surface, menuItem } from '../lib/styles';
-import type { YueProps } from '../lib/test-id';
+import type { QianProps } from '../lib/test-id';
 
 // 可输入筛选的下拉（Base UI Combobox）。验证门项：输入过滤、方向键高亮、Enter 选中、Escape 关闭、空态、ARIA combobox / listbox。
 
@@ -20,11 +20,11 @@ export function Combobox<Value, Multiple extends boolean | undefined = false>(pr
   return <BaseCombobox.Root<Value, Multiple> {...props} />;
 }
 
-export function ComboboxInput({ className, testId, ...props }: YueProps<ComboboxInputProps>) {
+export function ComboboxInput({ className, testId, ...props }: QianProps<ComboboxInputProps>) {
   return (
     <BaseCombobox.Input {...props}
       data-slot="combobox-input"
-      data-testid={testId ?? 'yue-combobox-input'}
+      data-testid={testId ?? 'qian-combobox-input'}
       className={cn(
         control, 'h-9 w-full min-w-40 px-3 text-sm',
         className,
@@ -33,7 +33,7 @@ export function ComboboxInput({ className, testId, ...props }: YueProps<Combobox
   );
 }
 
-export interface ComboboxContentProps extends YueProps<ComboboxPopupProps> {
+export interface ComboboxContentProps extends QianProps<ComboboxPopupProps> {
   side?: ComboboxPositionerProps['side'];
   align?: ComboboxPositionerProps['align'];
   sideOffset?: number;
@@ -44,7 +44,7 @@ export function ComboboxContent({ className, side, align, sideOffset = 4, testId
       <BaseCombobox.Positioner side={side} align={align} sideOffset={sideOffset} className="z-50 outline-none">
         <BaseCombobox.Popup {...props}
           data-slot="combobox-content"
-          data-testid={testId ?? 'yue-combobox-content'}
+          data-testid={testId ?? 'qian-combobox-content'}
           className={cn(surface, 'min-w-40 max-h-(--available-height) w-(--anchor-width) overflow-y-auto p-1', className)}
         />
       </BaseCombobox.Positioner>
@@ -52,25 +52,25 @@ export function ComboboxContent({ className, side, align, sideOffset = 4, testId
   );
 }
 
-export function ComboboxList({ className, testId, ...props }: YueProps<ComboboxListProps>) {
-  return <BaseCombobox.List {...props} data-slot="combobox-list" data-testid={testId ?? 'yue-combobox-list'} className={className} />;
+export function ComboboxList({ className, testId, ...props }: QianProps<ComboboxListProps>) {
+  return <BaseCombobox.List {...props} data-slot="combobox-list" data-testid={testId ?? 'qian-combobox-list'} className={className} />;
 }
 
-export function ComboboxEmpty({ className, testId, ...props }: YueProps<ComboboxEmptyProps>) {
+export function ComboboxEmpty({ className, testId, ...props }: QianProps<ComboboxEmptyProps>) {
   return (
     <BaseCombobox.Empty {...props}
       data-slot="combobox-empty"
-      data-testid={testId ?? 'yue-combobox-empty'}
+      data-testid={testId ?? 'qian-combobox-empty'}
       className={cn('px-2 py-1.5 text-muted-foreground empty:hidden', className)}
     />
   );
 }
 
-export function ComboboxItem({ className, testId, ...props }: YueProps<ComboboxItemProps>) {
+export function ComboboxItem({ className, testId, ...props }: QianProps<ComboboxItemProps>) {
   return (
     <BaseCombobox.Item {...props}
       data-slot="combobox-item"
-      data-testid={testId ?? 'yue-combobox-item'}
+      data-testid={testId ?? 'qian-combobox-item'}
       className={cn(
         menuItem, 'data-[selected]:font-medium',
         className,
@@ -80,11 +80,11 @@ export function ComboboxItem({ className, testId, ...props }: YueProps<ComboboxI
 }
 
 /** 推荐的可搜索选择器入口：输入框放在 Content 内，避免弹层外输入形态隐藏页面其余焦点目标。 */
-export type ComboboxTriggerProps = YueProps<ComponentProps<typeof BaseCombobox.Trigger>>;
+export type ComboboxTriggerProps = QianProps<ComponentProps<typeof BaseCombobox.Trigger>>;
 export function ComboboxTrigger({ className, testId, ...props }: ComboboxTriggerProps) {
-  return <BaseCombobox.Trigger {...props} data-slot="combobox-trigger" data-testid={testId ?? 'yue-combobox-trigger'} className={cn(control, 'inline-flex h-9 min-w-40 items-center justify-between px-3 text-sm', className)} />;
+  return <BaseCombobox.Trigger {...props} data-slot="combobox-trigger" data-testid={testId ?? 'qian-combobox-trigger'} className={cn(control, 'inline-flex h-9 min-w-40 items-center justify-between px-3 text-sm', className)} />;
 }
 export type ComboboxValueProps = ComponentProps<typeof BaseCombobox.Value>;
 export function ComboboxValue(props: ComboboxValueProps) {
-  return <span data-slot="combobox-value" data-testid="yue-combobox-value"><BaseCombobox.Value {...props} /></span>;
+  return <span data-slot="combobox-value" data-testid="qian-combobox-value"><BaseCombobox.Value {...props} /></span>;
 }

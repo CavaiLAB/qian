@@ -1,4 +1,4 @@
-import { initializeTheme, TONES, TOKEN_REGISTRY, tokenColor, type ThemePreference } from '@idadawn/yue-tokens';
+import { initializeTheme, TONES, TOKEN_REGISTRY, tokenColor, type ThemePreference } from '@cavailab/qian-tokens';
 import './tokens.css';
 
 const controller = initializeTheme();
@@ -10,7 +10,7 @@ brand.addEventListener('change', () => controller.setBrand(brand.value));
 const labels = { ok: '成功', warn: '警告', error: '错误', info: '信息', neutral: '中性' };
 for (const tone of TONES) {
   const badge = document.createElement('span'); badge.textContent = labels[tone]; badge.dataset.tone = tone;
-  badge.style.color = tokenColor(`--yue-${tone}`); badge.style.backgroundColor = tokenColor(`--yue-${tone}-bg`);
+  badge.style.color = tokenColor(`--qian-${tone}`); badge.style.backgroundColor = tokenColor(`--qian-${tone}-bg`);
   document.querySelector('#tones')!.append(badge);
 }
 for (const token of TOKEN_REGISTRY.semantics.filter(item => item.kind === 'color' && !item.name.endsWith('-foreground') && !item.name.endsWith('-bg'))) {

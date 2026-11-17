@@ -2,23 +2,23 @@
 title: 业务选择器：组织、用户、角色、字典与授权树
 description: 经注入的 PlatformClient 取数的 ApiSelect、DictSelect、OrganizeSelect、UserSelect、RoleSelect、菜单与按钮授权树和 IconPicker。
 part: components
-project: yue
+project: qian
 audience: [developer]
 updated: 2026-11-11
-component: '@idadawn/yue-biz'
+component: '@cavailab/qian-biz'
 ---
 
 import { ComponentDemo } from '@theme';
 
 # 业务选择器
 
-`@idadawn/yue-biz` 是需要知道「平台」存在的选择器层（[yue 规格](/design/prd/specs/yue) §3.1）。所有组件都只经宿主注入的 `PlatformClient` 取数，组件里没有第二条网络路径；文案全部走 i18n key，宿主用 `createBizI18n()` 新建实例，或对已有实例调用 `addBizLanguagePacks(i18n)`（会一并装入 data 的语言包）。组织选择与授权树建在 `@idadawn/yue-data` 的 Tree / TreeSelect 上，不另做一套树（规格 D3）。
+`@cavailab/qian-biz` 是需要知道「平台」存在的选择器层（[qian 规格](/design/prd/specs/yue) §3.1）。所有组件都只经宿主注入的 `PlatformClient` 取数，组件里没有第二条网络路径；文案全部走 i18n key，宿主用 `createBizI18n()` 新建实例，或对已有实例调用 `addBizLanguagePacks(i18n)`（会一并装入 data 的语言包）。组织选择与授权树建在 `@cavailab/qian-data` 的 Tree / TreeSelect 上，不另做一套树（规格 D3）。
 
 以下示例与靶场共用源码，只替换 SDK 网络层：mock 中间件按 PRD 7.4.3 的目录 API 与 PRD 7.5 的角色 / 权限点目录返回数据，接真实服务时组件代码不变。
 
 ## 取数契约
 
-路径、参数与响应类型由 `packages/yue/biz/contracts/biz.openapi.json` 生成（`pnpm --filter @idadawn/yue-biz contracts:generate`，CI 比对漂移）。
+路径、参数与响应类型由 `packages/qian/biz/contracts/biz.openapi.json` 生成（`pnpm --filter @cavailab/qian-biz contracts:generate`，CI 比对漂移）。
 
 | 接口 | 来源 | 用途 |
 |---|---|---|
@@ -86,7 +86,7 @@ AuthorizationTree 接收 `client`、`i18n`、`label`、`value`（已授予的权
 
 ## IconPicker
 
-图标选择器：从 `@idadawn/yue-core` 的统一 Icon 登记表（`ICON_NAMES`）里选，按图标名过滤，触发器显示所选图标；`icons` 可限定可选范围。图标集是本地登记表，不需要取数，因此没有 client 属性。
+图标选择器：从 `@cavailab/qian-core` 的统一 Icon 登记表（`ICON_NAMES`）里选，按图标名过滤，触发器显示所选图标；`icons` 可限定可选范围。图标集是本地登记表，不需要取数，因此没有 client 属性。
 
 <ComponentDemo name="IconPicker" />
 

@@ -2,7 +2,7 @@ import { readdirSync, readFileSync } from 'node:fs';
 import { Ajv2020 } from 'ajv/dist/2020';
 import addFormats from 'ajv-formats';
 import { describe, expect, it } from 'vitest';
-import { formSchema, listSchema, widgetSchema, type FormSchema } from '@idadawn/yue-contracts';
+import { formSchema, listSchema, widgetSchema, type FormSchema } from '@cavailab/qian-contracts';
 import { compileSchema } from './json-schema';
 import { assertFormSchema, validateMetadata, validateValues } from './schema';
 import { credentialSchema, schema } from './test/fixture';
@@ -203,11 +203,11 @@ describe('子集外拒绝，而不是静默放过', () => {
   });
 });
 
-// 外壳 meta CSP 不放行 'unsafe-eval'（S1-YUE-014）：yue-form 与它在运行期带进外壳源的工作区包都不能带 JSON Schema 编译器、不能在运行期生成代码。
+// 外壳 meta CSP 不放行 'unsafe-eval'（S1-YUE-014）：@cavailab/qian-form 与它在运行期带进外壳源的工作区包都不能带 JSON Schema 编译器、不能在运行期生成代码。
 describe('运行时路径不携带 JSON Schema 编译器、不在运行期生成代码', () => {
   const packages = new URL('../../', import.meta.url);
   const manifest = (name: string) => JSON.parse(readFileSync(new URL(`${name}/package.json`, packages), 'utf8')) as { dependencies?: Record<string, string>; peerDependencies?: Record<string, string> };
-  const workspace = (dependencies: Record<string, string> = {}) => Object.keys(dependencies).filter((name) => name.startsWith('@idadawn/yue-')).map((name) => name.slice('@idadawn/yue-'.length));
+  const workspace = (dependencies: Record<string, string> = {}) => Object.keys(dependencies).filter((name) => name.startsWith('@cavailab/qian-')).map((name) => name.slice('@cavailab/qian-'.length));
   const visited = new Set<string>();
   for (const pending = ['form']; pending.length;) {
     const name = pending.pop()!;
@@ -216,11 +216,11 @@ describe('运行时路径不携带 JSON Schema 编译器、不在运行期生成
     pending.push(...workspace(manifest(name).dependencies));
   }
 
-  it('沿 dependencies 收集到 yue-form 及其工作区运行时依赖', () => {
+  it('沿 dependencies 收集到 @cavailab/qian-form 及其工作区运行时依赖', () => {
     expect([...visited].sort()).toEqual(expect.arrayContaining(['contracts', 'core', 'form', 'sdk']));
   });
 
-  it.each([...visited])('@idadawn/yue-%s：dependencies 不含 ajv / ajv-formats，源码不含 Ajv 导入与动态代码生成', (name) => {
+  it.each([...visited])('@cavailab/qian-%s：dependencies 不含 ajv / ajv-formats，源码不含 Ajv 导入与动态代码生成', (name) => {
     const { dependencies = {}, peerDependencies = {} } = manifest(name);
     expect([...Object.keys(dependencies), ...Object.keys(peerDependencies)].filter((dependency) => /^ajv(?:-|$)/.test(dependency))).toEqual([]);
     const source = new URL(`${name}/src/`, packages);

@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import type { IconName } from '@idadawn/yue-core';
-import { createMockTransport, PlatformClient, type MockRoute } from '@idadawn/yue-sdk';
-import { ApiSelect, AuthorizationTree, DictSelect, IconPicker, OrganizeSelect, RoleSelect, UserSelect, createBizI18n, orgTypeDictionary } from '@idadawn/yue-biz';
+import type { IconName } from '@cavailab/qian-core';
+import { createMockTransport, PlatformClient, type MockRoute } from '@cavailab/qian-sdk';
+import { ApiSelect, AuthorizationTree, DictSelect, IconPicker, OrganizeSelect, RoleSelect, UserSelect, createBizI18n, orgTypeDictionary } from '@cavailab/qian-biz';
 
 // 示例只替换 SDK 网络层：mock 中间件按 PRD 7.4.3 的目录 API（与 Identity Server 一致的 snake_case）与 PRD 7.5 的角色 / 权限点目录草案返回数据，
 // 组件代码与接真实服务时相同。靶场 E2E、Rspress 场景与站点 E2E 共用这一份示例。

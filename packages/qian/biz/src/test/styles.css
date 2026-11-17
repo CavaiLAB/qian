@@ -1,5 +1,5 @@
 @import 'tailwindcss';
-@import '@idadawn/yue-tokens/theme.css';
+@import '@cavailab/qian-tokens/theme.css';
 @source '../../../core';
 @source '../../../data';
 @source '..';

@@ -15,7 +15,7 @@ import type {
 import type { ComponentProps } from 'react';
 import { cn } from '../lib/cn';
 import { button, surface, menuItem } from '../lib/styles';
-import type { YueProps } from '../lib/test-id';
+import type { QianProps } from '../lib/test-id';
 import { Icon } from './icon';
 
 // 下拉菜单（Base UI Menu）。验证门项：键盘导航、焦点管理、ARIA、子菜单（docs/prd/specs/yue.md §4.4）。
@@ -25,12 +25,12 @@ export function Menu(props: MenuProps) {
   return <BaseMenu.Root {...props} />;
 }
 
-export type MenuTriggerType = YueProps<MenuTriggerProps>;
+export type MenuTriggerType = QianProps<MenuTriggerProps>;
 export function MenuTrigger({ className, testId, ...props }: MenuTriggerType) {
   return (
     <BaseMenu.Trigger {...props}
       data-slot="menu-trigger"
-      data-testid={testId ?? 'yue-menu-trigger'}
+      data-testid={testId ?? 'qian-menu-trigger'}
       className={cn(
         button, 'border-border bg-background text-foreground shadow-xs hover:bg-accent data-[popup-open]:bg-accent',
         className,
@@ -39,7 +39,7 @@ export function MenuTrigger({ className, testId, ...props }: MenuTriggerType) {
   );
 }
 
-export interface MenuContentProps extends YueProps<MenuPopupProps> {
+export interface MenuContentProps extends QianProps<MenuPopupProps> {
   side?: MenuPositionerProps['side'];
   align?: MenuPositionerProps['align'];
   sideOffset?: number;
@@ -52,7 +52,7 @@ export function MenuContent({ className, side, align, sideOffset = 4, alignOffse
       <BaseMenu.Positioner side={side} align={align} sideOffset={sideOffset} alignOffset={alignOffset} className="z-50 outline-none">
         <BaseMenu.Popup {...props}
           data-slot="menu-content"
-          data-testid={testId ?? 'yue-menu-content'}
+          data-testid={testId ?? 'qian-menu-content'}
           className={cn(
             surface, 'min-w-40 max-h-(--available-height) w-(--anchor-width) overflow-y-auto p-1',
             className,
@@ -63,7 +63,7 @@ export function MenuContent({ className, side, align, sideOffset = 4, alignOffse
   );
 }
 
-export type MenuItemType = YueProps<MenuItemProps> & {
+export type MenuItemType = QianProps<MenuItemProps> & {
   /** destructive：危险操作（如「冻结」「删除」），文字用危险色，高亮时为错误浅底。 @default 'default' */
   variant?: 'default' | 'destructive';
 };
@@ -72,7 +72,7 @@ export function MenuItem({ className, testId, variant = 'default', ...props }: M
     <BaseMenu.Item {...props}
       data-slot="menu-item"
       data-variant={variant}
-      data-testid={testId ?? 'yue-menu-item'}
+      data-testid={testId ?? 'qian-menu-item'}
       className={cn(
         menuItem,
         variant === 'destructive' && 'text-destructive data-[highlighted]:bg-error-bg data-[highlighted]:text-destructive',
@@ -82,46 +82,46 @@ export function MenuItem({ className, testId, variant = 'default', ...props }: M
   );
 }
 
-export type MenuSeparatorProps = YueProps<ComponentProps<typeof BaseMenu.Separator>>;
+export type MenuSeparatorProps = QianProps<ComponentProps<typeof BaseMenu.Separator>>;
 export function MenuSeparator({ className, testId, ...props }: MenuSeparatorProps) {
   return (
     <BaseMenu.Separator {...props}
       data-slot="menu-separator"
-      data-testid={testId ?? 'yue-menu-separator'}
+      data-testid={testId ?? 'qian-menu-separator'}
       className={cn('my-1 h-px bg-border', className)}
     />
   );
 }
 
-export function MenuGroup({ className, testId, ...props }: YueProps<MenuGroupProps>) {
-  return <BaseMenu.Group {...props} data-slot="menu-group" data-testid={testId ?? 'yue-menu-group'} className={className} />;
+export function MenuGroup({ className, testId, ...props }: QianProps<MenuGroupProps>) {
+  return <BaseMenu.Group {...props} data-slot="menu-group" data-testid={testId ?? 'qian-menu-group'} className={className} />;
 }
 
-export function MenuGroupLabel({ className, testId, ...props }: YueProps<MenuGroupLabelProps>) {
+export function MenuGroupLabel({ className, testId, ...props }: QianProps<MenuGroupLabelProps>) {
   return (
     <BaseMenu.GroupLabel {...props}
       data-slot="menu-group-label"
-      data-testid={testId ?? 'yue-menu-group-label'}
+      data-testid={testId ?? 'qian-menu-group-label'}
       className={cn('px-2 py-1.5 text-xs text-muted-foreground', className)}
     />
   );
 }
 
 /** 单选组：value / onValueChange 与 Select 同形；组内每项是 menuitemradio，读屏按「已选中」读出。 */
-export function MenuRadioGroup({ className, testId, ...props }: YueProps<MenuRadioGroupProps>) {
-  return <BaseMenu.RadioGroup {...props} data-slot="menu-radio-group" data-testid={testId ?? 'yue-menu-radio-group'} className={className} />;
+export function MenuRadioGroup({ className, testId, ...props }: QianProps<MenuRadioGroupProps>) {
+  return <BaseMenu.RadioGroup {...props} data-slot="menu-radio-group" data-testid={testId ?? 'qian-menu-radio-group'} className={className} />;
 }
 
 /** 单选项：选中时右侧显示勾，状态不只靠颜色。 */
-export function MenuRadioItem({ className, testId, children, ...props }: YueProps<MenuRadioItemProps>) {
+export function MenuRadioItem({ className, testId, children, ...props }: QianProps<MenuRadioItemProps>) {
   return (
     <BaseMenu.RadioItem {...props}
       data-slot="menu-radio-item"
-      data-testid={testId ?? 'yue-menu-radio-item'}
+      data-testid={testId ?? 'qian-menu-radio-item'}
       className={cn(menuItem, 'justify-between gap-6 data-[checked]:font-medium', className)}
     >
       {children}
-      <BaseMenu.RadioItemIndicator data-slot="menu-radio-item-indicator" data-testid={`${testId ?? 'yue-menu-radio-item'}-indicator`} className="inline-flex text-primary"><Icon name="check" /></BaseMenu.RadioItemIndicator>
+      <BaseMenu.RadioItemIndicator data-slot="menu-radio-item-indicator" data-testid={`${testId ?? 'qian-menu-radio-item'}-indicator`} className="inline-flex text-primary"><Icon name="check" /></BaseMenu.RadioItemIndicator>
     </BaseMenu.RadioItem>
   );
 }
@@ -132,11 +132,11 @@ export function MenuSub(props: MenuSubProps) {
 }
 
 /** 子菜单入口：图标与文字靠左，末尾一个指向子菜单的箭头（随书写方向翻转）。 */
-export function MenuSubTrigger({ className, testId, children, ...props }: YueProps<MenuSubmenuTriggerProps>) {
+export function MenuSubTrigger({ className, testId, children, ...props }: QianProps<MenuSubmenuTriggerProps>) {
   return (
     <BaseMenu.SubmenuTrigger {...props}
       data-slot="menu-sub-trigger"
-      data-testid={testId ?? 'yue-menu-sub-trigger'}
+      data-testid={testId ?? 'qian-menu-sub-trigger'}
       className={cn(
         menuItem, 'data-[popup-open]:bg-accent',
         className,

@@ -2,7 +2,7 @@
 
 export interface ComponentManifest {
   name: string;
-  package: "@idadawn/yue-core";
+  package: "@cavailab/qian-core";
   version: string;
   props: {
     [k: string]: unknown;

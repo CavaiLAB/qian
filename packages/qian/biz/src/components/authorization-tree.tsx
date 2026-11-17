@@ -1,12 +1,12 @@
 import { useMemo } from 'react';
-import { Empty, cn, type TestIdProps } from '@idadawn/yue-core';
-import { Tree, type TreeNode } from '@idadawn/yue-data';
-import type { PlatformClient, PlatformI18n } from '@idadawn/yue-sdk';
+import { Empty, cn, type TestIdProps } from '@cavailab/qian-core';
+import { Tree, type TreeNode } from '@cavailab/qian-data';
+import type { PlatformClient, PlatformI18n } from '@cavailab/qian-sdk';
 import { loadPermissionCatalog, type PermissionCatalog, type PermissionDefinition } from '../api';
 import { useRemoteResource } from '../remote-options';
 import { SelectStatus } from './select-status';
 
-// 菜单 / 按钮授权树（PRD 7.5 最小角色授权页）建在 @yue/data 的 Tree 复选上，不另做一套树。
+// 菜单 / 按钮授权树（PRD 7.5 最小角色授权页）建在 @cavailab/qian-data 的 Tree 复选上，不另做一套树。
 // 口径：一个资源类型是一个菜单（UI 清单的页面以 <resource>:read 为门槛权限），菜单下的按钮是该资源的各个动作，read 排第一表示「菜单可见」。
 // 勾选任一按钮自动带上同菜单的 read；取消 read 同时取消该菜单的其余按钮——没有菜单就没有按钮。值只含权限点全名，分组节点不进入值。
 
@@ -76,7 +76,7 @@ export interface AuthorizationTreeProps extends TestIdProps {
 }
 
 export function AuthorizationTree({ client, i18n, label, value, onChange, className, testId }: AuthorizationTreeProps) {
-  const id = testId ?? 'yue-authorization-tree';
+  const id = testId ?? 'qian-authorization-tree';
   const remote = useRemoteResource({ client, load: (current, { signal }) => loadPermissionCatalog(current, signal) });
   const catalog = remote.data;
   const menus = useMemo(() => (catalog ? groupPermissionCatalog(catalog) : []), [catalog]);

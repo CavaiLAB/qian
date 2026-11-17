@@ -20,4 +20,4 @@
         theme,
         brand
     };
-})({"storageKey":"yue-theme","defaultTheme":"system"});
+})({"storageKey":"qian-theme","defaultTheme":"system"});

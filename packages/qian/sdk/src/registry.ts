@@ -1,5 +1,5 @@
-import type { WidgetMeta } from '@idadawn/yue-contracts';
-export type { WidgetMeta } from '@idadawn/yue-contracts';
+import type { WidgetMeta } from '@cavailab/qian-contracts';
+export type { WidgetMeta } from '@cavailab/qian-contracts';
 export type JsonValue = null | boolean | number | string | JsonValue[] | { [key: string]: JsonValue };
 export type JsonSchema = Record<string, JsonValue>;
 export interface RegistrationMeta {

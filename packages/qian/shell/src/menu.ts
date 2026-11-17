@@ -1,9 +1,9 @@
-import { Registry, type RegistrationMeta } from '@idadawn/yue-sdk';
+import { Registry, type RegistrationMeta } from '@cavailab/qian-sdk';
 
 /** `label` 是后端已本地化的显示文字（能力导航目录的页面标题），给出时优先于 `labelKey`。 */
 export interface ShellMenuItem {
   id: string; labelKey: string; label?: string; type: string; target: string; children?: readonly ShellMenuItem[];
-  /** yue 图标名（例如 `building`）；未登记的名称按缺省图标显示。 */
+  /** qian 图标名（例如 `building`）；未登记的名称按缺省图标显示。 */
   icon?: string;
   /** 已本地化的分组标题；相邻同组的项归在同一个标题下。 */
   group?: string;
@@ -18,7 +18,7 @@ export function safeNavigationUrl(value: string, external = false): string {
   if (!value || [...value].some(character => character.charCodeAt(0) <= 32 || character === '\\')) throw new TypeError('shell.error.navigation');
   if (external && !/^https?:\/\//i.test(value)) throw new TypeError('shell.error.navigation');
   if (!external && (!value.startsWith('/') || value.startsWith('//'))) throw new TypeError('shell.error.navigation');
-  const url = new URL(value, 'https://yue.local');
+  const url = new URL(value, 'https://qian.local');
   if (!['http:', 'https:'].includes(url.protocol) || url.username || url.password) throw new TypeError('shell.error.navigation');
   const fragment = url.hash.slice(1);
   const hashQuery = fragment.includes('?') ? fragment.slice(fragment.indexOf('?') + 1) : '';

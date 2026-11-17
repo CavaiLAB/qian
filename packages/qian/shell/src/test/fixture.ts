@@ -1,4 +1,4 @@
-import { createI18n } from '@idadawn/yue-sdk';
+import { createI18n } from '@cavailab/qian-sdk';
 import { vi } from 'vitest';
 import { installShellLanguagePacks } from '../locales';
 import type { AuthProvider, AuthSession } from '../auth';

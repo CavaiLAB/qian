@@ -1,9 +1,9 @@
 import type { ReactNode } from 'react';
-import { cn } from '@idadawn/yue-core/shell';
+import { cn } from '@cavailab/qian-core/shell';
 import type { ShellPartProps } from './layout';
 
 /** 品牌标识：圆角方块加三道横线。inverse 用在品牌深色面上（白底、深色横线）。 */
-export function BrandMark({ size = 28, inverse = false, className, testId = 'yue-brand-mark' }: { size?: number; inverse?: boolean; className?: string; testId?: string }) {
+export function BrandMark({ size = 28, inverse = false, className, testId = 'qian-brand-mark' }: { size?: number; inverse?: boolean; className?: string; testId?: string }) {
   return <svg viewBox="0 0 36 36" width={size} height={size} data-slot="brand-mark" data-testid={testId} className={cn('shrink-0', className)} aria-hidden="true" focusable="false">
     <rect width="36" height="36" rx="9" className={inverse ? 'fill-inverse-foreground' : 'fill-primary'} />
     {[10, 16.5, 23].map(y => <rect key={y} x="9" y={y} width="18" height="3" rx="1.5" className={inverse ? 'fill-inverse' : 'fill-primary-foreground'} />)}
@@ -32,7 +32,7 @@ export interface AuthLayoutProps extends ShellPartProps {
 }
 
 /** 认证与申请页布局：左侧品牌深色面（点阵底纹），右侧内容区；窄屏时侧栏折到上方。 */
-export function AuthLayout({ brand, brandHref, headline, description, aside, footer, toolbar, variant = 'sign-in', legal, children, className, testId = 'yue-auth-layout' }: AuthLayoutProps) {
+export function AuthLayout({ brand, brandHref, headline, description, aside, footer, toolbar, variant = 'sign-in', legal, children, className, testId = 'qian-auth-layout' }: AuthLayoutProps) {
   const signIn = variant === 'sign-in';
   const brandRow = <><BrandMark size={36} inverse /><span className="text-lg font-bold tracking-[0.02em]">{brand}</span></>;
   return <div data-slot="auth-layout" data-variant={variant} data-testid={testId} className={cn('flex min-h-dvh flex-wrap text-foreground', signIn ? 'bg-background' : 'bg-canvas', className)}>
@@ -68,7 +68,7 @@ export interface PlainLayoutProps extends ShellPartProps {
 }
 
 /** 无侧栏的简单布局：60px 顶栏放品牌与账号，主区在画布底色上居中。 */
-export function PlainLayout({ brand, account, width = 'sm', children, className, testId = 'yue-plain-layout' }: PlainLayoutProps) {
+export function PlainLayout({ brand, account, width = 'sm', children, className, testId = 'qian-plain-layout' }: PlainLayoutProps) {
   return <div data-slot="plain-layout" data-testid={testId} className={cn('flex min-h-dvh flex-col bg-canvas text-foreground', className)}>
     <header data-slot="plain-layout-header" className="flex h-15 shrink-0 items-center justify-between gap-4 border-b border-border bg-background px-4 sm:px-6">
       <span className="flex min-w-0 items-center gap-2.5"><BrandMark size={30} /><span className="truncate text-base font-bold">{brand}</span></span>

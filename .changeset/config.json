@@ -1,11 +1,11 @@
 {
   "changelog": "@changesets/cli/changelog",
   "commit": false,
-  "fixed": [["@idadawn/yue-*"]],
+  "fixed": [["@cavailab/qian-*"]],
   "linked": [],
   "access": "restricted",
   "baseBranch": "main",
   "updateInternalDependencies": "patch",
-  "ignore": ["yue-playground"],
+  "ignore": ["qian-playground"],
   "privatePackages": { "version": false, "tag": false }
 }

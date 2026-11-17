@@ -23,7 +23,7 @@ function Demo(props: { value?: string | null; defaultValue?: string | null; onVa
   );
 }
 
-const trigger = () => screen.getByTestId('yue-select-trigger');
+const trigger = () => screen.getByTestId('qian-select-trigger');
 const highlighted = () => screen.getAllByRole('option').find((o) => o.hasAttribute('data-highlighted'));
 
 describe('Select（Base UI 验证门）', () => {
@@ -36,7 +36,7 @@ describe('Select（Base UI 验证门）', () => {
     await userEvent.keyboard('{ArrowDown}');
     const listbox = await screen.findByRole('listbox', { name: '可选水果' });
     expect(trigger().getAttribute('aria-label')).toBe('水果');
-    expect(screen.getByTestId('yue-select-content').hasAttribute('listlabel')).toBe(false);
+    expect(screen.getByTestId('qian-select-content').hasAttribute('listlabel')).toBe(false);
     expect(within(listbox).getAllByRole('option').map((o) => o.textContent)).toEqual(['苹果', '香蕉', '樱桃']);
     await userEvent.keyboard('{ArrowDown}');
     await vi.waitFor(() => expect(highlighted()).toBeDefined());

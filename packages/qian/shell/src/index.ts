@@ -1,4 +1,4 @@
-export const PACKAGE_NAME = '@idadawn/yue-shell' as const;
+export const PACKAGE_NAME = '@cavailab/qian-shell' as const;
 export * from './preferences';
 export * from './menu';
 export * from './layout';

@@ -99,7 +99,7 @@ describe('TabsList variant="line"', () => {
       <TabsPanel value="pending">待审核列表</TabsPanel><TabsPanel value="all">全部列表</TabsPanel></Tabs>);
     expect(screen.getByRole('tablist').getAttribute('data-variant')).toBe('line');
     expect(tab('待审核 3').hasAttribute('data-active')).toBe(true);
-    expect(screen.getAllByTestId('yue-tabs-tab-count').map(node => node.textContent)).toEqual(['3', '18']);
+    expect(screen.getAllByTestId('qian-tabs-tab-count').map(node => node.textContent)).toEqual(['3', '18']);
     await userEvent.click(tab('全部 18'));
     expect(screen.getByRole('tabpanel').textContent).toBe('全部列表');
     const violations = blockingViolations(await runAxe());

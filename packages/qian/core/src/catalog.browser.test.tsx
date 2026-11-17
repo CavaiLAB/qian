@@ -10,10 +10,10 @@ afterEach(() => { cleanup(); vi.restoreAllMocks(); });
 async function openDemo(name: string) {
   if (opening[name]) await userEvent.click(screen.getByRole('button', { name: opening[name] }));
   if (name === 'Select') await userEvent.click(screen.getByRole('combobox'));
-  if (name === 'Combobox') await userEvent.click(screen.getByTestId('yue-combobox-trigger'));
+  if (name === 'Combobox') await userEvent.click(screen.getByTestId('qian-combobox-trigger'));
   if (name === 'Tooltip') { screen.getByRole('button', { name: '查看提示' }).focus(); await screen.findByRole('tooltip'); }
   if (name === 'HoverCard') { await userEvent.hover(screen.getByRole('link')); await screen.findByText('示例用户'); }
-  if (name === 'ContextMenu') { screen.getByTestId('yue-context-menu-trigger').focus(); await userEvent.keyboard('{Shift>}{F10}{/Shift}'); }
+  if (name === 'ContextMenu') { screen.getByTestId('qian-context-menu-trigger').focus(); await userEvent.keyboard('{Shift>}{F10}{/Shift}'); }
   if (['Dialog', 'Sheet', 'Drawer', 'Popover'].includes(name)) await screen.findByRole('dialog');
   if (name === 'AlertDialog') await screen.findByRole('alertdialog');
   if (['Menu', 'DropdownMenu', 'ContextMenu'].includes(name)) await screen.findByRole('menu');
@@ -39,11 +39,11 @@ describe('全组件部件与无障碍', () => {
 describe('基础交互', () => {
   it('关闭图标使用宿主标签，showCloseButton=false 可隐藏且兼容既有调用', () => {
     const view = render(<C.Dialog defaultOpen><C.DialogContent closeLabel="关闭资料"><C.DialogTitle>资料</C.DialogTitle></C.DialogContent></C.Dialog>);
-    expect(screen.getByTestId('yue-dialog-close-button').getAttribute('aria-label')).toBe('关闭资料');
+    expect(screen.getByTestId('qian-dialog-close-button').getAttribute('aria-label')).toBe('关闭资料');
     view.rerender(<C.Dialog defaultOpen><C.DialogContent closeLabel="关闭资料" showCloseButton={false}><C.DialogTitle>资料</C.DialogTitle></C.DialogContent></C.Dialog>);
-    expect(screen.queryByTestId('yue-dialog-close-button')).toBeNull();
+    expect(screen.queryByTestId('qian-dialog-close-button')).toBeNull();
     view.rerender(<C.Dialog defaultOpen><C.DialogContent><C.DialogTitle>资料</C.DialogTitle></C.DialogContent></C.Dialog>);
-    expect(screen.queryByTestId('yue-dialog-close-button')).toBeNull();
+    expect(screen.queryByTestId('qian-dialog-close-button')).toBeNull();
   });
 
   it('render Button 保留 Trigger 与 Close 身份，仍拒绝直接改写 Button 身份', async () => {
@@ -184,6 +184,6 @@ describe('Steps', () => {
     const items = [...list.querySelectorAll('li')];
     expect(items.map(item => item.getAttribute('aria-current'))).toEqual([null, null, 'step', null]);
     expect(items.map(item => item.textContent)).toEqual(['提交申请（已完成）', '平台审核（未通过）', '3开通企业（进行中）', '4登录使用（未开始）']);
-    expect(screen.getAllByTestId('yue-steps-connector')).toHaveLength(3);
+    expect(screen.getAllByTestId('qian-steps-connector')).toHaveLength(3);
   });
 });

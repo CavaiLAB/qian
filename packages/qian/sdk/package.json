@@ -1,12 +1,12 @@
 {
-  "name": "@idadawn/yue-sdk",
+  "name": "@cavailab/qian-sdk",
   "version": "0.1.0",
   "description": "注册表 API、PlatformClient、请求拦截器链、i18n、mock 与运行时配置注入。",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/idadawn/qian.git",
-    "directory": "packages/yue/sdk"
+    "directory": "packages/qian/sdk"
   },
   "type": "module",
   "sideEffects": [
@@ -38,8 +38,8 @@
     "i18next": "catalog:",
     "openapi-fetch": "catalog:",
     "lossless-json": "catalog:",
-    "@idadawn/yue-contracts": "workspace:^",
-    "@idadawn/yue-tokens": "workspace:^"
+    "@cavailab/qian-contracts": "workspace:^",
+    "@cavailab/qian-tokens": "workspace:^"
   },
   "peerDependencies": {
     "react": "^19.0.0",

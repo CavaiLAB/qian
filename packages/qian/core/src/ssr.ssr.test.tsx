@@ -59,7 +59,7 @@ describe('SSR', () => {
         </Tooltip>
       </TooltipProvider>,
     );
-    for (const id of ['yue-menu-trigger', 'yue-select-trigger', 'yue-combobox-input', 'yue-tabs-tab', 'yue-tabs-panel', 'yue-tooltip-trigger']) {
+    for (const id of ['qian-menu-trigger', 'qian-select-trigger', 'qian-combobox-input', 'qian-tabs-tab', 'qian-tabs-panel', 'qian-tooltip-trigger']) {
       expect(html, id).toContain(`data-testid="${id}"`);
     }
     expect(html).toContain('data-slot="menu-trigger"');

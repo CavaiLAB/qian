@@ -1,6 +1,6 @@
 import createClient, { type Client } from 'openapi-fetch';
 import { parse } from 'lossless-json';
-import type { ErrorDetail } from '@idadawn/yue-contracts';
+import type { ErrorDetail } from '@cavailab/qian-contracts';
 
 export type RequestTransport = (request: Request) => Promise<Response>;
 export type RequestMiddleware = (request: Request, next: RequestTransport) => Promise<Response>;

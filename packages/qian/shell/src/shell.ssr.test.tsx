@@ -25,7 +25,7 @@ describe('菜单类型注册表', () => {
 
 describe('Preferences', () => {
   it('namespace 隔离、宿主覆盖、存储读取、更新订阅和清理', () => {
-    const values = new Map([['yue.preferences.a', JSON.stringify({ theme: 'dark', locale: 'en-US', sidebarCollapsed: true, accessToken: 'never-keep' })]]);
+    const values = new Map([['qian.preferences.a', JSON.stringify({ theme: 'dark', locale: 'en-US', sidebarCollapsed: true, accessToken: 'never-keep' })]]);
     const storage = { getItem: (key: string) => values.get(key) ?? null, setItem: (key: string, value: string) => { values.set(key, value); } };
     const a = initPreferences({ namespace: 'a', storage, overrides: { locale: 'zh-CN' } });
     const b = initPreferences({ namespace: 'b', storage });
@@ -33,7 +33,7 @@ describe('Preferences', () => {
     expect(b.getSnapshot().theme).toBe('system');
     const listener = vi.fn(); const dispose = a.subscribe(listener);
     a.update({ theme: 'light', ...{ accessToken: 'new-secret' } }); expect(listener).toHaveBeenCalledTimes(1);
-    expect(values.get('yue.preferences.a')).not.toContain('Token');
+    expect(values.get('qian.preferences.a')).not.toContain('Token');
     dispose(); a.update({ theme: 'dark' }); expect(listener).toHaveBeenCalledTimes(1);
     a.reset(); expect(a.getSnapshot().sidebarCollapsed).toBe(false);
   });
@@ -43,15 +43,15 @@ describe('Preferences', () => {
     const fresh = initPreferences({ namespace: 'deploy', storage, defaults: { locale: 'en-US' } });
     expect(fresh.getSnapshot().locale).toBe('en-US'); expect(writes).toEqual([]);
     fresh.update({ theme: 'dark' });
-    expect(JSON.parse(values.get('yue.preferences.deploy')!)).toEqual({ theme: 'dark' });
+    expect(JSON.parse(values.get('qian.preferences.deploy')!)).toEqual({ theme: 'dark' });
     // 部署缺省以后变了：用户没改过的语言跟着新缺省走，改过的主题保留。
     expect(initPreferences({ namespace: 'deploy', storage, defaults: { locale: 'zh-TW' } }).getSnapshot()).toMatchObject({ theme: 'dark', locale: 'zh-TW' });
     fresh.update({ sidebarCollapsed: true });
-    expect(JSON.parse(values.get('yue.preferences.deploy')!)).toEqual({ theme: 'dark', sidebarCollapsed: true });
+    expect(JSON.parse(values.get('qian.preferences.deploy')!)).toEqual({ theme: 'dark', sidebarCollapsed: true });
     fresh.reset();
-    expect(JSON.parse(values.get('yue.preferences.deploy')!)).toEqual({});
+    expect(JSON.parse(values.get('qian.preferences.deploy')!)).toEqual({});
     expect(fresh.getSnapshot()).toEqual({ theme: 'system', locale: 'en-US', sidebarCollapsed: false });
-    values.set('yue.preferences.deploy', JSON.stringify({ locale: 'zh-TW' }));
+    values.set('qian.preferences.deploy', JSON.stringify({ locale: 'zh-TW' }));
     expect(initPreferences({ namespace: 'deploy', storage, defaults: { locale: 'en-US' } }).getSnapshot().locale).toBe('zh-TW');
     expect(initPreferences({ namespace: 'other', storage: null, defaults: { locale: 'en-US' } }).getServerSnapshot().locale).toBe('en-US');
   });
@@ -78,10 +78,10 @@ it('全部外壳、页面、认证与反馈组件可 SSR，密码不出现在 HT
   expect(auth).toContain('data-slot="authentication"');
   const password = renderToString(<PasswordLogin i18n={i18n} onSubmit={async () => {}} />);
   expect(password).toContain('type="password"'); expect(password).toContain('autoComplete="current-password"');
-  expect(renderToString(<PasswordLogin i18n={i18n} onSubmit={async () => {}} />)).toContain('yue-password-login');
-  expect(renderToString(<SsoCallback i18n={i18n} provider={provider} callback={{ code: 'one', state: 'two' }} onResult={noop} onBack={noop} />)).toContain('yue-sso-callback');
+  expect(renderToString(<PasswordLogin i18n={i18n} onSubmit={async () => {}} />)).toContain('qian-password-login');
+  expect(renderToString(<SsoCallback i18n={i18n} provider={provider} callback={{ code: 'one', state: 'two' }} onResult={noop} onBack={noop} />)).toContain('qian-sso-callback');
   expect(renderToString(<TenantSelection i18n={i18n} tenants={session.tenants} onSelect={noop} onBack={noop} />)).toContain('租户 A');
-  expect(renderToString(<TenantSwitcher i18n={i18n} provider={provider} session={session} onChanged={noop} />)).toContain('yue-tenant-switcher');
+  expect(renderToString(<TenantSwitcher i18n={i18n} provider={provider} session={session} onChanged={noop} />)).toContain('qian-tenant-switcher');
   expect(renderToString(<OfflineBanner i18n={i18n} offline />)).toContain('网络连接');
   expect(renderToString(<UpdateBanner i18n={i18n} available onReload={noop} />)).toContain('新版本');
   expect(renderToString(<ShellErrorBoundary i18n={i18n}><span>可用</span></ShellErrorBoundary>)).toContain('可用');
@@ -92,19 +92,19 @@ it('认证页布局、简单布局、品牌标识与工作空间卡片可 SSR；
   const i18n = makeI18n(); const noop = () => {};
   const signIn = renderToString(<AuthLayout brand="Qian" headline="标题" description="说明" footer={<span>版权</span>} toolbar={<span>工具</span>} legal="条款">表单</AuthLayout>);
   for (const slot of ['auth-layout', 'auth-layout-aside', 'auth-layout-main', 'auth-layout-brand', 'auth-layout-headline', 'auth-layout-decoration', 'auth-layout-toolbar', 'brand-mark']) expect(signIn).toContain(`data-slot="${slot}"`);
-  expect(signIn).toContain('data-variant="sign-in"'); expect(signIn).toContain('表单'); expect(signIn).toContain('条款'); expect(signIn).toContain('yue-auth-layout');
+  expect(signIn).toContain('data-variant="sign-in"'); expect(signIn).toContain('表单'); expect(signIn).toContain('条款'); expect(signIn).toContain('qian-auth-layout');
   const form = renderToString(<AuthLayout brand="Qian" brandHref="/login" headline="申请开通" variant="form">内容</AuthLayout>);
   expect(form).toContain('data-variant="form"'); expect(form).toContain('href="/login"');
   const plain = renderToString(<PlainLayout brand="Qian" account={<span>李雷</span>} width="md">进度</PlainLayout>);
   for (const slot of ['plain-layout', 'plain-layout-main']) expect(plain).toContain(`data-slot="${slot}"`);
   expect(plain).toContain('李雷'); expect(plain).toContain('进度');
   const mark = renderToString(<BrandMark />);
-  expect(mark).toContain('aria-hidden="true"'); expect(mark).toContain('data-slot="brand-mark"'); expect(mark).toContain('data-testid="yue-brand-mark"');
+  expect(mark).toContain('aria-hidden="true"'); expect(mark).toContain('data-slot="brand-mark"'); expect(mark).toContain('data-testid="qian-brand-mark"');
   expect(renderToString(<BrandMark testId="brand" />)).toContain('data-testid="brand"');
   const card = renderToString(<WorkspaceCard title="星河科技" description="试用 · xinghe" tile={<span>星</span>} label="切换工作空间" onClick={noop} />);
-  expect(card).toContain('data-slot="workspace-card"'); expect(card).toContain('<button'); expect(card).toContain('yue-workspace-card');
+  expect(card).toContain('data-slot="workspace-card"'); expect(card).toContain('<button'); expect(card).toContain('qian-workspace-card');
   expect(renderToString(<WorkspaceCard title="平台控制台" tile={<span>平</span>} label="切换工作空间" href="/select" />)).toContain('href="/select"');
   const shell = renderToString(<PreferencesProvider store={initPreferences({ namespace: 'ssr-locale', storage: null })}><AppShell i18n={i18n} brand="Qian" menu={[]} userName="李雷"
     workspace={<WorkspaceCard title="星河科技" tile={<span>星</span>} label="切换工作空间" onClick={noop} />} userMenu={<LocaleMenu i18n={i18n} />} /></PreferencesProvider>);
-  expect(shell).toContain('data-slot="workspace-card"'); expect(shell).not.toContain('yue-locale-menu');
+  expect(shell).toContain('data-slot="workspace-card"'); expect(shell).not.toContain('qian-locale-menu');
 });

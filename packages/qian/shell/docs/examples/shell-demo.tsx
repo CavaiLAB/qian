@@ -1,8 +1,8 @@
 import { useEffect, useState } from 'react';
-import { Avatar, AvatarFallback, avatarTint, Breadcrumb, Button, Card, Icon } from '@idadawn/yue-core';
-import { createI18n, createMockTransport, PlatformClient } from '@idadawn/yue-sdk';
-import { initializeTheme } from '@idadawn/yue-tokens';
-import { AppShell, AuthLayout, Authentication, ColPage, FallbackPage, InboxPopover, initPreferences, installShellLanguagePacks, LeftTree, LocaleMenu, OfflineBanner, Page, PageHeader, PlainLayout, PreferenceControls, PreferencesProvider, SessionExpiredDialog, ShellErrorBoundary, TenantSwitcher, UpdateBanner, usePreferences, WorkspaceCard, type AuthProvider, type AuthSession, type FallbackStatus } from '@idadawn/yue-shell';
+import { Avatar, AvatarFallback, avatarTint, Breadcrumb, Button, Card, Icon } from '@cavailab/qian-core';
+import { createI18n, createMockTransport, PlatformClient } from '@cavailab/qian-sdk';
+import { initializeTheme } from '@cavailab/qian-tokens';
+import { AppShell, AuthLayout, Authentication, ColPage, FallbackPage, InboxPopover, initPreferences, installShellLanguagePacks, LeftTree, LocaleMenu, OfflineBanner, Page, PageHeader, PlainLayout, PreferenceControls, PreferencesProvider, SessionExpiredDialog, ShellErrorBoundary, TenantSwitcher, UpdateBanner, usePreferences, WorkspaceCard, type AuthProvider, type AuthSession, type FallbackStatus } from '@cavailab/qian-shell';
 
 interface DemoProps { kind?: string; status?: number | string; authenticated?: boolean; multiTenant?: boolean; callbackFailure?: boolean; managed?: boolean; offline?: boolean; invalid?: boolean; disabled?: boolean }
 type Post<Input, Output> = { post: { requestBody: { content: { 'application/json': Input } }; responses: { 200: { content: { 'application/json': Output } } } } };
@@ -76,13 +76,13 @@ function Demo({ initial }: { initial: DemoProps }) {
   const [broken, setBroken] = useState(false);
   const [fallback, setFallback] = useState<FallbackStatus | null>((initial.status as FallbackStatus | undefined) ?? null);
   const [callback] = useState(() => { const query = new URLSearchParams(location.search); return query.has('code') || query.has('error') ? { code: query.get('code') ?? undefined, state: query.get('auth_state') ?? undefined, error: query.get('error') ?? undefined } : undefined; });
-  useEffect(() => { const controller = initializeTheme({ storageKey: 'yue-shell-demo-theme', defaultTheme: preferences.theme }); controller.setTheme(preferences.theme); return () => controller.dispose(); }, [preferences.theme]);
+  useEffect(() => { const controller = initializeTheme({ storageKey: 'qian-shell-demo-theme', defaultTheme: preferences.theme }); controller.setTheme(preferences.theme); return () => controller.dispose(); }, [preferences.theme]);
   const clearCallback = () => { const url = new URL(location.href); for (const key of ['code', 'auth_state', 'error']) url.searchParams.delete(key); history.replaceState(null, '', url.pathname + url.search + url.hash); };
   const authenticate = (next: AuthSession) => { setSession(next); clearCallback(); };
   if (fallback) return <main><FallbackPage status={fallback} i18n={i18n} onHome={() => setFallback(null)} onRetry={() => { setFallback(null); setPing('已重试'); }} /></main>;
   // 认证页按视图套框架：登录、回调用品牌深色面的 AuthLayout，选择工作空间用顶栏带「返回登录」的 PlainLayout。
   if (!session && initial.kind !== 'FallbackPage') return <Authentication provider={mock.provider} i18n={i18n} callback={callback} onAuthenticated={authenticate} onRedirect={url => location.assign(url)} onCallbackConsumed={clearCallback}
-    loginProps={{ rememberKey: 'yue-shell-demo-account' }} selectionProps={{ hideBack: true }}
+    loginProps={{ rememberKey: 'qian-shell-demo-account' }} selectionProps={{ hideBack: true }}
     frame={(view, content, { back }) => view === 'select-tenant'
       ? <PlainLayout brand="Qian 工作台" account={<Button variant="ghost" size="sm" onClick={back}><Icon name="logOut" />返回登录</Button>}>{content}</PlainLayout>
       : <AuthLayout brand="Qian 工作台" headline="一个账号，进入所有工作空间" description="平台控制台与各企业共用同一套登录与权限。" toolbar={<PreferenceControls i18n={i18n} localeStyle="label" />} legal="演示账号 demo，密码 demo-password。认证请求使用 SDK mock。">{content}</AuthLayout>} />;

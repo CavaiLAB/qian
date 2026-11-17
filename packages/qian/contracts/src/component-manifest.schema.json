@@ -22,7 +22,7 @@
       "pattern": "^[A-Z][A-Za-z0-9]+$"
     },
     "package": {
-      "const": "@idadawn/yue-core"
+      "const": "@cavailab/qian-core"
     },
     "version": {
       "type": "string",
@@ -73,7 +73,7 @@
       "uniqueItems": true,
       "items": {
         "type": "string",
-        "pattern": "^--yue-"
+        "pattern": "^--qian-"
       }
     },
     "examples": {

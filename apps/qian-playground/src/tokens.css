@@ -1,5 +1,5 @@
-@import '@idadawn/yue-tokens/index.css';
-html { background: var(--background); color: var(--foreground); font-family: var(--yue-p-font-sans); font-size: .875rem; }
+@import '@cavailab/qian-tokens/index.css';
+html { background: var(--background); color: var(--foreground); font-family: var(--qian-p-font-sans); font-size: .875rem; }
 body { margin: 0; }
 .token-lab { max-width: 64rem; margin: auto; padding: 2.5rem 1.5rem; }
 .token-lab header { margin-bottom: 2rem; }
@@ -10,7 +10,7 @@ body { margin: 0; }
 .token-lab label { margin-right: .5rem; }
 .token-lab select { margin-right: 1.5rem; padding: .5rem; background: var(--background); color: var(--foreground); border: 1px solid var(--input); border-radius: var(--radius); }
 .token-actions, .token-tones { display: flex; gap: .75rem; flex-wrap: wrap; margin: 1rem 0; }
-.token-lab button { padding: .7rem 1rem; border: 1px solid currentColor; border-radius: var(--yue-button-radius); font: inherit; }
+.token-lab button { padding: .7rem 1rem; border: 1px solid currentColor; border-radius: var(--qian-button-radius); font: inherit; }
 .token-lab button:focus-visible, .token-lab select:focus-visible { outline: 3px solid var(--ring); outline-offset: 3px; }
 .token-lab .primary { background: var(--primary); color: var(--primary-foreground); }
 .token-lab .secondary { background: var(--secondary); color: var(--secondary-foreground); }

@@ -1,7 +1,7 @@
 import { useId, useMemo, useState } from 'react';
-import { Button, Icon, Popover, PopoverContent, PopoverTrigger, cn } from '@idadawn/yue-core';
-import { Tree, TreeSelect, findTreePath, type TreeNode } from '@idadawn/yue-data';
-import type { PlatformClient } from '@idadawn/yue-sdk';
+import { Button, Icon, Popover, PopoverContent, PopoverTrigger, cn } from '@cavailab/qian-core';
+import { Tree, TreeSelect, findTreePath, type TreeNode } from '@cavailab/qian-data';
+import type { PlatformClient } from '@cavailab/qian-sdk';
 import { loadOrganizations, type DirectoryOrganization } from '../api';
 import { useRemoteResource } from '../remote-options';
 import { selectedValues, type BizSelectBaseProps, type Selection } from './option-combobox';
@@ -25,10 +25,10 @@ export type OrganizeSelectProps = BizSelectBaseProps & Selection & {
   client: PlatformClient;
 };
 
-/** 组织选择器：单选复用 @yue/data 的 TreeSelect，多选在同一 Tree 上做不级联的复选（成员可归属多个组织）。 */
+/** 组织选择器：单选复用 @cavailab/qian-data 的 TreeSelect，多选在同一 Tree 上做不级联的复选（成员可归属多个组织）。 */
 export function OrganizeSelect(props: OrganizeSelectProps) {
   const { client, i18n, label, disabled, className, testId } = props;
-  const id = testId ?? 'yue-organize-select';
+  const id = testId ?? 'qian-organize-select';
   const remote = useRemoteResource({ client, load: (current, { signal }) => loadOrganizations(current, signal) });
   const organizations = remote.data;
   const nodes = useMemo(() => buildOrganizationTree(organizations ?? []), [organizations]);

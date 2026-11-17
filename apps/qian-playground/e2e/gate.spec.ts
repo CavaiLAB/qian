@@ -3,7 +3,7 @@ import AxeBuilder from '@axe-core/playwright';
 import { expect, test, type Page } from '@playwright/test';
 
 // Base UI 验证门的页面级证据（docs/prd/specs/yue.md §4.4）：每个原语打开后的整页 axe 扫描 + 键盘主路径。
-// 组件级的细粒度键盘用例在 packages/yue/*/src/**/*.browser.test.tsx。
+// 组件级的细粒度键盘用例在 packages/qian/*/src/**/*.browser.test.tsx。
 
 // Base UI 的 Tab 哨兵立即转移焦点；只排除这四类内部哨兵，保留 aria-hidden-focus 规则。
 const focusGuards = '[data-base-ui-focus-guard][aria-hidden="true"][data-type]';
@@ -16,7 +16,7 @@ async function expectNoBlocking(page: Page, step: string) {
 
 test.beforeEach(async ({ page }) => {
   await page.goto('/');
-  await expect(page.getByRole('heading', { level: 1 })).toHaveText('yue · Base UI 验证门');
+  await expect(page.getByRole('heading', { level: 1 })).toHaveText('qian · Base UI 验证门');
 });
 
 test('整页（关闭态）无 critical / serious', async ({ page }) => {
@@ -43,7 +43,7 @@ test('Menu：键盘打开、进子菜单、选中', async ({ page }) => {
 });
 
 test('Select：键盘打开、选中、回写', async ({ page }) => {
-  const trigger = page.getByTestId('yue-select-trigger');
+  const trigger = page.getByTestId('qian-select-trigger');
   await trigger.focus();
   await page.keyboard.press('ArrowDown');
   await expect(page.getByRole('listbox')).toBeVisible();
@@ -56,7 +56,7 @@ test('Select：键盘打开、选中、回写', async ({ page }) => {
 });
 
 test('Combobox：输入过滤、选中、空态', async ({ page }) => {
-  const trigger = page.getByTestId('yue-combobox-trigger');
+  const trigger = page.getByTestId('qian-combobox-trigger');
   await trigger.click();
   const input = page.getByRole('combobox', { name: '水果筛选' });
   await input.fill('樱');
@@ -112,7 +112,7 @@ test('Tree：方向键展开进入、Enter 选中', async ({ page }) => {
 
 
 test('Select 的 Tab 哨兵不接收持久焦点，焦点不会留在 aria-hidden 内容中', async ({ page }) => {
-  const trigger = page.getByTestId('yue-select-trigger');
+  const trigger = page.getByTestId('qian-select-trigger');
   for (const key of ['Tab', 'Shift+Tab']) {
     await trigger.focus();
     await page.keyboard.press('ArrowDown');

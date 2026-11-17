@@ -1,12 +1,12 @@
 {
-  "name": "@idadawn/yue-data",
+  "name": "@cavailab/qian-data",
   "version": "0.1.0",
   "description": "DataTable 基础版、Tree 族、日期族、Upload 与 ImportWizard。",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/idadawn/qian.git",
-    "directory": "packages/yue/data"
+    "directory": "packages/qian/data"
   },
   "type": "module",
   "sideEffects": [
@@ -34,15 +34,15 @@
     "typecheck": "tsc -p tsconfig.json --noEmit",
     "publint": "publint --strict --pack pnpm",
     "test": "vitest run",
-    "contracts:generate": "pnpm --workspace-root openapi:generate --source packages/yue/data/contracts/upload.openapi.json --output packages/yue/data/src/upload.generated.ts",
-    "contracts:check": "pnpm --workspace-root openapi:generate --source packages/yue/data/contracts/upload.openapi.json --output packages/yue/data/src/upload.generated.ts --check"
+    "contracts:generate": "pnpm --workspace-root openapi:generate --source packages/qian/data/contracts/upload.openapi.json --output packages/qian/data/src/upload.generated.ts",
+    "contracts:check": "pnpm --workspace-root openapi:generate --source packages/qian/data/contracts/upload.openapi.json --output packages/qian/data/src/upload.generated.ts --check"
   },
   "dependencies": {
-    "@idadawn/yue-core": "workspace:^",
-    "@idadawn/yue-sdk": "workspace:^",
+    "@cavailab/qian-core": "workspace:^",
+    "@cavailab/qian-sdk": "workspace:^",
     "@tanstack/react-table": "catalog:",
     "@tanstack/react-virtual": "catalog:",
-    "@idadawn/yue-contracts": "workspace:^"
+    "@cavailab/qian-contracts": "workspace:^"
   },
   "peerDependencies": {
     "react": "^19.0.0",
@@ -66,7 +66,7 @@
     "vitest": "catalog:",
     "@tailwindcss/vite": "catalog:",
     "tailwindcss": "catalog:",
-    "@idadawn/yue-tokens": "workspace:^",
+    "@cavailab/qian-tokens": "workspace:^",
     "ajv": "catalog:"
   }
 }

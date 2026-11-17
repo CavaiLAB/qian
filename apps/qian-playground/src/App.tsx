@@ -28,12 +28,12 @@ import {
   TooltipProvider,
   TooltipTrigger,
   type TextDirection,
-} from '@idadawn/yue-core';
-import { Tree, type TreeNode } from '@idadawn/yue-data';
+} from '@cavailab/qian-core';
+import { Tree, type TreeNode } from '@cavailab/qian-data';
 import { useState } from 'react';
 
 // Base UI 验证门靶场（docs/prd/specs/yue.md §4.4）：六个原语各一节，Playwright + axe 与 Lighthouse 对本页跑。
-// 文案是演示数据，不走 i18n（i18n 约定随 @idadawn/yue-sdk 落地）。
+// 文案是演示数据，不走 i18n（i18n 约定随 @cavailab/qian-sdk 落地）。
 
 const FRUITS = ['苹果', '香蕉', '樱桃', '葡萄', '橙子'];
 
@@ -71,7 +71,7 @@ export function App() {
       <main dir={dir} className="mx-auto flex max-w-3xl flex-col gap-6 p-6 text-neutral-900">
         <a href="/core.html" className="text-sm underline">查看完整基础组件目录</a>
         <header className="flex items-center justify-between">
-          <h1 className="text-xl font-semibold">yue · Base UI 验证门</h1>
+          <h1 className="text-xl font-semibold">qian · Base UI 验证门</h1>
           <label className="flex items-center gap-2 text-sm">
             <input type="checkbox" checked={dir === 'rtl'} onChange={(e) => setDir(e.target.checked ? 'rtl' : 'ltr')} data-testid="gate-rtl" />
             RTL

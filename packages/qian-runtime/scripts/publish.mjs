@@ -7,11 +7,11 @@ import path from 'node:path';
 const pkg=JSON.parse(readFileSync(new URL('../package.json',import.meta.url),'utf8'));
 assert.equal(process.env.GITHUB_REF,'refs/heads/main');
 assert.equal(process.env.GITHUB_REPOSITORY,'idadawn/qian');
-assert.equal(pkg.name,'@idadawn/qian-runtime');
+assert.equal(pkg.name,'@cavailab/qian-runtime');
 assert.equal(pkg.version,process.env.RELEASE_VERSION);
 assert(/^\d+\.\d+\.\d+$/.test(pkg.version));
 assert(process.env.NODE_AUTH_TOKEN,'缺少 Actions 包发布凭据');
-const archive=path.join(process.env.RUNNER_TEMP,'qian-runtime',`idadawn-qian-runtime-${pkg.version}.tgz`);
+const archive=path.join(process.env.RUNNER_TEMP,'qian-runtime',`cavailab-qian-runtime-${pkg.version}.tgz`);
 const integrity='sha512-'+createHash('sha512').update(readFileSync(archive)).digest('base64');
 // 包 REST 元数据不保证包含 repository；仓库声明由实际上传制品证明。
 const artifact=JSON.parse(execFileSync('tar',['-xOf',archive,'package/package.json'],{encoding:'utf8'}));

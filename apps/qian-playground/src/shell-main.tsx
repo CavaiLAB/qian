@@ -1,10 +1,10 @@
 import { createRoot } from 'react-dom/client';
 import { lazy, Suspense } from 'react';
-import scenarios from '../../../packages/yue/shell/docs/scenarios.json';
+import scenarios from '../../../packages/qian/shell/docs/scenarios.json';
 import './index.css';
 
 // 示例按页面加载；Authentication 内部继续按认证路由懒加载密码表单。
-const ShellDemo = lazy(() => import('../../../packages/yue/shell/docs/examples/shell-demo'));
+const ShellDemo = lazy(() => import('../../../packages/qian/shell/docs/examples/shell-demo'));
 const query = new URLSearchParams(location.search);
 const theme = query.get('theme');
 if (theme === 'dark' || theme === 'light') { document.documentElement.dataset.theme = theme; document.documentElement.classList.toggle('dark', theme === 'dark'); }

@@ -1,7 +1,7 @@
 import { useMemo, useState, type CSSProperties, type ReactNode } from 'react';
-import { Button, Checkbox, Icon, Input, Select, SelectTrigger, SelectContent, SelectItem, Pagination, Popover, PopoverTrigger, PopoverContent, cn, useDirection } from '@idadawn/yue-core';
-import type { DataColumnMeta } from '@idadawn/yue-contracts';
-import type { PlatformI18n } from '@idadawn/yue-sdk';
+import { Button, Checkbox, Icon, Input, Select, SelectTrigger, SelectContent, SelectItem, Pagination, Popover, PopoverTrigger, PopoverContent, cn, useDirection } from '@cavailab/qian-core';
+import type { DataColumnMeta } from '@cavailab/qian-contracts';
+import type { PlatformI18n } from '@cavailab/qian-sdk';
 import { columnFilteringFeature, columnPinningFeature, columnSizingFeature, columnVisibilityFeature, functionalUpdate, rowPaginationFeature, rowSelectionFeature, rowSortingFeature, tableFeatures, useTable, type ColumnDef, type RowSelectionState } from '@tanstack/react-table';
 
 const features = tableFeatures({ columnFilteringFeature, columnPinningFeature, columnSizingFeature, columnVisibilityFeature, rowPaginationFeature, rowSelectionFeature, rowSortingFeature });
@@ -45,7 +45,7 @@ export interface DataTableProps<T extends object> {
 }
 
 /** 只接收服务端当前页；分页、排序、筛选变化交给消费方通过 PlatformClient 取数。 */
-export function DataTable<T extends object>({ columns, data, total, query, onQueryChange, getRowId, i18n, label, loading, error, onRetry, selectable = false, selectedIds, onSelectionChange, toolbar, header, toolbarEnd, columnToggle = true, density = 'standard', className, testId = 'yue-data-table' }: DataTableProps<T>) {
+export function DataTable<T extends object>({ columns, data, total, query, onQueryChange, getRowId, i18n, label, loading, error, onRetry, selectable = false, selectedIds, onSelectionChange, toolbar, header, toolbarEnd, columnToggle = true, density = 'standard', className, testId = 'qian-data-table' }: DataTableProps<T>) {
   const direction = useDirection();
   const [selection, setSelection] = useState<RowSelectionState>({});
   const selected = selectedIds ? Object.fromEntries(selectedIds.map((id) => [id, true as const])) : selection;
@@ -73,8 +73,8 @@ export function DataTable<T extends object>({ columns, data, total, query, onQue
   const state = loading ? 'loading' : error ? 'error' : data.length ? 'ready' : 'empty';
   const filters = table.getAllLeafColumns().filter(column => column.getCanFilter());
   const pageSizes = [...new Set([query.pageSize, 10, 20, 50, 100])].sort((a, b) => a - b);
-  // 行高至少为 --yue-table-row-height（标准 40px、紧凑 32px）；单元格按密度给上下内边距，两行内容时自然撑高。
-  const cell = cn('px-4 align-middle text-sm first:ps-5 last:pe-5 [[data-yue-density=compact]_&]:py-1', density === 'comfortable' ? 'py-3.5' : 'py-3');
+  // 行高至少为 --qian-table-row-height（标准 40px、紧凑 32px）；单元格按密度给上下内边距，两行内容时自然撑高。
+  const cell = cn('px-4 align-middle text-sm first:ps-5 last:pe-5 [[data-qian-density=compact]_&]:py-1', density === 'comfortable' ? 'py-3.5' : 'py-3');
   const align = (id: string) => columns.find(item => item.field === id)?.align === 'end' ? 'text-end' : 'text-start';
   return <section className={cn('overflow-hidden rounded-xl border border-border bg-card text-card-foreground', className)} data-slot="data-table" data-testid={testId} aria-label={label} aria-busy={!!loading}>
     {header && <div data-slot="data-table-header">{header}</div>}
@@ -102,7 +102,7 @@ export function DataTable<T extends object>({ columns, data, total, query, onQue
             {column.getCanSort() ? <Button variant="ghost" size="sm" className="-my-1 -ms-2 h-7.5 px-2 font-medium text-caption-foreground" onClick={column.getToggleSortingHandler()}>{i18n.t(String(column.columnDef.header))}{column.getIsSorted() === 'asc' ? ' ↑' : column.getIsSorted() === 'desc' ? ' ↓' : ''}</Button> : i18n.t(String(column.columnDef.header))}
           </th>)}
         </tr></thead>
-        <tbody>{state === 'ready' ? table.getRowModel().rows.map(row => <tr key={row.id} data-slot="data-table-row" data-testid={`${testId}-row`} data-state={row.getIsSelected() ? 'selected' : undefined} className="group h-(--yue-table-row-height) border-b border-border/70 transition-colors hover:bg-muted/40 data-[state=selected]:bg-muted">
+        <tbody>{state === 'ready' ? table.getRowModel().rows.map(row => <tr key={row.id} data-slot="data-table-row" data-testid={`${testId}-row`} data-state={row.getIsSelected() ? 'selected' : undefined} className="group h-(--qian-table-row-height) border-b border-border/70 transition-colors hover:bg-muted/40 data-[state=selected]:bg-muted">
           {selectable && <td className={cn(cell, 'w-10')}><Checkbox aria-label={i18n.t('data.selectRow', { row: row.index + 1 })} checked={row.getIsSelected()} onCheckedChange={checked => row.toggleSelected(!!checked)} /></td>}
           {visible.map(column => { const definition = columns.find(item => item.field === column.id)!; const value = row.getValue(column.id); return <td key={column.id} className={cn(cell, align(column.id), column.getIsPinned() && 'bg-card group-hover:bg-linear-to-b group-hover:from-muted/40 group-hover:to-muted/40 group-data-[state=selected]:bg-muted')} style={pinned(column.id)}>{definition.render ? definition.render(row.original) : value === null || value === undefined ? '' : String(value)}</td>; })}
         </tr>) : <tr><td colSpan={Math.max(1, visible.length + (selectable ? 1 : 0))} className="h-28 p-8 text-center text-muted-foreground"><div role={state === 'error' ? 'alert' : 'status'} data-slot={`data-table-${state}`} data-testid={`${testId}-${state}`}>{state === 'error' ? error : i18n.t(`data.${state}`)}{state === 'error' && onRetry && <Button variant="outline" className="ml-3" onClick={onRetry}>{i18n.t('common.retry')}</Button>}</div></td></tr>}</tbody>

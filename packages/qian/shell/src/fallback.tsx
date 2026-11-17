@@ -1,12 +1,12 @@
 import { Component, useSyncExternalStore, type ErrorInfo, type ReactNode } from 'react';
-import { Alert, Button, cn, Icon } from '@idadawn/yue-core/shell';
-import type { PlatformI18n } from '@idadawn/yue-sdk';
+import { Alert, Button, cn, Icon } from '@cavailab/qian-core/shell';
+import type { PlatformI18n } from '@cavailab/qian-sdk';
 import { useShellLocale, type ShellPartProps } from './layout';
 
 export type FallbackStatus = 403 | 404 | 500 | 'offline';
 export interface FallbackPageProps extends ShellPartProps { status: FallbackStatus; i18n: PlatformI18n; onRetry?: () => void; onHome?: () => void }
 const keys = { 403: 'forbidden', 404: 'notFound', 500: 'serverError', offline: 'offline' } as const;
-export function FallbackPage({ status, i18n, onRetry, onHome, className, testId = 'yue-fallback-page', children }: FallbackPageProps) {
+export function FallbackPage({ status, i18n, onRetry, onHome, className, testId = 'qian-fallback-page', children }: FallbackPageProps) {
   useShellLocale(i18n);
   const key = keys[status];
   return <section data-slot="fallback-page" data-testid={testId} className={cn('flex min-h-80 flex-col items-center justify-center gap-4 rounded-lg border border-border bg-card p-8 text-center', className)}>
@@ -17,13 +17,13 @@ export function FallbackPage({ status, i18n, onRetry, onHome, className, testId 
   </section>;
 }
 function subscribeOnline(listener: () => void) { window.addEventListener('online', listener); window.addEventListener('offline', listener); return () => { window.removeEventListener('online', listener); window.removeEventListener('offline', listener); }; }
-export function OfflineBanner({ i18n, offline, onRetry, className, testId = 'yue-offline-banner' }: ShellPartProps & { i18n: PlatformI18n; offline?: boolean; onRetry?: () => void }) {
+export function OfflineBanner({ i18n, offline, onRetry, className, testId = 'qian-offline-banner' }: ShellPartProps & { i18n: PlatformI18n; offline?: boolean; onRetry?: () => void }) {
   useShellLocale(i18n);
   const online = useSyncExternalStore(subscribeOnline, () => navigator.onLine, () => true);
   if (!(offline ?? !online)) return null;
   return <div data-slot="offline-banner" data-testid={testId}><Alert tone="warn" className={cn('items-center', className)} action={onRetry && <Button variant="outline" onClick={onRetry}>{i18n.t('common.retry')}</Button>}>{i18n.t('shell.offline')}</Alert></div>;
 }
-export function UpdateBanner({ i18n, available, onReload, className, testId = 'yue-update-banner' }: ShellPartProps & { i18n: PlatformI18n; available: boolean; onReload: () => void }) {
+export function UpdateBanner({ i18n, available, onReload, className, testId = 'qian-update-banner' }: ShellPartProps & { i18n: PlatformI18n; available: boolean; onReload: () => void }) {
   useShellLocale(i18n);
   if (!available) return null;
   return <div data-slot="update-banner" data-testid={testId}><Alert className={cn('items-center', className)} action={<Button variant="outline" onClick={onReload}>{i18n.t('shell.reload')}</Button>}>{i18n.t('shell.update')}</Alert></div>;

@@ -3,7 +3,7 @@ import type { TooltipPopupProps, TooltipPositionerProps, TooltipProviderProps, T
 import { createContext, useContext, useId, useState } from 'react';
 import { cn } from '../lib/cn';
 import { button, surface } from '../lib/styles';
-import type { YueProps } from '../lib/test-id';
+import type { QianProps } from '../lib/test-id';
 
 // 工具提示（Base UI Tooltip）。验证门项：聚焦即显示（键盘可达）、Escape 关闭、role=tooltip 与 aria-describedby 关联。
 // 验证门发现：Base UI 1.8 的 Tooltip 有意不输出 role="tooltip" 与 aria-describedby（它把提示视为非必要的补充信息）。
@@ -41,19 +41,19 @@ export function Tooltip({ open: openProp, defaultOpen, onOpenChange, ...props }:
   );
 }
 
-export function TooltipTrigger({ className, testId, ...props }: YueProps<TooltipTriggerProps>) {
+export function TooltipTrigger({ className, testId, ...props }: QianProps<TooltipTriggerProps>) {
   const link = useContext(TooltipLinkContext);
   return (
     <BaseTooltip.Trigger {...props}
       data-slot="tooltip-trigger"
-      data-testid={testId ?? 'yue-tooltip-trigger'}
+      data-testid={testId ?? 'qian-tooltip-trigger'}
       aria-describedby={link?.open ? link.id : undefined}
       className={cn(button, 'border-border bg-background shadow-xs', className)}
     />
   );
 }
 
-export interface TooltipContentProps extends YueProps<TooltipPopupProps> {
+export interface TooltipContentProps extends QianProps<TooltipPopupProps> {
   side?: TooltipPositionerProps['side'];
   align?: TooltipPositionerProps['align'];
   sideOffset?: number;
@@ -67,7 +67,7 @@ export function TooltipContent({ className, side, align, sideOffset = 6, testId,
           id={link?.id}
           role="tooltip"
           data-slot="tooltip-content"
-          data-testid={testId ?? 'yue-tooltip-content'}
+          data-testid={testId ?? 'qian-tooltip-content'}
           className={cn(surface, 'px-3 py-1.5 text-xs', className)}
           {...props}
         />

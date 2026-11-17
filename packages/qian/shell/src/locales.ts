@@ -1,4 +1,4 @@
-import type { LanguagePack, Locale, PlatformI18n } from '@idadawn/yue-sdk';
+import type { LanguagePack, Locale, PlatformI18n } from '@cavailab/qian-sdk';
 
 export const shellLanguagePacks: Record<Locale, LanguagePack> = {
   'zh-CN': {

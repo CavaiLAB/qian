@@ -1,6 +1,6 @@
 import { defineConfig } from '@playwright/test';
 
-// 统一 Linux 浏览器与系统字体环境；本机和 CI 均由 scripts/yue-visual.mjs 启动。
+// 统一 Linux 浏览器与系统字体环境；本机和 CI 均由 scripts/qian-visual.mjs 启动。
 export default defineConfig({
   testDir: './visual', fullyParallel: true, workers: 2, timeout: 30_000, retries: 0,
   forbidOnly: true, reporter: 'list', outputDir: './.visual-results/results',

@@ -178,11 +178,11 @@ it('没有 changePassword 的 provider 收到改密要求时按登录失败提�
 it('站内信弹窗：未读角标、空态与消息条目键盘可达，axe 通过', async () => {
   const open = vi.fn(); const i18n = makeI18n();
   const view = render(<InboxPopover i18n={i18n} messages={[{ id: '1', title: '审批提醒', body: '有 1 条待办', time: '09:00', unread: true }, { id: '2', title: '系统公告' }]} onOpen={open} />);
-  expect(screen.getByTestId('yue-inbox-unread').textContent).toBe('1');
+  expect(screen.getByTestId('qian-inbox-unread').textContent).toBe('1');
   await userEvent.click(screen.getByRole('button', { name: /站内信/ })); await screen.findByText('审批提醒'); await accessible();
   await userEvent.click(screen.getByRole('button', { name: /审批提醒/ })); expect(open).toHaveBeenCalledWith(expect.objectContaining({ id: '1' }));
   view.unmount(); render(<InboxPopover i18n={i18n} messages={[]} />);
-  expect(screen.queryByTestId('yue-inbox-unread')).toBeNull();
+  expect(screen.queryByTestId('qian-inbox-unread')).toBeNull();
   await userEvent.click(screen.getByRole('button', { name: '站内信' })); await screen.findByText('暂无消息');
 });
 
@@ -190,16 +190,16 @@ it('认证页布局：登录（深色品牌面、语言标签按钮、记住账�
   const store = initPreferences({ namespace: 'test-auth-layout', storage: null }); const i18n = makeI18n();
   const view = render(<PreferencesProvider store={store}><AuthLayout brand="Qian 乾" headline="为 Agent 时代准备的多租户平台" description="一个账号可以加入多家企业。" footer={<span>© 2026 Qian</span>}
     toolbar={<PreferenceControls i18n={i18n} localeStyle="label" />} legal="登录即表示你同意服务条款。">
-    <PasswordLogin i18n={i18n} onSubmit={vi.fn(async () => {})} rememberKey="yue.test.remember" forgotHref="#forgot" alternatives={<button type="button">单点登录</button>} footer={<p>还没有企业账号？</p>} />
+    <PasswordLogin i18n={i18n} onSubmit={vi.fn(async () => {})} rememberKey="qian.test.remember" forgotHref="#forgot" alternatives={<button type="button">单点登录</button>} footer={<p>还没有企业账号？</p>} />
   </AuthLayout></PreferencesProvider>);
-  expect(screen.getByTestId('yue-auth-layout').getAttribute('data-variant')).toBe('sign-in');
+  expect(screen.getByTestId('qian-auth-layout').getAttribute('data-variant')).toBe('sign-in');
   expect(screen.getByRole('heading', { level: 1, name: '登录' })).toBeTruthy();
   expect(screen.getByRole('heading', { level: 2, name: '为 Agent 时代准备的多租户平台' })).toBeTruthy();
   expect(screen.getByRole('link', { name: '忘记密码？' }).getAttribute('href')).toBe('#forgot');
   expect(screen.getByText('其他登录方式')).toBeTruthy();
   await accessible();
   // 语言标签按钮：可见文字是当前语言名，读屏名称以「语言」开头（可见文字包含在名称里）。
-  const locale = screen.getByTestId('yue-preference-controls-locale');
+  const locale = screen.getByTestId('qian-preference-controls-locale');
   expect(locale.textContent).toContain('简体中文');
   expect(locale.textContent).toContain('语言');
   await userEvent.click(locale); await accessible();
@@ -209,7 +209,7 @@ it('认证页布局：登录（深色品牌面、语言标签按钮、记住账�
   render(<PreferencesProvider store={store}><AuthLayout variant="form" brand="Qian 乾" brandHref="#login" headline="申请开通企业" aside={<ol><li>验证手机号</li><li>填写企业信息</li></ol>} toolbar={<a href="#login">已有账号？登录</a>}>
     <section aria-label="申请表单"><p>表单内容</p></section>
   </AuthLayout></PreferencesProvider>);
-  expect(screen.getByTestId('yue-auth-layout').getAttribute('data-variant')).toBe('form');
+  expect(screen.getByTestId('qian-auth-layout').getAttribute('data-variant')).toBe('form');
   expect(screen.getByRole('link', { name: 'Qian 乾' }).getAttribute('href')).toBe('#login');
   await accessible();
 });
@@ -227,7 +227,7 @@ it('认证页与外壳的几何：登录版标题在侧栏中部、不压住装�
       expect(headline.bottom).toBeLessThanOrEqual(decoration.top);
       expect(Math.abs((headline.top + headline.bottom) / 2 - (aside.top + aside.bottom) / 2)).toBeLessThan(60);
       const divider = box('[data-slot="password-login-alternatives"] > :first-child');
-      expect(screen.getByTestId('yue-password-login-sso').getBoundingClientRect().top - divider.bottom).toBeCloseTo(24, 0);
+      expect(screen.getByTestId('qian-password-login-sso').getBoundingClientRect().top - divider.bottom).toBeCloseTo(24, 0);
       view.unmount();
     }
     render(<PreferencesProvider store={store}><AppShell i18n={i18n} brand="Qian" menu={[]} managed userName="用户" breadcrumb={<span>首页</span>} toolbar={<PreferenceControls i18n={i18n} locale={false} />}>内容</AppShell></PreferencesProvider>);
@@ -240,8 +240,8 @@ it('选择工作空间：简单布局里平台控制台与企业各是一张卡�
   render(<PlainLayout brand="Qian 乾" account={<span>李雷</span>}><TenantSelection i18n={i18n} onSelect={select} onBack={vi.fn()} applyHref="#apply" hideBack
     tenants={[{ id: 'platform', name: 'platform', platform: true }, { id: 't1', name: '星河科技', code: 'xinghe', admin: true }, { id: 't2', name: '云帆物流', code: 'yunfan' }]} /></PlainLayout>);
   expect(screen.getByRole('heading', { level: 1, name: '选择要进入的工作空间' })).toBeTruthy();
-  expect(screen.queryByTestId('yue-tenant-selection-back')).toBeNull();
-  expect(screen.getByTestId('yue-tenant-selection-apply').getAttribute('href')).toBe('#apply');
+  expect(screen.queryByTestId('qian-tenant-selection-back')).toBeNull();
+  expect(screen.getByTestId('qian-tenant-selection-apply').getAttribute('href')).toBe('#apply');
   const company = screen.getByRole('button', { name: '星河科技' });
   expect(company.getAttribute('aria-describedby')).toBeTruthy();
   await accessible();
@@ -261,7 +261,7 @@ it('AppShell 工作空间卡片、导航分组与角标、账号菜单里的语�
   expect(screen.getByRole('group', { name: '租户' })).toBeTruthy();
   expect(screen.getByRole('link', { name: /开通申请/ }).getAttribute('aria-current')).toBe('page');
   expect(screen.getByRole('link', { name: '工作台' }).getAttribute('aria-current')).toBeNull();
-  expect(screen.getByTestId('yue-app-shell-menu-badge').textContent).toBe('3');
+  expect(screen.getByTestId('qian-app-shell-menu-badge').textContent).toBe('3');
   expect(screen.queryByRole('button', { name: '语言' })).toBeNull();
   await accessible();
   await userEvent.click(screen.getByRole('button', { name: /切换工作空间/ })); expect(switched).toHaveBeenCalledOnce();

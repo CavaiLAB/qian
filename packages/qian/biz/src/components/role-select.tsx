@@ -1,4 +1,4 @@
-import type { PlatformClient, PlatformI18n } from '@idadawn/yue-sdk';
+import type { PlatformClient, PlatformI18n } from '@cavailab/qian-sdk';
 import { loadRoles, type AuthzRole } from '../api';
 import { useRemoteResource } from '../remote-options';
 import { OptionCombobox, type BizSelectBaseProps, type SelectOption, type Selection } from './option-combobox';
@@ -23,7 +23,7 @@ export function RoleSelect(props: RoleSelectProps) {
   const { client, i18n, label, disabled, className, testId } = props;
   const remote = useRemoteResource({ client, load: (current, { signal }) => loadRoles(current, signal) });
   const options = (remote.data ?? []).map((role) => roleOption(role, i18n));
-  return <OptionCombobox slot="role-select" defaultTestId="yue-role-select" selection={props} options={options}
+  return <OptionCombobox slot="role-select" defaultTestId="qian-role-select" selection={props} options={options}
     loading={remote.loading} error={remote.error} onRetry={remote.reload}
     i18n={i18n} label={label} disabled={disabled} className={className} testId={testId} />;
 }

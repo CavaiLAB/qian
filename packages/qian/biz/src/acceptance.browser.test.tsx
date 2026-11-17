@@ -2,8 +2,8 @@ import { cleanup, render, screen, within } from '@testing-library/react';
 import { useState } from 'react';
 import { afterEach, beforeEach, describe, expect, it, vi } from 'vitest';
 import { userEvent } from 'vitest/browser';
-import { ICON_NAMES, type IconName } from '@idadawn/yue-core';
-import { builtinLanguagePacks, createI18n, type PlatformClient, type PlatformI18n } from '@idadawn/yue-sdk';
+import { ICON_NAMES, type IconName } from '@cavailab/qian-core';
+import { builtinLanguagePacks, createI18n, type PlatformClient, type PlatformI18n } from '@cavailab/qian-sdk';
 import type { AuthzRole, PermissionCatalog } from './api';
 import { ApiSelect, AuthorizationTree, DictSelect, IconPicker, OrganizeSelect, RoleSelect, UserSelect, addBizLanguagePacks, bizLanguagePacks, createBizI18n, orgTypeDictionary } from './index';
 import { CATALOG, MEMBERS, ORGANIZATIONS, ROLES, TENANT, createFixture } from './test/fixtures';
@@ -84,7 +84,7 @@ describe('组件只经注入的 PlatformClient 取数', () => {
     rerender(<AllSelectors client={second.client} i18n={i18n} />);
     await vi.waitFor(() => expect(second.requests.map((request) => request.url)).toContain('/api/authz/permissions'));
     expect(screen.queryByRole('tree', { name: 'L-tree' })).toBeNull();
-    expect(screen.getByTestId('yue-authorization-tree-loading')).toBeTruthy();
+    expect(screen.getByTestId('qian-authorization-tree-loading')).toBeTruthy();
     release();
     await settle(second.requests);
     expect(screen.getByRole('treeitem', { name: '订单' })).toBeTruthy();
@@ -198,17 +198,17 @@ describe('i18n 全部走 key', () => {
         <ApiSelect<Customer> client={client} i18n={i18n} label="L-api" value={null} onChange={() => {}} getValue={(item) => item.id} getLabel={(item) => item.name} load={async () => []} />
         <AuthorizationTree client={client} i18n={i18n} label="L-tree" value={[]} onChange={() => {}} />
       </>);
-      await screen.findByTestId('yue-authorization-tree-empty');
+      await screen.findByTestId('qian-authorization-tree-empty');
       collect();
       await open('L-role');
       await screen.findAllByRole('option');
       await userEvent.keyboard('zzzz');
       await vi.waitFor(() => expect(screen.queryAllByRole('option')).toHaveLength(0));
-      await emptyText('yue-role-select-empty');
+      await emptyText('qian-role-select-empty');
       collect();
       await close();
       await open('L-api');
-      await emptyText('yue-api-select-empty');
+      await emptyText('qian-api-select-empty');
       collect();
       cleanup();
     }
@@ -222,11 +222,11 @@ describe('i18n 全部走 key', () => {
         <RoleSelect client={client} i18n={i18n} label="L-role" value={null} onChange={() => {}} />
         <AuthorizationTree client={client} i18n={i18n} label="L-tree" value={[]} onChange={() => {}} />
       </>);
-      await screen.findByTestId('yue-organize-select-loading');
-      await screen.findByTestId('yue-authorization-tree-loading');
+      await screen.findByTestId('qian-organize-select-loading');
+      await screen.findByTestId('qian-authorization-tree-loading');
       collect();
       await open('L-role');
-      await emptyText('yue-role-select-empty');
+      await emptyText('qian-role-select-empty');
       collect();
       cleanup();
     }
@@ -241,7 +241,7 @@ describe('i18n 全部走 key', () => {
       await vi.waitFor(() => expect(screen.getAllByRole('alert')).toHaveLength(6));
       collect();
       await open('L-role');
-      await emptyText('yue-role-select-empty');
+      await emptyText('qian-role-select-empty');
       collect();
       cleanup();
     }
@@ -250,7 +250,7 @@ describe('i18n 全部走 key', () => {
     {
       const { client } = createFixture({ members: Array.from({ length: 60 }, (_, index) => MEMBERS[index % MEMBERS.length]!) });
       render(<UserSelect client={client} i18n={i18n} label="L-user" value={null} onChange={() => {}} />);
-      await screen.findByTestId('yue-user-select-notice');
+      await screen.findByTestId('qian-user-select-notice');
       collect();
       cleanup();
     }

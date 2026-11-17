@@ -1,12 +1,12 @@
 {
-  "name": "@idadawn/yue-tokens",
+  "name": "@cavailab/qian-tokens",
   "version": "0.1.0",
   "description": "三层设计令牌（primitive → semantic → component）、明暗两态、Tone 类型与运行时主题注入点。",
   "license": "Apache-2.0",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/idadawn/qian.git",
-    "directory": "packages/yue/tokens"
+    "directory": "packages/qian/tokens"
   },
   "type": "module",
   "sideEffects": [

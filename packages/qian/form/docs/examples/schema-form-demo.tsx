@@ -1,7 +1,7 @@
 import { useState } from 'react';
-import { Button } from '@idadawn/yue-core';
-import { createI18n, createMockTransport, PlatformClient } from '@idadawn/yue-sdk';
-import { FeedbackProvider, SchemaForm, useConfirm, useDrawer, useMessage, useModal, usePopup, type FormSchema, type FormValues } from '@idadawn/yue-form';
+import { Button } from '@cavailab/qian-core';
+import { createI18n, createMockTransport, PlatformClient } from '@cavailab/qian-sdk';
+import { FeedbackProvider, SchemaForm, useConfirm, useDrawer, useMessage, useModal, usePopup, type FormSchema, type FormValues } from '@cavailab/qian-form';
 
 const schema: FormSchema = {
   $schema: 'https://schema.qian.dev/form/v1', version: '1.0.0', id: 'qian.demo.customer',
@@ -21,7 +21,7 @@ i18n.addLanguagePack('zh-CN', { 'demo.code': '客户号', 'demo.name': '客户�
 function DemoContent({ readonly = false, invalid = false }: { readonly?: boolean; invalid?: boolean }) {
   const [record, setRecord] = useState<FormValues>({ code: 'sample', name: '示例客户', phone: '13812345678' });
   const [result, setResult] = useState('');
-  const [client] = useState(() => new PlatformClient({ baseUrl: 'https://yue.mock', transport: createMockTransport([{ method: 'POST', path: '/customers', respond: async (request) => {
+  const [client] = useState(() => new PlatformClient({ baseUrl: 'https://qian.mock', transport: createMockTransport([{ method: 'POST', path: '/customers', respond: async (request) => {
     const body = await request.json() as FormValues;
     if (body.name === '服务端错误' || invalid) return Response.json({ type: 'https://qian.dev/problems/protocol/INPUT_INVALID', title: '输入无效', status: 400, code: 'INPUT_INVALID', message: '名称已被保留', trace_id: 'a'.repeat(32), pointer: '#/name', errors: [{ code: 'INPUT_INVALID', message: '名称已被保留', pointer: '#/name' }] }, { status: 400 });
     return Response.json(body);

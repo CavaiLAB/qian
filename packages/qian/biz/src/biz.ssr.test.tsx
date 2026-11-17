@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { renderToString } from 'react-dom/server';
 import ts from 'typescript';
 import { describe, expect, it } from 'vitest';
-import { createMockTransport, PlatformClient } from '@idadawn/yue-sdk';
+import { createMockTransport, PlatformClient } from '@cavailab/qian-sdk';
 import { ApiSelect, AuthorizationTree, DictSelect, IconPicker, OrganizeSelect, RoleSelect, UserSelect, bizLanguagePacks, createBizI18n, orgTypeDictionary } from './index';
 
 describe('SSR', () => {
@@ -23,7 +23,7 @@ describe('SSR', () => {
       <IconPicker i18n={i18n} label="图标" value="building" onChange={() => {}} />
     </>);
     for (const slot of ['organize-select', 'user-select', 'role-select', 'dict-select', 'api-select', 'authorization-tree', 'icon-picker']) expect(html).toContain(`data-slot="${slot}"`);
-    expect(html).toContain('data-testid="yue-user-select-trigger"');
+    expect(html).toContain('data-testid="qian-user-select-trigger"');
     expect(html).toContain('加载中');
   });
 });

@@ -1,8 +1,8 @@
-# @idadawn/yue-shell
+# @cavailab/qian-shell
 
 AppShell 单一侧栏布局、菜单 → 路由、偏好、认证页族组件与契约、会话过期对话框、站内信与兜底页。本包只放通用 UI；对接 Qian 平台的接线（运行时配置、网关 BFF 会话、bootstrap、能力导航、身份服务 AuthProvider）在私有包 [`@qian/shell-kit`](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/packages/qian-shell-kit/README.md)，MF2 宿主与插槽在 [前端插件 SDK](../../qian-plugin-sdk/README.md)。
 
-- 分层与允许依赖：[yue 专题规格 §3.1](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/yue.md#31-包结构与依赖方向)；依赖方向由 `packages/yue/boundaries.config.mjs` 与 CI 门禁强制。
+- 分层与允许依赖：[qian 专题规格 §3.1](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/yue.md#31-包结构与依赖方向)；依赖方向由 `packages/qian/boundaries.config.mjs` 与 CI 门禁强制。
 - 实现任务：S1-YUE-006；库 API、共用示例与认证边界见 [组件文档源](docs/index.mdx)。
 
 ## 使用与职责
@@ -21,8 +21,8 @@ AuthProvider 由宿主注入，认证页族不持有令牌。登录表单使用 
 
 ### 管理台布局（S1-YUE-017）
 
-- AppShell 侧栏自上而下是品牌（`logo` 缺省为主色方块）、`workspace` 卡片（例如租户切换，侧栏收起时隐藏）、导航和账号卡（`userName` / `userDescription`，「用户菜单」里放 `userMenu` 与退出登录）。顶栏放侧栏开关、`breadcrumb` 与 `toolbar`；主区使用 `--yue-canvas` 画布底色。
-- `ShellMenuItem` 新增 `icon`（yue 图标名，未登记的名称回落为缺省图标）、`group`（相邻同组项共用一个分组标题）和 `badge`（只展示，收起时变成圆点并保留读屏文字）。
+- AppShell 侧栏自上而下是品牌（`logo` 缺省为主色方块）、`workspace` 卡片（例如租户切换，侧栏收起时隐藏）、导航和账号卡（`userName` / `userDescription`，「用户菜单」里放 `userMenu` 与退出登录）。顶栏放侧栏开关、`breadcrumb` 与 `toolbar`；主区使用 `--qian-canvas` 画布底色。
+- `ShellMenuItem` 新增 `icon`（qian 图标名，未登记的名称回落为缺省图标）、`group`（相邻同组项共用一个分组标题）和 `badge`（只展示，收起时变成圆点并保留读屏文字）。
 - PreferenceControls 改为主题、语言两个图标按钮，展开为单选菜单（`menuitemradio`，选中即关闭）；语言以各自本名列出。
 
 子路径让外壳首屏只拉需要的部分（首屏 JS 预算 250 KiB gzip）。Qian 的可部署外壳是 [apps/qian-shell](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/apps/qian-shell/README.md)，认证页族是 [packages/qian-identity-ui](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/packages/qian-identity-ui/README.md)；真实流程验收 `pnpm yue:auth` 对 [tools/Qian.Dev.Shell](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/tools/Qian.Dev.Shell/README.md) 拉起的真实 qian.identity、平台表面宿主与网关 BFF 运行。
@@ -33,9 +33,9 @@ menuTypeRegistry.toJSON 可导出菜单类型元数据，注册返回可撤销�
 
 ## 验证
 
-组件级 browser/SSR 与注册表/Preferences 单测位于 src，页面交互位于 apps/yue-playground/e2e/shell.spec.ts，文档场景位于 website/e2e/shell.spec.ts。运行仓库 pnpm yue:gates；生成目录、dist、测试结果不提交。
+组件级 browser/SSR 与注册表/Preferences 单测位于 src，页面交互位于 apps/qian-playground/e2e/shell.spec.ts，文档场景位于 website/e2e/shell.spec.ts。运行仓库 pnpm qian:gates；生成目录、dist、测试结果不提交。
 
-发布形状使用 automatic JSX 与保留模块的 ESM，保持密码表单的动态 import 边界。仓库安装依赖并构建后运行 `node packages/yue/shell/scripts/verify-package.mjs`：脚本实际打包六个依赖包、在临时目录离线安装 tarball、构建独立消费者并用 Chromium 验证已登录首屏不加载密码表单、进入认证页才加载且无运行时错误。它不使用源码 alias 或 React 全局兜底；报告与消费者保留在脚本输出的临时目录。首次运行需已安装 Playwright Chromium。
+发布形状使用 automatic JSX 与保留模块的 ESM，保持密码表单的动态 import 边界。仓库安装依赖并构建后运行 `node packages/qian/shell/scripts/verify-package.mjs`：脚本实际打包六个依赖包、在临时目录离线安装 tarball、构建独立消费者并用 Chromium 验证已登录首屏不加载密码表单、进入认证页才加载且无运行时错误。它不使用源码 alias 或 React 全局兜底；报告与消费者保留在脚本输出的临时目录。首次运行需已安装 Playwright Chromium。
 
 ## 已知限制与延期项
 

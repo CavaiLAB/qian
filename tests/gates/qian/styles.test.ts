@@ -1,8 +1,8 @@
 import { readFileSync, readdirSync } from 'node:fs';
 import path from 'node:path';
 import { describe, expect, it } from 'vitest';
-import manifest from '../../../packages/yue/core/src/manifest-catalog.json';
-import reference from '../../../packages/yue/core/docs/visual-reference.json';
+import manifest from '../../../packages/qian/core/src/manifest-catalog.json';
+import reference from '../../../packages/qian/core/docs/visual-reference.json';
 
 const root = path.resolve(import.meta.dirname, '../../..');
 const prohibited = (source: string): string[] => source.match(/[\w:-]+-\[(?:oklch\()?var\(--[^\]]+\]|\b(?:hover:)?brightness-\d+/g) ?? [];
@@ -13,13 +13,13 @@ function sources(directory: string): string[] {
     return entry.isDirectory() ? sources(file) : /\.[cm]?[jt]sx?$/.test(entry.name) && !entry.name.includes('.test.') ? [file] : [];
   });
 }
-describe('yue 视觉配方门禁', () => {
+describe('qian 视觉配方门禁', () => {
   it('拒绝绕过语义映射的变量颜色与 brightness 悬停；允许语义透明度、尺寸变量和固定焦点宽度', () => {
-    expect(prohibited('hover:bg-[var(--primary)] border-[oklch(var(--yue-border))] hover:brightness-95')).toHaveLength(3);
-    expect(prohibited('hover:bg-primary/90 ring-ring/50 h-(--yue-button-height) focus-visible:ring-[3px]')).toEqual([]);
+    expect(prohibited('hover:bg-[var(--primary)] border-[oklch(var(--qian-border))] hover:brightness-95')).toHaveLength(3);
+    expect(prohibited('hover:bg-primary/90 ring-ring/50 h-(--qian-button-height) focus-visible:ring-[3px]')).toEqual([]);
   });
   it('生产源码与共用示例均使用语义类', () => {
-    const violations = ['packages/yue', 'apps/yue-playground'].flatMap(directory => sources(path.join(root, directory))).flatMap(file => prohibited(readFileSync(file, 'utf8')).map(value => `${path.relative(root, file)}: ${value}`));
+    const violations = ['packages/qian', 'apps/qian-playground'].flatMap(directory => sources(path.join(root, directory))).flatMap(file => prohibited(readFileSync(file, 'utf8')).map(value => `${path.relative(root, file)}: ${value}`));
     expect(violations).toEqual([]);
   });
   it('52 个入口均登记官方基准的对应组件与有意偏离', () => {

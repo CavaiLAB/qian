@@ -1,5 +1,5 @@
 import { expect, it } from 'vitest';
-import { createMockTransport, PlatformClient } from '@idadawn/yue-sdk';
+import { createMockTransport, PlatformClient } from '@cavailab/qian-sdk';
 import { fileSha256, uploadFile, type UploadProgress } from './upload';
 
 const file = () => new File(['abcdefgh'], 'sample.txt', { type: 'text/plain' });

@@ -1,4 +1,4 @@
-import type { PlatformClient } from '@idadawn/yue-sdk';
+import type { PlatformClient } from '@cavailab/qian-sdk';
 import type { components, paths } from './biz.generated';
 
 // 业务选择器只经注入的 PlatformClient 取数：路径、参数与响应类型都由 contracts/biz.openapi.json 生成，组件里没有第二条网络路径。

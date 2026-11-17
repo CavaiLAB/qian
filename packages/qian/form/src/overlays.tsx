@@ -1,7 +1,7 @@
 import { createContext, useCallback, useContext, useEffect, useRef, useState, type ReactElement, type ReactNode } from 'react';
-import { AlertDialog, AlertDialogClose, AlertDialogContent, AlertDialogDescription, AlertDialogTitle, Button, Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle, Popover, PopoverClose, PopoverContent, PopoverDescription, PopoverTitle, PopoverTrigger, Sheet, SheetBody, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, ToastList, ToastProvider, useToast } from '@idadawn/yue-core';
+import { AlertDialog, AlertDialogClose, AlertDialogContent, AlertDialogDescription, AlertDialogTitle, Button, Dialog, DialogClose, DialogContent, DialogDescription, DialogTitle, Popover, PopoverClose, PopoverContent, PopoverDescription, PopoverTitle, PopoverTrigger, Sheet, SheetBody, SheetClose, SheetContent, SheetDescription, SheetFooter, SheetHeader, SheetTitle, ToastList, ToastProvider, useToast } from '@cavailab/qian-core';
 import { OverlayFormContext } from './overlay-form-context';
-import type { PlatformI18n } from '@idadawn/yue-sdk';
+import type { PlatformI18n } from '@cavailab/qian-sdk';
 
 export interface OverlayOptions {
   title: string;
@@ -32,7 +32,7 @@ function useOverlay(kind: 'modal' | 'drawer' | 'popup', i18n: PlatformI18n, trig
   const cancel = <Close render={<Button variant="outline" type="button" />}>{i18n.t('common.cancel')}</Close>;
   // 抽屉：页头 / 可滚动主体 / 固定页脚；主体里的表单把操作按钮送进页脚（SchemaForm 读 footer）。
   if (kind === 'drawer') return { open, close, holder: <Sheet open={!!options} onOpenChange={(value) => { if (!value) close(); }}>
-    {options && <SheetContent closeLabel={i18n.t('common.close')} size={options.size} data-slot="form-drawer" testId="yue-form-drawer">
+    {options && <SheetContent closeLabel={i18n.t('common.close')} size={options.size} data-slot="form-drawer" testId="qian-form-drawer">
       <SheetHeader><div className="flex min-h-8 flex-wrap items-center gap-3"><SheetTitle>{options.title}</SheetTitle>{options.extra}</div>{options.description && <SheetDescription>{options.description}</SheetDescription>}</SheetHeader>
       <SheetBody><OverlayFormContext value={{ cancel, register, footer }}>{options.content}</OverlayFormContext></SheetBody>
       <SheetFooter>{forms === 0 && <Close render={<Button variant="outline" />}>{i18n.t('common.close')}</Close>}<div ref={setFooter} data-slot="form-drawer-actions" className="contents" /></SheetFooter>
@@ -40,7 +40,7 @@ function useOverlay(kind: 'modal' | 'drawer' | 'popup', i18n: PlatformI18n, trig
   </Sheet> };
   return { open, close, holder: <Root open={!!options} onOpenChange={(value) => { if (!value) close(); else if (defaultOptions) open(defaultOptions); }}>
     {kind === 'popup' && <PopoverTrigger render={trigger} />}
-    {options && <Content {...(kind === 'popup' ? {} : { closeLabel: i18n.t('common.close') })} data-slot={`form-${kind}`} testId={`yue-form-${kind}`}>
+    {options && <Content {...(kind === 'popup' ? {} : { closeLabel: i18n.t('common.close') })} data-slot={`form-${kind}`} testId={`qian-form-${kind}`}>
       <Title>{options.title}</Title>
       {options.description && <Description>{options.description}</Description>}
       <OverlayFormContext value={{ cancel, register }}><div className="my-4">{options.content}</div></OverlayFormContext>
@@ -81,9 +81,9 @@ function FeedbackContent({ i18n, children }: { i18n: PlatformI18n; children: Rea
   };
   return <FeedbackContext.Provider value={value}>{children}<ToastList closeLabel={i18n.t('common.close')} />
     <AlertDialog open={!!confirmation} onOpenChange={(open) => { if (!open) finish(false); }}>
-      {confirmation && <AlertDialogContent closeLabel={i18n.t('common.close')} testId="yue-form-confirm"><AlertDialogTitle>{confirmation.title}</AlertDialogTitle>
+      {confirmation && <AlertDialogContent closeLabel={i18n.t('common.close')} testId="qian-form-confirm"><AlertDialogTitle>{confirmation.title}</AlertDialogTitle>
         {confirmation.description && <AlertDialogDescription>{confirmation.description}</AlertDialogDescription>}
-        <div className="mt-4 flex justify-end gap-2"><AlertDialogClose render={<Button variant="outline" />}>{i18n.t('common.cancel')}</AlertDialogClose><Button variant={confirmation.tone === 'danger' ? 'destructive' : 'primary'} onClick={() => finish(true)} testId="yue-form-confirm-ok">{confirmation.confirmLabel ?? i18n.t('common.confirm')}</Button></div>
+        <div className="mt-4 flex justify-end gap-2"><AlertDialogClose render={<Button variant="outline" />}>{i18n.t('common.cancel')}</AlertDialogClose><Button variant={confirmation.tone === 'danger' ? 'destructive' : 'primary'} onClick={() => finish(true)} testId="qian-form-confirm-ok">{confirmation.confirmLabel ?? i18n.t('common.confirm')}</Button></div>
       </AlertDialogContent>}
     </AlertDialog>
   </FeedbackContext.Provider>;

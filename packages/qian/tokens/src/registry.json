@@ -150,994 +150,994 @@
   ],
   "primitives": [
     {
-      "name": "--yue-p-space-0",
+      "name": "--qian-p-space-0",
       "value": "0rem",
       "meaning": "间距 0 级"
     },
     {
-      "name": "--yue-p-space-1",
+      "name": "--qian-p-space-1",
       "value": "0.25rem",
       "meaning": "间距 1 级"
     },
     {
-      "name": "--yue-p-space-2",
+      "name": "--qian-p-space-2",
       "value": "0.5rem",
       "meaning": "间距 2 级"
     },
     {
-      "name": "--yue-p-space-3",
+      "name": "--qian-p-space-3",
       "value": "0.75rem",
       "meaning": "间距 3 级"
     },
     {
-      "name": "--yue-p-space-4",
+      "name": "--qian-p-space-4",
       "value": "1rem",
       "meaning": "间距 4 级"
     },
     {
-      "name": "--yue-p-space-5",
+      "name": "--qian-p-space-5",
       "value": "1.25rem",
       "meaning": "间距 5 级"
     },
     {
-      "name": "--yue-p-space-6",
+      "name": "--qian-p-space-6",
       "value": "1.5rem",
       "meaning": "间距 6 级"
     },
     {
-      "name": "--yue-p-space-8",
+      "name": "--qian-p-space-8",
       "value": "2rem",
       "meaning": "间距 8 级"
     },
     {
-      "name": "--yue-p-space-10",
+      "name": "--qian-p-space-10",
       "value": "2.5rem",
       "meaning": "间距 10 级"
     },
     {
-      "name": "--yue-p-space-12",
+      "name": "--qian-p-space-12",
       "value": "3rem",
       "meaning": "间距 12 级"
     },
     {
-      "name": "--yue-p-space-16",
+      "name": "--qian-p-space-16",
       "value": "4rem",
       "meaning": "间距 16 级"
     },
     {
-      "name": "--yue-p-space-20",
+      "name": "--qian-p-space-20",
       "value": "5rem",
       "meaning": "间距 20 级"
     },
     {
-      "name": "--yue-p-space-24",
+      "name": "--qian-p-space-24",
       "value": "6rem",
       "meaning": "间距 24 级"
     },
     {
-      "name": "--yue-p-radius-sm",
+      "name": "--qian-p-radius-sm",
       "value": ".25rem",
       "meaning": "小圆角"
     },
     {
-      "name": "--yue-p-radius-md",
+      "name": "--qian-p-radius-md",
       "value": ".5rem",
       "meaning": "标准圆角"
     },
     {
-      "name": "--yue-p-radius-lg",
+      "name": "--qian-p-radius-lg",
       "value": ".75rem",
       "meaning": "大圆角"
     },
     {
-      "name": "--yue-p-radius-full",
+      "name": "--qian-p-radius-full",
       "value": "9999px",
       "meaning": "胶囊圆角"
     },
     {
-      "name": "--yue-p-font-size-xs",
+      "name": "--qian-p-font-size-xs",
       "value": ".75rem",
       "meaning": "辅助字号"
     },
     {
-      "name": "--yue-p-font-size-sm",
+      "name": "--qian-p-font-size-sm",
       "value": ".875rem",
       "meaning": "紧凑字号"
     },
     {
-      "name": "--yue-p-font-size-base",
+      "name": "--qian-p-font-size-base",
       "value": "1rem",
       "meaning": "正文字号"
     },
     {
-      "name": "--yue-p-font-size-lg",
+      "name": "--qian-p-font-size-lg",
       "value": "1.125rem",
       "meaning": "小标题字号"
     },
     {
-      "name": "--yue-p-font-size-xl",
+      "name": "--qian-p-font-size-xl",
       "value": "1.25rem",
       "meaning": "标题字号"
     },
     {
-      "name": "--yue-p-line-height-tight",
+      "name": "--qian-p-line-height-tight",
       "value": "1.25",
       "meaning": "紧凑行高"
     },
     {
-      "name": "--yue-p-line-height-normal",
+      "name": "--qian-p-line-height-normal",
       "value": "1.5",
       "meaning": "正文行高"
     },
     {
-      "name": "--yue-p-shadow-sm",
+      "name": "--qian-p-shadow-sm",
       "value": "0 1px 3px 0 rgb(0 0 0 / 0.1), 0 1px 2px -1px rgb(0 0 0 / 0.1)",
       "meaning": "轻投影"
     },
     {
-      "name": "--yue-p-shadow-md",
+      "name": "--qian-p-shadow-md",
       "value": "0 4px 6px -1px rgb(0 0 0 / 0.1), 0 2px 4px -2px rgb(0 0 0 / 0.1)",
       "meaning": "浮层投影"
     },
     {
-      "name": "--yue-p-duration-fast",
+      "name": "--qian-p-duration-fast",
       "value": "100ms",
       "meaning": "快速动效时长"
     },
     {
-      "name": "--yue-p-duration-normal",
+      "name": "--qian-p-duration-normal",
       "value": "200ms",
       "meaning": "标准动效时长"
     },
     {
-      "name": "--yue-p-duration-slow",
+      "name": "--qian-p-duration-slow",
       "value": "300ms",
       "meaning": "慢速动效时长"
     },
     {
-      "name": "--yue-p-ease-standard",
+      "name": "--qian-p-ease-standard",
       "value": "cubic-bezier(0.2, 0, 0, 1)",
       "meaning": "标准缓动"
     },
     {
-      "name": "--yue-p-z-base",
+      "name": "--qian-p-z-base",
       "value": "0",
       "meaning": "基础层级"
     },
     {
-      "name": "--yue-p-z-dropdown",
+      "name": "--qian-p-z-dropdown",
       "value": "1000",
       "meaning": "菜单层级"
     },
     {
-      "name": "--yue-p-z-modal",
+      "name": "--qian-p-z-modal",
       "value": "1300",
       "meaning": "模态层级"
     },
     {
-      "name": "--yue-p-z-toast",
+      "name": "--qian-p-z-toast",
       "value": "1500",
       "meaning": "提示层级"
     },
     {
-      "name": "--yue-p-breakpoint-sm",
+      "name": "--qian-p-breakpoint-sm",
       "value": "40rem",
       "meaning": "小屏断点"
     },
     {
-      "name": "--yue-p-breakpoint-md",
+      "name": "--qian-p-breakpoint-md",
       "value": "48rem",
       "meaning": "中屏断点"
     },
     {
-      "name": "--yue-p-breakpoint-lg",
+      "name": "--qian-p-breakpoint-lg",
       "value": "64rem",
       "meaning": "大屏断点"
     },
     {
-      "name": "--yue-p-breakpoint-xl",
+      "name": "--qian-p-breakpoint-xl",
       "value": "80rem",
       "meaning": "宽屏断点"
     },
     {
-      "name": "--yue-p-font-sans",
+      "name": "--qian-p-font-sans",
       "value": "ui-sans-serif, system-ui, -apple-system, \"Segoe UI\", Roboto, \"PingFang SC\", \"Hiragino Sans GB\", \"Microsoft YaHei\", \"Noto Sans CJK SC\", \"Helvetica Neue\", Arial, sans-serif",
       "meaning": "系统无衬线字体栈"
     },
     {
-      "name": "--yue-p-font-mono",
+      "name": "--qian-p-font-mono",
       "value": "ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, \"Liberation Mono\", \"Courier New\", monospace",
       "meaning": "系统等宽字体栈"
     },
     {
-      "name": "--yue-p-radius-base",
+      "name": "--qian-p-radius-base",
       "value": "0.625rem",
       "meaning": "语义圆角基准"
     },
     {
-      "name": "--yue-p-space-9",
+      "name": "--qian-p-space-9",
       "value": "2.25rem",
       "meaning": "间距 9 级"
     },
     {
-      "name": "--yue-p-shadow-xs",
+      "name": "--qian-p-shadow-xs",
       "value": "0 1px 2px 0 rgb(0 0 0 / 0.05)",
       "meaning": "控件轻投影"
     },
     {
-      "name": "--yue-p-shadow-lg",
+      "name": "--qian-p-shadow-lg",
       "value": "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
       "meaning": "弹层投影"
     },
     {
-      "name": "--yue-p-shadow-xl",
+      "name": "--qian-p-shadow-xl",
       "value": "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
       "meaning": "模态投影"
     }
   ],
   "semantics": [
     {
-      "name": "--yue-background",
+      "name": "--qian-background",
       "kind": "color",
-      "light": "--yue-p-white",
-      "dark": "--yue-p-neutral-975",
+      "light": "--qian-p-white",
+      "dark": "--qian-p-neutral-975",
       "meaning": "页面背景",
-      "contrastWith": "--yue-foreground",
+      "contrastWith": "--qian-foreground",
       "contrast": "text"
     },
     {
-      "name": "--yue-foreground",
+      "name": "--qian-foreground",
       "kind": "color",
-      "light": "--yue-p-neutral-975",
-      "dark": "--yue-p-neutral-50",
+      "light": "--qian-p-neutral-975",
+      "dark": "--qian-p-neutral-50",
       "meaning": "页面文字",
-      "contrastWith": "--yue-background",
+      "contrastWith": "--qian-background",
       "contrast": "text"
     },
     {
-      "name": "--yue-canvas",
+      "name": "--qian-canvas",
       "kind": "color",
-      "light": "--yue-p-slate-75",
-      "dark": "--yue-p-neutral-975",
+      "light": "--qian-p-slate-75",
+      "dark": "--qian-p-neutral-975",
       "meaning": "应用画布背景：外壳主区与页面底色，卡片与表格浮在其上",
-      "contrastWith": "--yue-foreground",
+      "contrastWith": "--qian-foreground",
       "contrast": "text"
     },
     {
-      "name": "--yue-card",
+      "name": "--qian-card",
       "kind": "color",
-      "light": "--yue-p-white",
-      "dark": "--yue-p-neutral-925",
+      "light": "--qian-p-white",
+      "dark": "--qian-p-neutral-925",
       "meaning": "卡片背景",
-      "contrastWith": "--yue-card-foreground",
+      "contrastWith": "--qian-card-foreground",
       "contrast": "text"
     },
     {
-      "name": "--yue-card-foreground",
+      "name": "--qian-card-foreground",
       "kind": "color",
-      "light": "--yue-p-neutral-975",
-      "dark": "--yue-p-neutral-50",
+      "light": "--qian-p-neutral-975",
+      "dark": "--qian-p-neutral-50",
       "meaning": "卡片文字",
-      "contrastWith": "--yue-card",
+      "contrastWith": "--qian-card",
       "contrast": "text"
     },
     {
-      "name": "--yue-popover",
+      "name": "--qian-popover",
       "kind": "color",
-      "light": "--yue-p-white",
-      "dark": "--yue-p-neutral-925",
+      "light": "--qian-p-white",
+      "dark": "--qian-p-neutral-925",
       "meaning": "浮层背景",
-      "contrastWith": "--yue-popover-foreground",
+      "contrastWith": "--qian-popover-foreground",
       "contrast": "text"
     },
     {
-      "name": "--yue-popover-foreground",
+      "name": "--qian-popover-foreground",
       "kind": "color",
-      "light": "--yue-p-neutral-975",
-      "dark": "--yue-p-neutral-50",
+      "light": "--qian-p-neutral-975",
+      "dark": "--qian-p-neutral-50",
       "meaning": "浮层文字",
-      "contrastWith": "--yue-popover",
+      "contrastWith": "--qian-popover",
       "contrast": "text"
     },
     {
-      "name": "--yue-primary",
+      "name": "--qian-primary",
       "kind": "color",
-      "light": "--yue-p-brand-600",
-      "dark": "--yue-p-brand-400",
+      "light": "--qian-p-brand-600",
+      "dark": "--qian-p-brand-400",
       "meaning": "主要操作背景",
-      "contrastWith": "--yue-primary-foreground",
+      "contrastWith": "--qian-primary-foreground",
       "contrast": "text"
     },
     {
-      "name": "--yue-primary-foreground",
+      "name": "--qian-primary-foreground",
       "kind": "color",
-      "light": "--yue-p-white",
-      "dark": "--yue-p-neutral-975",
+      "light": "--qian-p-white",
+      "dark": "--qian-p-neutral-975",
       "meaning": "主要操作文字",
-      "contrastWith": "--yue-primary",
+      "contrastWith": "--qian-primary",
       "contrast": "text"
     },
     {
-      "name": "--yue-secondary",
+      "name": "--qian-secondary",
       "kind": "color",
-      "light": "--yue-p-neutral-75",
-      "dark": "--yue-p-neutral-890",
+      "light": "--qian-p-neutral-75",
+      "dark": "--qian-p-neutral-890",
       "meaning": "次要操作背景",
-      "contrastWith": "--yue-secondary-foreground",
+      "contrastWith": "--qian-secondary-foreground",
       "contrast": "text"
     },
     {
-      "name": "--yue-secondary-foreground",
+      "name": "--qian-secondary-foreground",
       "kind": "color",
-      "light": "--yue-p-neutral-925",
-      "dark": "--yue-p-neutral-50",
+      "light": "--qian-p-neutral-925",
+      "dark": "--qian-p-neutral-50",
       "meaning": "次要操作文字",
-      "contrastWith": "--yue-secondary",
+      "contrastWith": "--qian-secondary",
       "contrast": "text"
     },
     {
-      "name": "--yue-muted",
+      "name": "--qian-muted",
       "kind": "color",
-      "light": "--yue-p-neutral-75",
-      "dark": "--yue-p-neutral-890",
+      "light": "--qian-p-neutral-75",
+      "dark": "--qian-p-neutral-890",
       "meaning": "弱化区域背景",
-      "contrastWith": "--yue-muted-foreground",
+      "contrastWith": "--qian-muted-foreground",
       "contrast": "text"
     },
     {
-      "name": "--yue-muted-foreground",
+      "name": "--qian-muted-foreground",
       "kind": "color",
-      "light": "--yue-p-neutral-575",
-      "dark": "--yue-p-neutral-415",
+      "light": "--qian-p-neutral-575",
+      "dark": "--qian-p-neutral-415",
       "meaning": "弱化区域文字",
-      "contrastWith": "--yue-muted",
+      "contrastWith": "--qian-muted",
       "contrast": "text"
     },
     {
-      "name": "--yue-accent",
+      "name": "--qian-accent",
       "kind": "color",
-      "light": "--yue-p-neutral-75",
-      "dark": "--yue-p-neutral-890",
+      "light": "--qian-p-neutral-75",
+      "dark": "--qian-p-neutral-890",
       "meaning": "低强调交互背景",
-      "contrastWith": "--yue-accent-foreground",
+      "contrastWith": "--qian-accent-foreground",
       "contrast": "text"
     },
     {
-      "name": "--yue-accent-foreground",
+      "name": "--qian-accent-foreground",
       "kind": "color",
-      "light": "--yue-p-neutral-925",
-      "dark": "--yue-p-neutral-50",
+      "light": "--qian-p-neutral-925",
+      "dark": "--qian-p-neutral-50",
       "meaning": "低强调交互文字",
-      "contrastWith": "--yue-accent",
+      "contrastWith": "--qian-accent",
       "contrast": "text"
     },
     {
-      "name": "--yue-destructive",
+      "name": "--qian-destructive",
       "kind": "color",
-      "light": "--yue-p-red-600",
-      "dark": "--yue-p-red-300",
+      "light": "--qian-p-red-600",
+      "dark": "--qian-p-red-300",
       "meaning": "破坏性操作背景",
-      "contrastWith": "--yue-destructive-foreground",
+      "contrastWith": "--qian-destructive-foreground",
       "contrast": "text"
     },
     {
-      "name": "--yue-destructive-foreground",
+      "name": "--qian-destructive-foreground",
       "kind": "color",
-      "light": "--yue-p-white",
-      "dark": "--yue-p-neutral-950",
+      "light": "--qian-p-white",
+      "dark": "--qian-p-neutral-950",
       "meaning": "破坏性操作文字",
-      "contrastWith": "--yue-destructive",
+      "contrastWith": "--qian-destructive",
       "contrast": "text"
     },
     {
-      "name": "--yue-border",
+      "name": "--qian-border",
       "kind": "color",
-      "light": "--yue-p-neutral-175",
-      "dark": "--yue-p-white",
+      "light": "--qian-p-neutral-175",
+      "dark": "--qian-p-white",
       "meaning": "边界线",
-      "contrastWith": "--yue-background",
+      "contrastWith": "--qian-background",
       "contrast": "decorative",
       "darkAlpha": 0.1
     },
     {
-      "name": "--yue-input",
+      "name": "--qian-input",
       "kind": "color",
-      "light": "--yue-p-neutral-450",
-      "dark": "--yue-p-white",
+      "light": "--qian-p-neutral-450",
+      "dark": "--qian-p-white",
       "meaning": "输入边界",
-      "contrastWith": "--yue-background",
+      "contrastWith": "--qian-background",
       "contrast": "boundary",
       "darkAlpha": 0.34
     },
     {
-      "name": "--yue-ring",
+      "name": "--qian-ring",
       "kind": "color",
-      "light": "--yue-p-brand-600",
-      "dark": "--yue-p-brand-400",
+      "light": "--qian-p-brand-600",
+      "dark": "--qian-p-brand-400",
       "meaning": "焦点环",
-      "contrastWith": "--yue-background",
+      "contrastWith": "--qian-background",
       "contrast": "boundary"
     },
     {
-      "name": "--yue-sidebar",
+      "name": "--qian-sidebar",
       "kind": "color",
-      "light": "--yue-p-white",
-      "dark": "--yue-p-neutral-925",
+      "light": "--qian-p-white",
+      "dark": "--qian-p-neutral-925",
       "meaning": "侧栏背景",
-      "contrastWith": "--yue-sidebar-foreground",
+      "contrastWith": "--qian-sidebar-foreground",
       "contrast": "text"
     },
     {
-      "name": "--yue-sidebar-foreground",
+      "name": "--qian-sidebar-foreground",
       "kind": "color",
-      "light": "--yue-p-neutral-975",
-      "dark": "--yue-p-neutral-50",
+      "light": "--qian-p-neutral-975",
+      "dark": "--qian-p-neutral-50",
       "meaning": "侧栏文字",
-      "contrastWith": "--yue-sidebar",
+      "contrastWith": "--qian-sidebar",
       "contrast": "text"
     },
     {
-      "name": "--yue-sidebar-primary",
+      "name": "--qian-sidebar-primary",
       "kind": "color",
-      "light": "--yue-p-brand-600",
-      "dark": "--yue-p-brand-400",
+      "light": "--qian-p-brand-600",
+      "dark": "--qian-p-brand-400",
       "meaning": "侧栏主要操作背景",
-      "contrastWith": "--yue-sidebar-primary-foreground",
+      "contrastWith": "--qian-sidebar-primary-foreground",
       "contrast": "text"
     },
     {
-      "name": "--yue-sidebar-primary-foreground",
+      "name": "--qian-sidebar-primary-foreground",
       "kind": "color",
-      "light": "--yue-p-white",
-      "dark": "--yue-p-neutral-975",
+      "light": "--qian-p-white",
+      "dark": "--qian-p-neutral-975",
       "meaning": "侧栏主要操作文字",
-      "contrastWith": "--yue-sidebar-primary",
+      "contrastWith": "--qian-sidebar-primary",
       "contrast": "text"
     },
     {
-      "name": "--yue-sidebar-accent",
+      "name": "--qian-sidebar-accent",
       "kind": "color",
-      "light": "--yue-p-neutral-75",
-      "dark": "--yue-p-neutral-890",
+      "light": "--qian-p-neutral-75",
+      "dark": "--qian-p-neutral-890",
       "meaning": "侧栏低强调交互背景",
-      "contrastWith": "--yue-sidebar-accent-foreground",
+      "contrastWith": "--qian-sidebar-accent-foreground",
       "contrast": "text"
     },
     {
-      "name": "--yue-sidebar-accent-foreground",
+      "name": "--qian-sidebar-accent-foreground",
       "kind": "color",
-      "light": "--yue-p-neutral-925",
-      "dark": "--yue-p-neutral-50",
+      "light": "--qian-p-neutral-925",
+      "dark": "--qian-p-neutral-50",
       "meaning": "侧栏低强调交互文字",
-      "contrastWith": "--yue-sidebar-accent",
+      "contrastWith": "--qian-sidebar-accent",
       "contrast": "text"
     },
     {
-      "name": "--yue-sidebar-border",
+      "name": "--qian-sidebar-border",
       "kind": "color",
-      "light": "--yue-p-neutral-175",
-      "dark": "--yue-p-white",
+      "light": "--qian-p-neutral-175",
+      "dark": "--qian-p-white",
       "meaning": "侧栏边界",
-      "contrastWith": "--yue-sidebar",
+      "contrastWith": "--qian-sidebar",
       "contrast": "decorative",
       "darkAlpha": 0.1
     },
     {
-      "name": "--yue-sidebar-ring",
+      "name": "--qian-sidebar-ring",
       "kind": "color",
-      "light": "--yue-p-brand-600",
-      "dark": "--yue-p-brand-400",
+      "light": "--qian-p-brand-600",
+      "dark": "--qian-p-brand-400",
       "meaning": "侧栏焦点环",
-      "contrastWith": "--yue-sidebar",
+      "contrastWith": "--qian-sidebar",
       "contrast": "boundary"
     },
     {
-      "name": "--yue-chart-1",
+      "name": "--qian-chart-1",
       "kind": "color",
-      "light": "--yue-p-brand-700",
-      "dark": "--yue-p-brand-300",
+      "light": "--qian-p-brand-700",
+      "dark": "--qian-p-brand-300",
       "meaning": "图形系列 1",
-      "contrastWith": "--yue-background",
+      "contrastWith": "--qian-background",
       "contrast": "boundary"
     },
     {
-      "name": "--yue-chart-2",
+      "name": "--qian-chart-2",
       "kind": "color",
-      "light": "--yue-p-teal-700",
-      "dark": "--yue-p-teal-300",
+      "light": "--qian-p-teal-700",
+      "dark": "--qian-p-teal-300",
       "meaning": "图形系列 2",
-      "contrastWith": "--yue-background",
+      "contrastWith": "--qian-background",
       "contrast": "boundary"
     },
     {
-      "name": "--yue-chart-3",
+      "name": "--qian-chart-3",
       "kind": "color",
-      "light": "--yue-p-amber-700",
-      "dark": "--yue-p-amber-300",
+      "light": "--qian-p-amber-700",
+      "dark": "--qian-p-amber-300",
       "meaning": "图形系列 3",
-      "contrastWith": "--yue-background",
+      "contrastWith": "--qian-background",
       "contrast": "boundary"
     },
     {
-      "name": "--yue-chart-4",
+      "name": "--qian-chart-4",
       "kind": "color",
-      "light": "--yue-p-violet-700",
-      "dark": "--yue-p-violet-300",
+      "light": "--qian-p-violet-700",
+      "dark": "--qian-p-violet-300",
       "meaning": "图形系列 4",
-      "contrastWith": "--yue-background",
+      "contrastWith": "--qian-background",
       "contrast": "boundary"
     },
     {
-      "name": "--yue-chart-5",
+      "name": "--qian-chart-5",
       "kind": "color",
-      "light": "--yue-p-green-700",
-      "dark": "--yue-p-green-300",
+      "light": "--qian-p-green-700",
+      "dark": "--qian-p-green-300",
       "meaning": "图形系列 5",
-      "contrastWith": "--yue-background",
+      "contrastWith": "--qian-background",
       "contrast": "boundary"
     },
     {
-      "name": "--yue-ok",
+      "name": "--qian-ok",
       "kind": "color",
-      "light": "--yue-p-green-700",
-      "dark": "--yue-p-green-200",
+      "light": "--qian-p-green-700",
+      "dark": "--qian-p-green-200",
       "meaning": "ok 状态文字：徽标、标签与行内状态的文字（配 ok-bg）",
-      "contrastWith": "--yue-ok-bg",
+      "contrastWith": "--qian-ok-bg",
       "contrast": "text"
     },
     {
-      "name": "--yue-ok-bg",
+      "name": "--qian-ok-bg",
       "kind": "color",
-      "light": "--yue-p-green-75",
-      "dark": "--yue-p-green-950",
+      "light": "--qian-p-green-75",
+      "dark": "--qian-p-green-950",
       "meaning": "ok 状态背景：徽标、标签、提示条与状态图标的底色",
-      "contrastWith": "--yue-ok",
+      "contrastWith": "--qian-ok",
       "contrast": "text"
     },
     {
-      "name": "--yue-warn",
+      "name": "--qian-warn",
       "kind": "color",
-      "light": "--yue-p-amber-700",
-      "dark": "--yue-p-amber-200",
+      "light": "--qian-p-amber-700",
+      "dark": "--qian-p-amber-200",
       "meaning": "warn 状态文字：徽标、标签与行内状态的文字（配 warn-bg）",
-      "contrastWith": "--yue-warn-bg",
+      "contrastWith": "--qian-warn-bg",
       "contrast": "text"
     },
     {
-      "name": "--yue-warn-bg",
+      "name": "--qian-warn-bg",
       "kind": "color",
-      "light": "--yue-p-amber-75",
-      "dark": "--yue-p-amber-950",
+      "light": "--qian-p-amber-75",
+      "dark": "--qian-p-amber-950",
       "meaning": "warn 状态背景：徽标、标签、提示条与状态图标的底色",
-      "contrastWith": "--yue-warn",
+      "contrastWith": "--qian-warn",
       "contrast": "text"
     },
     {
-      "name": "--yue-error",
+      "name": "--qian-error",
       "kind": "color",
-      "light": "--yue-p-red-700",
-      "dark": "--yue-p-red-200",
+      "light": "--qian-p-red-700",
+      "dark": "--qian-p-red-200",
       "meaning": "error 状态文字：徽标、标签与行内状态的文字（配 error-bg）",
-      "contrastWith": "--yue-error-bg",
+      "contrastWith": "--qian-error-bg",
       "contrast": "text"
     },
     {
-      "name": "--yue-error-bg",
+      "name": "--qian-error-bg",
       "kind": "color",
-      "light": "--yue-p-red-75",
-      "dark": "--yue-p-red-950",
+      "light": "--qian-p-red-75",
+      "dark": "--qian-p-red-950",
       "meaning": "error 状态背景：徽标、标签、提示条与状态图标的底色",
-      "contrastWith": "--yue-error",
+      "contrastWith": "--qian-error",
       "contrast": "text"
     },
     {
-      "name": "--yue-info",
+      "name": "--qian-info",
       "kind": "color",
-      "light": "--yue-p-blue-700",
-      "dark": "--yue-p-blue-200",
+      "light": "--qian-p-blue-700",
+      "dark": "--qian-p-blue-200",
       "meaning": "info 状态文字：徽标、标签与行内状态的文字（配 info-bg）",
-      "contrastWith": "--yue-info-bg",
+      "contrastWith": "--qian-info-bg",
       "contrast": "text"
     },
     {
-      "name": "--yue-info-bg",
+      "name": "--qian-info-bg",
       "kind": "color",
-      "light": "--yue-p-blue-75",
-      "dark": "--yue-p-blue-950",
+      "light": "--qian-p-blue-75",
+      "dark": "--qian-p-blue-950",
       "meaning": "info 状态背景：徽标、标签、提示条与状态图标的底色",
-      "contrastWith": "--yue-info",
+      "contrastWith": "--qian-info",
       "contrast": "text"
     },
     {
-      "name": "--yue-neutral",
+      "name": "--qian-neutral",
       "kind": "color",
-      "light": "--yue-p-neutral-700",
-      "dark": "--yue-p-neutral-200",
+      "light": "--qian-p-neutral-700",
+      "dark": "--qian-p-neutral-200",
       "meaning": "neutral 状态文字：徽标、标签与行内状态的文字（配 neutral-bg）",
-      "contrastWith": "--yue-neutral-bg",
+      "contrastWith": "--qian-neutral-bg",
       "contrast": "text"
     },
     {
-      "name": "--yue-neutral-bg",
+      "name": "--qian-neutral-bg",
       "kind": "color",
-      "light": "--yue-p-neutral-75",
-      "dark": "--yue-p-neutral-950",
+      "light": "--qian-p-neutral-75",
+      "dark": "--qian-p-neutral-950",
       "meaning": "neutral 状态背景：徽标、标签、提示条与状态图标的底色",
-      "contrastWith": "--yue-neutral",
+      "contrastWith": "--qian-neutral",
       "contrast": "text"
     },
     {
-      "name": "--yue-control-foreground",
+      "name": "--qian-control-foreground",
       "kind": "color",
-      "light": "--yue-p-neutral-890",
-      "dark": "--yue-p-neutral-100",
+      "light": "--qian-p-neutral-890",
+      "dark": "--qian-p-neutral-100",
       "meaning": "控件文字：字段标签、描边按钮、选择器取值与可选标签",
-      "contrastWith": "--yue-background",
+      "contrastWith": "--qian-background",
       "contrast": "text"
     },
     {
-      "name": "--yue-subtle-foreground",
+      "name": "--qian-subtle-foreground",
       "kind": "color",
-      "light": "--yue-p-neutral-800",
-      "dark": "--yue-p-neutral-200",
+      "light": "--qian-p-neutral-800",
+      "dark": "--qian-p-neutral-200",
       "meaning": "次要界面文字：导航项、图标按钮、复选框说明与次要链接",
-      "contrastWith": "--yue-background",
+      "contrastWith": "--qian-background",
       "contrast": "text"
     },
     {
-      "name": "--yue-caption-foreground",
+      "name": "--qian-caption-foreground",
       "kind": "color",
-      "light": "--yue-p-neutral-650",
-      "dark": "--yue-p-neutral-300",
+      "light": "--qian-p-neutral-650",
+      "dark": "--qian-p-neutral-300",
       "meaning": "说明文字：表头、分页、页签与卡片内的说明",
-      "contrastWith": "--yue-background",
+      "contrastWith": "--qian-background",
       "contrast": "text"
     },
     {
-      "name": "--yue-border-strong",
+      "name": "--qian-border-strong",
       "kind": "color",
-      "light": "--yue-p-neutral-200",
-      "dark": "--yue-p-white",
+      "light": "--qian-p-neutral-200",
+      "dark": "--qian-p-white",
       "meaning": "强边界：描边按钮、可选标签与分页按钮的边框",
-      "contrastWith": "--yue-background",
+      "contrastWith": "--qian-background",
       "contrast": "decorative",
       "darkAlpha": 0.16
     },
     {
-      "name": "--yue-primary-subtle",
+      "name": "--qian-primary-subtle",
       "kind": "color",
-      "light": "--yue-p-brand-50",
-      "dark": "--yue-p-brand-950",
+      "light": "--qian-p-brand-50",
+      "dark": "--qian-p-brand-950",
       "meaning": "主色浅底：主色柔和按钮与入口卡片的底色",
-      "contrastWith": "--yue-primary-soft-foreground",
+      "contrastWith": "--qian-primary-soft-foreground",
       "contrast": "text"
     },
     {
-      "name": "--yue-primary-soft",
+      "name": "--qian-primary-soft",
       "kind": "color",
-      "light": "--yue-p-brand-100",
-      "dark": "--yue-p-brand-900",
+      "light": "--qian-p-brand-100",
+      "dark": "--qian-p-brand-900",
       "meaning": "主色柔底：导航当前项、计数胶囊、序号与头像的底色",
-      "contrastWith": "--yue-primary-soft-foreground",
+      "contrastWith": "--qian-primary-soft-foreground",
       "contrast": "text"
     },
     {
-      "name": "--yue-primary-soft-foreground",
+      "name": "--qian-primary-soft-foreground",
       "kind": "color",
-      "light": "--yue-p-brand-700",
-      "dark": "--yue-p-brand-200",
+      "light": "--qian-p-brand-700",
+      "dark": "--qian-p-brand-200",
       "meaning": "主色柔底上的文字：导航当前项、柔和按钮与当前页码",
-      "contrastWith": "--yue-primary-soft",
+      "contrastWith": "--qian-primary-soft",
       "contrast": "text"
     },
     {
-      "name": "--yue-primary-border",
+      "name": "--qian-primary-border",
       "kind": "color",
-      "light": "--yue-p-brand-200",
-      "dark": "--yue-p-brand-800",
+      "light": "--qian-p-brand-200",
+      "dark": "--qian-p-brand-800",
       "meaning": "主色浅边框：主色浅底卡片的边框",
-      "contrastWith": "--yue-primary-subtle",
+      "contrastWith": "--qian-primary-subtle",
       "contrast": "decorative"
     },
     {
-      "name": "--yue-primary-border-strong",
+      "name": "--qian-primary-border-strong",
       "kind": "color",
-      "light": "--yue-p-brand-300",
-      "dark": "--yue-p-brand-700",
+      "light": "--qian-p-brand-300",
+      "dark": "--qian-p-brand-700",
       "meaning": "主色强边框：柔和按钮与可选卡片悬停时的边框",
-      "contrastWith": "--yue-background",
+      "contrastWith": "--qian-background",
       "contrast": "decorative"
     },
     {
-      "name": "--yue-ok-strong",
+      "name": "--qian-ok-strong",
       "kind": "color",
-      "light": "--yue-p-green-800",
-      "dark": "--yue-p-green-100",
+      "light": "--qian-p-green-800",
+      "dark": "--qian-p-green-100",
       "meaning": "ok 深色文字：提示条与成块区域内的文字（配 ok-bg）",
-      "contrastWith": "--yue-ok-bg",
+      "contrastWith": "--qian-ok-bg",
       "contrast": "text"
     },
     {
-      "name": "--yue-ok-border",
+      "name": "--qian-ok-border",
       "kind": "color",
-      "light": "--yue-p-green-175",
-      "dark": "--yue-p-green-800",
+      "light": "--qian-p-green-175",
+      "dark": "--qian-p-green-800",
       "meaning": "ok 边框：徽标、提示条与成块区域的边框",
-      "contrastWith": "--yue-ok-bg",
+      "contrastWith": "--qian-ok-bg",
       "contrast": "decorative"
     },
     {
-      "name": "--yue-ok-solid",
+      "name": "--qian-ok-solid",
       "kind": "color",
-      "light": "--yue-p-green-600",
-      "dark": "--yue-p-green-400",
+      "light": "--qian-p-green-600",
+      "dark": "--qian-p-green-400",
       "meaning": "ok 实色：状态圆点与进度填充",
-      "contrastWith": "--yue-background",
+      "contrastWith": "--qian-background",
       "contrast": "boundary"
     },
     {
-      "name": "--yue-ok-icon",
+      "name": "--qian-ok-icon",
       "kind": "color",
-      "light": "--yue-p-green-600",
-      "dark": "--yue-p-green-400",
+      "light": "--qian-p-green-600",
+      "dark": "--qian-p-green-400",
       "meaning": "ok 图标色：结果页、检查列表等处的状态图标字形",
-      "contrastWith": "--yue-background",
+      "contrastWith": "--qian-background",
       "contrast": "boundary"
     },
     {
-      "name": "--yue-warn-strong",
+      "name": "--qian-warn-strong",
       "kind": "color",
-      "light": "--yue-p-amber-800",
-      "dark": "--yue-p-amber-100",
+      "light": "--qian-p-amber-800",
+      "dark": "--qian-p-amber-100",
       "meaning": "warn 深色文字：提示条与成块区域内的文字（配 warn-bg）",
-      "contrastWith": "--yue-warn-bg",
+      "contrastWith": "--qian-warn-bg",
       "contrast": "text"
     },
     {
-      "name": "--yue-warn-border",
+      "name": "--qian-warn-border",
       "kind": "color",
-      "light": "--yue-p-amber-175",
-      "dark": "--yue-p-amber-800",
+      "light": "--qian-p-amber-175",
+      "dark": "--qian-p-amber-800",
       "meaning": "warn 边框：徽标、提示条与成块区域的边框",
-      "contrastWith": "--yue-warn-bg",
+      "contrastWith": "--qian-warn-bg",
       "contrast": "decorative"
     },
     {
-      "name": "--yue-warn-solid",
+      "name": "--qian-warn-solid",
       "kind": "color",
-      "light": "--yue-p-amber-500",
-      "dark": "--yue-p-amber-400",
+      "light": "--qian-p-amber-500",
+      "dark": "--qian-p-amber-400",
       "meaning": "warn 实色：状态圆点与进度填充",
-      "contrastWith": "--yue-background",
+      "contrastWith": "--qian-background",
       "contrast": "boundary"
     },
     {
-      "name": "--yue-warn-icon",
+      "name": "--qian-warn-icon",
       "kind": "color",
-      "light": "--yue-p-amber-600",
-      "dark": "--yue-p-amber-400",
+      "light": "--qian-p-amber-600",
+      "dark": "--qian-p-amber-400",
       "meaning": "warn 图标色：结果页、检查列表等处的状态图标字形；比圆点深一档（amber-600），大图标在浅底上更清楚",
-      "contrastWith": "--yue-background",
+      "contrastWith": "--qian-background",
       "contrast": "boundary"
     },
     {
-      "name": "--yue-error-strong",
+      "name": "--qian-error-strong",
       "kind": "color",
-      "light": "--yue-p-red-800",
-      "dark": "--yue-p-red-100",
+      "light": "--qian-p-red-800",
+      "dark": "--qian-p-red-100",
       "meaning": "error 深色文字：提示条与成块区域内的文字（配 error-bg）",
-      "contrastWith": "--yue-error-bg",
+      "contrastWith": "--qian-error-bg",
       "contrast": "text"
     },
     {
-      "name": "--yue-error-border",
+      "name": "--qian-error-border",
       "kind": "color",
-      "light": "--yue-p-red-175",
-      "dark": "--yue-p-red-800",
+      "light": "--qian-p-red-175",
+      "dark": "--qian-p-red-800",
       "meaning": "error 边框：徽标、提示条与成块区域的边框",
-      "contrastWith": "--yue-error-bg",
+      "contrastWith": "--qian-error-bg",
       "contrast": "decorative"
     },
     {
-      "name": "--yue-error-solid",
+      "name": "--qian-error-solid",
       "kind": "color",
-      "light": "--yue-p-red-600",
-      "dark": "--yue-p-red-400",
+      "light": "--qian-p-red-600",
+      "dark": "--qian-p-red-400",
       "meaning": "error 实色：状态圆点与进度填充",
-      "contrastWith": "--yue-background",
+      "contrastWith": "--qian-background",
       "contrast": "boundary"
     },
     {
-      "name": "--yue-error-icon",
+      "name": "--qian-error-icon",
       "kind": "color",
-      "light": "--yue-p-red-600",
-      "dark": "--yue-p-red-400",
+      "light": "--qian-p-red-600",
+      "dark": "--qian-p-red-400",
       "meaning": "error 图标色：结果页、检查列表等处的状态图标字形",
-      "contrastWith": "--yue-background",
+      "contrastWith": "--qian-background",
       "contrast": "boundary"
     },
     {
-      "name": "--yue-info-strong",
+      "name": "--qian-info-strong",
       "kind": "color",
-      "light": "--yue-p-blue-800",
-      "dark": "--yue-p-blue-100",
+      "light": "--qian-p-blue-800",
+      "dark": "--qian-p-blue-100",
       "meaning": "info 深色文字：提示条与成块区域内的文字（配 info-bg）",
-      "contrastWith": "--yue-info-bg",
+      "contrastWith": "--qian-info-bg",
       "contrast": "text"
     },
     {
-      "name": "--yue-info-border",
+      "name": "--qian-info-border",
       "kind": "color",
-      "light": "--yue-p-blue-200",
-      "dark": "--yue-p-blue-800",
+      "light": "--qian-p-blue-200",
+      "dark": "--qian-p-blue-800",
       "meaning": "info 边框：徽标、提示条与成块区域的边框",
-      "contrastWith": "--yue-info-bg",
+      "contrastWith": "--qian-info-bg",
       "contrast": "decorative"
     },
     {
-      "name": "--yue-info-solid",
+      "name": "--qian-info-solid",
       "kind": "color",
-      "light": "--yue-p-blue-600",
-      "dark": "--yue-p-blue-400",
+      "light": "--qian-p-blue-600",
+      "dark": "--qian-p-blue-400",
       "meaning": "info 实色：状态圆点与进度填充",
-      "contrastWith": "--yue-background",
+      "contrastWith": "--qian-background",
       "contrast": "boundary"
     },
     {
-      "name": "--yue-info-icon",
+      "name": "--qian-info-icon",
       "kind": "color",
-      "light": "--yue-p-blue-600",
-      "dark": "--yue-p-blue-400",
+      "light": "--qian-p-blue-600",
+      "dark": "--qian-p-blue-400",
       "meaning": "info 图标色：结果页、检查列表等处的状态图标字形",
-      "contrastWith": "--yue-background",
+      "contrastWith": "--qian-background",
       "contrast": "boundary"
     },
     {
-      "name": "--yue-neutral-strong",
+      "name": "--qian-neutral-strong",
       "kind": "color",
-      "light": "--yue-p-neutral-800",
-      "dark": "--yue-p-neutral-100",
+      "light": "--qian-p-neutral-800",
+      "dark": "--qian-p-neutral-100",
       "meaning": "neutral 深色文字：提示条与成块区域内的文字（配 neutral-bg）",
-      "contrastWith": "--yue-neutral-bg",
+      "contrastWith": "--qian-neutral-bg",
       "contrast": "text"
     },
     {
-      "name": "--yue-neutral-border",
+      "name": "--qian-neutral-border",
       "kind": "color",
-      "light": "--yue-p-neutral-175",
-      "dark": "--yue-p-neutral-800",
+      "light": "--qian-p-neutral-175",
+      "dark": "--qian-p-neutral-800",
       "meaning": "neutral 边框：徽标、提示条与成块区域的边框",
-      "contrastWith": "--yue-neutral-bg",
+      "contrastWith": "--qian-neutral-bg",
       "contrast": "decorative"
     },
     {
-      "name": "--yue-neutral-solid",
+      "name": "--qian-neutral-solid",
       "kind": "color",
-      "light": "--yue-p-neutral-450",
-      "dark": "--yue-p-neutral-400",
+      "light": "--qian-p-neutral-450",
+      "dark": "--qian-p-neutral-400",
       "meaning": "neutral 实色：状态圆点与进度填充",
-      "contrastWith": "--yue-background",
+      "contrastWith": "--qian-background",
       "contrast": "boundary"
     },
     {
-      "name": "--yue-neutral-icon",
+      "name": "--qian-neutral-icon",
       "kind": "color",
-      "light": "--yue-p-neutral-450",
-      "dark": "--yue-p-neutral-400",
+      "light": "--qian-p-neutral-450",
+      "dark": "--qian-p-neutral-400",
       "meaning": "neutral 图标色：结果页、检查列表等处的状态图标字形",
-      "contrastWith": "--yue-background",
+      "contrastWith": "--qian-background",
       "contrast": "boundary"
     },
     {
-      "name": "--yue-tint-violet",
+      "name": "--qian-tint-violet",
       "kind": "color",
-      "light": "--yue-p-violet-100",
-      "dark": "--yue-p-violet-900",
+      "light": "--qian-p-violet-100",
+      "dark": "--qian-p-violet-900",
       "meaning": "紫色点缀底：头像与标识色块",
-      "contrastWith": "--yue-tint-violet-foreground",
+      "contrastWith": "--qian-tint-violet-foreground",
       "contrast": "text"
     },
     {
-      "name": "--yue-tint-violet-foreground",
+      "name": "--qian-tint-violet-foreground",
       "kind": "color",
-      "light": "--yue-p-violet-700",
-      "dark": "--yue-p-violet-200",
+      "light": "--qian-p-violet-700",
+      "dark": "--qian-p-violet-200",
       "meaning": "紫色点缀文字：头像与标识色块上的字",
-      "contrastWith": "--yue-tint-violet",
+      "contrastWith": "--qian-tint-violet",
       "contrast": "text"
     },
     {
-      "name": "--yue-tint-teal",
+      "name": "--qian-tint-teal",
       "kind": "color",
-      "light": "--yue-p-teal-75",
-      "dark": "--yue-p-teal-900",
+      "light": "--qian-p-teal-75",
+      "dark": "--qian-p-teal-900",
       "meaning": "青色点缀底：头像与标识色块",
-      "contrastWith": "--yue-tint-teal-foreground",
+      "contrastWith": "--qian-tint-teal-foreground",
       "contrast": "text"
     },
     {
-      "name": "--yue-tint-teal-foreground",
+      "name": "--qian-tint-teal-foreground",
       "kind": "color",
-      "light": "--yue-p-teal-700",
-      "dark": "--yue-p-teal-200",
+      "light": "--qian-p-teal-700",
+      "dark": "--qian-p-teal-200",
       "meaning": "青色点缀文字：头像与标识色块上的字",
-      "contrastWith": "--yue-tint-teal",
+      "contrastWith": "--qian-tint-teal",
       "contrast": "text"
     },
     {
-      "name": "--yue-inverse",
+      "name": "--qian-inverse",
       "kind": "color",
-      "light": "--yue-p-brand-800",
-      "dark": "--yue-p-brand-800",
+      "light": "--qian-p-brand-800",
+      "dark": "--qian-p-brand-800",
       "meaning": "品牌深色面：认证与申请页的侧栏底色",
-      "contrastWith": "--yue-inverse-foreground",
+      "contrastWith": "--qian-inverse-foreground",
       "contrast": "text"
     },
     {
-      "name": "--yue-inverse-foreground",
+      "name": "--qian-inverse-foreground",
       "kind": "color",
-      "light": "--yue-p-white",
-      "dark": "--yue-p-white",
+      "light": "--qian-p-white",
+      "dark": "--qian-p-white",
       "meaning": "品牌深色面上的文字",
-      "contrastWith": "--yue-inverse",
+      "contrastWith": "--qian-inverse",
       "contrast": "text"
     },
     {
-      "name": "--yue-inverse-muted-foreground",
+      "name": "--qian-inverse-muted-foreground",
       "kind": "color",
-      "light": "--yue-p-brand-200",
-      "dark": "--yue-p-brand-200",
+      "light": "--qian-p-brand-200",
+      "dark": "--qian-p-brand-200",
       "meaning": "品牌深色面上的次要文字",
-      "contrastWith": "--yue-inverse",
+      "contrastWith": "--qian-inverse",
       "contrast": "text"
     },
     {
-      "name": "--yue-radius",
+      "name": "--qian-radius",
       "kind": "dimension",
-      "light": "--yue-p-radius-base",
-      "dark": "--yue-p-radius-base",
+      "light": "--qian-p-radius-base",
+      "dark": "--qian-p-radius-base",
       "meaning": "组件默认圆角"
     }
   ],
   "components": [
     {
-      "name": "--yue-button-radius",
-      "value": "calc(var(--yue-radius) - 2px)",
+      "name": "--qian-button-radius",
+      "value": "calc(var(--qian-radius) - 2px)",
       "meaning": "按钮圆角"
     },
     {
-      "name": "--yue-button-height",
-      "value": "var(--yue-p-space-9)",
+      "name": "--qian-button-height",
+      "value": "var(--qian-p-space-9)",
       "meaning": "按钮标准高度"
     },
     {
-      "name": "--yue-input-radius",
-      "value": "calc(var(--yue-radius) - 2px)",
+      "name": "--qian-input-radius",
+      "value": "calc(var(--qian-radius) - 2px)",
       "meaning": "输入框圆角"
     },
     {
-      "name": "--yue-table-row-height",
-      "value": "var(--yue-p-space-10)",
+      "name": "--qian-table-row-height",
+      "value": "var(--qian-p-space-10)",
       "meaning": "表格标准行高"
     },
     {
-      "name": "--yue-popover-shadow",
-      "value": "var(--yue-p-shadow-lg)",
+      "name": "--qian-popover-shadow",
+      "value": "var(--qian-p-shadow-lg)",
       "meaning": "浮层阴影"
     },
     {
-      "name": "--yue-table-row-height-compact",
-      "value": "var(--yue-p-space-8)",
+      "name": "--qian-table-row-height-compact",
+      "value": "var(--qian-p-space-8)",
       "meaning": "表格紧凑行高"
     },
     {
-      "name": "--yue-table-header-background",
-      "value": "color-mix(in srgb, oklch(var(--yue-muted)) 50%, oklch(var(--yue-background)))",
+      "name": "--qian-table-header-background",
+      "value": "color-mix(in srgb, oklch(var(--qian-muted)) 50%, oklch(var(--qian-background)))",
       "meaning": "表头背景：预合成的不透明 muted 半色，固定列与普通列共用"
     },
     {
-      "name": "--yue-input-height",
-      "value": "var(--yue-p-space-9)",
+      "name": "--qian-input-height",
+      "value": "var(--qian-p-space-9)",
       "meaning": "输入类控件标准高度：输入框、选择器、密码与数字输入；表单与抽屉按场景整体调档"
     }
   ],
@@ -1154,323 +1154,323 @@
   "aliases": [
     {
       "name": "--background",
-      "target": "--yue-background"
+      "target": "--qian-background"
     },
     {
       "name": "--foreground",
-      "target": "--yue-foreground"
+      "target": "--qian-foreground"
     },
     {
       "name": "--canvas",
-      "target": "--yue-canvas"
+      "target": "--qian-canvas"
     },
     {
       "name": "--card",
-      "target": "--yue-card"
+      "target": "--qian-card"
     },
     {
       "name": "--card-foreground",
-      "target": "--yue-card-foreground"
+      "target": "--qian-card-foreground"
     },
     {
       "name": "--popover",
-      "target": "--yue-popover"
+      "target": "--qian-popover"
     },
     {
       "name": "--popover-foreground",
-      "target": "--yue-popover-foreground"
+      "target": "--qian-popover-foreground"
     },
     {
       "name": "--primary",
-      "target": "--yue-primary"
+      "target": "--qian-primary"
     },
     {
       "name": "--primary-foreground",
-      "target": "--yue-primary-foreground"
+      "target": "--qian-primary-foreground"
     },
     {
       "name": "--secondary",
-      "target": "--yue-secondary"
+      "target": "--qian-secondary"
     },
     {
       "name": "--secondary-foreground",
-      "target": "--yue-secondary-foreground"
+      "target": "--qian-secondary-foreground"
     },
     {
       "name": "--muted",
-      "target": "--yue-muted"
+      "target": "--qian-muted"
     },
     {
       "name": "--muted-foreground",
-      "target": "--yue-muted-foreground"
+      "target": "--qian-muted-foreground"
     },
     {
       "name": "--accent",
-      "target": "--yue-accent"
+      "target": "--qian-accent"
     },
     {
       "name": "--accent-foreground",
-      "target": "--yue-accent-foreground"
+      "target": "--qian-accent-foreground"
     },
     {
       "name": "--destructive",
-      "target": "--yue-destructive"
+      "target": "--qian-destructive"
     },
     {
       "name": "--destructive-foreground",
-      "target": "--yue-destructive-foreground"
+      "target": "--qian-destructive-foreground"
     },
     {
       "name": "--border",
-      "target": "--yue-border"
+      "target": "--qian-border"
     },
     {
       "name": "--input",
-      "target": "--yue-input"
+      "target": "--qian-input"
     },
     {
       "name": "--ring",
-      "target": "--yue-ring"
+      "target": "--qian-ring"
     },
     {
       "name": "--sidebar",
-      "target": "--yue-sidebar"
+      "target": "--qian-sidebar"
     },
     {
       "name": "--sidebar-foreground",
-      "target": "--yue-sidebar-foreground"
+      "target": "--qian-sidebar-foreground"
     },
     {
       "name": "--sidebar-primary",
-      "target": "--yue-sidebar-primary"
+      "target": "--qian-sidebar-primary"
     },
     {
       "name": "--sidebar-primary-foreground",
-      "target": "--yue-sidebar-primary-foreground"
+      "target": "--qian-sidebar-primary-foreground"
     },
     {
       "name": "--sidebar-accent",
-      "target": "--yue-sidebar-accent"
+      "target": "--qian-sidebar-accent"
     },
     {
       "name": "--sidebar-accent-foreground",
-      "target": "--yue-sidebar-accent-foreground"
+      "target": "--qian-sidebar-accent-foreground"
     },
     {
       "name": "--sidebar-border",
-      "target": "--yue-sidebar-border"
+      "target": "--qian-sidebar-border"
     },
     {
       "name": "--sidebar-ring",
-      "target": "--yue-sidebar-ring"
+      "target": "--qian-sidebar-ring"
     },
     {
       "name": "--chart-1",
-      "target": "--yue-chart-1"
+      "target": "--qian-chart-1"
     },
     {
       "name": "--chart-2",
-      "target": "--yue-chart-2"
+      "target": "--qian-chart-2"
     },
     {
       "name": "--chart-3",
-      "target": "--yue-chart-3"
+      "target": "--qian-chart-3"
     },
     {
       "name": "--chart-4",
-      "target": "--yue-chart-4"
+      "target": "--qian-chart-4"
     },
     {
       "name": "--chart-5",
-      "target": "--yue-chart-5"
+      "target": "--qian-chart-5"
     },
     {
       "name": "--ok",
-      "target": "--yue-ok"
+      "target": "--qian-ok"
     },
     {
       "name": "--ok-bg",
-      "target": "--yue-ok-bg"
+      "target": "--qian-ok-bg"
     },
     {
       "name": "--warn",
-      "target": "--yue-warn"
+      "target": "--qian-warn"
     },
     {
       "name": "--warn-bg",
-      "target": "--yue-warn-bg"
+      "target": "--qian-warn-bg"
     },
     {
       "name": "--error",
-      "target": "--yue-error"
+      "target": "--qian-error"
     },
     {
       "name": "--error-bg",
-      "target": "--yue-error-bg"
+      "target": "--qian-error-bg"
     },
     {
       "name": "--info",
-      "target": "--yue-info"
+      "target": "--qian-info"
     },
     {
       "name": "--info-bg",
-      "target": "--yue-info-bg"
+      "target": "--qian-info-bg"
     },
     {
       "name": "--neutral",
-      "target": "--yue-neutral"
+      "target": "--qian-neutral"
     },
     {
       "name": "--neutral-bg",
-      "target": "--yue-neutral-bg"
+      "target": "--qian-neutral-bg"
     },
     {
       "name": "--control-foreground",
-      "target": "--yue-control-foreground"
+      "target": "--qian-control-foreground"
     },
     {
       "name": "--subtle-foreground",
-      "target": "--yue-subtle-foreground"
+      "target": "--qian-subtle-foreground"
     },
     {
       "name": "--caption-foreground",
-      "target": "--yue-caption-foreground"
+      "target": "--qian-caption-foreground"
     },
     {
       "name": "--border-strong",
-      "target": "--yue-border-strong"
+      "target": "--qian-border-strong"
     },
     {
       "name": "--primary-subtle",
-      "target": "--yue-primary-subtle"
+      "target": "--qian-primary-subtle"
     },
     {
       "name": "--primary-soft",
-      "target": "--yue-primary-soft"
+      "target": "--qian-primary-soft"
     },
     {
       "name": "--primary-soft-foreground",
-      "target": "--yue-primary-soft-foreground"
+      "target": "--qian-primary-soft-foreground"
     },
     {
       "name": "--primary-border",
-      "target": "--yue-primary-border"
+      "target": "--qian-primary-border"
     },
     {
       "name": "--primary-border-strong",
-      "target": "--yue-primary-border-strong"
+      "target": "--qian-primary-border-strong"
     },
     {
       "name": "--ok-strong",
-      "target": "--yue-ok-strong"
+      "target": "--qian-ok-strong"
     },
     {
       "name": "--ok-border",
-      "target": "--yue-ok-border"
+      "target": "--qian-ok-border"
     },
     {
       "name": "--ok-solid",
-      "target": "--yue-ok-solid"
+      "target": "--qian-ok-solid"
     },
     {
       "name": "--ok-icon",
-      "target": "--yue-ok-icon"
+      "target": "--qian-ok-icon"
     },
     {
       "name": "--warn-strong",
-      "target": "--yue-warn-strong"
+      "target": "--qian-warn-strong"
     },
     {
       "name": "--warn-border",
-      "target": "--yue-warn-border"
+      "target": "--qian-warn-border"
     },
     {
       "name": "--warn-solid",
-      "target": "--yue-warn-solid"
+      "target": "--qian-warn-solid"
     },
     {
       "name": "--warn-icon",
-      "target": "--yue-warn-icon"
+      "target": "--qian-warn-icon"
     },
     {
       "name": "--error-strong",
-      "target": "--yue-error-strong"
+      "target": "--qian-error-strong"
     },
     {
       "name": "--error-border",
-      "target": "--yue-error-border"
+      "target": "--qian-error-border"
     },
     {
       "name": "--error-solid",
-      "target": "--yue-error-solid"
+      "target": "--qian-error-solid"
     },
     {
       "name": "--error-icon",
-      "target": "--yue-error-icon"
+      "target": "--qian-error-icon"
     },
     {
       "name": "--info-strong",
-      "target": "--yue-info-strong"
+      "target": "--qian-info-strong"
     },
     {
       "name": "--info-border",
-      "target": "--yue-info-border"
+      "target": "--qian-info-border"
     },
     {
       "name": "--info-solid",
-      "target": "--yue-info-solid"
+      "target": "--qian-info-solid"
     },
     {
       "name": "--info-icon",
-      "target": "--yue-info-icon"
+      "target": "--qian-info-icon"
     },
     {
       "name": "--neutral-strong",
-      "target": "--yue-neutral-strong"
+      "target": "--qian-neutral-strong"
     },
     {
       "name": "--neutral-border",
-      "target": "--yue-neutral-border"
+      "target": "--qian-neutral-border"
     },
     {
       "name": "--neutral-solid",
-      "target": "--yue-neutral-solid"
+      "target": "--qian-neutral-solid"
     },
     {
       "name": "--neutral-icon",
-      "target": "--yue-neutral-icon"
+      "target": "--qian-neutral-icon"
     },
     {
       "name": "--tint-violet",
-      "target": "--yue-tint-violet"
+      "target": "--qian-tint-violet"
     },
     {
       "name": "--tint-violet-foreground",
-      "target": "--yue-tint-violet-foreground"
+      "target": "--qian-tint-violet-foreground"
     },
     {
       "name": "--tint-teal",
-      "target": "--yue-tint-teal"
+      "target": "--qian-tint-teal"
     },
     {
       "name": "--tint-teal-foreground",
-      "target": "--yue-tint-teal-foreground"
+      "target": "--qian-tint-teal-foreground"
     },
     {
       "name": "--inverse",
-      "target": "--yue-inverse"
+      "target": "--qian-inverse"
     },
     {
       "name": "--inverse-foreground",
-      "target": "--yue-inverse-foreground"
+      "target": "--qian-inverse-foreground"
     },
     {
       "name": "--inverse-muted-foreground",
-      "target": "--yue-inverse-muted-foreground"
+      "target": "--qian-inverse-muted-foreground"
     },
     {
       "name": "--radius",
-      "target": "--yue-radius"
+      "target": "--qian-radius"
     }
   ]
 }
