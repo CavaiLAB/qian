@@ -85,6 +85,17 @@ export const RULES = [
 // check 用：替换之后仍然允许带旧名字的文档（新旧对照、更名记录、导入记录）。
 export const HISTORY_DOCS = ['docs/migration.md', 'docs/migrating-from-yue.md', 'AGENTS.md', 'README.md', 'docs/architecture.md'];
 
+// check 用：F2 手工写进来、本来就要带旧名字的片段。只用来给剩下的 yue 归类，不参与 replace。带 file 的只认那一个文件。
+export const CHECK_KEEP = [
+  { id: 'guide-link', re: /migrating-from-yue\.md/g, why: '指向给使用方的迁移说明（docs/migrating-from-yue.md）的链接' },
+  { id: 'lead-registration', file: 'backend-copy/README.md', re: /engines\.yue|\\?"yue\\?"|#\/engines\/yue/g, why: '契约副本说明「领先于来源」一节里来源仍在用的旧键' },
+  { id: 'release-assertion', file: 'scripts/release/pack.mjs', re: /^.*文件名里还有 yue.*$/gm, why: '打包与消费验证断言制品里没有旧名字' },
+  { id: 'release-assertion', file: 'scripts/release/consumer.mjs', re: /^.*构建产物里还有 yue 前缀.*$/gm, why: '打包与消费验证断言制品里没有旧名字' },
+];
+
+// check 用：路径里带 yue、本来就该这样叫的文件。
+export const KEEP_PATHS = [{ path: 'docs/migrating-from-yue.md', why: '给使用方的迁移说明，文件名由任务书定' }];
+
 // ---------------------------------------------------------------------------
 
 const root = execFileSync('git', ['rev-parse', '--show-toplevel'], { encoding: 'utf8' }).trim();
@@ -281,7 +292,10 @@ function check() {
     counts.set(key, entry);
   };
   for (const file of trackedFiles()) {
-    if (/yue/i.test(file)) unclassified.push(`${file}（路径）`);
+    if (/yue/i.test(file)) {
+      if (KEEP_PATHS.some((keep) => keep.path === file)) add('guide-path', file);
+      else unclassified.push(`${file}（路径）`);
+    }
     const text = readText(file);
     if (text === null) {
       const n = countYue(readFileSync(path.join(root, file)).toString('latin1'));
@@ -289,11 +303,12 @@ function check() {
       continue;
     }
     if (!/yue/i.test(text)) continue;
-    // 先认保护区，再认文件。
+    // 先认保护区与 F2 手工写进来的片段，再认文件。本脚本与说明整个算 rename-script，不套手工片段。
+    const skip = skipOf(file);
     const covered = [];
     for (const { id, re } of PROTECT) for (const m of text.matchAll(re)) covered.push([m.index, m.index + m[0].length, id]);
+    if (skip?.keep !== 'rename-script') for (const { id, re, file: only } of CHECK_KEEP) if (!only || only === file) for (const m of text.matchAll(re)) covered.push([m.index, m.index + m[0].length, id]);
     covered.sort((a, b) => (b[1] - b[0]) - (a[1] - a[0])); // 嵌套时算在最外层名下，与 replace 的计数一致
-    const skip = skipOf(file);
     for (const m of text.matchAll(/yue/gi)) {
       const hit = covered.find(([start, end]) => m.index >= start && m.index < end);
       if (hit) add(hit[2], file);
@@ -309,7 +324,9 @@ function check() {
   const why = Object.fromEntries([
     ...PROTECT.map((p) => [p.id, p.why]),
     ...SKIP.map((s) => [s.keep, s.why]),
-    ['binary', '二进制文件（视觉基线 PNG）压缩数据里碰巧出现的字节，不是名字'],
+    ...CHECK_KEEP.map((k) => [k.id, k.why]),
+    ['guide-path', `路径：${KEEP_PATHS.map((keep) => `${keep.path}，${keep.why}`).join('；')}`],
+    ['binary','二进制文件（视觉基线 PNG）压缩数据里碰巧出现的字节，不是名字'],
     ['lockfile-hash', '锁文件里完整性摘要碰巧含有这三个字母，不是名字'],
     ['history-docs', '迁移计划、迁移说明与入口文档里的新旧名字对照与更名记录'],
   ]);
