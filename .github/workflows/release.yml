@@ -1,8 +1,9 @@
 name: release
 
 # 把 10 个包发到 GitHub Packages（S1-YUE-022 写好；首发由 F3 在产品负责人点头之后，在 Actions 里对 main 手动运行）。
-# 只能手动触发、只发 main：先核对这个提交在 qian、runtime-ts、backend-copy 三个工作流里都已通过，再打包验证、发布，
-# 发完在仓库外的空目录里从包源安装，做一次干净消费者验证。脚本与说明在 scripts/release/。
+# 只能手动触发、只发 main：先核对这个提交在 qian、runtime-ts、backend-copy 三个工作流里都已通过，再打包验证；
+# 上传之前先用这批 tarball 在仓库外的空项目里装一遍、跑一遍（S1-YUE-024），再发布；
+# 发完在仓库外的空目录里从包源安装，再做一次干净消费者验证与制品验收。脚本与说明在 scripts/release/。
 
 on:
   workflow_dispatch:
@@ -53,6 +54,11 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: 打包验证（10 个包）
         run: node scripts/release/pack.mjs "$RUNNER_TEMP/packages"
+      - name: 上传之前：用这批 tarball 做干净消费者验证与运行时、插件开发包的制品验收
+        run: |
+          node scripts/release/consumer.mjs archive "$RUNNER_TEMP/packages"
+          node packages/qian-runtime/scripts/verify-consumer.mjs "file:$RUNNER_TEMP/packages/cavailab-qian-runtime-$(node -p 'require("./packages/qian-runtime/package.json").version').tgz"
+          node packages/qian-plugin-sdk/scripts/verify-consumer.mjs archive "$RUNNER_TEMP/packages"
       - name: 发布到 GitHub Packages
         run: node scripts/release/publish.mjs "$RUNNER_TEMP/packages"
         env:
@@ -80,5 +86,11 @@ jobs:
       - run: pnpm install --frozen-lockfile
       - name: 在仓库外的空目录里从包源安装，类型检查并构建
         run: node scripts/release/consumer.mjs registry
+        env:
+          NODE_AUTH_TOKEN: ${{ github.token }}
+      - name: 从包源安装，跑运行时与插件开发包的制品验收
+        run: |
+          node packages/qian-runtime/scripts/verify-consumer.mjs "npm:@cavailab/qian-runtime@$(node -p 'require("./packages/qian-runtime/package.json").version')"
+          node packages/qian-plugin-sdk/scripts/verify-consumer.mjs registry
         env:
           NODE_AUTH_TOKEN: ${{ github.token }}
