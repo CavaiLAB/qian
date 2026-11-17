@@ -107,23 +107,36 @@ function readText(file, cwd = root) {
   if (BINARY_EXTENSIONS.has(path.extname(file).toLowerCase()) || buffer.subarray(0, 8000).includes(0)) return null;
   const text = buffer.toString('utf8');
   if (!Buffer.from(text, 'utf8').equals(buffer)) throw new Error(`${file}：不是合法的 UTF-8，停下来人工看`);
-  if (/[]/.test(text)) throw new Error(`${file}：含有占位用的私用区字符，停下来人工看`);
+  if (PRIVATE.test(text)) throw new Error(`${file}：含有占位用的私用区字符，停下来人工看`);
   return text;
 }
 
-/** 把保护区换成占位符；返回替换后的文本与原片段（按出现顺序）。 */
+// 占位符是私用区的两个字符包住片段的序号。源码里只写码位，免得脚本文件自己含有这两个字符。
+const OPEN = String.fromCodePoint(0xe000);
+const CLOSE = String.fromCodePoint(0xe001);
+const PLACEHOLDER = () => new RegExp(`${OPEN}(\\d+)${CLOSE}`, 'g');
+const PRIVATE = new RegExp(`[${OPEN}${CLOSE}]`);
+
+/**
+ * 把保护区换成占位符；返回替换后的文本与原片段（按出现顺序）。
+ * 保护区可以嵌套：任务号先换成占位符，固定提交的地址再把带着这个占位符的整段换掉（地址里带着任务号）。
+ */
 function mask(text) {
   const spans = [];
   for (const { id, re } of PROTECT) {
     text = text.replace(re, (match) => {
       spans.push({ id, match });
-      return `${spans.length - 1}`;
+      return `${OPEN}${spans.length - 1}${CLOSE}`;
     });
   }
   return { text, spans };
 }
 
-const unmask = (text, spans) => text.replace(/(\d+)/g, (_, i) => spans[Number(i)].match);
+/** 放回原片段。外层片段里还带着里层的占位符，所以一层层放，直到一个占位符也不剩。 */
+function unmask(text, spans) {
+  while (PLACEHOLDER().test(text)) text = text.replace(PLACEHOLDER(), (_, i) => spans[Number(i)].match);
+  return text;
+}
 
 /** 对一段文本应用映射表。stats 记每条规则命中的次数与命中的写法。 */
 export function applyRules(original, stats) {
@@ -141,17 +154,24 @@ export function applyRules(original, stats) {
     }
     text = text.replace(rule.re, rule.to);
   }
+  const result = unmask(text, spans);
+  if (PRIVATE.test(result)) throw new Error('占位符没有放回，停下来人工看');
   if (stats) {
-    for (const { id, match } of spans) {
-      const n = countYue(match);
-      if (!n) continue;
+    // 嵌套的里层片段算在包住它的外层名下，不重复计数（与 check 的归类一致）。
+    const nested = new Set();
+    for (const { match } of spans) for (const [, i] of match.matchAll(PLACEHOLDER())) nested.add(Number(i));
+    spans.forEach(({ id, match }, index) => {
+      if (nested.has(index)) return;
+      const whole = unmask(match, spans);
+      const n = countYue(whole);
+      if (!n) return;
       const entry = (stats[`keep:${id}`] ??= { count: 0, yue: 0, forms: new Map() });
       entry.count += 1;
       entry.yue += n;
-      entry.forms.set(match, (entry.forms.get(match) ?? 0) + 1);
-    }
+      entry.forms.set(whole, (entry.forms.get(whole) ?? 0) + 1);
+    });
   }
-  return unmask(text, spans);
+  return result;
 }
 
 /** 命中处连同前后的标识符字符，用来在盘点里看清是哪一种写法。 */
@@ -160,7 +180,7 @@ function tokenAround(text, offset, length) {
   let end = offset + length;
   while (start > 0 && /[\w$@./:-]/.test(text[start - 1])) start -= 1;
   while (end < text.length && /[\w$./:-]/.test(text[end])) end += 1;
-  return text.slice(start, end).replace(/[.:]+$/, '').replace(/\d+/g, '…');
+  return text.slice(start, end).replace(/[.:]+$/, '').replace(PLACEHOLDER(), '…');
 }
 
 const countYue = (text) => (text.match(/yue/gi) ?? []).length;
@@ -272,6 +292,7 @@ function check() {
     // 先认保护区，再认文件。
     const covered = [];
     for (const { id, re } of PROTECT) for (const m of text.matchAll(re)) covered.push([m.index, m.index + m[0].length, id]);
+    covered.sort((a, b) => (b[1] - b[0]) - (a[1] - a[0])); // 嵌套时算在最外层名下，与 replace 的计数一致
     const skip = skipOf(file);
     for (const m of text.matchAll(/yue/gi)) {
       const hit = covered.find(([start, end]) => m.index >= start && m.index < end);
