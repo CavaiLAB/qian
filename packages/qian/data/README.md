@@ -4,10 +4,15 @@ S1-YUE-008：DataTable、Tree / TreeSelect / Cascader、日期时间范围、Upl
 
 ## 安装
 
-包发在 GitHub Packages 上。它的 npm 包源装公开包也要带令牌（[GitHub 文档](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages)）：本机用有 `read:packages` 权限的个人访问令牌（classic）；GitHub Actions 里用工作流的 `GITHUB_TOKEN`，工作流要声明 `packages: read`。项目的 `.npmrc` 只引用环境变量，不写令牌值：
+包发在 GitHub Packages 上。它的 npm 包源装公开包也要带令牌（[GitHub 文档](https://docs.github.com/en/packages/working-with-a-github-packages-registry/working-with-the-npm-registry#authenticating-to-github-packages)）：本机用有 `read:packages` 权限的个人访问令牌（classic）；GitHub Actions 里用工作流的 `GITHUB_TOKEN`，工作流要声明 `packages: read`。项目的 `.npmrc` 写作用域那一行；认证行只引用环境变量、不写令牌值，放在用户级配置里（`~/.npmrc`，或 `NPM_CONFIG_USERCONFIG` 指向的文件；GitHub Actions 里 `actions/setup-node` 填了 `registry-url` 就会生成这样一份），不放项目的 `.npmrc`：pnpm（10.34.2 起的 10、11.5.3 起的 11 与 12）不展开项目 `.npmrc` 认证行里的环境变量，写在那里会 401（[迁移说明](https://github.com/CavaiLAB/qian/blob/main/docs/migrating-from-yue.md)第 2 节）。
 
 ```ini
+# 项目的 .npmrc
 @cavailab:registry=https://npm.pkg.github.com
+```
+
+```ini
+# ~/.npmrc，或 NPM_CONFIG_USERCONFIG 指向的文件
 //npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
 ```
 

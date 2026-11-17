@@ -251,7 +251,7 @@ F2（S1-YUE-022）的更名，2026-11-17。脚本与做法见[更名脚本](../s
 
 ## 11 首发记录
 
-F3（S1-YUE-024），2026-11-17 准备。本节先写准备了什么、查文档得到的结论与发布当天的步骤；发布之后把 11.5 的空格填上。
+F3（S1-YUE-024），2026-11-17 准备并发布。本节写准备了什么、查文档得到的结论、发布当天的步骤（11.3）与发布记录（11.5）。
 
 ### 11.1 准备了什么
 
@@ -314,14 +314,14 @@ F3（S1-YUE-024），2026-11-17 准备。本节先写准备了什么、查文档
    ```
 
    ```bash
-   pnpm changeset tag
+   pnpm changeset git-tag
    ```
 
    ```bash
    git push origin 'refs/tags/@cavailab/*'
    ```
 
-   `changeset tag` 给每个包打一个带注释的标签 `<包名>@<版本>`：这次是 `@cavailab/qian-<名>@0.2.0` 共 10 个，都指向 X。提议后端仓库与文档站按版本检出时用 `refs/tags/@cavailab/qian-core@0.2.0`（8 个层包同一版本，标签指向同一个提交）；运行时与插件开发包用各自的标签，它们的版本以后可能分开。不另打 `v0.2.0` 这类总标签，免得 10 个包版本分开之后说不清它指谁。
+   `changeset git-tag` 给每个包打一个带注释的标签 `<包名>@<版本>`：这次是 `@cavailab/qian-<名>@0.2.0` 共 10 个，都指向 X。提议后端仓库与文档站按版本检出时用 `refs/tags/@cavailab/qian-core@0.2.0`（8 个层包同一版本，标签指向同一个提交）；运行时与插件开发包用各自的标签，它们的版本以后可能分开。不另打 `v0.2.0` 这类总标签，免得 10 个包版本分开之后说不清它指谁。@changesets/cli 3 把原来的 `changeset tag` 标为弃用、改名 `changeset git-tag`；首发时用的是 `changeset tag`，效果相同。
 7. 把 11.5 填上，开一个只改文档的 PR。
 
 ### 11.4 出了问题怎么办
@@ -337,28 +337,30 @@ F3（S1-YUE-024），2026-11-17 准备。本节先写准备了什么、查文档
 
 已发布的版本原则上不撤：删版本只能在下载不超过 5000 次时由包的管理员做，删掉以后能不能重发同一版本号文档没说。要删由产品负责人定；删旧名字的包是 F5 的事。
 
-### 11.5 发布之后填写
+### 11.5 发布记录
 
 | 项 | 值 |
 |---|---|
-| 发布的提交 | （待填） |
-| `release` 运行 | （待填） |
-| 该提交上三个门禁工作流的运行 | （待填） |
-| 可见性 | （待填） |
-| 标签 | （待填） |
+| 发布的提交 | `8d5737f2d8bbbd56ec6ec12cb392ec706aae0719`（F3 的 PR #5 的合并提交），2026-11-17 |
+| `release` 运行 | [44082911243](https://github.com/CavaiLAB/qian/actions/runs/44082911243)：门禁已通过、打包并发布（上传之前用同一批 tarball 做了干净消费者验证与两个制品验收）、干净消费者验证，三个作业全部通过；10 个包都是这次上传的 |
+| 该提交上三个门禁工作流的运行 | `qian` [44082159956](https://github.com/CavaiLAB/qian/actions/runs/44082159956) 与 `runtime-ts` [44082160058](https://github.com/CavaiLAB/qian/actions/runs/44082160058) 由合并的 push 触发；`backend-copy` [44082790188](https://github.com/CavaiLAB/qian/actions/runs/44082790188) 手动触发；都成功 |
+| 可见性 | 发布后 10 个包都是 private，与 11.2 查到的「组织的新包默认私有」一致，`release` 在运行摘要里给了警告。产品负责人 2026-11-17 在各包的设置页改为 public，16:45（UTC）起 10 个都是 public。关联的仓库都是 `CavaiLAB/qian` |
+| 标签 | 10 个带注释的标签 `@cavailab/qian-<名>@0.2.0`，都指向发布提交（用 `pnpm changeset tag` 打，见 11.3） |
 
 | 包 | 版本 | 包源上的 `dist.integrity` |
 |---|---|---|
-| `@cavailab/qian-tokens` | 0.2.0 | （待填） |
-| `@cavailab/qian-contracts` | 0.2.0 | （待填） |
-| `@cavailab/qian-sdk` | 0.2.0 | （待填） |
-| `@cavailab/qian-core` | 0.2.0 | （待填） |
-| `@cavailab/qian-form` | 0.2.0 | （待填） |
-| `@cavailab/qian-data` | 0.2.0 | （待填） |
-| `@cavailab/qian-shell` | 0.2.0 | （待填） |
-| `@cavailab/qian-biz` | 0.2.0 | （待填） |
-| `@cavailab/qian-runtime` | 0.2.0 | （待填） |
-| `@cavailab/qian-plugin-sdk` | 0.2.0 | （待填） |
+| `@cavailab/qian-tokens` | 0.2.0 | `sha512-0RkX0ASiD7AFLU7f/W2RGb1x5zOLUAjxglZYg/SzyhubTdMhDC6RPSBXwqODWGQuGM9eXvdCcoxFjSBpRaRGQQ==` |
+| `@cavailab/qian-contracts` | 0.2.0 | `sha512-/hS6KAC/Rd+igXLZcP+kOQaG1ytGkRVfxsQ5vPFMiiywFLyDH9c4kPanfmIIGqYX1U11WLinpsz2+0Y6FLpxZQ==` |
+| `@cavailab/qian-sdk` | 0.2.0 | `sha512-SwMgYUiWZVr6kU9Y79cQCaVkRzKccDCXEg2F71ctKEzsv0avDDhqWcXD/WzmKESYxuPM5tNeVRnP67Xm9z+fmQ==` |
+| `@cavailab/qian-core` | 0.2.0 | `sha512-pCbW5F7O2VDVLyXtq/TLR4QNENeLq6vLdJLon9t+ny88QBfaGtVrcSBNXOi9A4VnfLbQWlx3yGKLgd8o0v6g3w==` |
+| `@cavailab/qian-form` | 0.2.0 | `sha512-q+hXaPXf0o9CtUcKJU7bujhi3jvCe5cW0s4E36nxj12GPxzrRpYGwE185sYPyNcc3a5aN6Yca/e1xbq169dJgg==` |
+| `@cavailab/qian-data` | 0.2.0 | `sha512-0LDxDDA3msEHjns4AimaVNLjAMU0WB2aZfAWUz2Jd0JX8dQwrOAv4+TeImPAMb766dSAzMtCDVDLSydUKVzGpQ==` |
+| `@cavailab/qian-shell` | 0.2.0 | `sha512-FdyjtNMNw6EGrKyY8jjr8XhjVtC7okh85dwfD+5J9BKCWqjjv70Ls1WZC7e4aYH8y+jq+q63goT5B8EYDEzAIw==` |
+| `@cavailab/qian-biz` | 0.2.0 | `sha512-Ax66fNqlE/k7DIbO9fGLy9fgeXCEzOwPj6mYtHLAQXMyrx8ZrWIj0+HAA2MDcK9FU3gVJYaMT62n11zqKoxV4A==` |
+| `@cavailab/qian-runtime` | 0.2.0 | `sha512-3ppyoYJcujEEjk8JGCwH8kDKcMK+zPvFKTej7n7tYK5zI6jF63174mEBUWbUKmEje6GXyqEEpAUF9tBjU+SyDg==` |
+| `@cavailab/qian-plugin-sdk` | 0.2.0 | `sha512-BDtlFzWNg73FeQ3bsX1j9q83hzxLYHeWKfMmcShRfrV3d0xEMW0+u+LvQvKtR2fqsbuCzmpoPZYKaGej5Z5QYg==` |
+
+包源上的 `dist.integrity` 与在发布提交上重新打包得到的 tarball 逐个相同（制品可复现，见 11.3 第 5 步）；包源上每个包只有 0.2.0 这一个版本，`latest` 指向它。
 
 ### 11.6 留给 F4
 
