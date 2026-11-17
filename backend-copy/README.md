@@ -8,8 +8,8 @@
 
 | 字段 | 含义 |
 |---|---|
-| `source.repository` | 来源仓库，写成「所有者/仓库」。现在是 `idadawn/qian`；后端迁往 `CavaiLAB/kun` 之后改指那边 |
-| `source.pathPrefix` | 这些文件在来源仓库里的路径前缀，以 `/` 结尾；没有前缀写空串。后端迁移之后这些文件会多一段前缀，填在这里 |
+| `source.repository` | 来源仓库，写成「所有者/仓库」。现在是后端仓库 `CavaiLAB/kun`；2026-11-17 之前是原仓库 `idadawn/qian`，改指的经过见 [迁移与更名](../docs/migration.md) 第 2.3 节 |
+| `source.pathPrefix` | 这些文件在来源仓库里的路径前缀，以 `/` 结尾；没有前缀写空串。现在是 `_import/qian/`：原 Qian 的整棵树在后端仓库的过渡目录 `_import/qian/` 下。以后后端分批整理、这些文件换了地方，照下文「后端改了契约之后」的最后一段更新 |
 | `source.commit` | 来源提交，全长哈希 |
 | `files` | 每个副本的路径（相对本目录，也就是在来源仓库里去掉前缀之后的路径）与 SHA-256；领先于来源的副本另有 `lead`，见下文 |
 
@@ -35,7 +35,7 @@ node scripts/backend-copy.mjs
 node scripts/backend-copy.mjs --source <后端仓库的检出>
 ```
 
-检出没停在清单记的提交上、或者任何一个文件与来源不同，都算失败。领先的副本不要求与来源相同，要求的是：来源的摘要等于登记的来源摘要，来源按登记的替换换过之后与副本逐字节相同。
+`--source` 给检出的根目录，清单里的路径前缀由脚本补上。检出没停在清单记的提交上、或者任何一个文件与来源不同，都算失败。领先的副本不要求与来源相同，要求的是：来源的摘要等于登记的来源摘要，来源按登记的替换换过之后与副本逐字节相同。
 
 ## 领先于来源的副本
 
@@ -89,12 +89,14 @@ node scripts/backend-copy.mjs --source <后端仓库的检出>
 
 4. 提 PR，说明来源提交从哪里升到哪里、哪些副本变了。
 
-后端换了仓库或目录结构（例如迁往 `CavaiLAB/kun` 之后这些文件多了前缀），更新时一并写回清单：
+后端换了仓库或目录结构，更新时一并写回清单。2026-11-17 来源由 `idadawn/qian` 改指 `CavaiLAB/kun` 时用的就是这一条，检出停在后端仓库的同步提交上（见 [迁移与更名](../docs/migration.md) 第 2.3 节）：
 
 ```bash
-node scripts/backend-copy.mjs --update <新仓库的检出> --repository CavaiLAB/kun --path-prefix <前缀>/
+node scripts/backend-copy.mjs --update <后端仓库的检出> --repository CavaiLAB/kun --path-prefix _import/qian/
 ```
+
+以后过渡目录 `_import/qian/` 里的文件随后端的批次搬了地方，照样跑这一条，`--path-prefix` 换成新的前缀；换了仓库的话 `--repository` 也换。
 
 ## 同一个来源提交的另一个用处
 
-TypeScript 运行时与 .NET 运行时共用的一致性用例（TCK）不复制到这里，留在后端仓库。`runtime-ts` 工作流里「运行时一致性用例」那一项按这份清单的仓库、前缀与提交检出后端，在检出里构建命令行，再用本仓库的运行时跑那套用例。所以升来源提交时，这一项也会跟着用新提交的用例。
+TypeScript 运行时与 .NET 运行时共用的一致性用例（TCK）不复制到这里，留在后端仓库。`runtime-ts` 工作流里「运行时一致性用例」那一项按这份清单的仓库、前缀与提交检出后端，在检出里前缀那一层目录（现在是 `_import/qian/`）构建命令行，再用本仓库的运行时跑那套用例。所以升来源提交时，这一项也会跟着用新提交的用例。
