@@ -51,7 +51,7 @@ Qian 负责人看得见、摸得着的那一层。在平台的理念「三元全
 | 范围 | 已定：只迁框架库（8 个包、组件演练场、前端插件开发包、TypeScript 运行时、前端门禁）。应用外壳、组件自带的界面、文档站留在后端仓库，按钉住的版本消费本仓库发布的包 |
 | 更名 | 已完成（F2）：由 yue 更名为 qian；8 个包名字里的 `yue-` 换成 `qian-`，不换词；样式变量、测试标识、存储键、清单版本键一并换名。新旧对照见[迁移说明](docs/migrating-from-yue.md)，经过见[迁移与更名](docs/migration.md)第 10 节 |
 | 包的作用域 | `@cavailab`：包发在 GitHub Packages 上，作用域要与仓库所有者同名。本仓库还没有发布过包，第一个版本就用新名字（F3） |
-| 许可 | 已定：MIT，见 [LICENSE](LICENSE)。许可证里的版权行是提议，待产品负责人确认 |
+| 许可 | 已定：MIT，见 [LICENSE](LICENSE)。版权行是 `Copyright (c) 2026 Qian Framework Contributors` |
 | 待定 | 首发的版本号、包的可见性与发布位置、文档站组件页由谁出。见[迁移与更名](docs/migration.md)第 8 节 |
 
 ## 文档
