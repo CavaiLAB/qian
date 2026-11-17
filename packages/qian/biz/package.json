@@ -1,6 +1,6 @@
 {
   "name": "@cavailab/qian-biz",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "业务选择器：远程选项、字典、组织 / 用户 / 角色选择器、菜单与按钮授权树、IconPicker。",
   "license": "MIT",
   "repository": {

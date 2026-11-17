@@ -1,0 +1,56 @@
+# @cavailab/qian-core
+
+## 0.2.0
+
+### Minor Changes
+
+- 7121e04: 以新名字首次发布。前端框架更名为 qian：包名改为 `@cavailab/qian-<名>`，许可改为 MIT；样式变量与可寻址属性的前缀、测试标识的默认前缀、导出的公共类型名、浏览器里主题与外壳偏好的存储键（旧值不迁移）、插件界面清单的前端版本键一并换名，组件的接口与行为不变。新旧名字的逐项对照与使用方要改什么，见[迁移说明](https://github.com/CavaiLAB/qian/blob/main/docs/migrating-from-yue.md)。
+
+### Patch Changes
+
+- 286adf6: biz 交付基础版业务选择器：ApiSelect / useRemoteOptions、DictSelect、OrganizeSelect、UserSelect、RoleSelect、菜单与按钮授权树、IconPicker，全部经注入的 PlatformClient 取数、文案走 i18n key，取数契约由 OpenAPI 生成。data 的 Tree 增加 cascade 开关（关闭后节点独立勾选），TreeSelect / Cascader 触发器的可访问名称改为「标签 + 当前值」以满足 WCAG 2.5.3；core 导出已登记图标名 ICON_NAMES。
+- 6871f2a: 发布构建改用 automatic JSX runtime，生成显式运行时导入，修复安装真实制品后基础组件与表单因缺少全局 React 而无法渲染的问题。
+- 4fee304: SelectContent 增加 listLabel，将宿主本地化后的可访问名称传给内部选项列表，修复外壳主题与租户选择器打开时 listbox 缺少名称的问题。
+- 7dd9917: 管理台样式刷新：新增画布令牌 `--qian-canvas`，浅色侧栏改为白底。core 新增 Steps 步骤条、MenuRadioGroup / MenuRadioItem 单选菜单与 `isIconName`。Badge 支持状态圆点，Alert 支持标题与语气图标，Result 改为大图标居中版式，Button 新增 link 变体，Tabs 新增 line 变体与计数，Sheet 新增页头、主体、页脚与宽度档，Descriptions 新增上下排布，Pagination 改为描边按钮，图标从 14 个增加到 50 个。DataTable 改为卡片容器并支持表头插槽，页长显示「N 条/页」。SchemaForm 的枚举可按语言包前缀显示选项文案，新增 `qian.segmented` 分段控件。抽屉表单的操作按钮移到固定页脚，抽屉里的子步骤表单用 `inlineActions` 把按钮留在表单内、不占页脚。SchemaForm 新增带标题的字段组（无字段节点带 `labelKey`）与 `fieldExtra` 附加提示，自动填充语义补 name / email / tel / organization / one-time-code。AppShell 的侧栏改为品牌、工作区卡片、分组导航（支持图标与角标）和底部账号卡，顶栏放侧栏开关、面包屑与工具；主题和语言改为图标单选菜单。原有公开属性与受控协议保持兼容。
+- 2eab94c: 交付基础组件、统一令牌与可寻址部件，新增机器可读组件清单及由 Schema 生成的类型。组件支持服务端渲染、键盘操作与明暗主题，通过无障碍验收。
+- 488d847: 修正组件清单属性标题，说明从真实 TypeScript 注释生成；嵌套子 Schema 的属性同样沿 TS 类型取注释，无注释则省略。删除 35 个实现未消费的目录属性；Icon.title 已透传到 SVG，补充其类型声明。
+- 7aa70cc: 按租户开通流程的原型继续调整令牌与组件。
+  
+  tokens：新增状态图标档 `--qian-{ok,warn,error,info,neutral}-icon`（Tailwind 类 `text-*-icon`），用于结果页、检查列表等处的状态图标字形：warn 取 amber-600，比圆点用的实色深一档，大图标在浅底上更清楚；其余语气与实色相同。`-solid` 改为只用于圆点与进度填充。
+  
+  core：Result 的状态图标改用图标档，「审核中」等 warn 图标与原型一致。
+  
+  shell：AuthLayout 的 sign-in 侧栏标题改为上下自动外边距居中，不传 `footer` 时不再沉到底部压住装饰条；新增部件 `auth-layout-headline` 与 `auth-layout-decoration`。BrandMark 带 `data-slot="brand-mark"` 与默认 testId `qian-brand-mark`，可传 `testId` 覆盖。外壳顶栏含底边为 56px（此前 57px）。PasswordLogin「其他登录方式」分隔线到入口 24px，多个入口之间 12px。
+- 466fad7: 按租户开通流程的原型补齐令牌与基础组件。
+  
+  tokens：画布改为冷灰（新增 slate 色阶与 650 档）；新增控件、次要、说明三档文字色，强边框，主色浅底 / 柔底 / 柔底文字 / 浅边框 / 强边框，状态色的边框 / 实色 / 深色文字三档，紫与青两种点缀色，品牌深色面三件套；组件层新增 `--qian-input-height`，输入类控件高度按场景整体调档；`--radius-xl` 为 12px；危险色、状态文字与状态底色按原型调整；正文行高改为固定 22px（`text-sm` 的行高写成 1.375rem，13px 的子元素继承同一行高），去掉 body 上强制的灰阶抗锯齿。
+  
+  core：Button 新增 `soft`、`destructive-outline` 变体与 `xs`、`xl` 尺寸，描边按钮改为强边框加控件文字，实心按钮的底色铺满透明边框（与同尺寸描边按钮外形一致，40px 按钮看上去就是 40px）；Badge 改为底色加边框加实色圆点，Tag 支持 `dot`；Alert 改用深一档文字并新增 `size="sm"`（表单内，文字取状态文字色），图标跟随文字色，md 带标题时上下 14px、标题与正文间距 2px；Result 去掉图标下方多出的间距与标题字距收紧，说明文字最宽 520px、用说明色；Avatar 新增 `tint`、`shape` 与按种子稳定取色的 `avatarTint`；Steps 新增 `tone="inverse"` 与 `size="lg"`；Tabs 的 line 变体新增 `countVariant="pill"`；Descriptions 新增 `grid`、`justified` 布局与 `span: 'full'`，并独立成模块（外壳子集只引 Descriptions 时不再带上 ScrollArea 与拖拽分栏）；MenuItem 新增 `variant="destructive"`；MenuSubTrigger 末尾加子菜单箭头；Input 的 `type="search"` 去掉浏览器自带的清除按钮；新增 globe、key、lock、message、network、shield、sliders、layoutGrid 图标，图标默认线宽 1.75；外壳子集 `./shell` 补上 Avatar、Breadcrumb、Descriptions 与 MenuSub / MenuSubTrigger。修复 Dialog / AlertDialog / Drawer / Popover / Sheet 的 Close 经 `render` 交给描边 Button 时边框被基础类盖成透明：Close 传了 `render` 时不再叠加基础按钮类，样式完全由 render 的元素决定（交给 Button 时用它自己的变体；交给其他元素时须自带样式）。
+  
+  data：DataTable 新增列 `align`、`toolbarEnd`、`columnToggle` 与 `density`，表头与分页栏按原型调整；表格内部滚动区改为 group，不再与外层出现两个同名 region 地标。TreeSelect 浮层给出固定宽度，树行不再换行（虚拟化行高固定，换行会盖住相邻行）。
+  
+  form：SchemaForm 新增 `size`、`layout`、`columnWidth`、`groupVariant="card"` 与 `fieldAdornment`（输入框内的后缀、输入框右侧的单位文字与附加按钮，后缀与单位关联到输入框）；`useConfirm` 新增 `tone: 'danger'` 与 `confirmLabel`；`useDrawer` 的 `description` 可传带格式的内容。
+  
+  shell：新增认证页布局 AuthLayout（品牌深色面加内容区，sign-in 与 form 两档）、PlainLayout、BrandMark、WorkspaceCard 与账号菜单里的语言子菜单 LocaleMenu；AppShell 的侧栏开关移到品牌行；PreferenceControls 新增 `locale` 与 `localeStyle`；PasswordLogin 改为 44px 控件，支持记住账号、忘记密码、其他登录方式与表单下方内容，不再依赖 SchemaForm；TenantSelection 改为工作空间卡片并支持 `applyHref`、`hideBack`，卡片按钮的可访问名称就是企业名，租户号与角色作为说明读出；Authentication 新增 `frame`、`loginProps` 与 `selectionProps`，不传 `frame` 时内容按原型列宽居中（登录 400px、选择工作空间 600px），不再铺满宿主容器；`matchMenuItem` 的根路径「/」只精确命中，不再作为所有路径的前缀。
+  
+  除 Close 传 `render` 时的样式来源（见上）与 Authentication 不传 `frame` 时的列宽外，原有公开属性保持兼容。
+- a5aa0be: 统一基础组件的语义配方、焦点与弹层过渡；触发器由 Button 显式组合。数据表格使用独立查询区、列显隐浮层和分页，表单在同一页脚放置取消与确认。保留既有公开属性、标识与受控协议；弹层内容新增兼容的 closeLabel / showCloseButton，用宿主标签提供右上角关闭图标。
+- 90ac29a: 按文字、控件边界与装饰线分类验证对比度，校正透明色的 sRGB 合成；统一 neutral 语义色、品牌主色、系统字体和 Tailwind v4 主题映射，接通组件尺寸与圆角令牌。输入边界保持 3:1，文字配对保持 4.5:1。
+- 7d98b6c: 为 MF2 外壳提供保留现有根 API 的按需子路径，并在首次异步取令牌时阻止跨租户重写请求。
+- c7a5953: @cavailab/qian-shell 增加外壳首屏用的子路径导出 `./router`、`./menu`、`./inbox` 与按需加载的 `./session-dialog`（`SessionExpiredDialog` 仍从根入口导出）；`initPreferences` 新增 `defaults`：部署缺省（如运行时配置给的语言）低于已保存的偏好，且不写进偏好存储；偏好存储改为只记用户改过的键（`update` 增量合并，`reset` 写空对象），此前每次更新都写整份快照。@cavailab/qian-core 的外壳子集 `./shell` 补上 `Badge` 与 `Popover` / `PopoverTrigger` / `PopoverContent` / `PopoverTitle`，站内信弹窗不再把完整组件目录拉进首屏。
+  
+  @cavailab/qian-plugin-sdk 的 UI 清单与插槽贡献校验改为构建期预编译（由 UI 清单的 JSON Schema 经 Ajv standalone 生成）：浏览器运行时不再携带 Ajv 编译器、不在运行期生成代码，`ajv` 改为开发依赖。客户端动作的参数 Schema 改由可解释子集校验（类型、枚举 / 常量、对象、数组、字符串与数值约束及说明关键字）；`$ref`、组合、条件、`format` 等子集外关键字拒绝登记（`INPUT_INVALID`，指针 `/parameters`），此前按完整 2020-12 编译放行。
+- Updated dependencies [c843008]
+- Updated dependencies [7310263]
+- Updated dependencies [31add9a]
+- Updated dependencies [7dd9917]
+- Updated dependencies [2eab94c]
+- Updated dependencies [7121e04]
+- Updated dependencies [7aa70cc]
+- Updated dependencies [466fad7]
+- Updated dependencies [a5aa0be]
+- Updated dependencies [90ac29a]
+- Updated dependencies [8dccae5]
+- Updated dependencies [f12e059]
+  - @cavailab/qian-tokens@0.2.0
+  - @cavailab/qian-contracts@0.2.0

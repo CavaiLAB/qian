@@ -1,6 +1,6 @@
 {
   "name": "@cavailab/qian-plugin-sdk",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "description": "Qian 前端插件契约、作用域插槽、MF2 加载与桥接 API。",
   "type": "module",
   "license": "MIT",
