@@ -16,8 +16,6 @@ npm install '@qian/plugin-sdk@npm:@cavailab/qian-plugin-sdk@0.2.0'
 
 `scripts/verify-consumer.mjs` 在仓库外的空项目里经逻辑导入名 `@qian/plugin-sdk` 装上运行时、tokens、contracts、sdk 与本包的制品（`archive <打包目录>` 用 `scripts/release/pack.mjs` 打出的 tarball，`registry` 从包源装已发布的版本），实际跑一遍 `ShellHost` 的登记、按需加载、桥接调用与卸载，再按 NodeNext 解析做类型检查。CI 的 `qian` 工作流与 `release` 工作流都跑它，见[发布脚本](https://github.com/CavaiLAB/qian/blob/main/scripts/release/README.md)。
 
-原仓库 `plugin-sdk-release` 工作流的私有发布脚本（`private-publication.mjs`、`private-package-api.mjs`、`release.mjs` 与它们的测试）在 F3 删掉了：10 个包统一由 `release` 工作流发布，包是公开的，那套「先核对为私有才上传」的流程不再适用。
-
 ## 宿主与远程
 
 宿主创建 `ShellHost`，提供身份上下文、挂载、权益、权限、同一个 `PlatformClient`、导航/通知处理器以及必需的 `audit` 适配器。`start()` 挂载真实 `qian.shell` 根条目，`registerRemote()` 只登记可信清单，不发网络请求。`catalog(slot)` 由静态贡献生成导航；`loadSlot(slot, id)` 仅为当前页面需要的贡献调用 MF2 `registerRemotes / loadRemote`；`preloadSlot` 复用相同授权与版本检查。宿主可消费服务端已裁剪目录，但每次调用仍校验当前权限与 scope。
