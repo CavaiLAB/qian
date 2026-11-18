@@ -1,6 +1,6 @@
 # 发布脚本
 
-10 个包（`packages/qian/*` 的 8 个、运行时、前端插件开发包）的打包验证、发布与干净消费者验证。由 F2（S1-YUE-022）写好，F3（S1-YUE-024）为首发补齐；要产品负责人点头之后在 Actions 里对 `main` 手动运行 [`release`](../../.github/workflows/release.yml) 工作流。**不从本机发布。** 发布当天照着做的步骤见[迁移与更名](../../docs/migration.md)第 11.3 节。
+10 个包（`packages/qian/*` 的 8 个、运行时、前端插件开发包）的打包验证、发布与干净消费者验证。由 F2（S1-YUE-022）写好，F3（S1-YUE-024）为首发补齐；要产品负责人点头之后在 Actions 里对 `main` 手动运行 [`release`](../../.github/workflows/release.yml) 工作流。**不从本机发布。** 发布当天照着做的步骤见[迁移文档](../../docs/migration.md)第 11.3 节。
 
 | 文件 | 作用 |
 |---|---|
@@ -18,7 +18,7 @@
 2. **打包并发布**：`pack.mjs` 打包验证；上传之前先用这批 tarball 跑 `consumer.mjs archive` 与上面两个制品验收（`archive` / `file:`），都过了才由 `publish.mjs` 发布。版本号取各包的 `package.json`，包源与可见性取 `publishConfig`，工作流不改它们。这批 tarball 与 `packages.json` 作为 `qian-packages` 留存在这次运行里。
 3. **干净消费者验证**：`consumer.mjs registry` 从包源装已发布的版本，类型检查、构建并渲染组件；再从包源跑一遍两个制品验收。
 
-发到一半失败，对同一提交重跑整个工作流即可：同一提交两次打包得到逐字节相同的 tarball（F3 实测，见[迁移与更名](../../docs/migration.md)第 11.1 节），已经上传的包按摘要相同跳过，只传剩下的。摘要不同说明制品真的变了，`publish.mjs` 一个都不传；已发布的版本不覆盖，要改就出新版本。
+发到一半失败，对同一提交重跑整个工作流即可：同一提交两次打包得到逐字节相同的 tarball（F3 实测，见[迁移文档](../../docs/migration.md)第 11.1 节），已经上传的包按摘要相同跳过，只传剩下的。摘要不同说明制品真的变了，`publish.mjs` 一个都不传；已发布的版本不覆盖，要改就出新版本。
 
 ## 在本机做打包验证（不发布）
 

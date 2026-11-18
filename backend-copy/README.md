@@ -1,6 +1,6 @@
 # 后端契约的副本
 
-这个目录里的文件是**副本**，唯一来源在后端仓库，**不在这里改**。要改去后端仓库改，合入之后按下文更新副本与清单。为什么只放副本、两个仓库之间还有哪些接口，见 [迁移与更名](../docs/migration.md) 第 2.3 节与第 4 节。
+这个目录里的文件是**副本**，唯一来源在后端仓库，**不在这里改**。要改去后端仓库改，合入之后按下文更新副本与清单。为什么只放副本、两个仓库之间还有哪些接口，见 [迁移文档](../docs/migration.md) 第 2.3 节与第 4 节。
 
 ## 清单
 
@@ -8,8 +8,8 @@
 
 | 字段 | 含义 |
 |---|---|
-| `source.repository` | 来源仓库，写成「所有者/仓库」。现在是后端仓库 `CavaiLAB/kun`；2026-11-17 之前是原仓库 `idadawn/qian`，改指的经过见 [迁移与更名](../docs/migration.md) 第 2.3 节 |
-| `source.pathPrefix` | 这些文件在来源仓库里的路径前缀，以 `/` 结尾；没有前缀写空串。现在是 `_import/qian/`：原 Qian 的整棵树在后端仓库的过渡目录 `_import/qian/` 下。以后后端分批整理、这些文件换了地方，照下文「后端改了契约之后」的最后一段更新 |
+| `source.repository` | 来源仓库，写成「所有者/仓库」。现在是后端仓库 `CavaiLAB/kun` |
+| `source.pathPrefix` | 这些文件在来源仓库里的路径前缀，以 `/` 结尾；没有前缀写空串。现在是 `_import/qian/`，即后端仓库的过渡目录。以后后端分批整理、这些文件换了地方，照下文「后端改了契约之后」的最后一段更新 |
 | `source.commit` | 来源提交，全长哈希 |
 | `files` | 每个副本的路径（相对本目录，也就是在来源仓库里去掉前缀之后的路径）与 SHA-256；领先于来源的副本另有 `lead`，见下文 |
 
@@ -51,14 +51,9 @@ node scripts/backend-copy.mjs --source <后端仓库的检出>
 
 两头都对得上才算通过：本机不带参数时，把副本按 `replace` 反向换回去，摘要要等于 `lead.sourceSha256`；CI 的比对（`--source`）要求来源的摘要等于 `lead.sourceSha256`，即后端那份没有意外变化，而且来源按 `replace` 正向替换之后与副本逐字节相同，即副本与来源的差异恰好是登记的那几处。
 
-现在没有领先的副本，5 份副本都与来源逐字节相同。上一次领先是界面清单的版本键：F2（S1-YUE-022）把声明前端版本要求的键由 `engines.yue` 改为 `engines.qian`，这份 Schema 与一致性用例的唯一来源在后端仓库，副本先改；后端在 F4（S1-YUE-025，`CavaiLAB/kun#23`）里跟上，来源提交升到 `71cbd5b4fb` 时 `--update` 去掉了这两条登记。当时登记的替换：
+现在没有领先的副本，5 份副本都与来源逐字节相同。
 
-| 副本 | 登记的替换 |
-|---|---|
-| `schemas/v2/ui.schema.json` | `"yue"` → `"qian"`，2 处：`engines` 的 `required` 与 `properties` |
-| `tck/surfaces/cases.json` | 界面清单正文里的 `\"yue\":` → `\"qian\":`，27 处；期望错误的指针 `#/engines/yue"` → `#/engines/qian"`，1 处 |
-
-`--update` 遇到领先的文件：新来源还是旧的写法，就在新来源上重做一遍登记的替换，更新 `lead.sourceSha256`；新来源已经是副本的样子，去掉 `lead`，副本恢复与来源逐字节相同；两样都不是，说明来源在领先改动的位置变了，停下来人工处理。F4 合入之后升来源提交就是第二种情况，照下一节的步骤跑 `--update` 即可，不用手工改清单。
+`--update` 遇到领先的文件：新来源还是旧的写法，就在新来源上重做一遍登记的替换，更新 `lead.sourceSha256`；新来源已经是副本的样子，去掉 `lead`，副本恢复与来源逐字节相同；两样都不是，说明来源在领先改动的位置变了，停下来人工处理。
 
 由界面清单 Schema 派生的两个文件（`packages/qian-plugin-sdk/src/ui-schema.generated.ts`、`ui-validators.generated.ts`）按副本生成，见下一节第 3 步。
 
@@ -89,7 +84,7 @@ node scripts/backend-copy.mjs --source <后端仓库的检出>
 
 4. 提 PR，说明来源提交从哪里升到哪里、哪些副本变了。
 
-后端换了仓库或目录结构，更新时一并写回清单。2026-11-17 来源由 `idadawn/qian` 改指 `CavaiLAB/kun` 时用的就是这一条，检出停在后端仓库的同步提交上（见 [迁移与更名](../docs/migration.md) 第 2.3 节）：
+后端换了仓库或目录结构，更新时一并写回清单：
 
 ```bash
 node scripts/backend-copy.mjs --update <后端仓库的检出> --repository CavaiLAB/kun --path-prefix _import/qian/

@@ -2,7 +2,7 @@
 
 注册表 API、PlatformClient、请求拦截器链、i18n 与 mock；配置由宿主经构造参数注入。
 
-- 分层与允许依赖：[qian 专题规格 §3.1](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/yue.md#31-包结构与依赖方向)；依赖方向由 `packages/qian/boundaries.config.mjs` 与 CI 门禁强制。
+- 分层与允许依赖：[qian 专题规格 §3.1](https://github.com/CavaiLAB/kun/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/yue.md#31-包结构与依赖方向)；依赖方向由 `packages/qian/boundaries.config.mjs` 与 CI 门禁强制。
 - 实现任务：S1-YUE-009（S1-DEC-024 / R109）。
 
 ## 安装
@@ -68,4 +68,4 @@ HttpOnly Cookie 会话的宿主改用 `sessionProvider: { refreshSession(): Prom
 
 - SDK 不提供登录页、OIDC 流程或 HTTP 刷新端点，分别由外壳与身份组件承接；组件消费方提供对应 OpenAPI 生成类型。
 - SSE 为 S1 草案，只提供 Schema 与类型；流连接、重连与 Agent 界面归后续任务。客户端动作参数须由执行方按注册表 Schema 校验，服务端权限判定不由前端替代。
-- 本包由构造参数注入配置；平台外壳的运行时配置（同源 `/app-config.json`）由 `@qian/shell-kit` 的 `loadAppConfig` 读取与校验（S1-YUE-012），外壳据此构造 `PlatformClient`。新名字从 0.2.0 起发布。
+- 本包由构造参数注入配置；平台外壳的运行时配置（同源 `/app-config.json`）由 `@qian/shell-kit` 的 `loadAppConfig` 读取与校验（S1-YUE-012），外壳据此构造 `PlatformClient`。

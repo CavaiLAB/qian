@@ -1,6 +1,6 @@
 # @cavailab/qian-tokens
 
-三层设计令牌（primitive → semantic → component）、明暗两态、状态色与 `Tone` 类型、浏览器主题控制器及首帧初始化脚本。包不依赖其他 qian 包；规格见 [qian §3.5](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/yue.md#35-令牌命名)，实现任务为 S1-YUE-004 与 S1-YUE-011。
+三层设计令牌（primitive → semantic → component）、明暗两态、状态色与 `Tone` 类型、浏览器主题控制器及首帧初始化脚本。包不依赖其他 qian 包；规格见 [qian §3.5](https://github.com/CavaiLAB/kun/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/yue.md#35-令牌命名)，实现任务为 S1-YUE-004 与 S1-YUE-011。
 
 ## 安装
 
@@ -85,4 +85,4 @@ pnpm qian:build && pnpm qian:a11y && pnpm qian:lighthouse
 
 `src/index.css`、`src/theme.css` 与 `src/theme-init.js` 是提交在仓库中的生成资产；`tokens:check` 校验新鲜度、引用层级、角色重名与对比度，并拒绝工作区消费 CSS 重新声明已登记的语义/组件/别名。该检查已接入 `qian:lint`。浏览器测试覆盖第一次动画帧、存储拒绝、服务端品牌、运行时切换及系统主题变化。
 
-靶场启动后可访问 `/tokens.html` 查看品牌、明暗、状态与语义色；它是验证页。Rspress 已统一提供组件交互文档与令牌页；DTCG 导出仍为 P2。新名字从 0.2.0 起发布到 GitHub Packages，发布与验收由本仓库的 `release` 工作流完成。
+靶场启动后可访问 `/tokens.html` 查看品牌、明暗、状态与语义色；它是验证页。Rspress 已统一提供组件交互文档与令牌页；DTCG 导出仍为 P2。包发布在 GitHub Packages，发布与验收由本仓库的 `release` 工作流完成。

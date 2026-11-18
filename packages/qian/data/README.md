@@ -38,7 +38,7 @@ Upload 只经注入的 PlatformClient 请求四个 FILE-003 端点，SHA-256 摘
 
 ## 已知限制与延期项
 
-真实上传及 200 MB 对象存储 E2E 属于 S1-FILE-003；参考应用列表属于 S1-QA-007。Upload 摘要当前读取整个文件，不承诺超大文件的恒定内存。树表、行内编辑、列权限与动态行高留给 S2。TanStack Virtual 会让 React Compiler 跳过该树组件的自动记忆化，保留正常 React 更新，不屏蔽 lint 规则。新名字从 0.2.0 起发布。
+真实上传及 200 MB 对象存储 E2E 属于 S1-FILE-003；参考应用列表属于 S1-QA-007。Upload 摘要当前读取整个文件，不承诺超大文件的恒定内存。树表、行内编辑、列权限与动态行高留给 S2。TanStack Virtual 会让 React Compiler 跳过该树组件的自动记忆化，保留正常 React 更新，不屏蔽 lint 规则。
 
 ## 列表密度与视觉回归
 
