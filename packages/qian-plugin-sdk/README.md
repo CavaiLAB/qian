@@ -1,6 +1,6 @@
 # Qian 前端插件 SDK
 
-逻辑名 `@qian/plugin-sdk`，GitHub Packages 上的发布名 `@cavailab/qian-plugin-sdk`（公开包）。目录模型与运行时语义见 [组件规格](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/component-model.md)，任务范围见 [S1-YUE-001](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/pm/tasks/S1-YUE-001.md)。本包提供外壳 Definition 与运行时适配；qian 的组件层（`packages/qian/*`）保持可独立使用，不依赖本包。
+逻辑名 `@qian/plugin-sdk`，GitHub Packages 上的发布名 `@cavailab/qian-plugin-sdk`（公开包）。目录模型与运行时语义见 [组件规格](https://github.com/CavaiLAB/kun/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/component-model.md)，任务范围见 [S1-YUE-001](https://github.com/CavaiLAB/kun/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/pm/tasks/S1-YUE-001.md)。本包提供外壳 Definition 与运行时适配；qian 的组件层（`packages/qian/*`）保持可独立使用，不依赖本包。
 
 ## 安装与发布
 
@@ -10,7 +10,7 @@
 npm install '@qian/plugin-sdk@npm:@cavailab/qian-plugin-sdk@0.2.1'
 ```
 
-依赖为实际发布的 `@cavailab/qian-runtime`、`@cavailab/qian-sdk`（传递 contracts 与 tokens）、官方 MF2 runtime 与 SemVer；Ajv 只在构建期使用（见下文「校验不在运行期生成代码」）。`pnpm pack` 会把 workspace 依赖写成固定版本范围，包内只交付 ESM、声明与文档；本地 pack 不代表包源上发布成功。正式发布与仓库外的干净消费者验证由本仓库的 `release` 工作流执行，见[发布脚本](https://github.com/CavaiLAB/qian/blob/main/scripts/release/README.md)。新名字从 0.2.0 起发布，旧名字 `@idadawn/qian-plugin-sdk` 不再出新版本。变更记录不随包发布，在[仓库里](https://github.com/CavaiLAB/qian/blob/main/packages/qian-plugin-sdk/CHANGELOG.md)。
+依赖为实际发布的 `@cavailab/qian-runtime`、`@cavailab/qian-sdk`（传递 contracts 与 tokens）、官方 MF2 runtime 与 SemVer；Ajv 只在构建期使用（见下文「校验不在运行期生成代码」）。`pnpm pack` 会把 workspace 依赖写成固定版本范围，包内只交付 ESM、声明与文档；本地 pack 不代表包源上发布成功。正式发布与仓库外的干净消费者验证由本仓库的 `release` 工作流执行，见[发布脚本](https://github.com/CavaiLAB/qian/blob/main/scripts/release/README.md)。变更记录不随包发布，在[仓库里](https://github.com/CavaiLAB/qian/blob/main/packages/qian-plugin-sdk/CHANGELOG.md)。
 
 ### 制品验收
 
@@ -33,7 +33,7 @@ const menu = host.catalog('qian.shell.nav/v1');
 await host.loadSlot('qian.shell.nav/v1', menu[0]?.descriptor.id);
 ```
 
-官方可运行接线见 [qian.shell](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/apps/qian-shell/README.md)。`engines.qian` 在任何远程请求之前做 SemVer 检查；不满足时写结构化控制台事件，等待审计成功后抛 `ShellError`（`INPUT_INVALID`、`/engines/qian`）。审计失败向调用方传播，不能悄悄降级为只有控制台。错误细节沿冻结 ErrorDetail，错误目录由 `contracts/v0/error-codes.json` 派生并检查新鲜度。
+官方可运行接线见 [qian.shell](https://github.com/CavaiLAB/kun/blob/71cbd5b4fb8f9f813684940a192ca15ea5feaac3/_import/qian/apps/qian-shell/README.md)。`engines.qian` 在任何远程请求之前做 SemVer 检查；不满足时写结构化控制台事件，等待审计成功后抛 `ShellError`（`INPUT_INVALID`、`/engines/qian`）。审计失败向调用方传播，不能悄悄降级为只有控制台。错误细节沿冻结 ErrorDetail，错误目录由 `contracts/v0/error-codes.json` 派生并检查新鲜度。
 
 远程 `mf-manifest.json`、`remoteEntry.js` 与 `@mf-types.zip / .d.ts` 由官方 Vite 插件生成。宿主采用 MF2 runtime 显式共享工厂；远程的 React、qian、SDK 全部 `import: false`，只能消费宿主 singleton。宿主完整根包按需加载，首次布局用现有 qian 的子路径；没有引入第二套 UI 引擎或裁剪后回落双份共享包。
 

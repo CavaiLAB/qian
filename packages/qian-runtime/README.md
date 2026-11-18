@@ -1,6 +1,6 @@
 # Qian TypeScript 运行时
 
-依据 [组件模型 §5](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/component-model.md#5-运行时模型) 与 [S1-RT-003](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/pm/tasks/S1-RT-003.md)。S1-DEC-014 批准的物理包名是 `@idadawn/qian-runtime`，当时作为私有包发布在 GitHub Packages；F2 把作用域改为 `@cavailab`（GitHub Packages 要求作用域与仓库所有者同名），现在的包名是 `@cavailab/qian-runtime`，从 0.2.0 起以这个名字发布，包是公开的。消费者通过 npm alias 保留公共逻辑导入名 `@qian/runtime`。
+依据 [组件模型 §5](https://github.com/CavaiLAB/kun/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/component-model.md#5-运行时模型) 与 [S1-RT-003](https://github.com/CavaiLAB/kun/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/pm/tasks/S1-RT-003.md)。物理包名是 `@cavailab/qian-runtime`（GitHub Packages 要求作用域与仓库所有者同名），发布在 GitHub Packages，包是公开的。消费者通过 npm alias 保留公共逻辑导入名 `@qian/runtime`。
 
 ## 安装
 
@@ -22,7 +22,7 @@
 npm install '@qian/runtime@npm:@cavailab/qian-runtime@0.2.1'
 ```
 
-`package.json` 的依赖值为 `"@qian/runtime": "npm:@cavailab/qian-runtime@0.2.1"`，下文逻辑导入名保持一致。变更记录不随包发布，在[仓库里](https://github.com/CavaiLAB/qian/blob/main/packages/qian-runtime/CHANGELOG.md)。源码工作区内部构建按目录筛选包；发版只经本仓库的 `release` 工作流（在 main 上手动触发）：先核对门禁，打包后先在仓库外的干净项目里用这批制品装一遍、跑一遍，再按清单版本发布，发完从包源安装并构建，见[发布脚本](https://github.com/CavaiLAB/qian/blob/main/scripts/release/README.md)。旧名字的 0.1.0、0.1.1 由原仓库的发布工作流发布，不再出新版本。
+`package.json` 的依赖值为 `"@qian/runtime": "npm:@cavailab/qian-runtime@0.2.1"`，下文逻辑导入名保持一致。变更记录不随包发布，在[仓库里](https://github.com/CavaiLAB/qian/blob/main/packages/qian-runtime/CHANGELOG.md)。源码工作区内部构建按目录筛选包；发版只经本仓库的 `release` 工作流（在 main 上手动触发）：先核对门禁，打包后先在仓库外的干净项目里用这批制品装一遍、跑一遍，再按清单版本发布，发完从包源安装并构建，见[发布脚本](https://github.com/CavaiLAB/qian/blob/main/scripts/release/README.md)。
 
 `scripts/verify-consumer.mjs` 是本包自己的制品验收：在仓库外的空项目里经逻辑导入名 `@qian/runtime` 装上制品（`file:<tarball>` 或 `npm:@cavailab/qian-runtime@<版本>`），实际装载、派发、卸载一次，核对许可证文件随包，再按 NodeNext 解析做类型检查。CI 的 `runtime-ts` 工作流对每次改动的打包结果跑它，`release` 工作流在上传前对 tarball、发布后对包源各跑一次。
 
@@ -77,7 +77,7 @@ pnpm --filter ./packages/qian-runtime test:browser
 
 `test` 跑 9 项边界/错误验证。与 .NET 运行时共用的一致性用例（TCK）留在后端仓库：TS harness 复用后端的 `tck/runtime/harness-ts.mjs` 与 `assembly-ts.mjs`，直接读取 26 个 YAML 场景与 T15–T17 的 3 个装配场景，不复制语言独立输入；从真实 minimal profile 起步，并调用真实 profile 装配器（后端命令行的 `profiles.js`）后挂载运行时。合计 38 项测试。
 
-在本仓库跑 TCK 要一份后端仓库的检出，停在 `backend-copy/manifest.json` 记的来源提交上；清单记的仓库、提交与路径前缀可以用 `node scripts/backend-copy.mjs --print-source` 打出来。现在后端仓库是 `CavaiLAB/kun`，原 Qian 的整棵树在它的过渡目录 `_import/qian/` 下，这就是清单的路径前缀。在检出里构建命令行，要在前缀那一层目录（现在是 `_import/qian/`）执行，不是检出的根目录：
+在本仓库跑 TCK 要一份后端仓库的检出，停在 `backend-copy/manifest.json` 记的来源提交上；清单记的仓库、提交与路径前缀可以用 `node scripts/backend-copy.mjs --print-source` 打出来。现在后端仓库是 `CavaiLAB/kun`，清单的路径前缀是它的过渡目录 `_import/qian/`。在检出里构建命令行，要在前缀那一层目录（现在是 `_import/qian/`）执行，不是检出的根目录：
 
 ```bash
 pnpm install --frozen-lockfile --filter 'qian...'

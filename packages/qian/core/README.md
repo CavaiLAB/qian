@@ -1,6 +1,6 @@
 # @cavailab/qian-core
 
-Qian 的基础组件层，基于 Base UI 1.8、统一 qian 令牌与 Lucide 图标。S1-YUE-005 提供 51 个组件入口及配套部件（S1-YUE-017 增加 Steps，现为 52 个）、机器可读 manifest、Rspress 组件文档、SSR/键盘与无障碍验收。后端设计文档写于更名之前，用旧名字与旧的包简称称呼本包，对照见[迁移说明](https://github.com/CavaiLAB/qian/blob/main/docs/migrating-from-yue.md)。
+Qian 的基础组件层，基于 Base UI 1.8、统一 qian 令牌与 Lucide 图标。S1-YUE-005 提供 51 个组件入口及配套部件（S1-YUE-017 增加 Steps，现为 52 个）、机器可读 manifest、Rspress 组件文档、SSR/键盘与无障碍验收。
 
 ## 边界与安装
 

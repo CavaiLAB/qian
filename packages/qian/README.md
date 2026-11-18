@@ -1,6 +1,6 @@
 # qian 前端工作区
 
-qian 是匠心智能体平台的 React 组件库与外壳（产品族的前端层，[ADR-021](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/adr/ADR-021-product-family-structure.md)），以 pnpm workspace 交付，发 GitHub Packages。**包名**：`@cavailab/qian-<包>`（目录 `packages/qian/<包>`）。本文链接的需求、规格与 ADR 在后端仓库，写于更名之前，用的是旧名字与旧的包简称；新旧名字的对照见[迁移说明](../../docs/migrating-from-yue.md)。本目录是 S1-YUE-003 建立的工程化基线：包骨架、分层边界、八项 CI 门禁与 Base UI 验证门。依据：[PRD §07 7.15.2](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/07-s1-foundation.md)、[qian 专题规格](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/yue.md)（§3.1 分层、§4.1 流程、§4.4 验证门、§8 验收）、[ADR-013](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/adr/ADR-013-frontend-yue.md)。
+qian 是匠心智能体平台的 React 组件库与外壳（产品族的前端层，[ADR-021](https://github.com/CavaiLAB/kun/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/adr/ADR-021-product-family-structure.md)），以 pnpm workspace 交付，发 GitHub Packages。**包名**：`@cavailab/qian-<包>`（目录 `packages/qian/<包>`）。本文链接的需求、规格与 ADR 在后端仓库。本目录是 S1-YUE-003 建立的工程化基线：包骨架、分层边界、八项 CI 门禁与 Base UI 验证门。依据：[PRD §07 7.15.2](https://github.com/CavaiLAB/kun/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/07-s1-foundation.md)、[qian 专题规格](https://github.com/CavaiLAB/kun/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/yue.md)（§3.1 分层、§4.1 流程、§4.4 验证门、§8 验收）、[ADR-013](https://github.com/CavaiLAB/kun/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/adr/ADR-013-frontend-yue.md)。
 
 ## 1 布局
 
@@ -23,7 +23,7 @@ tests/gates/qian/           门禁自测：分层边界、循环依赖样例、�
 
 ## 2 分层与依赖方向
 
-包结构与允许依赖以 [规格 §3.1](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/yue.md#31-包结构与依赖方向) 为准，矩阵写在 `boundaries.config.mjs`：下层不得 import 上层；shell / data / form / charts / code-editor 同层互不依赖（shell → form 的登录表单是唯一例外）；横切包 sdk / agent / mobile 只被上层消费；tokens / contracts 不依赖任何 `@cavailab/qian-*` 包。违规在 lint 阶段直接失败，不接受「临时引用、下个迭代修」。
+包结构与允许依赖以 [规格 §3.1](https://github.com/CavaiLAB/kun/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/yue.md#31-包结构与依赖方向) 为准，矩阵写在 `boundaries.config.mjs`：下层不得 import 上层；shell / data / form / charts / code-editor 同层互不依赖（shell → form 的登录表单是唯一例外）；横切包 sdk / agent / mobile 只被上层消费；tokens / contracts 不依赖任何 `@cavailab/qian-*` 包。违规在 lint 阶段直接失败，不接受「临时引用、下个迭代修」。
 
 新建一个包：在 `boundaries.config.mjs` 的 `DIRECT` 登记目录名与允许依赖（没登记的包名什么 `@cavailab/qian-*` 包都不许引）→ 同步规格 §3.1 的表 → 复制一个现有包的四个文件改名 → `pnpm install`。`tests/gates/qian/packages.test.ts` 会核对 package.json 的依赖不超出矩阵。
 
@@ -71,10 +71,10 @@ tests/gates/qian/           门禁自测：分层边界、循环依赖样例、�
 
 ## 6 Base UI 验证门
 
-2026-10-09 通过，锁定 `@base-ui/react` 1.8，不切 Radix、不混用；五项发现与封装层处理见 [ADR-013 §9](https://github.com/idadawn/qian/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/adr/ADR-013-frontend-yue.md#9-状态历史status-history)。`@cavailab/qian-core` 已由 S1-YUE-005 扩展为 51 个组件入口、配套 manifest 与 Rspress 交互文档；S1-YUE-008 在同一 Tree 上补齐虚拟化，并交付表格、树选择、日期、Upload 与 ImagePreview。
+2026-10-09 通过，锁定 `@base-ui/react` 1.8，不切 Radix、不混用；五项发现与封装层处理见 [ADR-013 §9](https://github.com/CavaiLAB/kun/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/adr/ADR-013-frontend-yue.md#9-状态历史status-history)。`@cavailab/qian-core` 已由 S1-YUE-005 扩展为 51 个组件入口、配套 manifest 与 Rspress 交互文档；S1-YUE-008 在同一 Tree 上补齐虚拟化，并交付表格、树选择、日期、Upload 与 ImagePreview。
 
 ## 7 已知限制与延期项
 
 - tokens 的品牌、明暗与语义色验证页已在靶场 `/tokens.html` 建立；Rspress 组件页与站内交互编辑器由 S1-YUE-005 提供，文档站留在后端仓库，在那里执行 `pnpm docs:site` 验证生成、真实交互、离线编辑及静态构建；sdk / shell / data / form / biz 的组件文案门禁已随 SDK 接入 lint，资源包、示例与测试除外，core 继续由宿主传 label；视觉回归已随 S1-YUE-011 接入 `pnpm qian:visual`，采用固定 Linux 镜像，本机需 Docker。
-- tokens 已实现三层令牌和首帧主题控制；sdk 已交付类型化客户端、注册表与三语言 i18n；form 已交付 SchemaForm 与统一弹层；data 已交付 S1 基础组件，真实上传 E2E 仍归 S1-FILE-003；shell 已交付页面骨架、菜单/偏好与注入式认证页族（R111）；biz 已交付 S1 基础版业务选择器（S1-YUE-010），角色与权限点目录的服务端归 S1-AZ-005；tokens、contracts、sdk 曾以旧名字于 2026-10-23 私有发布 0.1.0（S1-YUE-001）；新名字从 0.2.0 起发布（F3）。
+- tokens 已实现三层令牌和首帧主题控制；sdk 已交付类型化客户端、注册表与三语言 i18n；form 已交付 SchemaForm 与统一弹层；data 已交付 S1 基础组件，真实上传 E2E 仍归 S1-FILE-003；shell 已交付页面骨架、菜单/偏好与注入式认证页族（R111）；biz 已交付 S1 基础版业务选择器（S1-YUE-010），角色与权限点目录的服务端归 S1-AZ-005；10 个包从 0.2.0 起发布（F3）。
 - Lighthouse 同时覆盖靶场各页与 `/shell.html` 的真实 AppShell 首屏；认证表单按需懒加载，脚本压缩后 ≤ 250 KiB、a11y = 100 的预算不变（PRD §14）。真实 qian.shell 部署接线由 S1-YUE-001/002 继续验收。
