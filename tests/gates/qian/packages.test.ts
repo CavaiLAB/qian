@@ -36,6 +36,15 @@ describe('packages/qian/* 的 package.json', () => {
     }
   });
 
+  it('Changesets 只将层包编为同一固定版本组，运行时与插件开发包各自发版', () => {
+    const config = JSON.parse(fs.readFileSync(path.join(ROOT, '.changeset/config.json'), 'utf8')) as {
+      fixed: string[][];
+      linked: string[][];
+    };
+    expect(config.fixed.map((group) => [...group].sort())).toEqual([packages.map(({ pkg }) => pkg.name).sort()]);
+    expect(config.linked).toEqual([]);
+  });
+
   it('dependencies 里的层包不超出矩阵允许范围，且用 workspace 协议', () => {
     for (const { dir, pkg } of packages) {
       const allowed = allowedDependencies(dir);
