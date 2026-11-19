@@ -52,7 +52,8 @@ Qian 负责人看得见、摸得着的那一层。在平台的理念「三元全
 | 名字 | 已完成（F2）：包名 `@cavailab/qian-*`，样式变量 `--qian-*`，测试标识的默认前缀 `qian-`，清单版本键 `engines.qian`。使用方要改什么见[迁移说明](docs/migrating-from-yue.md)，记录见[迁移文档](docs/migration.md)第 10 节 |
 | 包与发布 | 已定：作用域 `@cavailab`（包发在 GitHub Packages 上，作用域要与仓库所有者同名）；首发 10 个包统一 0.2.0，包公开。GitHub Packages 的 npm 包源装公开包也要带令牌，`.npmrc` 怎么写见[迁移说明](docs/migrating-from-yue.md)第 2 节。首发 0.2.0 已于 2026-11-17 发布；0.2.1 已于 2026-11-18 发布，返修 data、biz 一渲染就报错，使用方用 0.2.1。发布步骤与记录见[迁移文档](docs/migration.md)第 11 节 |
 | 许可 | 已定：MIT，见 [LICENSE](LICENSE)。版权行是 `Copyright (c) 2026 Qian Framework Contributors` |
-| 待定 | 文档站组件页由谁出、10 个包要不要锁成同一版本。见[迁移文档](docs/migration.md)第 8 节 |
+| 后续版本 | 8 个层包统一定版本。TypeScript 运行时与前端插件开发包各自定版本 |
+| 组件文档 | 组件文档站按本仓库的 `@cavailab/qian-core@<版本>` 标签生成并发布组件页。组件源码与示例在本仓库维护 |
 
 ## 文档
 

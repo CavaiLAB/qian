@@ -87,7 +87,7 @@ node packages/qian-plugin-sdk/scripts/verify-consumer.mjs archive <输出目录>
 ## 要改文档
 
 1. 文档用中文，不写参考平台和对标项目的名字。
-2. 分清「已定」「提议」「待定」。迁入的时点与范围、包名、许可与许可证的版权行、首发的版本号（0.2.0）、包的可见性（公开）、发布位置（GitHub Packages）是已定的，见 [迁移文档](docs/migration.md) 第 1 节；文档站组件页由谁出、10 个包要不要锁成同一版本是待定的，见第 8 节。
+2. 分清「已定」「提议」「待定」。迁入的时点与范围、包名、许可与许可证的版权行、首发的版本号（0.2.0）、包的可见性（公开）、发布位置（GitHub Packages）是已定的，见 [迁移文档](docs/migration.md) 第 1 节。8 个层包统一定版本，运行时与前端插件开发包各自定版本。组件文档站按本仓库的核心包标签生成组件页。
 3. 说现状的时候写清是「已有」（已经实现）还是「规划」。
 4. 平台级的口径（名称、三个框架的分工、契约）在 [jiangxin](https://github.com/CavaiLAB/jiangxin) 里改，这里只引用。
 5. 改动走分支和 PR，不直接推 `main`。建仓期间的初始文档除外，见平台总览的[协作约定](https://github.com/CavaiLAB/jiangxin/blob/main/docs/07-governance.md)第 2 节。
