@@ -9,7 +9,7 @@
 | 字段 | 含义 |
 |---|---|
 | `source.repository` | 来源仓库，写成「所有者/仓库」。现在是后端仓库 `CavaiLAB/kun` |
-| `source.pathPrefix` | 这些文件在来源仓库里的路径前缀，以 `/` 结尾；没有前缀写空串。现在是 `_import/qian/`，即后端仓库的过渡目录。以后后端分批整理、这些文件换了地方，照下文「后端改了契约之后」的最后一段更新 |
+| `source.pathPrefix` | 契约所在目录相对来源仓库根的前缀。空串表示仓库根，子目录的前缀以 `/` 结尾 |
 | `source.commit` | 来源提交，全长哈希 |
 | `files` | 每个副本的路径（相对本目录，也就是在来源仓库里去掉前缀之后的路径）与 SHA-256；领先于来源的副本另有 `lead`，见下文 |
 
@@ -87,11 +87,11 @@ node scripts/backend-copy.mjs --source <后端仓库的检出>
 后端换了仓库或目录结构，更新时一并写回清单：
 
 ```bash
-node scripts/backend-copy.mjs --update <后端仓库的检出> --repository CavaiLAB/kun --path-prefix _import/qian/
+node scripts/backend-copy.mjs --update <后端仓库的检出> --repository CavaiLAB/kun --path-prefix ''
 ```
 
-以后过渡目录 `_import/qian/` 里的文件随后端的批次搬了地方，照样跑这一条，`--path-prefix` 换成新的前缀；换了仓库的话 `--repository` 也换。
+上面的空串表示从后端仓库根目录取文件。更新其他布局时，先确认五个文件都位于同一来源前缀下，再将该前缀传给 `--path-prefix`。
 
 ## 同一个来源提交的另一个用处
 
-TypeScript 运行时与 .NET 运行时共用的一致性用例（TCK）不复制到这里，留在后端仓库。`runtime-ts` 工作流里「运行时一致性用例」那一项按这份清单的仓库、前缀与提交检出后端，在检出里前缀那一层目录（现在是 `_import/qian/`）构建命令行，再用本仓库的运行时跑那套用例。所以升来源提交时，这一项也会跟着用新提交的用例。
+TypeScript 运行时与 .NET 运行时共用的一致性用例（TCK）不复制到这里，留在后端仓库。`runtime-ts` 工作流里「运行时一致性用例」那一项按这份清单的仓库、前缀与提交检出后端，在清单指定的目录构建命令行，再用本仓库的运行时跑那套用例。所以升来源提交时，这一项也会跟着用新提交的用例。
