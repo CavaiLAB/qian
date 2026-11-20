@@ -2,8 +2,8 @@
   "note": "后端冻结契约的副本。唯一来源是 source 指的仓库与提交，不在这里改：要改去后端仓库改，再按 README.md 更新副本与这份清单。带 lead 的文件领先于来源：副本是来源按 lead.replace 逐条替换的结果，lead.sourceSha256 是来源在来源提交的摘要，见 README.md「领先于来源的副本」。",
   "source": {
     "repository": "CavaiLAB/kun",
-    "pathPrefix": "_import/qian/",
-    "commit": "71cbd5b4fb8f9f813684940a192ca15ea5feaac3"
+    "pathPrefix": "",
+    "commit": "dbd56c6892666fa10b487e2b172de94c8540658c"
   },
   "files": [
     {
