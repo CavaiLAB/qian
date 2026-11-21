@@ -37,9 +37,9 @@ flowchart BT
 
 ## 3 应用外壳
 
-应用外壳是平台自己的界面应用，承载各个应用的页面。它在后端仓库，建在本仓库发布的包上。
+本节描述 Kun 仓库中的现有应用外壳。它使用 Qian 发布的组件包，承载各应用的页面。
 
-最终用户的入口是 Agent 平台，它的客户端基于企业级框架；企业级应用平台不另做一套入口，Agent 平台收起对话区就是它（已定，2026-11-19）。提议 Agent 平台的界面用本仓库的包搭，见平台总览的[角色与产品形态](https://github.com/CavaiLAB/jiangxin/blob/main/docs/09-roles-and-product.md)第 3、4 节。现有的应用外壳怎么并进 Agent 平台的客户端，待定，见平台总览的[仓库与归属](https://github.com/CavaiLAB/jiangxin/blob/main/docs/05-repositories.md)第 1.1 节；那里的提议是：外壳里通用的部分（会话、启动聚合、能力导航、按需装载页面）留在企业级框架里，以包的形式发布，Agent 平台的客户端在 `jiangxin` 里用这些包组装。定下来之前，本节说的是应用外壳现在的样子。
+2026-11-20 的产品裁定确定匠心工业智能体平台的 Web 和桌面端采用 DSH 客户端。Qian 冻结在 `0.2.1`。现有应用外壳如何处置，以及产品的登录、租户、策略和审计由哪个后端提供，均待定。[产品裁定 P38 及待定事项](https://github.com/CavaiLAB/jiangxin/blob/9d1c1475acb7d10c85b415ff7b2400ad6fe88ed1/docs/decisions/2026-11-20-product.md)
 
 - **运行时配置。** 外壳启动时从同源地址读配置，同一份构建产物可以部署到不同环境。
 - **会话。** 浏览器里不放令牌。登录之后会话由网关持有，前端只带会话 Cookie；会话过期有统一的处理。
@@ -70,7 +70,7 @@ flowchart BT
 
 ## 6 面向智能体的界面
 
-规划。它们是 Agent 平台界面的一部分，见平台总览的[角色与产品形态](https://github.com/CavaiLAB/jiangxin/blob/main/docs/09-roles-and-product.md)第 4 节。
+下表记录 Qian 冻结前为 Agent 平台拟定的界面。产品的角色与形态见平台总览的[角色与产品形态](https://github.com/CavaiLAB/jiangxin/blob/main/docs/09-roles-and-product.md)第 4 节。
 
 | 界面 | 作用 |
 |---|---|

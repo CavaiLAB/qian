@@ -17,7 +17,8 @@
 | 许可证的版权行 | `Copyright (c) 2026 Qian Framework Contributors`，仓库根与运行时包的许可证文件都用这一行 | 产品负责人 2026-11-17 确认 F2 的提议 |
 | 规划中的渲染层 | 分层矩阵为运行时层预留的包定名为 renderer（`@cavailab/qian-renderer`），TypeScript 运行时的名字不变 | 产品负责人 2026-11-17，见第 10.1 节 |
 | 首发的版本号 | 10 个包统一 0.2.0 | 产品负责人 2026-11-17，照第 8 节原来的提议 |
-| 后续版本 | 8 个层包同属一个 Changesets 固定版本组。TypeScript 运行时和前端插件开发包分别定版本 | 产品负责人 2026-11-20 确认 |
+| 版本分组 | 8 个层包同属一个 Changesets 固定版本组。TypeScript 运行时和前端插件开发包分别定版本 | 产品负责人 2026-11-20 确认 |
+| 当前版本 | Qian 冻结在 0.2.1。产品的 Web 和桌面外壳采用 DSH 客户端。是否再发布 Qian 新版本、现有 Kun 应用外壳如何处置，均待定。 | [产品裁定 P38](https://github.com/CavaiLAB/jiangxin/blob/9d1c1475acb7d10c85b415ff7b2400ad6fe88ed1/docs/decisions/2026-11-20-product.md) |
 | 组件文档 | 组件文档站按本仓库的 `@cavailab/qian-core@<版本>` 标签生成并发布组件页，源码与示例随标签取用 | 产品负责人 2026-11-20 确认 |
 | 包的可见性 | 公开 | 产品负责人 2026-11-17，照第 8 节原来的提议。GitHub Packages 上怎样才算公开、要谁动手，见第 11.2 节 |
 | 发布位置 | GitHub Packages（`https://npm.pkg.github.com`，作用域 `@cavailab`） | 产品负责人 2026-11-17：知情后说按提议开工。要让外部开发者不带令牌就能装，得另发到公共的 npm 包源，那需要先有组织账号与发布令牌，现在不做 |

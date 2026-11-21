@@ -2,9 +2,11 @@
 
 [匠心智能体平台](https://github.com/CavaiLAB/jiangxin)的前端框架。TypeScript 与 React：设计令牌、组件库、应用外壳、微前端、由 Schema 驱动的界面。
 
+**Qian 已冻结在 `0.2.1`。** 匠心工业智能体平台的 Web 和桌面端采用 DSH 客户端。Qian 是否再发新版、Kun 仓库中现有应用外壳的去向均待定。[产品裁定 P38](https://github.com/CavaiLAB/jiangxin/blob/9d1c1475acb7d10c85b415ff7b2400ad6fe88ed1/docs/decisions/2026-11-20-product.md)
+
 > **状态：迁移进行中（2026-11-18）。** 框架库已连同提交历史从后端仓库的前端工作区迁入本仓库：包名 `@cavailab/qian-*`、目录 `packages/qian/`。首发（F3）已于 2026-11-17 完成：10 个包以 0.2.0 发布在 GitHub Packages，已公开，发布记录见[迁移文档](docs/migration.md)第 11.5 节。0.2.0 的数据组件包与业务选择器包一渲染就报错，2026-11-18 以 0.2.1 返修，10 个包一起升，请用 0.2.1（第 11.7 节）。计划与进度见[迁移文档](docs/migration.md)，使用方要改什么见[迁移说明](docs/migrating-from-yue.md)，本机怎么跑门禁见 [AGENTS.md](AGENTS.md)。
 >
-> **名字说明：** 后端仓库 [CavaiLAB/kun](https://github.com/CavaiLAB/kun) 里以 `Qian.` 开头的 .NET 包、组件 id 前缀 `qian.` 与 `qian` 命令行都属于平台，不是本仓库的前端框架。
+> 合并版的 .NET 包使用 `Kun.*`。组件 ID 的 `qian.` 前缀和 `qian` 命令行由后端仓库维护。[后端包迁移指南](https://github.com/CavaiLAB/kun/blob/main/docs/guides/package-migration.md)
 
 ## 定位
 
@@ -13,7 +15,7 @@ Qian 负责人看得见、摸得着的那一层。在平台的理念「三元全
 它有两个使用方式：
 
 - **当组件库用。** 装几个包，在自己的 React 项目里用设计令牌和组件。
-- **当应用框架用。** 用外壳组件搭宿主页面，业务页面作为远程模块按需加载，表单和列表由 Schema 渲染。平台自己的应用外壳就是这样搭的；平台上最终用户的入口是 Agent 平台，它的客户端基于企业级框架（已定），见[框架架构](docs/architecture.md)第 3 节。
+- **当应用框架用。** 用外壳组件搭宿主页面，业务页面作为远程模块按需加载，表单和列表由 Schema 渲染。Kun 仓库中的现有应用外壳采用这种方式。[框架架构第 3 节](docs/architecture.md#3-应用外壳)
 
 ## 包含什么
 
@@ -52,7 +54,7 @@ Qian 负责人看得见、摸得着的那一层。在平台的理念「三元全
 | 名字 | 已完成（F2）：包名 `@cavailab/qian-*`，样式变量 `--qian-*`，测试标识的默认前缀 `qian-`，清单版本键 `engines.qian`。使用方要改什么见[迁移说明](docs/migrating-from-yue.md)，记录见[迁移文档](docs/migration.md)第 10 节 |
 | 包与发布 | 已定：作用域 `@cavailab`（包发在 GitHub Packages 上，作用域要与仓库所有者同名）；首发 10 个包统一 0.2.0，包公开。GitHub Packages 的 npm 包源装公开包也要带令牌，`.npmrc` 怎么写见[迁移说明](docs/migrating-from-yue.md)第 2 节。首发 0.2.0 已于 2026-11-17 发布；0.2.1 已于 2026-11-18 发布，返修 data、biz 一渲染就报错，使用方用 0.2.1。发布步骤与记录见[迁移文档](docs/migration.md)第 11 节 |
 | 许可 | 已定：MIT，见 [LICENSE](LICENSE)。版权行是 `Copyright (c) 2026 Qian Framework Contributors` |
-| 后续版本 | 8 个层包统一定版本。TypeScript 运行时与前端插件开发包各自定版本 |
+| 版本分组 | 8 个层包统一定版本。TypeScript 运行时与前端插件开发包各自定版本 |
 | 组件文档 | 组件文档站按本仓库的 `@cavailab/qian-core@<版本>` 标签生成并发布组件页。组件源码与示例在本仓库维护 |
 
 ## 文档
