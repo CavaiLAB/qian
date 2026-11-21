@@ -1,10 +1,10 @@
 # AGENTS.md：给编码代理的入口说明
 
-这个仓库是 **Qian**：匠心智能体平台的前端框架（TypeScript、React）。框架库连同提交历史从后端仓库迁入本仓库，怎么迁、迁到哪一步，见[迁移文档](docs/migration.md)。
+这个仓库保存 **Qian** 前端框架（TypeScript、React）。本次迁移按冻结版本 0.2.1 归档验收，业务预发保留原版外壳与现有数据。平台的 Web 和桌面端采用 DSH 客户端。[维护入口与迁移记录](docs/migration.md)
 
 ## 先弄清名字
 
-后端仓库 [CavaiLAB/kun](https://github.com/CavaiLAB/kun) 里以 `Qian.` 开头的 .NET 包、组件 id 前缀 `qian.` 与 `qian` 命令行都属于平台，不是本仓库的前端框架。
+平台的 .NET 包使用 `Kun.*` 命名。组件 ID 的 `qian.` 前缀与 `qian` 命令行由后端仓库维护。[Kun 仓库](https://github.com/CavaiLAB/kun)
 
 代码里的名字：包名 `@cavailab/qian-<名>`、目录 `packages/qian/`、`apps/qian-playground`、`tests/gates/qian`，样式变量 `--qian-*`，测试标识的默认前缀 `qian-`，根脚本 `qian:*`。前端插件开发包与 TypeScript 运行时是 `@cavailab/qian-plugin-sdk`、`@cavailab/qian-runtime`，也以 `@cavailab/qian-` 开头，所以要指 8 个层包时逐个写名字或写 `packages/qian/*`，不要用 `@cavailab/qian-*` 通配（固定版本组与分层规则都是这样写的）。
 
@@ -26,13 +26,13 @@
 
 ## 要改代码
 
-迁移分五个阶段，按 [迁移文档](docs/migration.md) 第 3 节一个接一个做。动手之前先看它，弄清现在在哪个阶段。
+查既有迁移的阶段与交付记录，见[迁移文档](docs/migration.md)第 3、9 至 12 节。
 
 - 迁入本仓库的只有框架库：8 个包、组件演练场、前端插件开发包、TypeScript 运行时、接口类型生成工具与前端门禁。应用外壳、三个组件自带的界面、参考应用的界面、文档站、命令行留在后端仓库，不要搬过来。
 - 框架库的改动一律在本仓库做，不再从后端仓库导入。
 - 新写的代码与文档只用上文列出的名字。
 - 后端的冻结契约在本仓库只有副本（`backend-copy/`），不在这里改。要改去后端仓库改，再按 [副本的说明](backend-copy/README.md) 更新副本与来源清单。
-- 包不从本机发布，只经 `release` 工作流发布：只能在 `main` 上手动触发，见 [发布脚本](scripts/release/README.md)。发布之前要产品负责人点头。首发 0.2.0 已于 2026-11-17 发布，0.2.1（返修 data、biz 一渲染就报错）已于 2026-11-18 发布；以后发版照 [迁移文档](docs/migration.md) 第 11.3 节的步骤做。
+- 10 个包的 0.2.0 和 0.2.1 均已发布。Qian 冻结在 0.2.1，是否再发新版待定。已使用的发布流程与验收方法见[迁移文档](docs/migration.md)第 11 节。
 
 ## 在本机跑门禁
 

@@ -1,18 +1,22 @@
 # Qian
 
-[匠心智能体平台](https://github.com/CavaiLAB/jiangxin)的前端框架。TypeScript 与 React：设计令牌、组件库、应用外壳、微前端、由 Schema 驱动的界面。
+Qian 提供基于 TypeScript 与 React 的企业级组件。
 
-**Qian 已冻结在 `0.2.1`。** 匠心工业智能体平台的 Web 和桌面端采用 DSH 客户端。Qian 是否再发新版、Kun 仓库中现有应用外壳的去向均待定。[产品裁定 P38](https://github.com/CavaiLAB/jiangxin/blob/9d1c1475acb7d10c85b415ff7b2400ad6fe88ed1/docs/decisions/2026-11-20-product.md)
+**Qian 已冻结在 `0.2.1`。** 本次迁移按该版本的包、标签和源码归档验收。业务预发继续运行原版外壳与远程模块，保留现有数据。[外壳迁移裁定 P42](https://github.com/CavaiLAB/jiangxin/blob/5ca1442b04eb7c4812314664ab06a9d7feba6a22/docs/decisions/2026-11-21-shell-migration.md)
 
-> **状态：迁移进行中（2026-11-18）。** 框架库已连同提交历史从后端仓库的前端工作区迁入本仓库：包名 `@cavailab/qian-*`、目录 `packages/qian/`。首发（F3）已于 2026-11-17 完成：10 个包以 0.2.0 发布在 GitHub Packages，已公开，发布记录见[迁移文档](docs/migration.md)第 11.5 节。0.2.0 的数据组件包与业务选择器包一渲染就报错，2026-11-18 以 0.2.1 返修，10 个包一起升，请用 0.2.1（第 11.7 节）。计划与进度见[迁移文档](docs/migration.md)，使用方要改什么见[迁移说明](docs/migrating-from-yue.md)，本机怎么跑门禁见 [AGENTS.md](AGENTS.md)。
->
+框架的 10 个 npm 包通过 GitHub Packages 公开发布，包名使用 `@cavailab/qian-*`。从旧版 yue 升级时，包名、样式变量、清单字段和浏览器存储键需要一起更新。[安装与升级说明](docs/migrating-from-yue.md)
+
+匠心工业智能体平台的 Web 和桌面端采用 DSH 客户端。旧外壳源码以后的用途、Qian 是否再发新版，以及产品登录、租户、策略和审计由哪个后端提供，仍待决定。[产品裁定 P38](https://github.com/CavaiLAB/jiangxin/blob/9d1c1475acb7d10c85b415ff7b2400ad6fe88ed1/docs/decisions/2026-11-20-product.md)
+
+Kun 仓库保有使用 Qian 0.2.1 的外壳源码、身份与租户页面，也维护组件文档站和 `qian` 命令行。[Kun 仓库](https://github.com/CavaiLAB/kun)
+
 > 合并版的 .NET 包使用 `Kun.*`。组件 ID 的 `qian.` 前缀和 `qian` 命令行由后端仓库维护。[后端包迁移指南](https://github.com/CavaiLAB/kun/blob/main/docs/guides/package-migration.md)
 
 ## 定位
 
-Qian 负责人看得见、摸得着的那一层。在平台的理念「三元全智生命体」里，它和 Kun 一起构成「三元」，也就是躯体；人在这里提出意图、查看过程、判断结果、审核智能体的往来。
+Qian 0.2.1 提供设计令牌、React 组件、远程页面加载，以及由 Schema 驱动的表单和列表。
 
-它有两个使用方式：
+已有项目可以按需使用冻结版本。
 
 - **当组件库用。** 装几个包，在自己的 React 项目里用设计令牌和组件。
 - **当应用框架用。** 用外壳组件搭宿主页面，业务页面作为远程模块按需加载，表单和列表由 Schema 渲染。Kun 仓库中的现有应用外壳采用这种方式。[框架架构第 3 节](docs/architecture.md#3-应用外壳)
@@ -31,10 +35,10 @@ Qian 负责人看得见、摸得着的那一层。在平台的理念「三元全
 | 业务选择器 | 字典、组织、用户、角色选择器，菜单与按钮授权树 | 已有基础版 |
 | TypeScript 运行时 | 与后端同语义的组件运行时：带范围的服务、事件、可撤销的副作用 | 已有；随本仓库 |
 | 前端插件开发包 | 前端插件契约、带范围的插槽、远程模块的加载与桥接 | 已有；随本仓库 |
-| 应用外壳 | 运行时配置、会话、能力导航、按需加载远程页面、租户切换 | 已有；是平台自己的界面应用，留在后端仓库，建在本仓库发布的包上。最终用户的入口是 Agent 平台（已定），应用外壳怎么并进它的客户端，待定 |
+| 应用外壳 | 运行时配置、会话、能力导航、按需加载远程页面、租户切换 | Kun 的外壳源码按 Qian 0.2.1 归档，业务预发保留原版 |
 | 身份与租户页面 | 登录与认证页、租户管理、租户开通申请 | 已有；是平台组件自带的界面，跟组件走，留在后端仓库 |
-| 图表、代码编辑器、移动端 | — | 规划 |
-| 面向智能体的界面 | 意图输入、过程展示、审核收件箱（要发出去的与发给我的都要人审，起步两道都必审，已定）、对话里的确认卡、管理我的 Agent。它们是 Agent 平台界面的一部分 | 规划 |
+| 图表、代码编辑器、移动端 | — | 0.2.1 设计稿中的规划 |
+| 面向智能体的界面 | 意图输入、过程展示、审核收件箱（要发出去的与发给我的都要人审，起步两道都必审，已定）、对话里的确认卡、管理我的 Agent。它们是 Agent 平台界面的一部分 | 0.2.1 设计稿中的规划 |
 
 ## 设计原则
 
@@ -47,20 +51,18 @@ Qian 负责人看得见、摸得着的那一层。在平台的理念「三元全
 
 ## 现状
 
-| 项 | 状态 |
+| 项目 | 使用方式 |
 |---|---|
-| 代码 | 已导入（F1）：框架库连同 154 个提交从后端仓库的提交 [`aafa0cc5ab`](https://github.com/CavaiLAB/kun/tree/aafa0cc5ab48637a1c634867d6cddb2935837814) 导入，文件与源提交逐个一致；八项门禁、视觉回归与运行时测试跑在本仓库的 CI 上。框架库的改动一律在本仓库做 |
-| 范围 | 已定：只迁框架库（8 个包、组件演练场、前端插件开发包、TypeScript 运行时、前端门禁）。应用外壳、组件自带的界面、文档站留在后端仓库，按钉住的版本消费本仓库发布的包 |
-| 名字 | 已完成（F2）：包名 `@cavailab/qian-*`，样式变量 `--qian-*`，测试标识的默认前缀 `qian-`，清单版本键 `engines.qian`。使用方要改什么见[迁移说明](docs/migrating-from-yue.md)，记录见[迁移文档](docs/migration.md)第 10 节 |
-| 包与发布 | 已定：作用域 `@cavailab`（包发在 GitHub Packages 上，作用域要与仓库所有者同名）；首发 10 个包统一 0.2.0，包公开。GitHub Packages 的 npm 包源装公开包也要带令牌，`.npmrc` 怎么写见[迁移说明](docs/migrating-from-yue.md)第 2 节。首发 0.2.0 已于 2026-11-17 发布；0.2.1 已于 2026-11-18 发布，返修 data、biz 一渲染就报错，使用方用 0.2.1。发布步骤与记录见[迁移文档](docs/migration.md)第 11 节 |
-| 许可 | 已定：MIT，见 [LICENSE](LICENSE)。版权行是 `Copyright (c) 2026 Qian Framework Contributors` |
+| 安装 | 在用户级 npm 配置中设置 GitHub Packages 的读取凭据，按需安装所用的包。首发的修订版为 0.2.1，包含数据组件和业务选择器的渲染修复。[安装示例](docs/migrating-from-yue.md) |
 | 版本分组 | 8 个层包统一定版本。TypeScript 运行时与前端插件开发包各自定版本 |
-| 组件文档 | 组件文档站按本仓库的 `@cavailab/qian-core@<版本>` 标签生成并发布组件页。组件源码与示例在本仓库维护 |
+| 组件文档 | 现有组件文档站按核心包发布标签取源码和示例。冻结版本对应 `@cavailab/qian-core@0.2.1`。 |
+| 许可 | MIT。版权归 Qian Framework Contributors 所有。[许可证](LICENSE) |
+| 维护 | 查阅冻结版本、后端契约和归档记录，见[维护入口](docs/migration.md)。本地校验命令见[开发说明](AGENTS.md)。 |
 
 ## 文档
 
 - [框架架构](docs/architecture.md)：分层、应用外壳、微前端、由 Schema 驱动的界面、面向智能体的界面、质量门禁。
-- [迁移文档](docs/migration.md)：迁移的执行计划与记录。范围、五个阶段、两个仓库之间的接口、还有什么没定，以及各阶段的记录。
+- [迁移文档](docs/migration.md)：发布、后端接入与迁移历史。范围、五个阶段、两个仓库之间的接口、还有什么没定，以及各阶段的记录。
 - [迁移说明](docs/migrating-from-yue.md)：给使用方。从旧包迁移时，包名、样式变量、测试标识、导出的标识符、存储键、清单版本键要怎么改。
 - [后端契约的副本](backend-copy/README.md)：框架库构建与测试时读的后端冻结契约，在本仓库只放副本。
 - [平台总览](https://github.com/CavaiLAB/jiangxin)：理念、角色与产品形态、总体架构、插件模型、应用互通、历史系统接入、Agent 协同、路线、平台级裁定。
