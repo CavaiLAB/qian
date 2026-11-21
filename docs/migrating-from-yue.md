@@ -31,7 +31,22 @@
 - 各包导出的 `PACKAGE_NAME` 常量，值是新包名。
 - 版本：F2 不改版本号；F3 以新名字首发，10 个包都是 0.2.0。2026-11-18 发 0.2.1：返修 data、biz 一渲染就报 `React is not defined`，10 个包一起升到 0.2.1（原因见[迁移与更名](migration.md)第 11.7 节），请用 0.2.1。8 个层包固定同一个版本号；运行时与插件开发包也以 `@cavailab/qian-` 开头，但不在固定组里，各自定版本（以后要不要把 10 个包锁成同一版本还没定）。0.2.0 对旧名字的最后一个版本是 minor，0.x 期间 minor 可能有破坏性变更，插件清单里 `engines.qian` 写 `^0.1.0` 的要放宽（第 6 节）。
 - 变更记录在各包目录的 `CHANGELOG.md`（例如[基础组件包的](https://github.com/CavaiLAB/qian/blob/main/packages/qian/core/CHANGELOG.md)），不随包发布：各包的 `files` 不含它，打包也不会自动带上。
-- 旧名字已经发布过的版本（tokens、contracts、sdk、运行时、插件开发包）不再出新版本。F5 删除旧名字的 3 个私有包，旧名字的运行时与插件开发包标弃用，见[迁移与更名](migration.md)第 3 节。
+
+### 旧依赖还能否从包源安装
+
+2026-11-21，GitHub Packages 已删除三个旧层包。升级时把直接依赖或 npm 别名指向下表的 0.2.1，重新生成锁文件，再用空缓存执行安装。
+
+| 旧包与版本 | 包源现状 | 归档替代版本 |
+|---|---|---|
+| `@idadawn/yue-sdk@0.1.0` | 已删除 | `@cavailab/qian-sdk@0.2.1` |
+| `@idadawn/yue-contracts@0.1.0` | 已删除 | `@cavailab/qian-contracts@0.2.1` |
+| `@idadawn/yue-tokens@0.1.0` | 已删除 | `@cavailab/qian-tokens@0.2.1` |
+| `@idadawn/qian-runtime` 的 `0.1.0`、`0.1.1` | 两版均可独立安装 | `@cavailab/qian-runtime@0.2.1` |
+| `@idadawn/qian-plugin-sdk@0.1.0` | 包体仍可下载，全新安装缺少旧层包 | `@cavailab/qian-plugin-sdk@0.2.1` |
+
+旧插件开发包依赖旧 SDK，旧 SDK 又依赖契约包和设计令牌包。即使锁文件钉住了版本和摘要，从空缓存运行 `npm ci` 仍会因旧包下载地址返回 404 而失败。已经构建并部署的静态页面加载现有资源，无须访问 npm 包源。
+
+旧运行时与插件开发包已决定弃用。截至 2026-11-21，包源中这三个版本的 `deprecated` 字段仍为空，使用方应按上表迁移。
 
 ### 从 GitHub Packages 安装
 
