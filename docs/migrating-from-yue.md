@@ -41,12 +41,13 @@
 | `@idadawn/yue-sdk@0.1.0` | 已删除 | `@cavailab/qian-sdk@0.2.1` |
 | `@idadawn/yue-contracts@0.1.0` | 已删除 | `@cavailab/qian-contracts@0.2.1` |
 | `@idadawn/yue-tokens@0.1.0` | 已删除 | `@cavailab/qian-tokens@0.2.1` |
-| `@idadawn/qian-runtime` 的 `0.1.0`、`0.1.1` | 两版均可独立安装 | `@cavailab/qian-runtime@0.2.1` |
-| `@idadawn/qian-plugin-sdk@0.1.0` | 包体仍可下载，全新安装缺少旧层包 | `@cavailab/qian-plugin-sdk@0.2.1` |
+| `@idadawn/qian-runtime@0.1.0` | 保留，可独立安装 | `@cavailab/qian-runtime@0.2.1` |
+| `@idadawn/qian-runtime@0.1.1` | 保留，可独立安装 | `@cavailab/qian-runtime@0.2.1` |
+| `@idadawn/qian-plugin-sdk@0.1.0` | 保留，包体可下载。空缓存安装会因缺少旧层包而失败 | `@cavailab/qian-plugin-sdk@0.2.1` |
 
 旧插件开发包依赖旧 SDK，旧 SDK 又依赖契约包和设计令牌包。即使锁文件钉住了版本和摘要，从空缓存运行 `npm ci` 仍会因旧包下载地址返回 404 而失败。已经构建并部署的静态页面加载现有资源，无须访问 npm 包源。
 
-旧运行时与插件开发包已决定弃用。截至 2026-11-21，包源中这三个版本的 `deprecated` 字段仍为空，使用方应按上表迁移。
+2026-11-23 的最终裁定保留这三个旧版本，以本指南的逐版替代对照完成迁移验收。GitHub Packages 拒绝了三次原生弃用标记写入。复核时，三个版本的 `deprecated` 字段均为空。npm 不会针对这三个版本给出原生弃用警告，使用方可按表中的完整包名和版本检查依赖。
 
 ### 从 GitHub Packages 安装
 
