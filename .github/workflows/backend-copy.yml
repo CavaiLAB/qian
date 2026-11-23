@@ -7,8 +7,7 @@ on:
   push:
     branches: [main]
     paths: ['backend-copy/**', 'scripts/backend-copy.mjs', '.github/workflows/backend-copy.yml']
-  pull_request:
-    paths: ['backend-copy/**', 'scripts/backend-copy.mjs', '.github/workflows/backend-copy.yml']
+  workflow_call:
   workflow_dispatch:
 
 permissions:

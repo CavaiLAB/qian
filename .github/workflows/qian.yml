@@ -29,28 +29,7 @@ on:
       - ".dependency-cruiser.cjs"
       - "vitest.config.ts"
       - ".github/workflows/qian.yml"
-  pull_request:
-    paths:
-      - "scripts/qian-visual.mjs"
-      - "scripts/release/**"
-      - "packages/qian/**"
-      - "backend-copy/**"
-      - "scripts/backend-copy.mjs"
-      - "packages/qian-plugin-sdk/**"
-      - "packages/qian-runtime/**"
-      - "tools/openapi-codegen/**"
-      - "apps/**"
-      - "tests/gates/qian/**"
-      - ".changeset/config.json"
-      - "package.json"
-      - "pnpm-lock.yaml"
-      - "pnpm-workspace.yaml"
-      - "turbo.json"
-      - "eslint.config.mjs"
-      - "eslint.boundaries.config.mjs"
-      - ".dependency-cruiser.cjs"
-      - "vitest.config.ts"
-      - ".github/workflows/qian.yml"
+  workflow_call:
   workflow_dispatch:
 
 permissions:
