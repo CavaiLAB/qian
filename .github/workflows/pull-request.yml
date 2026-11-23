@@ -1,0 +1,69 @@
+name: Qian 合并检查
+
+on: pull_request
+
+permissions:
+  contents: read
+
+concurrency:
+  group: qian-pr-${{ github.event.pull_request.number }}
+  cancel-in-progress: true
+
+jobs:
+  changes:
+    name: 判定适用门禁
+    runs-on: ubuntu-latest
+    outputs:
+      qian: ${{ steps.scope.outputs.qian }}
+      runtime-ts: ${{ steps.scope.outputs.runtime-ts }}
+      backend-copy: ${{ steps.scope.outputs.backend-copy }}
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+          persist-credentials: false
+      - id: scope
+        env:
+          BASE: ${{ github.event.pull_request.base.sha }}
+          HEAD: ${{ github.event.pull_request.head.sha }}
+        run: ruby scripts/ci/pr-gates.rb "$BASE" "$HEAD" >> "$GITHUB_OUTPUT"
+
+  qian:
+    needs: changes
+    if: needs.changes.outputs.qian == 'true'
+    uses: ./.github/workflows/qian.yml
+
+  runtime-ts:
+    needs: changes
+    if: needs.changes.outputs.runtime-ts == 'true'
+    permissions:
+      contents: read
+      packages: read
+    uses: ./.github/workflows/runtime-ts.yml
+
+  backend-copy:
+    needs: changes
+    if: needs.changes.outputs.backend-copy == 'true'
+    uses: ./.github/workflows/backend-copy.yml
+
+  summary:
+    name: Qian CI 汇总
+    needs: [changes, qian, runtime-ts, backend-copy]
+    if: always()
+    runs-on: ubuntu-latest
+    steps:
+      - name: 核对每个适用工作流的结果
+        env:
+          RESULTS: ${{ toJSON(needs) }}
+        run: |
+          python3 - <<'PY'
+          import json, os
+          results = json.loads(os.environ['RESULTS'])
+          changes = results.pop('changes')
+          if changes['result'] != 'success':
+              raise SystemExit('无法确定适用门禁')
+          for name, job in results.items():
+              expected = {'true': 'success', 'false': 'skipped'}[changes['outputs'][name]]
+              if job['result'] != expected:
+                  raise SystemExit(f"{name} 应为 {expected}，实际为 {job['result']}")
+          PY
