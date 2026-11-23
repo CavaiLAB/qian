@@ -29,7 +29,7 @@
 - Tailwind 的工具类由使用方扫描组件源码生成。`@source` 指向安装目录的，路径里的包目录跟着换成 `@cavailab/qian-*`。
 - 微前端的共享依赖按包名登记：宿主与远程的 `shared` 键与 `requiredVersion` 要一起换成新名字，否则两边各带一份。
 - 各包导出的 `PACKAGE_NAME` 常量，值是新包名。
-- 版本：F2 不改版本号；F3 以新名字首发，10 个包都是 0.2.0。2026-11-18 发 0.2.1：返修 data、biz 一渲染就报 `React is not defined`，10 个包一起升到 0.2.1（原因见[迁移与更名](migration.md)第 11.7 节），请用 0.2.1。8 个层包固定同一个版本号；运行时与插件开发包也以 `@cavailab/qian-` 开头，但不在固定组里，各自定版本（以后要不要把 10 个包锁成同一版本还没定）。0.2.0 对旧名字的最后一个版本是 minor，0.x 期间 minor 可能有破坏性变更，插件清单里 `engines.qian` 写 `^0.1.0` 的要放宽（第 6 节）。
+- 版本：F2 不改版本号；F3 以新名字首发，10 个包都是 0.2.0。2026-11-18 发 0.2.1：返修 data、biz 一渲染就报 `React is not defined`，10 个包一起升到 0.2.1（原因见[迁移与更名](migration.md)第 11.7 节），请用 0.2.1。按 2026-11-20 的[版本裁定 P34](https://github.com/CavaiLAB/jiangxin/blob/56b8e7d6cee240580247eda0d03381c3808e7b2e/docs/decisions/2026-11-20-release.md)，8 个界面层包统一定版本，TypeScript 运行时与前端插件开发包各自定版本。0.2.0 对旧名字的最后一个版本是 minor，0.x 期间 minor 可能有破坏性变更，插件清单里 `engines.qian` 写 `^0.1.0` 的要放宽（第 6 节）。
 - 变更记录在各包目录的 `CHANGELOG.md`（例如[基础组件包的](https://github.com/CavaiLAB/qian/blob/main/packages/qian/core/CHANGELOG.md)），不随包发布：各包的 `files` 不含它，打包也不会自动带上。
 
 ### 旧依赖还能否从包源安装
