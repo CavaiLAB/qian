@@ -41,7 +41,7 @@ flowchart BT
 
 本次迁移按 Qian 0.2.1 的包、标签和外壳源码归档验收。业务预发继续运行原版外壳与远程模块，保留现有数据。[外壳迁移裁定 P42](https://github.com/CavaiLAB/jiangxin/blob/5ca1442b04eb7c4812314664ab06a9d7feba6a22/docs/decisions/2026-11-21-shell-migration.md)
 
-匠心工业智能体平台的 Web 和桌面端采用 DSH 客户端。旧外壳源码以后的用途、Qian 是否再发新版，以及产品登录、租户、策略和审计由哪个后端提供，仍待决定。[产品裁定 P38](https://github.com/CavaiLAB/jiangxin/blob/9d1c1475acb7d10c85b415ff7b2400ad6fe88ed1/docs/decisions/2026-11-20-product.md)
+匠心工业智能体平台的 Web 和桌面端采用 DSH 客户端。Qian 不再发新版，仓库已于 2026-11-25 归档。旧外壳源码以后的用途，以及产品登录、租户、策略和审计由哪个后端提供，仍待决定。[产品裁定 P38](https://github.com/CavaiLAB/jiangxin/blob/9d1c1475acb7d10c85b415ff7b2400ad6fe88ed1/docs/decisions/2026-11-20-product.md)、[平台裁定 P77](https://github.com/CavaiLAB/jiangxin/blob/main/docs/decisions/2026-11-25-platform.md)
 
 - **运行时配置。** 外壳启动时从同源地址读配置，同一份构建产物可以部署到不同环境。
 - **会话。** 浏览器里不放令牌。登录之后会话由网关持有，前端只带会话 Cookie；会话过期有统一的处理。
