@@ -2,11 +2,13 @@
 
 Qian 提供基于 TypeScript 与 React 的企业级组件。
 
+**本仓库已于 2026-11-25 归档，只读。** Qian 不再发新版。已发布的 `0.2.0`、`0.2.1` 留在 GitHub Packages，继续可以安装。匠心工业智能体平台以后的界面组件放在平台仓库的 `packages/ui-kit`，基础组件用 shadcn（底下是 Base UI）加 Tailwind。要再发版，须先由仓库管理员取消归档。[平台裁定 P76、P77](https://github.com/CavaiLAB/jiangxin/blob/main/docs/decisions/2026-11-25-platform.md)
+
 **Qian 已冻结在 `0.2.1`。** 本次迁移按该版本的包、标签和源码归档验收。业务预发继续运行原版外壳与远程模块，保留现有数据。[外壳迁移裁定 P42](https://github.com/CavaiLAB/jiangxin/blob/5ca1442b04eb7c4812314664ab06a9d7feba6a22/docs/decisions/2026-11-21-shell-migration.md)
 
 框架的 10 个 npm 包通过 GitHub Packages 公开发布，包名使用 `@cavailab/qian-*`。从旧版 yue 升级时，包名、样式变量、清单字段和浏览器存储键需要一起更新。[安装与升级说明](docs/migrating-from-yue.md)
 
-匠心工业智能体平台的 Web 和桌面端采用 DSH 客户端。旧外壳源码以后的用途、Qian 是否再发新版，以及产品登录、租户、策略和审计由哪个后端提供，仍待决定。[产品裁定 P38](https://github.com/CavaiLAB/jiangxin/blob/9d1c1475acb7d10c85b415ff7b2400ad6fe88ed1/docs/decisions/2026-11-20-product.md)
+匠心工业智能体平台的 Web 和桌面端采用 DSH 客户端。旧外壳源码以后的用途，以及产品登录、租户、策略和审计由哪个后端提供，仍待决定。[产品裁定 P38](https://github.com/CavaiLAB/jiangxin/blob/9d1c1475acb7d10c85b415ff7b2400ad6fe88ed1/docs/decisions/2026-11-20-product.md)
 
 Kun 仓库保有使用 Qian 0.2.1 的外壳源码、身份与租户页面，也维护组件文档站和 `qian` 命令行。[Kun 仓库](https://github.com/CavaiLAB/kun)
 

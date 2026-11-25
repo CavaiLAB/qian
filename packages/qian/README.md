@@ -1,5 +1,7 @@
 # qian 前端工作区
 
+> 本仓库已于 2026-11-25 归档，只读。下面是冻结在 0.2.1 时的说明；其中出版本与发布的流程不再执行，要再发版须先由仓库管理员取消归档。
+
 qian 是匠心工业智能体平台的 React 组件库与外壳（产品族的前端层，[ADR-021](https://github.com/CavaiLAB/kun/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/adr/ADR-021-product-family-structure.md)），以 pnpm workspace 交付，发 GitHub Packages。**包名**：`@cavailab/qian-<包>`（目录 `packages/qian/<包>`）。本文链接的需求、规格与 ADR 在后端仓库。本目录是 S1-YUE-003 建立的工程化基线：包骨架、分层边界、八项 CI 门禁与 Base UI 验证门。依据：[PRD §07 7.15.2](https://github.com/CavaiLAB/kun/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/07-s1-foundation.md)、[qian 专题规格](https://github.com/CavaiLAB/kun/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/prd/specs/yue.md)（§3.1 分层、§4.1 流程、§4.4 验证门、§8 验收）、[ADR-013](https://github.com/CavaiLAB/kun/blob/aafa0cc5ab48637a1c634867d6cddb2935837814/docs/adr/ADR-013-frontend-yue.md)。
 
 ## 1 布局

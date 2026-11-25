@@ -4,6 +4,8 @@ Qian 前端框架已从后端工作区迁入 `CavaiLAB/qian`，原有提交历�
 
 ## 维护入口
 
+本仓库已于 2026-11-25 归档，只读。Qian 不再发新版，已发布的包继续可以安装；要再发版，须先由仓库管理员取消归档。[平台裁定 P76、P77](https://github.com/CavaiLAB/jiangxin/blob/main/docs/decisions/2026-11-25-platform.md)
+
 本次前端迁移按 Qian 0.2.1 归档验收。Kun 中的外壳源码继续保留。业务预发运行原版外壳与远程模块，保留现有数据。归档范围与现网处置见[第 13 节](#13-冻结版本的归档验收)。
 
 | 需要做什么 | 去哪里 |
@@ -33,7 +35,7 @@ Qian 前端框架已从后端工作区迁入 `CavaiLAB/qian`，原有提交历�
 | 规划中的渲染层 | 分层矩阵为运行时层预留的包定名为 renderer（`@cavailab/qian-renderer`），TypeScript 运行时的名字不变 | 产品负责人 2026-11-17，见第 10.1 节 |
 | 首发的版本号 | 10 个包统一 0.2.0 | 产品负责人 2026-11-17，照第 8 节原来的提议 |
 | 版本分组 | 8 个层包同属一个 Changesets 固定版本组。TypeScript 运行时和前端插件开发包分别定版本 | 产品负责人 2026-11-20 确认 |
-| 当前版本 | Qian 冻结在 0.2.1。产品 Web 和桌面端采用 DSH 客户端，后续需要的组件按 DSH 的写法迁入平台自己的界面包。Qian 是否再发新版、产品登录后端如何接入均待定 | [产品裁定 P38](https://github.com/CavaiLAB/jiangxin/blob/9d1c1475acb7d10c85b415ff7b2400ad6fe88ed1/docs/decisions/2026-11-20-product.md) |
+| 当前版本 | Qian 冻结在 0.2.1。产品 Web 和桌面端采用 DSH 客户端，后续需要的组件迁入平台自己的界面包，基础组件用 shadcn 加 Tailwind。Qian 不再发新版，仓库 2026-11-25 归档。产品登录后端如何接入待定 | [产品裁定 P38](https://github.com/CavaiLAB/jiangxin/blob/9d1c1475acb7d10c85b415ff7b2400ad6fe88ed1/docs/decisions/2026-11-20-product.md)；[平台裁定 P76、P77](https://github.com/CavaiLAB/jiangxin/blob/main/docs/decisions/2026-11-25-platform.md) |
 | 组件文档 | 组件文档站按本仓库的 `@cavailab/qian-core@<版本>` 标签生成并发布组件页，源码与示例随标签取用 | 产品负责人 2026-11-20 确认 |
 | 包的可见性 | 公开 | 产品负责人 2026-11-17，照第 8 节原来的提议。GitHub Packages 上怎样才算公开、要谁动手，见第 11.2 节 |
 | 发布位置 | GitHub Packages（`https://npm.pkg.github.com`，作用域 `@cavailab`） | 产品负责人 2026-11-17：知情后说按提议开工。要让外部开发者不带令牌就能装，得另发到公共的 npm 包源，那需要先有组织账号与发布令牌，现在不做 |
@@ -447,8 +449,8 @@ F4（S1-YUE-025），2026-11-18 在后端仓库完成：`CavaiLAB/kun#23` 以合
 
 | 查阅事项 | 归档时的实际状态 |
 |---|---|
-| 安装与版本分组 | 10 个 0.2.1 包已发布到 GitHub Packages。8 个界面层包属于固定版本组，TypeScript 运行时与前端插件开发包各自定版本。是否再发布 Qian 新版待定。 |
+| 安装与版本分组 | 10 个 0.2.1 包已发布到 GitHub Packages。8 个界面层包属于固定版本组，TypeScript 运行时与前端插件开发包各自定版本。不再发布 Qian 新版（2026-11-25 定）。 |
 | 组件文档 | 现有组件文档站从核心包标签 `@cavailab/qian-core@0.2.1` 取源码与示例。原组件页书签可继续使用。 |
 | 后端契约 | `backend-copy/manifest.json` 钉住 Kun 来源提交。5 份契约副本与该提交根目录的原件逐字节一致。[副本核对说明](../backend-copy/README.md) |
 | 旧 npm 包 | 三个旧层包的 0.1.0 已从 GitHub Packages 删除。旧运行时的 0.1.0、0.1.1 仍可独立安装；旧插件开发包的 0.1.0 仍可下载，但从空缓存安装会因缺少旧层包而失败。三个版本均保留原包体，npm 安装时不会针对它们给出原生弃用警告。2026-11-23 决定以迁移指南的逐版替代关系完成验收。[逐版替代对照与锁文件迁移](migrating-from-yue.md#旧依赖还能否从包源安装) |
-| 仓库设置 | 自 2026-11-23 起，改动须通过 PR 进入 `main`。PR 的「Qian CI 汇总」通过后，以合并提交合入。主干禁止强制推送和删除。[主干保护规则](https://github.com/CavaiLAB/qian/rules/27879620) |
+| 仓库设置 | 自 2026-11-23 起，改动须通过 PR 进入 `main`。PR 的「Qian CI 汇总」通过后，以合并提交合入。主干禁止强制推送和删除。2026-11-25 起仓库归档，只读。[主干保护规则](https://github.com/CavaiLAB/qian/rules/27879620) |
